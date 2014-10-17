@@ -2,7 +2,7 @@
 #define JEUXH
 
 //####grille de test#####//
-#define TESTGRID 1
+#define TESTGRID 0
 //###arret des ennemis###//
 #define ARRET_MOB 1
 //#######################//
@@ -22,7 +22,7 @@ float combat (float vie, struct RAT *rat, DIVERSsysteme *systeme, PERSO *perso, 
 				, PACKobjet *objet, DIVERSui *ui);
 
 int Hitboxjoueur (SDL_Rect pmob, SDL_Rect pperso, float *ptrvie, PERSO *perso);
-int HitboxBalle(SDL_Rect pballe[], SDL_Rect *pennemi);
+int HitboxBalle(typecombat *BTLstr, SDL_Rect pballe[], SDL_Rect *pennemi);
 int HitboxPoing(typecombat *BTLstr, SDL_Rect *pennemi);
 
 void afficherCOMBAT(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso, RAT *rat,

@@ -7,6 +7,7 @@
 #include <string.h>
 #include <math.h>
 
+#include "rat.h"
 #include "evenement.h"
 #include "tir.h"
 #include "jeux.h"
@@ -18,7 +19,6 @@
 #include "colision.h"
 #include "systeme.h"
 #include "tool.h"
-#include "rat.h"
 
 float combat (float vie, struct RAT *rat, struct DIVERSsysteme *systeme, PERSO *perso, DIVERSinventaire *inventaire,
               PACKrecompense *recompense, PACKobjet *objet, DIVERSui *ui)
@@ -189,11 +189,11 @@ void afficherCOMBAT(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso, RA
 	{
 		if (BTLstr->DepartBalle[BTLstr->irect] != 0)
 		{
-		    #if TESTGRID == 1
+		   /* #if TESTGRID == 1
 		    SDL_Point tmp = {BTLstr->pballe[BTLstr->irect].x + (BTLstr->pballe[BTLstr->irect].w/2),
                              BTLstr->pballe[BTLstr->irect].y + (BTLstr->pballe[BTLstr->irect].h/2)};
 		    UnWriteCircleTestGrid(BTLstr, &tmp, 10);
-		    #endif // TESTGRID
+		    #endif // TESTGRID*/
 			SDL_RenderCopy(systeme->renderer, BTLstr->balle, NULL, &BTLstr->pballe[BTLstr->irect]);
 		}
 
@@ -247,15 +247,32 @@ int Hitboxjoueur (SDL_Rect pmob, SDL_Rect pperso, float *ptrvie, PERSO *perso)
 	return -1;
 }
 
-int HitboxBalle(SDL_Rect pballe[NBcailloux], SDL_Rect *pennemi)
+int HitboxBalle(typecombat *BTLstr, SDL_Rect pballe[NBcailloux], SDL_Rect *pennemi)
 {
-	int i;
-
+	int i, k = 0, l = 0;
+	SDL_Rect pix = {k, l, 1, 1};
+	SDL_Point point;
 	for (i = 0 ; i < NBcailloux ; i++)
 	{
-	    if (checkdistance(pennemi, &pballe[i], 30) == -1 )
+	    for(k = pballe[i].x ; k <= pballe[i].x + pballe[i].w ; k++)
         {
-            return i;
+            for(l = pballe[i].y ; l <= pballe[i].y + pballe[i].h; l++)
+            {
+                pix.x = k;
+                pix.y = l;
+                if (checkdistance(&pix, &pballe[i], 30) == -1 )
+                {
+                    if (TestColision_Rat(pennemi, pix.x, pix.y) == 1)
+                    {
+                        #if TESTGRID == 1
+                        point.x = pballe[i].x;
+                        point.y = pballe[i].y;
+                        UnWriteCircleTestGrid(BTLstr, &point, 10);
+                        #endif // TESTGRID
+                        return i;
+                    }
+                }
+            }
         }
 	}
 	return -1;
@@ -342,7 +359,7 @@ void COMBATgestionDEGAT (typecombat *BTLstr, DIVERSui *ui)
 		    if (ui->casestuff[ARME].IDobjet == 3)
             {
                     BTLstr->ResultatHitbox = -1;//initialisation
-                    BTLstr->ResultatHitbox = HitboxBalle(BTLstr->pballe, &BTLstr->ennemi[index].position);
+                    BTLstr->ResultatHitbox = HitboxBalle(BTLstr, BTLstr->pballe, &BTLstr->ennemi[index].position);
             }
             //décision dégat mains nue
             else if (ui->casestuff[ARME].IDobjet == -1)
