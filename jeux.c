@@ -18,7 +18,7 @@
 #include "colision.h"
 #include "systeme.h"
 #include "tool.h"
-
+#include "rat.h"
 
 float combat (float vie, struct RAT *rat, struct DIVERSsysteme *systeme, PERSO *perso, DIVERSinventaire *inventaire,
               PACKrecompense *recompense, PACKobjet *objet, DIVERSui *ui)
