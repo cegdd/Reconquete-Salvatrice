@@ -263,7 +263,7 @@ int HitboxBalle(SDL_Rect pballe[NBcailloux], SDL_Rect *pennemi)
 
 int HitboxPoing(typecombat *BTLstr, SDL_Rect *pennemi)
 {
-    int k, l;
+    int k = 0, l = 0;
     SDL_Rect pix = {k, l, 1, 1};
 
     for(k = pennemi->x ; k <= pennemi->x + pennemi->w ; k++)
