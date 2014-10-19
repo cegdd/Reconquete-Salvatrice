@@ -247,29 +247,64 @@ int Hitboxjoueur (SDL_Rect pmob, SDL_Rect pperso, float *ptrvie, PERSO *perso)
 	return -1;
 }
 
-int HitboxBalle(typecombat *BTLstr, SDL_Rect pballe[NBcailloux], SDL_Rect *pennemi)
-{
+int HitboxBalle(typecombat *BTLstr, SDL_Rect pballe[], SDL_Rect *pennemi)
+{//fonction appeler pour chaque monstres
 	int i, k = 0, l = 0;
 	SDL_Rect pix = {k, l, 1, 1};
 	SDL_Point point;
+
+
+//test de la hit box des rats [TEMPORAIRE prend beaucou de ressource]
+	for(k = 650 ; k <= 1366 ; k++)
+    {
+        for(l = 300 ; l <= 768; l++)
+        {
+            pix.x = k;
+            pix.y = l;
+
+            if (TestColision_Rat(pennemi, pix.x, pix.y) == 1)
+            {
+                BTLstr->calque[k][l] = 1;
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
 	for (i = 0 ; i < NBcailloux ; i++)
 	{
-	    for(k = pballe[i].x ; k <= pballe[i].x + pballe[i].w ; k++)
+	    if (checkdistance(pennemi, &pballe[i], 500) == -1 )//degrossissage pour calcul précis
         {
-            for(l = pballe[i].y ; l <= pballe[i].y + pballe[i].h; l++)
+            point.x = pballe[i].x;
+            point.y = pballe[i].y;
+            UnWriteCircleTestGrid(BTLstr, &point, 10);
+
+            for(k = pballe[i].x ; k <= pballe[i].x + pballe[i].w ; k++)
             {
-                pix.x = k;
-                pix.y = l;
-                if (checkdistance(&pix, &pballe[i], 30) == -1 )
+                for(l = pballe[i].y ; l <= pballe[i].y + pballe[i].h; l++)
                 {
-                    if (TestColision_Rat(pennemi, pix.x, pix.y) == 1)
+                    pix.x = k;
+                    pix.y = l;
+
+                    if (checkdistance(&pix, &pballe[i], 10) == -1 )
                     {
-                        #if TESTGRID == 1
-                        point.x = pballe[i].x;
-                        point.y = pballe[i].y;
-                        UnWriteCircleTestGrid(BTLstr, &point, 10);
-                        #endif // TESTGRID
-                        return i;
+                        if (TestColision_Rat(pennemi, pix.x, pix.y) == 1)
+                        {
+                            #if TESTGRID == 1
+                            point.x = pballe[i].x;
+                            point.y = pballe[i].y;
+                            UnWriteCircleTestGrid(BTLstr, &point, 10);
+                            #endif // TESTGRID
+                            return i;
+                        }
                     }
                 }
             }
@@ -283,29 +318,27 @@ int HitboxPoing(typecombat *BTLstr, SDL_Rect *pennemi)
     int k = 0, l = 0;
     SDL_Rect pix = {k, l, 1, 1};
 
-    for(k = pennemi->x ; k <= pennemi->x + pennemi->w ; k++)
+
+    if (checkdistance(pennemi, &BTLstr->Pperso, 120) == -1 )//degrossissage pour calcul précis
     {
-        for(l = pennemi->y ; l <= pennemi->y + pennemi->h; l++)
+        for(k = BTLstr->Pperso.x ; k <= BTLstr->Pperso.x + BTLstr->Pperso.w ; k++)
         {
-            pix.x = k;
-            pix.y = l;
-            if(k < 1366 && l < 768)
+            for(l = BTLstr->Pperso.y ; l <= BTLstr->Pperso.y + BTLstr->Pperso.h; l++)
             {
-
-
-
-            if (checkdistance(&pix, pennemi, 10) == -1)
-            {
-                BTLstr->calque[k][l] = 1;
-                if (colisionfromage(&BTLstr->Pperso, pennemi, &BTLstr->pcurseur, 40) == true)
+                pix.x = k;
+                pix.y = l;
+                if (checkdistance(&BTLstr->Pperso, pennemi, 30) == 1)
                 {
-                    BTLstr->calque[k][l] = 1;
-                    //return 0;
+                    if (colisionfromage(&pix, pennemi, &BTLstr->pcurseur, 20) == true)
+                    {
+                        BTLstr->calque[k][l] = 1;
+                        //return 0;
+                    }
                 }
             }
-        }}
+        }
     }
-    return -1;
+return -1;
 }
 
 void COMBATgestionCLICetCOLISION (typecombat *BTLstr, DIVERSui *ui)
@@ -317,8 +350,8 @@ void COMBATgestionCLICetCOLISION (typecombat *BTLstr, DIVERSui *ui)
             gestiontir(BTLstr);
             COMBATgestionprojectile(BTLstr);
         }
-        COMBATgestionDEGAT(BTLstr, ui);
     }
+    COMBATgestionDEGAT(BTLstr, ui);
 }
 
 void COMBATgestionprojectile (typecombat *BTLstr)

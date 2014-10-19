@@ -2,7 +2,7 @@
 #define JEUXH
 
 //####grille de test#####//
-#define TESTGRID 0
+#define TESTGRID 1
 //###arret des ennemis###//
 #define ARRET_MOB 1
 //#######################//
