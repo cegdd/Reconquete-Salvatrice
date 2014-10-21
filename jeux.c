@@ -253,7 +253,7 @@ int HitboxBalle(typecombat *BTLstr, SDL_Rect pballe[], SDL_Rect *pennemi)
 	SDL_Rect pix = {k, l, 1, 1};
 	SDL_Point point;
 
-
+/*
 //test de la hit box des rats [TEMPORAIRE prend beaucou de ressource]
 	for(k = 650 ; k <= 1366 ; k++)
     {
@@ -267,7 +267,7 @@ int HitboxBalle(typecombat *BTLstr, SDL_Rect pballe[], SDL_Rect *pennemi)
                 BTLstr->calque[k][l] = 1;
             }
         }
-    }
+    }*/
 
 
 

@@ -590,11 +590,11 @@ void afficherJOUEURS(PERSO *perso, DIVERSdeplacement *deplacement, DIVERSsysteme
 	//joueur client
 	if (deplacement->direction.direction == -1)
 	{
-		calcul = 180-(45 * deplacement->direction.olddirection);
+		calcul = 180+(45 * deplacement->direction.olddirection);
 	}
 	else
 	{
-		calcul = 180-(45 * deplacement->direction.direction);
+		calcul = 180+(45 * deplacement->direction.direction);
 	}
 
 	SDL_RenderCopyEx(systeme->renderer, perso->textureperso[deplacement->indexanimperso], NULL, &perso->pperso, calcul,NULL, SDL_FLIP_NONE);

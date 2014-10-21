@@ -5,6 +5,7 @@
 #include "image.h"
 #include "tableau.h"
 #include "colision.h"
+#include "deplacement.h"
 #include "main.h"
 
 void deplacementperso(SDL_Surface *mapnb[], PERSO *perso, DIRECTION *direction, DIVERSsysteme *systeme, int *x, int *y, int enmap)
@@ -45,339 +46,108 @@ void deplacementperso(SDL_Surface *mapnb[], PERSO *perso, DIRECTION *direction, 
 		}
 	}
 
-	cote[0] = etatpix[0] + etatpix[1] + etatpix[2];
-	cote[1] = etatpix[1] + etatpix[2] + etatpix[3];
-	cote[2] = etatpix[2] + etatpix[3] + etatpix[4];
-	cote[3] = etatpix[3] + etatpix[4] + etatpix[5];
-	cote[4] = etatpix[4] + etatpix[5] + etatpix[6];
-	cote[5] = etatpix[5] + etatpix[6] + etatpix[7];
-	cote[6] = etatpix[6] + etatpix[7] + etatpix[0];
-	cote[7] = etatpix[7] + etatpix[0] + etatpix[1];
+	cote[UP] = etatpix[UP] + etatpix[UPRIGHT] + etatpix[RIGHT];
+	cote[UPRIGHT] = etatpix[UPRIGHT] + etatpix[RIGHT] + etatpix[RIGHTDOWN];
+	cote[RIGHT] = etatpix[RIGHT] + etatpix[RIGHTDOWN] + etatpix[DOWN];
+	cote[RIGHTDOWN] = etatpix[RIGHTDOWN] + etatpix[DOWN] + etatpix[DOWNLEFT];
+	cote[DOWN] = etatpix[DOWN] + etatpix[DOWNLEFT] + etatpix[LEFT];
+	cote[DOWNLEFT] = etatpix[DOWNLEFT] + etatpix[LEFT] + etatpix[LEFTUP];
+	cote[LEFT] = etatpix[LEFT] + etatpix[LEFTUP] + etatpix[UP];
+	cote[LEFTUP] = etatpix[LEFTUP] + etatpix[UP] + etatpix[UPRIGHT];
 
 	if(autorisation == false)
 	{
 		//bas
-		if(direction->direction == 4 && *y+perso->pperso.h >= systeme->screenh){cote[4] = 3; cote[3] = 3; cote[5] = 3;}
+		if(direction->direction == DOWN && *y+perso->pperso.h >= systeme->screenh){cote[DOWN] = 3; cote[RIGHTDOWN] = 3; cote[DOWNLEFT] = 3;}
 		//droite
-		if(direction->direction == 6 && *x+perso->pperso.w >= systeme->screenw){cote[2] = 3; cote[1] = 3; cote[3] = 3;}
+		if(direction->direction == RIGHT && *x+perso->pperso.w >= systeme->screenw){cote[RIGHT] = 3; cote[UPRIGHT] = 3; cote[RIGHTDOWN] = 3;}
 		//haut
-		if(direction->direction == 0 && *y < 0){cote[0] = 3; cote[7] = 3; cote[1] = 3;}
+		if(direction->direction == UP && *y < 0){cote[UP] = 3; cote[LEFTUP] = 3; cote[UPRIGHT] = 3;}
 		//gauche
-		if(direction->direction == 2 && *x < 0){cote[6] = 3; cote[7] = 3; cote[5] = 3;}
+		if(direction->direction == LEFT && *x < 0){cote[LEFT] = 3; cote[LEFTUP] = 3; cote[DOWNLEFT] = 3;}
 
-		if(direction->direction == 5 && *y+perso->pperso.h >= systeme->screenh){cote[4] = 3; cote[3] = 3; cote[5] = 3;}
-		if(direction->direction == 3 && *y+perso->pperso.h >= systeme->screenh){cote[4] = 3; cote[3] = 3; cote[5] = 3;}
+		if(direction->direction == DOWNLEFT && *y+perso->pperso.h >= systeme->screenh){cote[DOWN] = 3; cote[RIGHTDOWN] = 3; cote[DOWNLEFT] = 3;}
+		if(direction->direction == RIGHTDOWN && *y+perso->pperso.h >= systeme->screenh){cote[DOWN] = 3; cote[RIGHTDOWN] = 3; cote[DOWNLEFT] = 3;}
 
-		if(direction->direction == 1 && *y < 0){cote[0] = 3; cote[7] = 3; cote[1] = 3;}
-		if(direction->direction == 7 && *y < 0){cote[0] = 3; cote[7] = 3; cote[1] = 3;}
+		if(direction->direction == UPRIGHT && *y < 0){cote[UP] = 3; cote[LEFTUP] = 3; cote[UPRIGHT] = 3;}
+		if(direction->direction == LEFTUP && *y < 0){cote[UP] = 3; cote[LEFTUP] = 3; cote[UPRIGHT] = 3;}
 
-		if(direction->direction == 7 && *x+perso->pperso.w >= systeme->screenw){cote[2] = 3; cote[1] = 3; cote[3] = 3;}
-		if(direction->direction == 5 && *x+perso->pperso.w >= systeme->screenw){cote[2] = 3; cote[1] = 3; cote[3] = 3;}
+		if(direction->direction == LEFTUP && *x+perso->pperso.w >= systeme->screenw){cote[RIGHT] = 3; cote[UPRIGHT] = 3; cote[RIGHTDOWN] = 3;}
+		if(direction->direction == DOWNLEFT && *x+perso->pperso.w >= systeme->screenw){cote[RIGHT] = 3; cote[UPRIGHT] = 3; cote[RIGHTDOWN] = 3;}
 
-		if(direction->direction == 3 && *x < 0){cote[6] = 3; cote[7] = 3; cote[5] = 3;}
-		if(direction->direction == 1 && *x < 0){cote[6] = 3; cote[7] = 3; cote[5] = 3;}
+		if(direction->direction == RIGHTDOWN && *x < 0){cote[LEFT] = 3; cote[LEFTUP] = 3; cote[DOWNLEFT] = 3;}
+		if(direction->direction == UPRIGHT && *x < 0){cote[LEFT] = 3; cote[LEFTUP] = 3; cote[DOWNLEFT] = 3;}
 	}
 
 
 	switch (direction->direction)
 	{
-	case 0:
-		if (cote[0] <=1)                    {haut(perso, y, systeme, enmap);}
-		else if (cote[7] <= 1)              {gauchehaut(perso, x, y, systeme, enmap);}
-		else if (cote[1] <= 1)              {hautdroite(perso, x, y, systeme, enmap);}
+	case UP:
+		if (cote[UP] <=1)                    {haut(perso, y, systeme, enmap);}
+		else if (cote[LEFTUP] <= 1)              {gauchehaut(perso, x, y, systeme, enmap);}
+		else if (cote[UPRIGHT] <= 1)              {hautdroite(perso, x, y, systeme, enmap);}
 		break;
-	case 7:
-		if (cote[1] <=1)
+	case UPRIGHT:
+		if (cote[UPRIGHT] <=1)
 		{
 			hautdroite(perso, x, y, systeme, enmap);
 		}
-		else if (cote[0] <= 1)              {haut(perso, y, systeme, enmap);}
-		else if (cote[2] <= 1)              {droite(perso, x, systeme, enmap);}
+		else if (cote[UP] <= 1)              {haut(perso, y, systeme, enmap);}
+		else if (cote[RIGHT] <= 1)              {droite(perso, x, systeme, enmap);}
 		break;
-	case 6:
-		if (cote[2] <=1)
+	case RIGHT:
+		if (cote[RIGHT] <=1)
 		{
 			droite(perso, x, systeme, enmap);
 		}
-		else if (cote[1] <= 1)              {hautdroite(perso, x, y, systeme, enmap);}
-		else if (cote[3] <= 1)              {basdroite(perso, x, y, systeme, enmap);}
+		else if (cote[UPRIGHT] <= 1)              {hautdroite(perso, x, y, systeme, enmap);}
+		else if (cote[RIGHTDOWN] <= 1)              {basdroite(perso, x, y, systeme, enmap);}
 		break;
-	case 5:
-		if (cote[3] <=1)
+	case RIGHTDOWN:
+		if (cote[RIGHTDOWN] <=1)
 		{
 			basdroite(perso, x, y, systeme, enmap);
 		}
-		else if (cote[2] <= 1)              {droite(perso, x, systeme, enmap);}
-		else if (cote[4] <= 1)              {bas(perso, y, systeme, enmap);}
+		else if (cote[RIGHT] <= 1)              {droite(perso, x, systeme, enmap);}
+		else if (cote[DOWN] <= 1)              {bas(perso, y, systeme, enmap);}
 		break;
-	case 4:
-		if (cote[4] <=1)
+	case DOWN:
+		if (cote[DOWN] <=1)
 		{
 			bas(perso, y, systeme, enmap);
 		}
-		else if (cote[3] <= 1)              {basdroite(perso, x, y, systeme, enmap);}
-		else if (cote[5] <= 1)              {basgauche(perso, x, y, systeme, enmap);}
+		else if (cote[RIGHTDOWN] <= 1)              {basdroite(perso, x, y, systeme, enmap);}
+		else if (cote[DOWNLEFT] <= 1)              {basgauche(perso, x, y, systeme, enmap);}
 		break;
-	case 3:
-		if (cote[5] <=1)
+	case DOWNLEFT:
+		if (cote[DOWNLEFT] <=1)
 		{
 			basgauche(perso, x, y, systeme, enmap);
 		}
-		else if (cote[4] <= 1)              {bas(perso, y, systeme, enmap);}
-		else if (cote[6] <= 1)              {gauche(perso, x, systeme, enmap);}
+		else if (cote[DOWN] <= 1)              {bas(perso, y, systeme, enmap);}
+		else if (cote[LEFT] <= 1)              {gauche(perso, x, systeme, enmap);}
 		break;
-	case 2:
-		if (cote[6] <=1)
+	case LEFT:
+		if (cote[LEFT] <=1)
 		{
 			gauche(perso, x, systeme, enmap);
 		}
-		else if (cote[5] <= 1)              {basgauche(perso, x, y, systeme, enmap);}
-		else if (cote[7] <= 1)              {gauchehaut(perso, x, y, systeme, enmap);}
+		else if (cote[DOWNLEFT] <= 1)              {basgauche(perso, x, y, systeme, enmap);}
+		else if (cote[LEFTUP] <= 1)              {gauchehaut(perso, x, y, systeme, enmap);}
 		break;
-	case 1:
-		if (cote[7] <=1)
+	case LEFTUP:
+		if (cote[LEFTUP] <=1)
 		{
 			gauchehaut(perso, x, y, systeme, enmap);
 		}
-		else if (cote[6] <= 1)              {gauche(perso, x, systeme, enmap);}
-		else if (cote[0] <= 1)              {haut(perso, y, systeme, enmap);}
+		else if (cote[LEFT] <= 1)              {gauche(perso, x, systeme, enmap);}
+		else if (cote[UP] <= 1)              {haut(perso, y, systeme, enmap);}
 		break;
 	}
 
 }
 
-void haut (PERSO *perso, int* y, DIVERSsysteme *systeme, int enmap)
-{
-    if (enmap == 1)
-    {
-        if (perso->pperso.y >= (systeme->screenh-perso->pperso.h)/2)
-        {
-            perso->pperso.y = perso->pperso.y - 6;
-        }
-        else if (*y >= 0 && perso->pperso.y >= 10)
-        {
-            perso->pperso.y = perso->pperso.y - 6;
-        }
-        else if (*y <= 0)
-        {
-            *y = *y + 6;
-        }
-    }
-    else
-	{
-		*y = *y - 3;
-	}
-}
-void hautdroite (PERSO *perso, int* x, int* y, DIVERSsysteme *systeme, int enmap)
-{
-    if (enmap == 1)
-    {
-        if (perso->pperso.y >= (systeme->screenh-perso->pperso.h)/2)
-        {
-            perso->pperso.y = perso->pperso.y - 5;
-        }
-        else if (*y >= 0 && perso->pperso.y >= 10)
-        {
-            perso->pperso.y = perso->pperso.y - 5;
-        }
-        else if (*y <= 0)
-        {
-            *y = *y + 5;
-        }
 
-        if (perso->pperso.x <= (systeme->screenw-perso->pperso.w)/2)
-        {
-            perso->pperso.x = perso->pperso.x + 5;
-        }
-        else if (*x <= -8640 && perso->pperso.x <= systeme->screenw-perso->pperso.w)
-        {
-            perso->pperso.x = perso->pperso.x + 5;
-        }
-        else if (*x >= -8640)
-        {
-            *x = *x - 5;
-        }
-    }
-    else
-	{
-		*x = *x + 2;
-		*y = *y - 2;
-	}
-}
-void droite (PERSO *perso, int* x, DIVERSsysteme *systeme, int enmap)
-{
-    if (enmap == 1)
-    {
-        if (perso->pperso.x <= (systeme->screenw-perso->pperso.w)/2)
-        {
-            perso->pperso.x = perso->pperso.x + 6;
-        }
-        else if (*x <= -8640 && perso->pperso.x <= systeme->screenw-perso->pperso.w)
-        {
-            perso->pperso.x = perso->pperso.x + 6;
-        }
-        else if (*x >= -8640)
-        {
-            *x = *x - 6;
-        }
-    }
-    else
-	{
-		*x = *x + 3;
-	}
-}
-void basdroite (PERSO *perso, int* x, int* y, DIVERSsysteme *systeme, int enmap)
-{
-    if (enmap == 1)
-    {
-        if (perso->pperso.y <= (systeme->screenh-perso->pperso.h)/2)
-        {
-            perso->pperso.y = perso->pperso.y + 5;
-        }
-        else if (*y <= -9222 && perso->pperso.y <= systeme->screenh-perso->pperso.h)
-        {
-            perso->pperso.y = perso->pperso.y + 5;
-        }
-        else if (*y >= -9222)
-        {
-            *y = *y - 5;
-        }
-
-        if (perso->pperso.x <= (systeme->screenw-perso->pperso.w)/2)
-        {
-            perso->pperso.x = perso->pperso.x + 5;
-        }
-        else if (*x <= -8640 && perso->pperso.x <= systeme->screenw-perso->pperso.w)
-        {
-            perso->pperso.x = perso->pperso.x + 5;
-        }
-        else if (*x >= -8640)
-        {
-            *x = *x - 5;
-        }
-    }
-    else
-	{
-		*y = *y + 2;
-		*x = *x + 2;
-	}
-}
-void bas (PERSO *perso, int* y, DIVERSsysteme *systeme, int enmap)
-{
-    if (enmap == 1)
-    {
-        if (perso->pperso.y <= (systeme->screenh-perso->pperso.h)/2)
-        {
-            perso->pperso.y = perso->pperso.y + 6;
-        }
-        else if (*y <= -9222 && perso->pperso.y <= systeme->screenh-perso->pperso.h)
-        {
-            perso->pperso.y = perso->pperso.y + 6;
-        }
-        else if (*y >= -9222)
-        {
-            *y = *y - 6;
-        }
-    }
-    else
-	{
-		*y = *y + 3;
-	}
-}
-void basgauche (PERSO *perso, int* x, int* y, DIVERSsysteme *systeme, int enmap)
-{
-    if (enmap == 1)
-    {
-        if (perso->pperso.y <= (systeme->screenh-perso->pperso.h)/2)
-        {
-            perso->pperso.y = perso->pperso.y + 5;   //bas
-        }
-        else if (*y <= -9222 && perso->pperso.y <= systeme->screenh-perso->pperso.h)
-        {
-            perso->pperso.y = perso->pperso.y + 5;
-        }
-        else if (*y >= -9222)
-        {
-            *y = *y - 5;
-        }
-
-        if (perso->pperso.x >= (systeme->screenw-perso->pperso.w)/2)
-        {
-            perso->pperso.x = perso->pperso.x - 5;   //gauche
-        }
-        else if (*x >= 0 && perso->pperso.x >= -10)
-        {
-            perso->pperso.x = perso->pperso.x - 5;
-        }
-        else if (*x <= 0)
-        {
-            *x = *x + 5;
-        }
-    }
-    else
-	{
-		*y = *y + 2;
-		*x = *x - 2;
-	}
-}
-void gauche (PERSO *perso, int* x, DIVERSsysteme *systeme, int enmap)
-{
-    if (enmap == 1)
-    {
-        if (perso->pperso.x >= (systeme->screenw-perso->pperso.w)/2)
-        {
-            perso->pperso.x = perso->pperso.x - 6;
-        }
-        else if (*x >= 0 && perso->pperso.x >= -10)
-        {
-            perso->pperso.x = perso->pperso.x - 6;
-        }
-        else if (*x <= 0)
-        {
-            *x = *x + 6;
-        }
-    }
-    else
-	{
-		*x = *x - 3;
-	}
-}
-void gauchehaut (PERSO *perso, int* x, int* y, DIVERSsysteme *systeme, int enmap)
-{
-    if (enmap == 1)
-    {
-        if (perso->pperso.y >= (systeme->screenh-perso->pperso.h)/2)
-        {
-            perso->pperso.y = perso->pperso.y - 5;   //haut
-        }
-        else if (*y >= 0 && perso->pperso.y >= 10)
-        {
-            perso->pperso.y = perso->pperso.y - 5;
-        }
-        else if (*y <= 0)
-        {
-            *y = *y + 5;
-        }
-
-        if (perso->pperso.x >= (systeme->screenw-perso->pperso.w)/2)
-        {
-            perso->pperso.x = perso->pperso.x - 5;   //gauche
-        }
-        else if (*x >= 0 && perso->pperso.x >= -10)
-        {
-            perso->pperso.x = perso->pperso.x - 5;
-        }
-        else if (*x <= 0)
-        {
-            *x = *x + 5;
-        }
-    }
-    else
-	{
-		*y = *y - 2;
-		*x = *x - 2;
-	}
-}
 int colisionbox(SDL_Rect *A, SDL_Rect *B, int pointeur)
 {
 	//si le pointeur de la souris(A) est dans la zone B
