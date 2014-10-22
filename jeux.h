@@ -22,7 +22,7 @@ float combat (float vie, struct RAT *rat, DIVERSsysteme *systeme, PERSO *perso, 
 				, PACKobjet *objet, DIVERSui *ui);
 
 int Hitboxjoueur (SDL_Rect pmob, SDL_Rect pperso, float *ptrvie, PERSO *perso);
-int HitboxBalle(typecombat *BTLstr, SDL_Rect pballe[], SDL_Rect *pennemi);
+int HitboxBalle(typecombat *BTLstr, SDL_Rect pballe[], SDL_Rect *pennemi, int Iennemi);
 int HitboxPoing(typecombat *BTLstr, SDL_Rect *pennemi);
 
 void afficherCOMBAT(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso, RAT *rat,

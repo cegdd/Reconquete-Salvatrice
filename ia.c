@@ -65,7 +65,7 @@ int MouvemementChauveSouris(typecombat *BTLstr, struct RAT *rat, struct DIVERSsy
 			{
 				BTLstr->ennemi[index].position.x += 1;
 				BTLstr->ennemi[index].position.y -= 1;
-				return 1;
+				return UPRIGHT;
 			}
 			break;
 		case 2:
@@ -77,7 +77,7 @@ int MouvemementChauveSouris(typecombat *BTLstr, struct RAT *rat, struct DIVERSsy
 			else
 			{
 				BTLstr->ennemi[index].position.x += 1;
-				return 2;
+				return RIGHT;
 			}
 			break;
 		case 3:
@@ -92,7 +92,7 @@ int MouvemementChauveSouris(typecombat *BTLstr, struct RAT *rat, struct DIVERSsy
 			{
 				BTLstr->ennemi[index].position.x += 1;
 				BTLstr->ennemi[index].position.y += 1;
-				return 3;
+				return RIGHTDOWN;
 			}
 			break;
 		case 4:
@@ -104,7 +104,7 @@ int MouvemementChauveSouris(typecombat *BTLstr, struct RAT *rat, struct DIVERSsy
 			else
 			{
 				BTLstr->ennemi[index].position.y += 1;
-				return 4;
+				return DOWN;
 			}
 			break;
 		case 5:
@@ -119,7 +119,7 @@ int MouvemementChauveSouris(typecombat *BTLstr, struct RAT *rat, struct DIVERSsy
 			{
 				BTLstr->ennemi[index].position.x -= 1;
 				BTLstr->ennemi[index].position.y += 1;
-				return 5;
+				return DOWNLEFT;
 			}
 			break;
 		case 6:
@@ -131,7 +131,7 @@ int MouvemementChauveSouris(typecombat *BTLstr, struct RAT *rat, struct DIVERSsy
 			else
 			{
 				BTLstr->ennemi[index].position.x -= 1;
-				return 6;
+				return LEFT;
 			}
 			break;
 		case 7:
@@ -146,7 +146,7 @@ int MouvemementChauveSouris(typecombat *BTLstr, struct RAT *rat, struct DIVERSsy
 			{
 				BTLstr->ennemi[index].position.x -= 1;
 				BTLstr->ennemi[index].position.y -= 1;
-				return 7;
+				return LEFTUP;
 			}
 			break;
 		default:
@@ -158,10 +158,10 @@ int MouvemementChauveSouris(typecombat *BTLstr, struct RAT *rat, struct DIVERSsy
 			else
 			{
 				BTLstr->ennemi[index].position.y -= 1;
-				return 0;
+				return UP;
 			}
 			break;
 	}
-	return 0;
+	return UP;
 }
 

@@ -247,13 +247,13 @@ int Hitboxjoueur (SDL_Rect pmob, SDL_Rect pperso, float *ptrvie, PERSO *perso)
 	return -1;
 }
 
-int HitboxBalle(typecombat *BTLstr, SDL_Rect pballe[], SDL_Rect *pennemi)
+int HitboxBalle(typecombat *BTLstr, SDL_Rect pballe[], SDL_Rect *pennemi, int direction)
 {//fonction appeler pour chaque monstres
 	int i, k = 0, l = 0;
 	SDL_Rect pix = {k, l, 1, 1};
 	SDL_Point point;
 
-/*
+
 //test de la hit box des rats [TEMPORAIRE prend beaucou de ressource]
 	for(k = 650 ; k <= 1366 ; k++)
     {
@@ -262,20 +262,12 @@ int HitboxBalle(typecombat *BTLstr, SDL_Rect pballe[], SDL_Rect *pennemi)
             pix.x = k;
             pix.y = l;
 
-            if (TestColision_Rat(pennemi, pix.x, pix.y) == 1)
+            if (TestColision_Rat(pennemi, pix.x, pix.y, direction) == 1)
             {
                 BTLstr->calque[k][l] = 1;
             }
         }
-    }*/
-
-
-
-
-
-
-
-
+    }
 
 
 
@@ -296,7 +288,7 @@ int HitboxBalle(typecombat *BTLstr, SDL_Rect pballe[], SDL_Rect *pennemi)
 
                     if (checkdistance(&pix, &pballe[i], 10) == -1 )
                     {
-                        if (TestColision_Rat(pennemi, pix.x, pix.y) == 1)
+                        if (TestColision_Rat(pennemi, pix.x, pix.y, direction) == 1)
                         {
                             #if TESTGRID == 1
                             point.x = pballe[i].x;
@@ -391,8 +383,8 @@ void COMBATgestionDEGAT (typecombat *BTLstr, DIVERSui *ui)
 		    //décision dégat lancepierre
 		    if (ui->casestuff[ARME].IDobjet == 3)
             {
-                    BTLstr->ResultatHitbox = -1;//initialisation
-                    BTLstr->ResultatHitbox = HitboxBalle(BTLstr, BTLstr->pballe, &BTLstr->ennemi[index].position);
+                    BTLstr->ResultatHitbox = HitboxBalle(BTLstr, BTLstr->pballe,
+                                                         &BTLstr->ennemi[index].position, BTLstr->ennemi[index].Direction);
             }
             //décision dégat mains nue
             else if (ui->casestuff[ARME].IDobjet == -1)
