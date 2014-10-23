@@ -253,27 +253,9 @@ int HitboxBalle(typecombat *BTLstr, SDL_Rect pballe[], SDL_Rect *pennemi, int di
 	SDL_Rect pix = {k, l, 1, 1};
 	SDL_Point point;
 
-
-//test de la hit box des rats [TEMPORAIRE prend beaucou de ressource]
-	for(k = 650 ; k <= 1366 ; k++)
-    {
-        for(l = 300 ; l <= 768; l++)
-        {
-            pix.x = k;
-            pix.y = l;
-
-            if (TestColision_Rat(pennemi, pix.x, pix.y, direction) == 1)
-            {
-                BTLstr->calque[k][l] = 1;
-            }
-        }
-    }
-
-
-
 	for (i = 0 ; i < NBcailloux ; i++)
 	{
-	    if (checkdistance(pennemi, &pballe[i], 500) == -1 )//degrossissage pour calcul précis
+	    if (checkdistance(pennemi, &pballe[i], 120) == -1 )//degrossissage pour calcul précis
         {
             point.x = pballe[i].x;
             point.y = pballe[i].y;
