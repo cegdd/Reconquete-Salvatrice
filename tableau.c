@@ -945,7 +945,7 @@ void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, float vi
 	for (index=0; index<NBcailloux; index++)
 	{
 		BTLstr->i[index] = 0;
-		BTLstr->DepartBalle[index] = 0;
+		BTLstr->DepartBalle[index] = UNUSED;
 	}
 
 	for (index = 0 ; index < 48 ; index++)

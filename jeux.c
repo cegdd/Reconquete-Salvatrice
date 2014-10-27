@@ -187,13 +187,8 @@ void afficherCOMBAT(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso, RA
 
 	for(BTLstr->irect = 0 ; BTLstr->irect < NBcailloux ; BTLstr->irect++)
 	{
-		if (BTLstr->DepartBalle[BTLstr->irect] != 0)
+		if (BTLstr->DepartBalle[BTLstr->irect] == RUNNING || BTLstr->DepartBalle[BTLstr->irect] == GO)
 		{
-		   /* #if TESTGRID == 1
-		    SDL_Point tmp = {BTLstr->pballe[BTLstr->irect].x + (BTLstr->pballe[BTLstr->irect].w/2),
-                             BTLstr->pballe[BTLstr->irect].y + (BTLstr->pballe[BTLstr->irect].h/2)};
-		    UnWriteCircleTestGrid(BTLstr, &tmp, 10);
-		    #endif // TESTGRID*/
 			SDL_RenderCopy(systeme->renderer, BTLstr->balle, NULL, &BTLstr->pballe[BTLstr->irect]);
 		}
 
@@ -333,7 +328,7 @@ void COMBATgestionprojectile (typecombat *BTLstr)
 	int index;
 	for (index = 0 ; index < NBcailloux ; index++)
 	{
-		if (BTLstr->DepartBalle[index] != 0 && BTLstr->i[index] < PRECISIONcailloux-1 && BTLstr->DepartBalle[index] != 3 )
+		if (BTLstr->DepartBalle[index] != UNUSED && BTLstr->i[index] < PRECISIONcailloux - 1 && BTLstr->DepartBalle[index] != STOP)
 		{
 			BTLstr->i[index] = BTLstr->i[index]+1;
 			BTLstr->pballe[index].x = BTLstr->tx[index][BTLstr->i[index]];
@@ -343,11 +338,11 @@ void COMBATgestionprojectile (typecombat *BTLstr)
 		{
 			BTLstr->pballe[index].x = BTLstr->tx[index][PRECISIONcailloux-1];
 			BTLstr->pballe[index].y = BTLstr->ty[index][PRECISIONcailloux-1];
-			BTLstr->DepartBalle[index] = 3;
+			BTLstr->DepartBalle[index] = STOP;
 		}
 		else
 		{
-			BTLstr->DepartBalle[index] = 0;
+			BTLstr->DepartBalle[index] = RUNNING;
 		}
 	}
 }
@@ -388,7 +383,7 @@ void COMBATgestionDEGAT (typecombat *BTLstr, DIVERSui *ui)
 				{
 					BTLstr->tx[BTLstr->ResultatHitbox][index2] = -100;
 				}
-				BTLstr->DepartBalle[BTLstr->ResultatHitbox] = 3; // pour projectile
+				BTLstr->DepartBalle[BTLstr->ResultatHitbox] = UNUSED; // pour projectile
 				BTLstr->ennemi[index].vie = 0;
 			}
 		}
@@ -600,7 +595,7 @@ void gestiontir(typecombat *BTLstr)
     tirer (BTLstr->px, BTLstr->py, BTLstr->canonx, BTLstr->canony, BTLstr->tx, BTLstr->ty, BTLstr->tableauutile, &BTLstr->degre);
 
     BTLstr->letirdemander = false;
-    BTLstr->DepartBalle[BTLstr->tableauutile] = 1;
+    BTLstr->DepartBalle[BTLstr->tableauutile] = GO;
     BTLstr->i[BTLstr->tableauutile] = 0;
     BTLstr->tableauutile++;
     if (BTLstr->tableauutile == 20)
