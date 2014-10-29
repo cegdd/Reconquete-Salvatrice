@@ -157,9 +157,6 @@ void afficherCOMBAT(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso, RA
 			calcul =90+(45 * BTLstr->ennemi[index].Direction);
 			SDL_RenderCopyEx(systeme->renderer,rat->texture[2], NULL, &BTLstr->ennemi[index].position, calcul,NULL, SDL_FLIP_NONE);
 		}
-	}
-	for (index = 0; index < BTLstr->NBennemi ; index++)
-	{
 		if (BTLstr->ennemi[index].vie > 0)//si elles sont vivantes
 		{
 			calcul =90+(45 * BTLstr->ennemi[index].Direction);
@@ -187,7 +184,7 @@ void afficherCOMBAT(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso, RA
 
 	for(BTLstr->irect = 0 ; BTLstr->irect < NBcailloux ; BTLstr->irect++)
 	{
-		if (BTLstr->DepartBalle[BTLstr->irect] == RUNNING || BTLstr->DepartBalle[BTLstr->irect] == GO)
+		if (BTLstr->DepartBalle[BTLstr->irect] == RUNNING)
 		{
 			SDL_RenderCopy(systeme->renderer, BTLstr->balle, NULL, &BTLstr->pballe[BTLstr->irect]);
 		}
@@ -246,15 +243,20 @@ int HitboxBalle(typecombat *BTLstr, SDL_Rect pballe[], SDL_Rect *pennemi, int di
 {//fonction appeler pour chaque monstres
 	int i, k = 0, l = 0;
 	SDL_Rect pix = {k, l, 1, 1};
+
+	#if TESTGRID == 1
 	SDL_Point point;
+	#endif // TESTGRID
 
 	for (i = 0 ; i < NBcailloux ; i++)
-	{
-	    if (checkdistance(pennemi, &pballe[i], 120) == -1 )//degrossissage pour calcul précis
+	{   //tri et degrossissage pour calcul précis
+	    if (checkdistance(pennemi, &pballe[i], 120) == -1 && BTLstr->DepartBalle[i] == RUNNING )
         {
+            #if TESTGRID == 1
             point.x = pballe[i].x;
             point.y = pballe[i].y;
             UnWriteCircleTestGrid(BTLstr, &point, 10);
+            #endif // TESTGRID
 
             for(k = pballe[i].x ; k <= pballe[i].x + pballe[i].w ; k++)
             {
@@ -367,13 +369,6 @@ void COMBATgestionDEGAT (typecombat *BTLstr, DIVERSui *ui)
             else if (ui->casestuff[ARME].IDobjet == -1)
             {
                 BTLstr->ResultatHitbox = HitboxPoing(BTLstr, &BTLstr->ennemi[index].position);
-            }
-            else
-            {
-                if( colisionbox(&BTLstr->pcurseur, &BTLstr->ennemi[index].position, 1) == 1)
-                {
-                    BTLstr->ResultatHitbox = 0;
-                }
             }
 
 			//si dégat infligé
@@ -595,7 +590,7 @@ void gestiontir(typecombat *BTLstr)
     tirer (BTLstr->px, BTLstr->py, BTLstr->canonx, BTLstr->canony, BTLstr->tx, BTLstr->ty, BTLstr->tableauutile, &BTLstr->degre);
 
     BTLstr->letirdemander = false;
-    BTLstr->DepartBalle[BTLstr->tableauutile] = GO;
+    BTLstr->DepartBalle[BTLstr->tableauutile] = RUNNING;
     BTLstr->i[BTLstr->tableauutile] = 0;
     BTLstr->tableauutile++;
     if (BTLstr->tableauutile == 20)
