@@ -35,8 +35,8 @@ void deplacementperso(SDL_Surface *mapnb[], PERSO *perso, DIRECTION *direction, 
 		SDL_Rect ptemp;
 		ptemp.x = 0;
 		ptemp.y = 0;
-		ptemp.w = 1366;
-		ptemp.h = 768;
+		ptemp.w = systeme->screenw;
+		ptemp.h = systeme->screenh;
 		if (colisionbox(&perso->pperso, &ptemp, 0) == 0)
 		{
 		}
@@ -72,11 +72,11 @@ void deplacementperso(SDL_Surface *mapnb[], PERSO *perso, DIRECTION *direction, 
 		if(direction->direction == UPRIGHT && *y < 0){cote[UP] = 3; cote[LEFTUP] = 3; cote[UPRIGHT] = 3;}
 		if(direction->direction == LEFTUP && *y < 0){cote[UP] = 3; cote[LEFTUP] = 3; cote[UPRIGHT] = 3;}
 
-		if(direction->direction == LEFTUP && *x+perso->pperso.w >= systeme->screenw){cote[RIGHT] = 3; cote[UPRIGHT] = 3; cote[RIGHTDOWN] = 3;}
-		if(direction->direction == DOWNLEFT && *x+perso->pperso.w >= systeme->screenw){cote[RIGHT] = 3; cote[UPRIGHT] = 3; cote[RIGHTDOWN] = 3;}
+		if(direction->direction == LEFTUP && *x < 0){cote[LEFTUP] = 3; cote[LEFT] = 3; cote[DOWNLEFT] = 3;}
+		if(direction->direction == DOWNLEFT && *x < 0){cote[LEFTUP] = 3; cote[LEFT] = 3; cote[DOWNLEFT] = 3;}
 
-		if(direction->direction == RIGHTDOWN && *x < 0){cote[LEFT] = 3; cote[LEFTUP] = 3; cote[DOWNLEFT] = 3;}
-		if(direction->direction == UPRIGHT && *x < 0){cote[LEFT] = 3; cote[LEFTUP] = 3; cote[DOWNLEFT] = 3;}
+		if(direction->direction == RIGHTDOWN && *x+perso->pperso.w >= systeme->screenw){cote[RIGHT] = 3; cote[RIGHTDOWN] = 3; cote[UPRIGHT] = 3;}
+		if(direction->direction == UPRIGHT && *x+perso->pperso.w >= systeme->screenw){cote[RIGHT] = 3; cote[RIGHTDOWN] = 3; cote[UPRIGHT] = 3;}
 	}
 
 
