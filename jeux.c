@@ -157,7 +157,7 @@ void afficherCOMBAT(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso, RA
 			calcul =90+(45 * BTLstr->ennemi[index].Direction);
 			SDL_RenderCopyEx(systeme->renderer,rat->texture[2], NULL, &BTLstr->ennemi[index].position, calcul,NULL, SDL_FLIP_NONE);
 		}
-		if (BTLstr->ennemi[index].vie > 0)//si elles sont vivantes
+		else if (BTLstr->ennemi[index].vie > 0)//si elles sont vivantes
 		{
 			calcul =90+(45 * BTLstr->ennemi[index].Direction);
 			SDL_RenderCopyEx(systeme->renderer, rat->texture[BTLstr->ennemi[index].indexanim], NULL, &BTLstr->ennemi[index].position, calcul,NULL, SDL_FLIP_NONE);

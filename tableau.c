@@ -996,7 +996,7 @@ void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, float vi
 	BTLstr->fond = LoadingImage				("rs/fonds/fondcombat.png", 0, systeme);
 	BTLstr->curseur = LoadingImage			("rs/images/curseur.png", 0, systeme);
 	BTLstr->balle = LoadingImage			("rs/images/balle.png", 0, systeme);
-	BTLstr->peau = LoadingImage			("rs/objets/0.png", 0, systeme);
+	BTLstr->peau = LoadingImage			    ("rs/objets/0#0.png", 0, systeme);
 
 	sprintf(BTLstr->StringVie, "vie de %s : %.1f", systeme->sauvegarde[0], vie);
 	BTLstr->tVie = imprime (BTLstr->StringVie, systeme->screenw*0.35, NOIR, systeme, NULL);
