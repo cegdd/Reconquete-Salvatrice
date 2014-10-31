@@ -82,7 +82,7 @@ float combat (float vie, struct RAT *rat, struct DIVERSsysteme *systeme, PERSO *
 
 
 		//affichage ~60/sec
-		if (BTLstr.temps - BTLstr.tempsaffichage >= 16)
+		if (BTLstr.temps - BTLstr.tempsaffichage >= 16)//16
 		{
 			fps++;
 			BTLstr.tempsaffichage = BTLstr.temps;
@@ -90,12 +90,10 @@ float combat (float vie, struct RAT *rat, struct DIVERSsysteme *systeme, PERSO *
 		}
 		else if (BTLstr.temps - BTLstr.tempsseconde >= 1000)//1000
 		{
-			vie = fps;
-			fps = 0;
 			//temporaire
-			sprintf(BTLstr.StringVie, "%s : %d", systeme->sauvegarde[0],colisionfromage(&BTLstr.Pperso, &BTLstr.pecran, &BTLstr.pcurseur, 20));
+			sprintf(BTLstr.StringVie, "fps : %d",fps);
 			BTLstr.tVie = imprime (BTLstr.StringVie, systeme->screenw*0.3, NOIR, systeme, NULL);
-
+			fps = 0;
 			BTLstr.tempsseconde = BTLstr.temps;
 
 			BTLstr.alive = 0;
