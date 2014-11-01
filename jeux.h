@@ -22,14 +22,11 @@ float combat (float vie, struct RAT *rat, DIVERSsysteme *systeme, PERSO *perso, 
 				, PACKobjet *objet, DIVERSui *ui);
 
 int Hitboxjoueur (SDL_Rect pmob, SDL_Rect pperso, float *ptrvie, PERSO *perso);
-int HitboxBalle(typecombat *BTLstr, SDL_Rect pballe[], SDL_Rect *pennemi, int Iennemi);
-int HitboxPoing(typecombat *BTLstr, SDL_Rect *pennemi);
 
 void afficherCOMBAT(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso, RAT *rat,
                     DIVERSinventaire *inventaire, PACKobjet *objet);
 
 void COMBATgestionCLICetCOLISION (typecombat *BTLstr, DIVERSui *ui);
-void COMBATgestionprojectile (typecombat *BTLstr);
 void COMBATgestionDEGAT (typecombat *BTLstr, DIVERSui *ui);
 void COMBATgestionENNEMI(typecombat *BTLstr, struct RAT *rat, DIVERSsysteme *systeme);
 void COMBATgestionOBJETsol(typecombat *BTLstr, DIVERSsysteme *systeme, PACKrecompense *recompense);
@@ -39,8 +36,5 @@ void COMBATanimationMOB(typecombat *BTLstr);
 void COMBATanimationOBJET(typecombat *BTLstr);
 
 void ADDloot(PACKrecompense *recompense, int id, int nombre);
-
-void gestiontir(typecombat *BTLstr);
-void gestioncoup(typecombat *BTLstr);
 
 #endif

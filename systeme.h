@@ -12,5 +12,8 @@ void recompensecombat(RAT *rat, int *recompense);
 void checkandrefreshstuff( PERSO *perso, PACKobjet *objet, DIVERSsysteme *systeme, DIVERSui *ui);
 void checkinventaire( PACKobjet *objet, DIVERSinventaire *inventaire);
 int checkdistance(SDL_Rect *A, SDL_Rect *B, int lenght);
+int calculoctant(int px, int py, int canonx, int canony, int* difx, int* dify);
+int arrondi (float flottant);
+
 
 #endif

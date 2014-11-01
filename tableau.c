@@ -942,12 +942,6 @@ void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, float vi
 		BTLstr->ennemi[index].STATICposition.h = BTLstr->ennemi[index].position.h;
 	}
 
-	for (index=0; index<NBcailloux; index++)
-	{
-		BTLstr->i[index] = 0;
-		BTLstr->DepartBalle[index] = UNUSED;
-	}
-
 	for (index = 0 ; index < 48 ; index++)
 	{
 		BTLstr->StringVie[index] = '\0';
@@ -961,6 +955,9 @@ void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, float vi
 
 	for (index = 0 ; index < NBcailloux ; index++)
 	{
+	    BTLstr->i[index] = 0;
+		BTLstr->DepartBalle[index] = UNUSED;
+
 		BTLstr->pballe[index].x = -50;
 		BTLstr->pballe[index].y = -50;
 		BTLstr->pballe[index].w = systeme->screenw*0.0146;

@@ -112,3 +112,64 @@ int checkdistance(SDL_Rect *A, SDL_Rect *B, int lenght)
 	if (resultat <= lenght) {return -1;} // dedans
 	return 1; // dehors
 }
+
+int arrondi (float flottant)
+{
+    return (int)(flottant+0.5);
+}
+
+int calculoctant(int x, int y, int x2, int y2, int* difx, int* dify)
+{
+	int octant = 0;
+
+	if (x >= x2)
+	{
+		if (difx != NULL)
+		{
+			*difx = x - x2;
+		}
+
+		if (y >= y2)
+        {
+			if (difx != NULL)
+			{
+				*dify = y - y2;
+			}
+            octant = 2;
+        }
+        else
+        {
+			if (difx != NULL)
+			{
+				*dify = y2 - y;
+			}
+            octant = 1;
+        }
+    }
+    else
+    {
+		if (difx != NULL)
+		{
+			*difx = x2 - x;
+		}
+
+        if (y >= y2)
+        {
+			if (difx != NULL)
+			{
+				*dify = y - y2;
+			}
+            octant = 3;
+        }
+        else
+        {
+			if (difx != NULL)
+			{
+				*dify = y2 - y;
+			}
+            octant = 4;
+        }
+    }
+
+    return octant;
+}

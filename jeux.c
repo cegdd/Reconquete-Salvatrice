@@ -19,6 +19,7 @@
 #include "colision.h"
 #include "systeme.h"
 #include "tool.h"
+#include "CaC.h"
 
 float combat (float vie, struct RAT *rat, struct DIVERSsysteme *systeme, PERSO *perso, DIVERSinventaire *inventaire,
               PACKrecompense *recompense, PACKobjet *objet, DIVERSui *ui)
@@ -117,7 +118,11 @@ float combat (float vie, struct RAT *rat, struct DIVERSsysteme *systeme, PERSO *
 	{
 		return BTL_WON;
 	}
-	return BTL_LOST;
+	else
+    {
+        printf("erreur de sortie en combat");
+        return BTL_WON;
+    }
 }
 
 void afficherCOMBAT(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso, RAT *rat, DIVERSinventaire *inventaire, PACKobjet *objet)
@@ -237,79 +242,6 @@ int Hitboxjoueur (SDL_Rect pmob, SDL_Rect pperso, float *ptrvie, PERSO *perso)
 	return -1;
 }
 
-int HitboxBalle(typecombat *BTLstr, SDL_Rect pballe[], SDL_Rect *pennemi, int direction)
-{//fonction appeler pour chaque monstres
-	int i, k = 0, l = 0;
-	SDL_Rect pix = {k, l, 1, 1};
-
-	#if TESTGRID == 1
-	SDL_Point point;
-	#endif // TESTGRID
-
-	for (i = 0 ; i < NBcailloux ; i++)
-	{   //tri et degrossissage pour calcul précis
-	    if (checkdistance(pennemi, &pballe[i], 120) == -1 && BTLstr->DepartBalle[i] == RUNNING )
-        {
-            #if TESTGRID == 1
-            point.x = pballe[i].x;
-            point.y = pballe[i].y;
-            UnWriteCircleTestGrid(BTLstr, &point, 10);
-            #endif // TESTGRID
-
-            for(k = pballe[i].x ; k <= pballe[i].x + pballe[i].w ; k++)
-            {
-                for(l = pballe[i].y ; l <= pballe[i].y + pballe[i].h; l++)
-                {
-                    pix.x = k;
-                    pix.y = l;
-
-                    if (checkdistance(&pix, &pballe[i], 10) == -1 )
-                    {
-                        if (TestColision_Rat(pennemi, pix.x, pix.y, direction) == 1)
-                        {
-                            #if TESTGRID == 1
-                            point.x = pballe[i].x;
-                            point.y = pballe[i].y;
-                            UnWriteCircleTestGrid(BTLstr, &point, 10);
-                            #endif // TESTGRID
-                            return i;
-                        }
-                    }
-                }
-            }
-        }
-	}
-	return -1;
-}
-
-int HitboxPoing(typecombat *BTLstr, SDL_Rect *pennemi)
-{
-    int k = 0, l = 0;
-    SDL_Rect pix = {k, l, 1, 1};
-
-
-    if (checkdistance(pennemi, &BTLstr->Pperso, 120) == -1 )//degrossissage pour calcul précis
-    {
-        for(k = BTLstr->Pperso.x ; k <= BTLstr->Pperso.x + BTLstr->Pperso.w ; k++)
-        {
-            for(l = BTLstr->Pperso.y ; l <= BTLstr->Pperso.y + BTLstr->Pperso.h; l++)
-            {
-                pix.x = k;
-                pix.y = l;
-                if (checkdistance(&BTLstr->Pperso, pennemi, 30) == 1)
-                {
-                    if (colisionfromage(&pix, pennemi, &BTLstr->pcurseur, 20) == true)
-                    {
-                        BTLstr->calque[k][l] = 1;
-                        //return 0;
-                    }
-                }
-            }
-        }
-    }
-return -1;
-}
-
 void COMBATgestionCLICetCOLISION (typecombat *BTLstr, DIVERSui *ui)
 {
     if (BTLstr->letirdemander == true)
@@ -321,30 +253,6 @@ void COMBATgestionCLICetCOLISION (typecombat *BTLstr, DIVERSui *ui)
         }
     }
     COMBATgestionDEGAT(BTLstr, ui);
-}
-
-void COMBATgestionprojectile (typecombat *BTLstr)
-{
-	int index;
-	for (index = 0 ; index < NBcailloux ; index++)
-	{
-		if (BTLstr->DepartBalle[index] != UNUSED && BTLstr->i[index] < PRECISIONcailloux - 1 && BTLstr->DepartBalle[index] != STOP)
-		{
-			BTLstr->i[index] = BTLstr->i[index]+1;
-			BTLstr->pballe[index].x = BTLstr->tx[index][BTLstr->i[index]];
-			BTLstr->pballe[index].y = BTLstr->ty[index][BTLstr->i[index]];
-		}
-		else if (BTLstr->i[index] >= PRECISIONcailloux-1)
-		{
-			BTLstr->pballe[index].x = BTLstr->tx[index][PRECISIONcailloux-1];
-			BTLstr->pballe[index].y = BTLstr->ty[index][PRECISIONcailloux-1];
-			BTLstr->DepartBalle[index] = STOP;
-		}
-		else
-		{
-			BTLstr->DepartBalle[index] = RUNNING;
-		}
-	}
 }
 
 void COMBATgestionDEGAT (typecombat *BTLstr, DIVERSui *ui)
@@ -580,19 +488,5 @@ void COMBATgestionOBJETsol(typecombat *BTLstr, DIVERSsysteme *systeme, PACKrecom
 				BTLstr->lootsolDY[index] = 3;
 			}
 		}
-	}
-}
-
-void gestiontir(typecombat *BTLstr)
-{
-    tirer (BTLstr->px, BTLstr->py, BTLstr->canonx, BTLstr->canony, BTLstr->tx, BTLstr->ty, BTLstr->tableauutile, &BTLstr->degre);
-
-    BTLstr->letirdemander = false;
-    BTLstr->DepartBalle[BTLstr->tableauutile] = RUNNING;
-    BTLstr->i[BTLstr->tableauutile] = 0;
-    BTLstr->tableauutile++;
-    if (BTLstr->tableauutile == 20)
-	{
-		BTLstr->tableauutile = 0;
 	}
 }
