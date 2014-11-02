@@ -244,13 +244,10 @@ int Hitboxjoueur (SDL_Rect pmob, SDL_Rect pperso, float *ptrvie, PERSO *perso)
 
 void COMBATgestionCLICetCOLISION (typecombat *BTLstr, DIVERSui *ui)
 {
-    if (BTLstr->letirdemander == true)
+    if (BTLstr->letirdemander == true && ui->casestuff[ARME].IDobjet == 3)
     {
-        if (ui->casestuff[ARME].IDobjet == 3)
-        {
-            gestiontir(BTLstr);
-            COMBATgestionprojectile(BTLstr);
-        }
+        gestiontir(BTLstr);
+        COMBATgestionprojectile(BTLstr);
     }
     COMBATgestionDEGAT(BTLstr, ui);
 }
@@ -268,13 +265,15 @@ void COMBATgestionDEGAT (typecombat *BTLstr, DIVERSui *ui)
 		    //décision dégat lancepierre
 		    if (ui->casestuff[ARME].IDobjet == 3)
             {
-                    BTLstr->ResultatHitbox = HitboxBalle(BTLstr, BTLstr->pballe,
-                                                         &BTLstr->ennemi[index].position, BTLstr->ennemi[index].Direction);
+                    BTLstr->ResultatHitbox = HitboxBalle(BTLstr, index);
             }
             //décision dégat mains nue
             else if (ui->casestuff[ARME].IDobjet == -1)
             {
-                BTLstr->ResultatHitbox = HitboxPoing(BTLstr, &BTLstr->ennemi[index].position);
+                if (BTLstr->letirdemander == true)
+                {
+                    BTLstr->ResultatHitbox = HitboxPoing(BTLstr, index);
+                }
             }
 
 			//si dégat infligé
@@ -289,6 +288,7 @@ void COMBATgestionDEGAT (typecombat *BTLstr, DIVERSui *ui)
 			}
 		}
 	}
+	BTLstr->letirdemander = false;
 }
 
 void COMBATanimationPERSO(typecombat *BTLstr)

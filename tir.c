@@ -65,7 +65,7 @@ void tirer (float px, float py, int canonx, int canony, int tx[][PRECISIONcaillo
 	}
 }
 
-int HitboxBalle(typecombat *BTLstr, SDL_Rect pballe[], SDL_Rect *pennemi, int direction)
+int HitboxBalle(typecombat *BTLstr, int index)
 {//fonction appeler pour chaque monstres
 	int i, k = 0, l = 0;
 	SDL_Rect pix = {k, l, 1, 1};
@@ -76,7 +76,7 @@ int HitboxBalle(typecombat *BTLstr, SDL_Rect pballe[], SDL_Rect *pennemi, int di
 
 	for (i = 0 ; i < NBcailloux ; i++)
 	{   //tri et degrossissage pour calcul précis
-	    if (checkdistance(pennemi, &pballe[i], 120) == -1 && BTLstr->DepartBalle[i] == RUNNING )
+	    if (checkdistance(&BTLstr->ennemi[index].position, &BTLstr->pballe[i], 120) == -1 && BTLstr->DepartBalle[i] == RUNNING )
         {
             #if TESTGRID == 1
             point.x = pballe[i].x;
@@ -84,16 +84,16 @@ int HitboxBalle(typecombat *BTLstr, SDL_Rect pballe[], SDL_Rect *pennemi, int di
             UnWriteCircleTestGrid(BTLstr, &point, 10);
             #endif // TESTGRID
 
-            for(k = pballe[i].x ; k <= pballe[i].x + pballe[i].w ; k++)
+            for(k = BTLstr->pballe[i].x ; k <= BTLstr->pballe[i].x + BTLstr->pballe[i].w ; k++)
             {
-                for(l = pballe[i].y ; l <= pballe[i].y + pballe[i].h; l++)
+                for(l = BTLstr->pballe[i].y ; l <= BTLstr->pballe[i].y + BTLstr->pballe[i].h; l++)
                 {
                     pix.x = k;
                     pix.y = l;
 
-                    if (checkdistance(&pix, &pballe[i], 10) == -1 )
+                    if (checkdistance(&pix, &BTLstr->pballe[i], 10) == -1 )
                     {
-                        if (TestColision_Rat(pennemi, pix.x, pix.y, direction) == 1)
+                        if (TestColision_Rat(&BTLstr->ennemi[index].position, pix.x, pix.y, BTLstr->ennemi[index].Direction) == 1)
                         {
                             #if TESTGRID == 1
                             point.x = pballe[i].x;

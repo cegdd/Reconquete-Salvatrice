@@ -165,11 +165,11 @@ int colisionbox(SDL_Rect *A, SDL_Rect *B, int pointeur)
 	}
 	return 0;
 }
-bool colisionfromage(SDL_Rect *lanceur, SDL_Rect *recepteur, SDL_Rect *curseur, double marge)
+bool colisionfromage(SDL_Rect *lanceur, SDL_Rect *recepteur, SDL_Rect *pixeltest, double marge)
 {
-    register double diff;
+    double diff;
 
-	diff = (FindAngle(lanceur, recepteur)+180) - (FindAngle(lanceur, curseur)+180);
+	diff = (FindAngle(lanceur, recepteur)+180) - (FindAngle(lanceur, pixeltest)+180);
 
 	if (diff < 0) //si diff est négatif, on le passe en positif
     {

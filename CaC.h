@@ -3,6 +3,6 @@
 
 typedef struct typecombat typecombat;
 
-int HitboxPoing(typecombat *BTLstr, SDL_Rect *pennemi);
+int HitboxPoing(typecombat *BTLstr, int index);
 
 #endif // CACH
