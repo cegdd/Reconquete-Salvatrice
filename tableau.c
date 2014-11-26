@@ -212,18 +212,18 @@ void initobjet(PACKobjet *objet, DIVERSsysteme *systeme)//													objet
 
     //index * nom * empilage * type * def * life * force * portee * regenlife * bodypart
     createobjet(0, "peau des rats", 99, 0, RESSOURCE, 0, 0, 0, 0, -1, objet);
+    createobjet(1, "sandales", 1, EQUIPEMENT, 3, 10, 0, 0, 1, PIED, objet);
+    createobjet(2, "silex", 5, RESSOURCE, 0, 0, 0, 0, 0, -1, objet);
+    createobjet(3, "lance pierre", 1, EQUIPEMENT, 1, 0, 3, 100, 0, ARME, objet);
     createobjet(4, "toge en peau de rat", 1, EQUIPEMENT, 5, 10, 0, 0, 2, TORSE, objet);
     createobjet(5, "echarpe en peau de rat", 1, EQUIPEMENT, 2, 0, 0, 0, 1, COU, objet);
-    createobjet(11, "cape lesté de silex", 1, EQUIPEMENT, 10, 15, 2, 0, 0, DOS, objet);
     createobjet(6, "cape en peau de rat", 1, EQUIPEMENT, 5, 5, 1, 0, 0, DOS, objet);
-    createobjet(10, "hachette", 1, EQUIPEMENT, 0, 0, 5, 3, 0, ARME, objet);
-    createobjet(3, "lance pierre", 1, EQUIPEMENT, 1, 0, 3, 100, 0, ARME, objet);
-    createobjet(12, "baton de chamane", 1, EQUIPEMENT, 0, 20, 0, 4, 4, ARME, objet);
     createobjet(7, "branche", 5, RESSOURCE, 0, 0, 0, 0, 0, -1, objet);
-    createobjet(2, "silex", 5, RESSOURCE, 0, 0, 0, 0, 0, -1, objet);
-    createobjet(1, "sandales", 1, EQUIPEMENT, 3, 10, 0, 0, 1, PIED, objet);
     createobjet(8, "ceinture", 1, EQUIPEMENT, 5, 0, 5, 0, 1, TAILLE, objet);
     createobjet(9, "coiffe", 1, EQUIPEMENT, 10, 20, 0, 0, 1, TETE, objet);
+    createobjet(11, "cape lesté de silex", 1, EQUIPEMENT, 10, 15, 2, 0, 0, DOS, objet);
+    createobjet(10, "hachette", 1, EQUIPEMENT, 0, 0, 5, 3, 0, ARME, objet);
+    createobjet(12, "baton de chamane", 1, EQUIPEMENT, 0, 20, 0, 4, 4, ARME, objet);
 
 	objet->objetenmain.IDobjet = -1;
 	objet->objetenmain.NBobjet = 0;
