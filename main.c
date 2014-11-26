@@ -56,7 +56,9 @@ int main (int argc, char *argv[])
 	#endif // FASTLOG
 
 	Mix_Music *sound = Mix_LoadMUS("game.mp3");
-	if (Mix_PlayMusic(sound, -1) < 0){return EXIT_FAILURE;}
+	if (sound == NULL){ printf("musique non trouvée"); return EXIT_FAILURE;}
+	else if (Mix_PlayMusic(sound, -1) < 0){ printf("musique non jouable"); return EXIT_FAILURE;}
+	
 	//si le login est accepté
 	if (login(&systeme) == 2)
 	{

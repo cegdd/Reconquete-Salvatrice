@@ -1,6 +1,7 @@
 #include <SDL2/SDL.h>
 #include <math.h>
 #include <stdio.h>
+#include <stdbool.h>
 
 #include "image.h"
 #include "tableau.h"
@@ -178,9 +179,9 @@ bool colisionfromage(SDL_Rect *lanceur, SDL_Rect *recepteur, SDL_Rect *pixeltest
 
 	if (diff <= 0 || diff >= marge/2) //si la différence est plus grande que la marge, nous retournons FAUX
     {
-        return FALSE;
+        return false;
     }
-    return TRUE;
+    return true;
 }
 double FindAngle(SDL_Rect *A, SDL_Rect *B)
 {

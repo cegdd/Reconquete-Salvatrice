@@ -7,7 +7,7 @@ typedef struct DIVERSsysteme DIVERSsysteme;
 void createobjet(int index, char *nom, int empilage, int type, int def, int life, int force, int portee, int regenlife,
                  int bodypart, PACKobjet *objet)
 {
-    sprintf(objet->objet[index].nom, nom);
+    sprintf(objet->objet[index].nom, "%s\n",nom);
 	objet->objet[index].empilage = empilage;
 	objet->objet[index].type = type;
 	objet->objet[index].def = def;
