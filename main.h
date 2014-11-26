@@ -7,7 +7,7 @@
 //#include "sauvegarde.h"
 
 //#####     OS     ######//
-#define WINDOWS 1
+#define WINDOWS 0
 //####logging rapide#####//
 #define FASTLOG 1
 //#######################//
