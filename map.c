@@ -43,7 +43,7 @@ int map (DIVERSsysteme *systeme, typeFORthreads *online)
 		srand(temps.temptotal);
 	}
 
-    initobjet(&objet, systeme);
+    initobjet(&objet, systeme, &craft);
     initbouton(&bouton, systeme);
     initmonstre(&monstre, systeme);
     initinventaire(&inventaire, systeme);

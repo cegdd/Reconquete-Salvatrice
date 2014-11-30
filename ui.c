@@ -291,6 +291,7 @@ void afficherCRAFT(DIVERScraft *craft, DIVERSui *ui, PACKbouton *bouton, PACKobj
 		}
 	}
 	//affichage des plans
+	printf("%d", craft->bcraftactif);
 	for (index = 0 ; index < 10 ; index++)
 	{
 		if (craft->bcraftactif != -1)
@@ -301,7 +302,7 @@ void afficherCRAFT(DIVERScraft *craft, DIVERSui *ui, PACKbouton *bouton, PACKobj
 			{
                 SDL_RenderCopy	(systeme->renderer, objet->objet[objet->PLANstuff[craft->bcraftactif][index].resultatID].texturenom[2], NULL, &craft->posplan);
 			}
-			else if (craft->planpointer == index)
+			else if (craft->planpointer == index && craft->planpointer <  craft->planparonglets[craft->bcraftactif] )
 			{
                 SDL_RenderCopy	(systeme->renderer, objet->objet[objet->PLANstuff[craft->bcraftactif][index].resultatID].texturenom[1], NULL, &craft->posplan);
             }
@@ -311,7 +312,8 @@ void afficherCRAFT(DIVERScraft *craft, DIVERSui *ui, PACKbouton *bouton, PACKobj
 			}
 		}
 	}
-
+		printf ("colonne %d egale a %d\n", craft->bcraftactif, craft->planparonglets[craft->bcraftactif]);
+	
 	//affichage de la composition du plan
 	if (craft->planactif >= 0 && craft->planactif < 10)
 	{

@@ -9,7 +9,7 @@
 //#####     OS     ######//
 #define WINDOWS 0
 //####logging rapide#####//
-#define FASTLOG 0
+#define FASTLOG 1
 //#######################//
 
 #define LOOTMAX 50
@@ -379,6 +379,7 @@ struct DIVERScraft
     int bcraftpointer;
     int planactif;
     int planpointer;
+    int planparonglets[7];
 
     SDL_Texture *Uicraft;
     SDL_Texture *tetabli;

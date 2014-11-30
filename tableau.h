@@ -28,7 +28,7 @@ int TotalTableauInt(int *ptrTableau, int nbcase);
 void initPLAN(int type, int index, PACKobjet *objet);
 void initinventaire(DIVERSinventaire *inventaire, DIVERSsysteme *systeme);
 void deplacementmap(SDL_Rect *pmap,int nombretiles, int x, int y);
-void initobjet(PACKobjet *objet, DIVERSsysteme *systeme);
+void initobjet(PACKobjet *objet, DIVERSsysteme *systeme, DIVERScraft *craft);
 void initbouton(PACKbouton *bouton, DIVERSsysteme *systeme);
 void initmonstre(PACKmonstre *monstre, DIVERSsysteme *systeme);
 void initdeplacement(DIVERSdeplacement *deplacement, DIVERSsysteme *systeme);

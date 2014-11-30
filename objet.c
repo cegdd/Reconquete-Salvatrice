@@ -2,10 +2,11 @@
 #include <stdio.h>
 
 typedef struct PACKobjet PACKobjet;
+typedef struct DIVERScraft DIVERScraft;
 typedef struct DIVERSsysteme DIVERSsysteme;
 
 void createobjet(int index, char *nom, int empilage, int type, int def, int life, int force, int portee, int regenlife,
-                 int bodypart, PACKobjet *objet)
+                 int bodypart, PACKobjet *objet, DIVERScraft *craft)
 {
     sprintf(objet->objet[index].nom, "%s\n",nom);
 	objet->objet[index].empilage = empilage;
@@ -16,6 +17,7 @@ void createobjet(int index, char *nom, int empilage, int type, int def, int life
 	objet->objet[index].portee = portee;
 	objet->objet[index].regenlife = regenlife;
 	objet->objet[index].bodypart = bodypart;
+	if (bodypart != -1) {craft->planparonglets[bodypart]++;}
 }
 
 void addcompo(int type, int index, int compoID, int compoNB, PACKobjet *objet)
