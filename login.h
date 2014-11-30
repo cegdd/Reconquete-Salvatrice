@@ -39,6 +39,7 @@ struct typelogin
 	int etatjouer;
 	int etatcreer;
 	int etatquitter;
+	int etatarcade;
 	int etatazerty;
 	int etatqwerty;
 	int etatqwertz;
@@ -79,8 +80,9 @@ int login (DIVERSsysteme *systeme);
 int creerjoueur(char sauvegarde[][50]);
 
 void InitLoginStore(typelogin *loginstore, DIVERSsysteme *systeme);
-void Initbouton(bouton *option, bouton *jouer, bouton *creer, bouton *quitter, bouton *azerty, bouton *qwerty, bouton *qwertz
-				, DIVERSsysteme *systeme);
-void affichageloggin(typelogin *loginstore, DIVERSsysteme *systeme, bouton *option, bouton *jouer, bouton *creer, bouton *quitter, bouton *azerty, bouton *qwerty, bouton *qwertz);
+void Initbouton(bouton *option, bouton *jouer, bouton *creer, bouton *quitter, bouton *azerty, bouton *qwerty, bouton *qwertz,
+				bouton *arcade, DIVERSsysteme *systeme);
+void affichageloggin(typelogin *loginstore, DIVERSsysteme *systeme, bouton *option, bouton *jouer, bouton *creer, bouton *quitter,
+				bouton *azerty, bouton *qwerty, bouton *qwertz, bouton *arcade);
 
 #endif

@@ -15,11 +15,11 @@
 int login (DIVERSsysteme *systeme)
 {
 	struct typelogin loginstore;
-	struct bouton option, jouer, creer, quitter, azerty, qwerty, qwertz;
+	struct bouton option, jouer, creer, quitter, azerty, qwerty, qwertz, arcade;
 	//initialisation des variables
 	InitLoginStore(&loginstore, systeme);
 	//initialisation des boutons
-	Initbouton(&option, &jouer, &creer, &quitter, &azerty, &qwerty, &qwertz, systeme);
+	Initbouton(&option, &jouer, &creer, &quitter, &azerty, &qwerty, &qwertz, &arcade, systeme);
 
 	while(loginstore.continuer == 1)
 	{
@@ -100,7 +100,7 @@ int login (DIVERSsysteme *systeme)
 				loginstore.mdpshow[loginstore.i] = '\0';
 			}
 			//affichage
-			affichageloggin(&loginstore, systeme, &option, &jouer, &creer, &quitter, &azerty, &qwerty, &qwertz);
+			affichageloggin(&loginstore, systeme, &option, &jouer, &creer, &quitter, &azerty, &qwerty, &qwertz, &arcade);
 		}
 		else
 		{
@@ -399,44 +399,43 @@ void InitLoginStore(typelogin *loginstore, DIVERSsysteme *systeme)
 }
 
 void Initbouton(bouton *option, bouton *jouer, bouton *creer, bouton *quitter, bouton *azerty, bouton *qwerty, bouton *qwertz,
-				DIVERSsysteme *systeme)
+				bouton *arcade, DIVERSsysteme *systeme)
 {
 	option->normal = LoadingImage		("rs/ui/options.png", 0, systeme);
 	option->survoler = LoadingImage		("rs/ui/options2.png", 0, systeme);
 	option->cliquer = LoadingImage		("rs/ui/options3.png", 0, systeme);
-	option->pos.x = systeme->screenw/9;
+	option->pos.x = systeme->screenw/11;
 	option->pos.y = (systeme->screenh/6)*5;
-	option->pos.w = systeme->screenw/9;
+	option->pos.w = systeme->screenw/11;
 	option->pos.h = systeme->screenh/12;
 
 	jouer->normal = LoadingImage		("rs/ui/jouer.png", 0, systeme);
 	jouer->survoler = LoadingImage		("rs/ui/jouer2.png", 0, systeme);
 	jouer->cliquer = LoadingImage		("rs/ui/jouer3.png", 0, systeme);
-	jouer->pos.x = (systeme->screenw/9)*3;
+	jouer->pos.x = (systeme->screenw/11)*3;
 	jouer->pos.y = (systeme->screenh/6)*5;
-	jouer->pos.w = systeme->screenw/9;
+	jouer->pos.w = systeme->screenw/11;
 	jouer->pos.h = systeme->screenh/12;
 
 	creer->normal = LoadingImage		("rs/ui/creer.png", 0, systeme);
 	creer->survoler = LoadingImage		("rs/ui/creer2.png", 0, systeme);
 	creer->cliquer = LoadingImage		("rs/ui/creer3.png", 0, systeme);
-	creer->pos.x = (systeme->screenw/9)*5;
+	creer->pos.x = (systeme->screenw/11)*5;
 	creer->pos.y = (systeme->screenh/6)*5;
-	creer->pos.w = systeme->screenw/9;
+	creer->pos.w = systeme->screenw/11;
 	creer->pos.h = systeme->screenh/12;
 
 	quitter->normal = LoadingImage		("rs/ui/logquitter.png", 0, systeme);
 	quitter->survoler = LoadingImage		("rs/ui/logquitter2.png", 0, systeme);
 	quitter->cliquer = LoadingImage		("rs/ui/logquitter3.png", 0, systeme);
-	quitter->pos.x = (systeme->screenw/9)*7;
+	quitter->pos.x = (systeme->screenw/11)*7;
 	quitter->pos.y = (systeme->screenh/6)*5;
-	quitter->pos.w = systeme->screenw/9;
+	quitter->pos.w = systeme->screenw/11;
 	quitter->pos.h = systeme->screenh/12;
 
 	azerty->normal = LoadingImage		("rs/ui/azerty.png", 0, systeme);
 	azerty->survoler = LoadingImage		("rs/ui/azerty2.png", 0, systeme);
 	azerty->cliquer = LoadingImage		("rs/ui/azerty3.png", 0, systeme);
-
 	azerty->pos.w = systeme->screenw/11;
 	azerty->pos.h = systeme->screenh/18;
 	azerty->pos.x = (systeme->screenw/11)*4;
@@ -445,7 +444,6 @@ void Initbouton(bouton *option, bouton *jouer, bouton *creer, bouton *quitter, b
 	qwerty->normal = LoadingImage		("rs/ui/qwerty.png", 0, systeme);
 	qwerty->survoler = LoadingImage		("rs/ui/qwerty2.png", 0, systeme);
 	qwerty->cliquer = LoadingImage		("rs/ui/qwerty3.png", 0, systeme);
-
 	qwerty->pos.w = systeme->screenw/11;
 	qwerty->pos.h = systeme->screenh/18;
 	qwerty->pos.x = (systeme->screenw/11)*6;
@@ -454,15 +452,23 @@ void Initbouton(bouton *option, bouton *jouer, bouton *creer, bouton *quitter, b
     qwertz->normal = LoadingImage		("rs/ui/qwertz.png", 0, systeme);
 	qwertz->survoler = LoadingImage		("rs/ui/qwertz2.png", 0, systeme);
 	qwertz->cliquer = LoadingImage		("rs/ui/qwertz3.png", 0, systeme);
-
 	qwertz->pos.w = systeme->screenw/11;
 	qwertz->pos.h = systeme->screenh/18;
 	qwertz->pos.x = (systeme->screenw/11)*8;
 	qwertz->pos.y = (systeme->screenh/30)*14;
+	
+	arcade->normal = LoadingImage		("rs/ui/arcade.png", 0, systeme);
+	arcade->survoler = LoadingImage		("rs/ui/arcade.png", 0, systeme);
+	arcade->cliquer = LoadingImage		("rs/ui/arcade.png", 0, systeme);
+	arcade->pos.x = (systeme->screenw/11)*9;
+	arcade->pos.y = (systeme->screenh/6)*5;
+	arcade->pos.w = systeme->screenw/11;
+	arcade->pos.h = systeme->screenh/12;
 
 }
 
-void affichageloggin(typelogin *loginstore, DIVERSsysteme *systeme, bouton *option, bouton *jouer, bouton *creer, bouton *quitter, bouton *azerty, bouton *qwerty, bouton *qwertz)
+void affichageloggin(typelogin *loginstore, DIVERSsysteme *systeme, bouton *option, bouton *jouer, bouton *creer, bouton *quitter,
+					bouton *azerty, bouton *qwerty, bouton *qwertz, bouton *arcade)
 {
     SDL_RenderClear(systeme->renderer);
 
@@ -511,6 +517,13 @@ void affichageloggin(typelogin *loginstore, DIVERSsysteme *systeme, bouton *opti
     {   SDL_RenderCopy(systeme->renderer, creer->survoler, NULL, &creer->pos);}
     else
     {   SDL_RenderCopy(systeme->renderer, creer->cliquer, NULL, &creer->pos);}
+    
+    if (loginstore->etatarcade == 0)
+    {   SDL_RenderCopy(systeme->renderer, arcade->normal, NULL, &arcade->pos);}
+    else if (loginstore->etatarcade == 1)
+    {   SDL_RenderCopy(systeme->renderer, arcade->survoler, NULL, &arcade->pos);}
+    else
+    {   SDL_RenderCopy(systeme->renderer, arcade->cliquer, NULL, &arcade->pos);}
 
     //mot de passe et pseudo
 

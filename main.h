@@ -9,7 +9,7 @@
 //#####     OS     ######//
 #define WINDOWS 0
 //####logging rapide#####//
-#define FASTLOG 1
+#define FASTLOG 0
 //#######################//
 
 #define LOOTMAX 50

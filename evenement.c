@@ -163,7 +163,7 @@ int boucleeventlogin (struct typelogin *loginstore, DIVERSsysteme *systeme)
 	int x = loginstore->ppointeur.x;
 	int y = loginstore->ppointeur.y;
 
-	if (x >= systeme->screenw/9 && x <= (systeme->screenw/9)+(systeme->screenw/9) &&
+	if (x >= systeme->screenw/11 && x <= (systeme->screenw/11)+(systeme->screenw/11) &&
 		y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12) &&
 		loginstore->etatoption != 2 && loginstore->optionactif == 0)//													option
 	{
@@ -171,8 +171,9 @@ int boucleeventlogin (struct typelogin *loginstore, DIVERSsysteme *systeme)
 		loginstore->etatjouer = 0;
 		loginstore->etatcreer = 0;
 		loginstore->etatquitter = 0;
+		loginstore->etatarcade = 0;
 	}
-	else if (x >= (systeme->screenw/9)*3 && x <= ((systeme->screenw/9)*3)+(systeme->screenw/9) &&
+	else if (x >= (systeme->screenw/11)*3 && x <= ((systeme->screenw/11)*3)+(systeme->screenw/11) &&
 			y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12) &&
 			loginstore->etatjouer != 2 && loginstore->optionactif == 0)//												jouer
 	{
@@ -180,8 +181,9 @@ int boucleeventlogin (struct typelogin *loginstore, DIVERSsysteme *systeme)
 		loginstore->etatjouer = 1;
 		loginstore->etatcreer = 0;
 		loginstore->etatquitter = 0;
+		loginstore->etatarcade = 0;
 	}
-	else if (x >= (systeme->screenw/9)*5 && x <= ((systeme->screenw/9)*5)+(systeme->screenw/9) &&
+	else if (x >= (systeme->screenw/11)*5 && x <= ((systeme->screenw/11)*5)+(systeme->screenw/11) &&
 			y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12) &&
 			loginstore->etatcreer != 2 && loginstore->optionactif == 0)//												creer
 	{
@@ -189,8 +191,9 @@ int boucleeventlogin (struct typelogin *loginstore, DIVERSsysteme *systeme)
 		loginstore->etatjouer = 0;
 		loginstore->etatcreer = 1;
 		loginstore->etatquitter = 0;
+		loginstore->etatarcade = 0;
 	}
-	else if (x >= (systeme->screenw/9)*7 && x <= ((systeme->screenw/9)*7)+(systeme->screenw/9) &&
+	else if (x >= (systeme->screenw/11)*7 && x <= ((systeme->screenw/11)*7)+(systeme->screenw/11) &&
 			y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12) &&
 			loginstore->etatquitter != 2 && loginstore->optionactif == 0)//												quitter
 	{
@@ -198,13 +201,26 @@ int boucleeventlogin (struct typelogin *loginstore, DIVERSsysteme *systeme)
 		loginstore->etatjouer = 0;
 		loginstore->etatcreer = 0;
 		loginstore->etatquitter = 1;
+		loginstore->etatarcade = 0;
 	}
-	else if ( loginstore->etatoption != 2 && loginstore->etatjouer != 2 && loginstore->etatcreer != 2 && loginstore->etatquitter != 2 && loginstore->optionactif == 0)
+	else if (x >= (systeme->screenw/11)*9 && x <= ((systeme->screenw/11)*9)+(systeme->screenw/11) &&
+			y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12) &&
+			loginstore->etatarcade != 2 && loginstore->optionactif == 0)//												arcade
 	{
 		loginstore->etatoption = 0;
 		loginstore->etatjouer = 0;
 		loginstore->etatcreer = 0;
 		loginstore->etatquitter = 0;
+		loginstore->etatarcade = 1;
+	}
+	else if ( loginstore->etatoption != 2 && loginstore->etatjouer != 2 && loginstore->etatcreer != 2 &&
+			loginstore->etatquitter != 2 && loginstore->optionactif == 0 && loginstore->etatarcade != 2)
+	{
+		loginstore->etatoption = 0;
+		loginstore->etatjouer = 0;
+		loginstore->etatcreer = 0;
+		loginstore->etatquitter = 0;
+		loginstore->etatarcade = 0;
 	}
 	else if ( loginstore->optionactif == 1 &&
 			x >= (systeme->screenw/11)*4 && x <= ((systeme->screenw/11)*4)+(systeme->screenw/11) &&
@@ -359,25 +375,30 @@ int boucleeventlogin (struct typelogin *loginstore, DIVERSsysteme *systeme)
 				}
 				break;
 			case SDL_MOUSEBUTTONDOWN:
-				if (x >= systeme->screenw/9 && x <= (systeme->screenw/9)+(systeme->screenw/9) &&
+				if (x >= systeme->screenw/11 && x <= (systeme->screenw/11)+(systeme->screenw/11) &&
 				y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12))//							option
 				{
 					loginstore->etatoption = 2;
 				}
-				else if (x >= (systeme->screenw/9)*3 && x <= ((systeme->screenw/9)*3)+(systeme->screenw/9) &&
+				else if (x >= (systeme->screenw/11)*3 && x <= ((systeme->screenw/11)*3)+(systeme->screenw/11) &&
 				y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12))//						jouer
 				{
 					loginstore->etatjouer = 2;
 				}
-				else if (x >= (systeme->screenw/9)*5 && x <= ((systeme->screenw/9)*5)+(systeme->screenw/9) &&
+				else if (x >= (systeme->screenw/11)*5 && x <= ((systeme->screenw/11)*5)+(systeme->screenw/11) &&
 				y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12))//						creer
 				{
 					loginstore->etatcreer = 2;
 				}
-				else if (x >= (systeme->screenw/9)*7 && x <= ((systeme->screenw/9)*7)+(systeme->screenw/9) &&
+				else if (x >= (systeme->screenw/11)*7 && x <= ((systeme->screenw/11)*7)+(systeme->screenw/11) &&
 				y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12))//						quitter
 				{
 					loginstore->etatquitter = 2;
+				}
+				else if (x >= (systeme->screenw/11)*9 && x <= ((systeme->screenw/11)*7)+(systeme->screenw/11) &&
+				y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12))//						arcade
+				{
+					loginstore->etatarcade = 2;
 				}
 
 				if ( loginstore->optionactif == 1 &&
@@ -448,17 +469,20 @@ int boucleeventlogin (struct typelogin *loginstore, DIVERSsysteme *systeme)
 					}
 
 
-					if (x >= systeme->screenw/9 && x <= (systeme->screenw/9)+(systeme->screenw/9) &&
+					if (x >= systeme->screenw/11 && x <= (systeme->screenw/11)+(systeme->screenw/11) &&
 					y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12))//						option
 					{return 4;}
-					else if (x >= (systeme->screenw/9)*3 && x <= ((systeme->screenw/9)*3)+(systeme->screenw/9) &&
+					else if (x >= (systeme->screenw/11)*3 && x <= ((systeme->screenw/11)*3)+(systeme->screenw/11) &&
 					y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12))//						jouer
 					{return 2;}
-					else if (x >= (systeme->screenw/9)*5 && x <= ((systeme->screenw/9)*5)+(systeme->screenw/9) &&
+					else if (x >= (systeme->screenw/11)*5 && x <= ((systeme->screenw/11)*5)+(systeme->screenw/11) &&
 					y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12))//						creer
 					{return 3;}
-					else if (x >= (systeme->screenw/9)*7 && x <= ((systeme->screenw/9)*7)+(systeme->screenw/9) &&
+					else if (x >= (systeme->screenw/11)*7 && x <= ((systeme->screenw/11)*7)+(systeme->screenw/11) &&
 					y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12))//						quitter
+					{return 0;}
+					else if (x >= (systeme->screenw/11)*9 && x <= ((systeme->screenw/11)*9)+(systeme->screenw/11) &&
+					y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12))//						arcade
 					{return 0;}
 					}
 				break;
