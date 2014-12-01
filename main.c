@@ -68,7 +68,8 @@ int main (int argc, char *argv[])
 
 		Mix_PauseMusic ();
 		//lancement du jeu
-		if (map(&systeme, &online) != 1) {return EXIT_FAILURE;}
+		//if (map(&systeme, &online) != 1) {return EXIT_FAILURE;}
+		if (chargementcarte(&systeme, &online) != 1) {return EXIT_FAILURE;}
 	}
 
 	Mix_FreeMusic(sound);
@@ -77,3 +78,43 @@ int main (int argc, char *argv[])
     return EXIT_SUCCESS;
 }
 
+int chargementcarte(struct DIVERSsysteme *systeme, struct typeFORthreads *online)
+{
+	PACKbouton bouton;
+    PACKobjet objet;
+    PACKmonstre monstre;
+    PERSO perso;
+    DIVERSinventaire inventaire;
+    DIVERSdeplacement deplacement;
+    DIVERStemps temps;
+    DIVERSui ui;
+    DIVERSchat chat;
+    DIVERScraft craft;
+    DIVERSmap carte;
+    PACKpnj pnj;
+    PACKrecompense recompense;
+    typeFORevent FORevent;
+
+    if (temps.temptotal != 0)
+	{
+		srand(temps.temptotal);
+	}
+
+    initobjet(&objet, systeme, &craft);
+    initbouton(&bouton, systeme);
+    initmonstre(&monstre, systeme);
+    initinventaire(&inventaire, systeme);
+    initdeplacement(&deplacement, systeme);
+    initperso(&perso, systeme);
+    initmap(&carte, systeme, &perso);
+    inittemps(&temps, systeme);
+    initui(&ui, systeme);
+    initchat(&chat, systeme);
+    initcraft(&craft, systeme);
+    initpnj(&pnj);
+    initrecompense(&recompense, systeme);
+    initFORevent(&FORevent, &objet, &bouton, &inventaire, systeme, &deplacement, &chat, &ui, &craft, &monstre, &perso, &pnj);
+    
+    map(systeme, online, &bouton, &objet, &monstre, &perso, &inventaire, &deplacement, &temps, &ui, &chat, &craft, &carte, &pnj, &recompense, &FORevent);
+	return 1;
+}

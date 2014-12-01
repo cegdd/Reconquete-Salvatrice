@@ -18,48 +18,13 @@
 #include "tableau.h"
 #include "systeme.h"
 #include "listechaine.h"
-
-int map (DIVERSsysteme *systeme, typeFORthreads *online)
+//map(systeme, online, &bouton, &objet, &monstre, &perso, &inventaire, &temps, &ui, &chat, &craft, &carte, &pnj, &recompense, &FORevent)
+int map (DIVERSsysteme *systeme, typeFORthreads *online, PACKbouton *bouton , PACKobjet *objet, PACKmonstre *monstre, PERSO *perso, DIVERSinventaire *inventaire, DIVERSdeplacement *deplacement, 
+		DIVERStemps *temps, DIVERSui *ui, DIVERSchat *chat, DIVERScraft *craft, DIVERSmap *carte, PACKpnj *pnj, PACKrecompense *recompense, typeFORevent *FORevent)
 {
     chargement(systeme);
 
-    PACKbouton bouton;
-    PACKobjet objet;
-    PACKmonstre monstre;
-    PERSO perso;
-    DIVERSinventaire inventaire;
-    DIVERSdeplacement deplacement;
-    DIVERStemps temps;
-    DIVERSui ui;
-    DIVERSchat chat;
-    DIVERScraft craft;
-    DIVERSmap carte;
-    PACKpnj pnj;
-    PACKrecompense recompense;
-    typeFORevent FORevent;
-
-    if (temps.temptotal != 0)
-	{
-		srand(temps.temptotal);
-	}
-
-    initobjet(&objet, systeme, &craft);
-    initbouton(&bouton, systeme);
-    initmonstre(&monstre, systeme);
-    initinventaire(&inventaire, systeme);
-    initdeplacement(&deplacement, systeme);
-    initperso(&perso, systeme);
-    initmap(&carte, systeme, &perso);
-    inittemps(&temps, systeme);
-    initui(&ui, systeme);
-    initchat(&chat, systeme);
-    initcraft(&craft, systeme);
-    initpnj(&pnj);
-    initrecompense(&recompense, systeme);
-    initFORevent(&FORevent, &objet, &bouton, &inventaire, systeme, &deplacement, &chat, &ui, &craft, &monstre, &perso, &pnj);
-
     online->jeuxACTIF = 1;
-
 
     int index;
     for(index = 0 ; index < MAX_JOUEURS ; index++)
@@ -69,8 +34,8 @@ int map (DIVERSsysteme *systeme, typeFORthreads *online)
         online->joueurs[index].position.w = 0;
         online->joueurs[index].position.h = 0;
     }
-    checkandrefreshstuff(&perso, &objet, systeme, &ui);
-    checkinventaire(&objet, &inventaire);
+    checkandrefreshstuff(perso, objet, systeme, ui);
+    checkinventaire(objet, inventaire);
 
 //#############################################################################################################################################################
 //											##################### Boucle De Jeu #####################																					#
@@ -78,35 +43,35 @@ int map (DIVERSsysteme *systeme, typeFORthreads *online)
 
     while (systeme->continuer == 1)
     {
-        temps.tpact = SDL_GetTicks();
+        temps->tpact = SDL_GetTicks();
 
-        if (temps.tpact - temps.tpapr >= 15) //15   ms
+        if (temps->tpact - temps->tpapr >= 15) //15   ms
         {
-            temps.tpapr = temps.tpact;
-            temps.i++;
+            temps->tpapr = temps->tpact;
+            temps->i++;
 
 			//sichronisation des positions
-			sinchronisationposition(&pnj, &carte, &monstre, &craft, systeme, online, &perso);
+			sinchronisationposition(pnj, carte, monstre, craft, systeme, online, perso);
 
             //animation personnage qui marche
-            ANIMpersomarche(&deplacement, &temps);
-            ANIMmonstre(&monstre, &temps);
+            ANIMpersomarche(deplacement, temps);
+            ANIMmonstre(monstre, temps);
             //deplacement de la carte
-            deplacementmap(&carte.pmap[0], TILESMAP, deplacement.x, deplacement.y);
+            deplacementmap(&carte->pmap[0], TILESMAP, deplacement->x, deplacement->y);
             //calcul direction joueur client
-            deplacement.direction.direction = directionperso(&deplacement.direction);
+            deplacement->direction.direction = directionperso(&deplacement->direction);
             //deplacement
-            deplacementperso(&carte.calque[0], &perso, &deplacement.direction, systeme, &deplacement.x, &deplacement.y, 1);
+            deplacementperso(&carte->calque[0], perso, &deplacement->direction, systeme, &deplacement->x, &deplacement->y, 1);
             //recupération coordonées souris
             SDL_GetMouseState(&systeme->pp.x, &systeme->pp.y);
             //gestion de l'ui
-            gestionui(systeme, &ui, &craft, &bouton, &chat, &inventaire, &objet, &perso, &pnj);
+            gestionui(systeme, ui, craft, bouton, chat, inventaire, objet, perso, pnj);
             //detection des combats
-            lancementcombat(&monstre, &inventaire, &chat, &ui, &deplacement, &objet, &perso, systeme, &recompense);
+            lancementcombat(monstre, inventaire, chat, ui, deplacement, objet, perso, systeme, recompense);
             //gestion des evenement
-            boucleevent(&online->chat.lancermessage, &FORevent);
+            boucleevent(&online->chat.lancermessage, FORevent);
             //gestion du chat
-            gestionchat(&chat, systeme, online);
+            gestionchat(chat, systeme, online);
 
 //##################################################################################################################################################################################
 //												##################### AFFICHAGE #####################																	#
@@ -116,32 +81,32 @@ int map (DIVERSsysteme *systeme, typeFORthreads *online)
             SDL_RenderClear(systeme->renderer);
 
             //affichage de la carte
-            afficherMAP(&carte, systeme, &craft);
+            afficherMAP(carte, systeme, craft);
             //affichage des pnj
-            afficherPNJ(&perso, &pnj, systeme);
+            afficherPNJ(perso, pnj, systeme);
             //affichage des mobs
-            afficherMOB(&monstre, systeme);
+            afficherMOB(monstre, systeme);
             //affichage des joueurs
-            afficherJOUEURS(&perso, &deplacement, systeme, online);
+            afficherJOUEURS(perso, deplacement, systeme, online);
             //affichage du chat
-            if (chat.chatactif == true)
+            if (chat->chatactif == true)
             {
-                afficherCHAT(&chat, &ui, online->chat.lenbuffer, systeme);
+                afficherCHAT(chat, ui, online->chat.lenbuffer, systeme);
             }
             //affichage de l'inventaire
-            else if (inventaire.actif == true)
+            else if (inventaire->actif == true)
             {
-                afficherINVENTAIRE(&inventaire, &ui, &objet, systeme);
+                afficherINVENTAIRE(inventaire, ui, objet, systeme);
             }
             //affichage de l'interface utilisateur
-            afficherUI(online->isonline, &ui, &bouton, &temps, &perso, &chat, &inventaire, systeme, &recompense, &objet);
+            afficherUI(online->isonline, ui, bouton, temps, perso, chat, inventaire, systeme, recompense, objet);
             //affichage de l'interface de crafting
-            if (craft.actif == true)
+            if (craft->actif == true)
             {
-                afficherCRAFT(&craft, &ui, &bouton, &objet, &inventaire, systeme);
+                afficherCRAFT(craft, ui, bouton, objet, inventaire, systeme);
             }
             //affichage du pointeur
-            afficherPOINTEUR(systeme, &objet);
+            afficherPOINTEUR(systeme, objet);
 
             //rendu éran
             SDL_RenderPresent(systeme->renderer);
@@ -151,79 +116,79 @@ int map (DIVERSsysteme *systeme, typeFORthreads *online)
 //								##################### Frame Par Secondes #####################								#
 //###########################################################################################################################
 
-        else if (temps.tpact - temps.tpap >= 1000)
+        else if (temps->tpact - temps->tpap >= 1000)
         {
-            temps.temptotal++;
+            temps->temptotal++;
 
             for (index = 0 ; index < 3 ; index++)
 			{
-				if (monstre.rat[index].etat != 0)
+				if (monstre->rat[index].etat != 0)
 				{
-					monstre.rat[index].etat++;
+					monstre->rat[index].etat++;
 				}
 			}
 
 			//si premiere seconde du joueur
-            if (temps.temptotal == 1)
+            if (temps->temptotal == 1)
             {
                 char texte[2548] = "           Toumai :\n\nBonjour à toi jeune ...\njeune quoi exactement?\nJe suis vieux, mes yeux sont fatigués\nmais mon esprit reste vif!\nEt à ta démarche je devine que tu n'es\npas du coin.\nJ'ignore ce que tu viens faire ici mais je dois te prévenir :\n\nles lieux ne sont pas sûrs!\nEt en tant que sage de la tribue, je dois m'assurer que tu puisses survivre au moins quelques jours.\nRamène moi 5 cadavres de batmouths et je croirais peut-être en ton avenir.\nAvec une bonne pierre entre les 2 yeux je ne donne pas cher de leurs vies! \n\n   APPUIE SUR ENTRÉE POUR CONTINUER";
-                ui.ttextedialogue = fenetredialogue(systeme->screenw*0.4, systeme->screenh*0.8, &ui.pdialogue, &ui.ptextedialogue, texte, BLANC, systeme);
-                ui.dialogueactif = 1;
+                ui->ttextedialogue = fenetredialogue(systeme->screenw*0.4, systeme->screenh*0.8, &ui->pdialogue, &ui->ptextedialogue, texte, BLANC, systeme);
+                ui->dialogueactif = 1;
             }
 
-            if (temps.temptotal - temps.oldipourregen >= 3)
+            if (temps->temptotal - temps->oldipourregen >= 3)
             {
-                if (perso.life < perso.lifemax)
+                if (perso->life < perso->lifemax)
                 {
-                    perso.life += REGEN;
-                    perso.life += perso.regenlife;
-                    if (perso.life > perso.lifemax)
+                    perso->life += REGEN;
+                    perso->life += perso->regenlife;
+                    if (perso->life > perso->lifemax)
 					{
-						perso.life = perso.lifemax;
+						perso->life = perso->lifemax;
 					}
-                    temps.oldipourregen = temps.temptotal;
+                    temps->oldipourregen = temps->temptotal;
                 }
 
             }
             else
 			{
-				if (perso.life < perso.lifemax)
+				if (perso->life < perso->lifemax)
                 {
-                    perso.life += perso.regenlife;
-                    if (perso.life > perso.lifemax)
+                    perso->life += perso->regenlife;
+                    if (perso->life > perso->lifemax)
 					{
-						perso.life = perso.lifemax;
+						perso->life = perso->lifemax;
 					}
                 }
 			}
-            if (temps.temptotal - temps.tpspoursave >= 30)
+            if (temps->temptotal - temps->tpspoursave >= 30)
             {
-                sauvegardetout(systeme->sauvegarde, carte.pmap[0], &perso, temps.temptotal, 0, objet.sac1, TAILLESAC, &ui);
-                temps.tpspoursave = temps.temptotal;
+                sauvegardetout(systeme->sauvegarde, carte->pmap[0], perso, temps->temptotal, 0, objet->sac1, TAILLESAC, ui);
+                temps->tpspoursave = temps->temptotal;
             }
 
 
-            sprintf(temps.StringI, "IPS => %d", temps.i);//temps.i
-            sprintf(perso.slife, "vie : %0.1f/%d", perso.life, perso.lifemax);
-            sprintf(temps.stringtempstotal, "age du personnage : %dj %dh %dmin %dsec", calcultempsjours(temps.temptotal), calcultempsheures(temps.temptotal), calcultempsminutes(temps.temptotal), calcultempssecondes(temps.temptotal));
+            sprintf(temps->StringI, "IPS => %d", temps->i);
+            sprintf(perso->slife, "vie : %0.1f/%d", perso->life, perso->lifemax);
+            sprintf(temps->stringtempstotal, "age du personnage : %dj %dh %dmin %dsec", calcultempsjours(temps->temptotal), calcultempsheures(temps->temptotal), calcultempsminutes(temps->temptotal), calcultempssecondes(temps->temptotal));
 
-            SDL_DestroyTexture(temps.tfps);
-            SDL_DestroyTexture(perso.tlife);
-            SDL_DestroyTexture(temps.ttemps);
+            SDL_DestroyTexture(temps->tfps);
+            SDL_DestroyTexture(perso->tlife);
+            SDL_DestroyTexture(temps->ttemps);
 
-            temps.tfps = imprime (temps.StringI, systeme->screenw, BLANC, systeme, NULL);
-            perso.tlife = imprime (perso.slife, systeme->screenw, BLANC, systeme, NULL);
-            temps.ttemps = imprime (temps.stringtempstotal, systeme->screenw, BLANC, systeme, NULL);
+            temps->tfps = imprime (temps->StringI, systeme->screenw, BLANC, systeme, NULL);
+            perso->tlife = imprime (perso->slife, systeme->screenw, BLANC, systeme, NULL);
+            temps->ttemps = imprime (temps->stringtempstotal, systeme->screenw, BLANC, systeme, NULL);
 
             for(index = 0; index < 10 ; index++)
             {
-                chat.pstringchat[index].y = (systeme->screenh*0.5)+(online->chat.poschat[index]*(systeme->screenh*0.047));
-                SDL_DestroyTexture(chat.tstringchat[index]);
-                chat.tstringchat[index] = imprime(online->chat.schat[index], systeme->screenw, BLANC, systeme, NULL);
+                chat->pstringchat[index].y = (systeme->screenh*0.5)+(online->chat.poschat[index]*(systeme->screenh*0.047));
+                SDL_DestroyTexture(chat->tstringchat[index]);
+                chat->tstringchat[index] = imprime(online->chat.schat[index], systeme->screenw, BLANC, systeme, NULL);
             }
 
-            temps.i = 0;
-            temps.tpap = temps.tpact;
+            temps->i = 0;
+            temps->tpap = temps->tpact;
         }
         else
         {
@@ -237,11 +202,11 @@ int map (DIVERSsysteme *systeme, typeFORthreads *online)
 //																															#
 //###########################################################################################################################
 
-    sauvegardetout(systeme->sauvegarde, carte.pmap[0], &perso, temps.temptotal, 0, objet.sac1, TAILLESAC, &ui);
+    sauvegardetout(systeme->sauvegarde, carte->pmap[0], perso, temps->temptotal, 0, objet->sac1, TAILLESAC, ui);
 
     for (index = 0 ; index < TILESMAP ; index++)
     {
-        SDL_UnlockSurface(carte.calque[index]);
+        SDL_UnlockSurface(carte->calque[index]);
     }
 
     //si la condition de boucle est toujours vrai, la fonction a été terminée par erreur.

@@ -19,7 +19,8 @@ typedef struct PACKrecompense PACKrecompense;
 typedef struct typeFORevent typeFORevent;
 typedef struct typeFORthreads typeFORthreads;
 
-int map (DIVERSsysteme *systeme, typeFORthreads *online);
+int map (DIVERSsysteme *systeme, typeFORthreads *online, PACKbouton *bouton , PACKobjet *objet, PACKmonstre *monstre, PERSO *perso, DIVERSinventaire *inventaire, DIVERSdeplacement *deplacement, 
+		DIVERStemps *temps, DIVERSui *ui, DIVERSchat *chat, DIVERScraft *craft, DIVERSmap *carte, PACKpnj *pnj, PACKrecompense *recompense, typeFORevent *FORevent);
 void lancementcombat(PACKmonstre *monstre, DIVERSinventaire *inventaire, DIVERSchat *chat, DIVERSui *ui,
 					DIVERSdeplacement *deplacement, PACKobjet *objet, PERSO *perso, DIVERSsysteme *systeme,
 					PACKrecompense *recompense);

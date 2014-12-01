@@ -4,8 +4,6 @@
 #include <stdbool.h>
 #include <SDL2/SDL_ttf.h>
 
-//#include "sauvegarde.h"
-
 //#####     OS     ######//
 #define WINDOWS 0
 //####logging rapide#####//
@@ -548,3 +546,5 @@ struct typecombat
     SDL_Rect testcontact;
 };
 #endif
+
+int chargementcarte(struct DIVERSsysteme *systeme, struct typeFORthreads *online);
