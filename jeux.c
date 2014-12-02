@@ -22,16 +22,16 @@
 #include "CaC.h"
 
 float combat (float vie, struct RAT *rat, struct DIVERSsysteme *systeme, PERSO *perso, DIVERSinventaire *inventaire,
-              PACKrecompense *recompense, PACKobjet *objet, DIVERSui *ui)
+              PACKrecompense *recompense, PACKobjet *objet, DIVERSui *ui, bool arcademode)
 {
 	//structure contenant toutes les variables pour les combats
 	typecombat BTLstr;
 	DIRECTION direction;
-
+	
 	int index, fps = 0;
 
 	//initialisation des variables
-	initcombatstore(&BTLstr, systeme, vie, &direction);
+	initcombatstore(&BTLstr, systeme, vie, &direction, arcademode);
 
 	while (BTLstr.continuer == -1)
 	{
@@ -88,11 +88,14 @@ float combat (float vie, struct RAT *rat, struct DIVERSsysteme *systeme, PERSO *
 			fps++;
 			BTLstr.tempsaffichage = BTLstr.temps;
 			afficherCOMBAT(&BTLstr, systeme, perso, rat, inventaire, objet);
+			if (fps%20 == 1)
+			{
+				ajoutermonstre(&BTLstr, systeme);
+			}
 		}
 		else if (BTLstr.temps - BTLstr.tempsseconde >= 1000)//1000
 		{
-			//temporaire
-			sprintf(BTLstr.StringVie, "fps : %d",fps);
+			sprintf(BTLstr.StringVie, "fps : %d",BTLstr.NBennemi);//fps
 			BTLstr.tVie = imprime (BTLstr.StringVie, systeme->screenw*0.3, NOIR, systeme, NULL);
 			fps = 0;
 			BTLstr.tempsseconde = BTLstr.temps;
@@ -123,6 +126,56 @@ float combat (float vie, struct RAT *rat, struct DIVERSsysteme *systeme, PERSO *
         printf("erreur de sortie en combat");
         return BTL_WON;
     }
+}
+
+void ajoutermonstre(typecombat *BTLstr, DIVERSsysteme *systeme)
+{
+	int index2 = 0;
+	int index = 0;
+	
+	if (BTLstr->NBennemi < LIMITEmobARCADE)
+	{
+		BTLstr->NBennemi++;
+		index = BTLstr->NBennemi;
+	}
+	else
+	{
+		for(index = 0 ; index < LIMITEmobARCADE ; index++)
+		{
+			if (BTLstr->ennemi[index].vie <= 0)
+			{
+				break;
+			}
+		}
+	}
+	
+	//s'il n'est pas déjà vivant
+	if (BTLstr->ennemi[index].vie <= 0)
+	{
+		float lrand1 = rand()%systeme->screenw;
+		float lrand2 = rand()%systeme->screenh;
+		BTLstr->ennemi[index].vie = 10;
+		BTLstr->ennemi[index].tempsanimation = 0;
+		BTLstr->ennemi[index].Direction = rand()%8;
+		BTLstr->ennemi[index].indexanim = 0;
+		BTLstr->ennemi[index].mind = 0;
+		BTLstr->ennemi[index].mindtime = 0;
+		BTLstr->ennemi[index].looted = 0;
+		BTLstr->ennemi[index].ontheway = 0;
+		BTLstr->ennemi[index].wayx = 0;
+		BTLstr->ennemi[index].wayy = 0;
+		for (index2 = 0 ; index2 < 8 ; index2++)
+		{
+			BTLstr->ennemi[index].relevancy[index2] = 0;
+		}
+		BTLstr->ennemi[index].position.x = lrand1;
+		BTLstr->ennemi[index].position.y = lrand2;
+		BTLstr->ennemi[index].position.w = systeme->screenw*0.073206442;//100
+		BTLstr->ennemi[index].position.h = systeme->screenh*0.032552083;//25
+		;
+		BTLstr->ennemi[index].STATICposition.w = BTLstr->ennemi[index].position.w;
+		BTLstr->ennemi[index].STATICposition.h = BTLstr->ennemi[index].position.h;
+	}
 }
 
 void afficherCOMBAT(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso, RAT *rat, DIVERSinventaire *inventaire, PACKobjet *objet)
@@ -358,6 +411,7 @@ void COMBATanimationOBJET(typecombat *BTLstr)
 void COMBATgestionENNEMI(typecombat *BTLstr, struct RAT *rat, DIVERSsysteme *systeme)
 {
 	int index;
+	
 
 	for (index = 0 ; index < BTLstr->NBennemi ; index++)
 	{

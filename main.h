@@ -32,6 +32,7 @@
 #define DEGATsubitCHOC 3  //6 a 10
 #define DEGATsubitDUREE 0.3  //0.8
 #define VITESSE 3
+#define LIMITEmobARCADE 256
 
 #define BTL_WON 1
 #define BTL_LOST 0
@@ -484,7 +485,7 @@ struct typecombat
 {
     char calque[1366][768];
 	int NBennemi;
-	struct mob ennemi[128];
+	struct mob ennemi[LIMITEmobARCADE];
 
     char StringVie[48];
     char StringCailloux[128];

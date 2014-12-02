@@ -280,9 +280,13 @@ void lancementcombat(PACKmonstre *monstre, DIVERSinventaire *inventaire, DIVERSc
 			recompense->recompenseID[index2] = -1;
 		}
 	}
+	else if (arcademode == true)
+	{
+		ui->casestuff[ARME].IDobjet = 3;
+	}
 	
 	//############lancement du combat############
-	RETcombat = combat(perso->life, &monstre->rat[index], systeme, perso, inventaire, recompense, objet, ui);
+	RETcombat = combat(perso->life, &monstre->rat[index], systeme, perso, inventaire, recompense, objet, ui, arcademode);
 	
 	if (arcademode == false)
 	{

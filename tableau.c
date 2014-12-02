@@ -855,7 +855,7 @@ void initonline(typeFORthreads *online, DIVERSsysteme *systeme)
 
 }
 
-void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, float vie, struct DIRECTION *direction)
+void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, float vie, struct DIRECTION *direction, bool arcademode)
 {
 	int index, index2;
 
@@ -891,7 +891,14 @@ void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, float vi
 	direction->olddirection = 0;
 
 	BTLstr->NBlootsol = rand()%5;  //max déclaré 64
-	BTLstr->NBennemi = rand()%150+5;//max déclaré 128        rand()%45+5
+	if (arcademode == false)
+	{
+		BTLstr->NBennemi = rand()%150+5;//max déclaré 128        rand()%45+5
+	}
+	else
+	{
+		BTLstr->NBennemi = 0;
+	}
 	BTLstr->alive = BTLstr->NBennemi;
 
 	for (index = 0 ; index < BTLstr->NBlootsol ; index++)
