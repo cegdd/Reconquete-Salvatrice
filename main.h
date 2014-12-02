@@ -548,3 +548,4 @@ struct typecombat
 #endif
 
 int chargementcarte(struct DIVERSsysteme *systeme, struct typeFORthreads *online);
+int chargementarcade (struct DIVERSsysteme *systeme);

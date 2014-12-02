@@ -67,7 +67,7 @@ int map (DIVERSsysteme *systeme, typeFORthreads *online, PACKbouton *bouton , PA
             //gestion de l'ui
             gestionui(systeme, ui, craft, bouton, chat, inventaire, objet, perso, pnj);
             //detection des combats
-            lancementcombat(monstre, inventaire, chat, ui, deplacement, objet, perso, systeme, recompense);
+            detectioncombat(monstre, inventaire, chat, ui, deplacement, objet, perso, systeme, recompense, false);
             //gestion des evenement
             boucleevent(&online->chat.lancermessage, FORevent);
             //gestion du chat
@@ -220,7 +220,29 @@ int map (DIVERSsysteme *systeme, typeFORthreads *online, PACKbouton *bouton , PA
 
 
 
-
+void detectioncombat(PACKmonstre *monstre, DIVERSinventaire *inventaire, DIVERSchat *chat, DIVERSui *ui,
+                     DIVERSdeplacement *deplacement, PACKobjet *objet, PERSO *perso,DIVERSsysteme *systeme,
+                     PACKrecompense *recompense, bool arcademode)
+{
+	int index = 0;
+	
+	for(index = 0 ; index < 3 ; index++)
+    {
+		if (monstre->rat[index].etat >= TEMPSREPOPBATMOUTHS)
+        {
+            monstre->rat[index].etat = 0;
+        }
+        
+        if (perso->pperso.x+perso->pperso.w >= monstre->rat[index].position.x &&
+                perso->pperso.y+perso->pperso.h >= monstre->rat[index].position.y &&
+                perso->pperso.y <= monstre->rat[index].position.y+monstre->rat[index].position.h &&
+                perso->pperso.x <= monstre->rat[index].position.x+monstre->rat[index].position.w &&
+                monstre->rat[index].etat == 0)
+        {
+			lancementcombat(monstre, inventaire, chat, ui, deplacement, objet, perso, systeme, recompense, arcademode, index);
+		}
+	}
+}
 
 
 
@@ -230,104 +252,95 @@ int map (DIVERSsysteme *systeme, typeFORthreads *online, PACKbouton *bouton , PA
 
 void lancementcombat(PACKmonstre *monstre, DIVERSinventaire *inventaire, DIVERSchat *chat, DIVERSui *ui,
                      DIVERSdeplacement *deplacement, PACKobjet *objet, PERSO *perso,DIVERSsysteme *systeme,
-                     PACKrecompense *recompense)
+                     PACKrecompense *recompense, bool arcademode, int index)
 {
-    int index, indexloot = 0, index2, RETcombat;
+    int indexloot = 0, index2, RETcombat;
     char slootcombat[120];
-    for(index = 0 ; index < 3 ; index++)
-    {
-		//repop monstre
-        if (monstre->rat[index].etat >= TEMPSREPOPBATMOUTHS)
-        {
-            monstre->rat[index].etat = 0;
-        }
-        //si joueur marche sur une creature
-        if (perso->pperso.x+perso->pperso.w >= monstre->rat[index].position.x &&
-                perso->pperso.y+perso->pperso.h >= monstre->rat[index].position.y &&
-                perso->pperso.y <= monstre->rat[index].position.y+monstre->rat[index].position.h &&
-                perso->pperso.x <= monstre->rat[index].position.x+monstre->rat[index].position.w &&
-                monstre->rat[index].etat == 0)
-        {
-			//ecran de chargement
-            chargement(systeme);
 
-            //cloture des UIs et arret du personnage
-            inventaire->actif = false;
-            chat->chatactif = false;
-            systeme->inbattle = true;
-            ui->dialogueactif = 0;
-            deplacement->persobouge = 0;
+	//ecran de chargement
+	chargement(systeme);
 
-            //initialisation des tableaux de récompense
-			for (index2 = 0 ; index2 < LOOTMAX ; index2++)
+	if (arcademode == false)
+	{
+		//cloture des UIs et arret du personnage
+		inventaire->actif = false;
+		chat->chatactif = false;
+		systeme->inbattle = true;
+		ui->dialogueactif = 0;
+		deplacement->persobouge = 0;
+	
+
+		//initialisation des tableaux de récompense
+		for (index2 = 0 ; index2 < LOOTMAX ; index2++)
+		{
+			recompense->recompenseNB[index2] = 0;
+		}
+		for (index2 = 0 ; index2 < NOMBREOBJETS ; index2++)
+		{
+			recompense->recompenseID[index2] = -1;
+		}
+	}
+	
+	//############lancement du combat############
+	RETcombat = combat(perso->life, &monstre->rat[index], systeme, perso, inventaire, recompense, objet, ui);
+	
+	if (arcademode == false)
+	{
+		//si joueur mort
+		if (RETcombat == BTL_LOST)
+		{
+			//ecran de mort
+			ANIMmort(systeme);
+			//replacement du joueur au départ avec toute sa vie
+			deplacement->x = 0;
+			deplacement->y = -200;
+			perso->pperso.x = systeme->screenw/2;
+			perso->pperso.y = systeme->screenh/2;
+			perso->life = perso->lifemax;
+		}
+		//si le joueur a fui
+		else if (RETcombat == BTL_LEAVED)
+		{
+			monstre->rat[index].etat = 1;
+
+			ui->ttextedialogue = fenetredialogue(systeme->screenw*0.4, systeme->screenh*0.8, &ui->pdialogue, &ui->ptextedialogue, "Vous avez fui,\ntous les objets obtenu pendant le combat on été abandonné sur place.\n\n\n\n(entrée/échap pour continuer)\n",
+									  BLANC, systeme);
+			ui->dialogueactif = 1;
+		}
+		//si joueur vivant
+		else
+		{
+			//creature morte
+			monstre->rat[index].etat = 1;
+			//dialogue de récompense
+			ui->dialogueactif = 2;
+
+			//si des récompenses on été obtenue
+			while (recompense->recompenseNB[indexloot] > 0)
 			{
-				recompense->recompenseNB[index2] = 0;
-			}
-			for (index2 = 0 ; index2 < NOMBREOBJETS ; index2++)
-			{
-				recompense->recompenseID[index2] = -1;
-			}
-            //            ###################
-            //############lancement du combat############
-            //            ###################
-            RETcombat = combat(perso->life, &monstre->rat[index], systeme, perso, inventaire, recompense, objet, ui);
+				//ecriture de la récompense
+				sprintf(slootcombat, "-> %d %s", recompense->recompenseNB[indexloot], objet->objet[recompense->recompenseID[indexloot]].nom);
+				SDL_DestroyTexture(recompense->ttextelootcombat[indexloot]);
+				recompense->ttextelootcombat[indexloot] = imprime(slootcombat, systeme->screenw, BLANC, systeme, NULL);
 
-            //si joueur mort
-            if (RETcombat == BTL_LOST)
-            {
-				//ecran de mort
-                ANIMmort(systeme);
-                //replacement du joueur au départ avec toute sa vie
-                deplacement->x = 0;
-                deplacement->y = -200;
-                perso->pperso.x = systeme->screenw/2;
-                perso->pperso.y = systeme->screenh/2;
-                perso->life = perso->lifemax;
-            }
-            //si le joueur a fui
-            else if (RETcombat == BTL_LEAVED)
-            {
-				monstre->rat[index].etat = 1;
-
-				ui->ttextedialogue = fenetredialogue(systeme->screenw*0.4, systeme->screenh*0.8, &ui->pdialogue, &ui->ptextedialogue, "Vous avez fui,\ntous les objets obtenu pendant le combat on été abandonné sur place.\n\n\n\n(entrée/échap pour continuer)\n",
-                                          BLANC, systeme);
-                ui->dialogueactif = 1;
-			}
-            //si joueur vivant
-            else
-            {
-				//creature morte
-                monstre->rat[index].etat = 1;
-                //dialogue de récompense
-                ui->dialogueactif = 2;
-
-                //si des récompenses on été obtenue
-				while (recompense->recompenseNB[indexloot] > 0)
+				for (index2 = 0 ; index2 < recompense->recompenseNB[indexloot] ; index2++)
 				{
-					//ecriture de la récompense
-					sprintf(slootcombat, "-> %d %s", recompense->recompenseNB[indexloot], objet->objet[recompense->recompenseID[indexloot]].nom);
-					SDL_DestroyTexture(recompense->ttextelootcombat[indexloot]);
-					recompense->ttextelootcombat[indexloot] = imprime(slootcombat, systeme->screenw, BLANC, systeme, NULL);
-
-					for (index2 = 0 ; index2 < recompense->recompenseNB[indexloot] ; index2++)
-					{
-						//insertion des récompenses 1 par 1
-						insertionsac(objet, recompense->recompenseID[indexloot]);
-					}
-					indexloot++;
+					//insertion des récompenses 1 par 1
+					insertionsac(objet, recompense->recompenseID[indexloot]);
 				}
-            }
-            deplacement->direction.bas = 0;
-            deplacement->direction.haut = 0;
-            deplacement->direction.gauche = 0;
-            deplacement->direction.droite = 0;
-            sprintf(perso->slife, "vie : %0.1f/%d", perso->life, perso->lifemax);
-            SDL_DestroyTexture(perso->tlife);
-            perso->tlife = imprime (perso->slife, systeme->screenw, BLANC, systeme, NULL);
+				indexloot++;
+			}
+		}
+		deplacement->direction.bas = 0;
+		deplacement->direction.haut = 0;
+		deplacement->direction.gauche = 0;
+		deplacement->direction.droite = 0;
+		sprintf(perso->slife, "vie : %0.1f/%d", perso->life, perso->lifemax);
+		SDL_DestroyTexture(perso->tlife);
+		perso->tlife = imprime (perso->slife, systeme->screenw, BLANC, systeme, NULL);
 
-            checkinventaire(objet, inventaire);
-        }
-    }
+		checkinventaire(objet, inventaire);
+	}
 }
 
 void ANIMpersomarche(DIVERSdeplacement *deplacement, DIVERStemps *temps)

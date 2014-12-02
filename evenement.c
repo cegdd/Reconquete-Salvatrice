@@ -468,7 +468,7 @@ int boucleeventlogin (struct typelogin *loginstore, DIVERSsysteme *systeme)
 						loginstore->saisiemdp = 0;
 					}
 
-
+					//ATTENTION DON'T USE "1"
 					if (x >= systeme->screenw/11 && x <= (systeme->screenw/11)+(systeme->screenw/11) &&
 					y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12))//						option
 					{return 4;}
@@ -483,7 +483,7 @@ int boucleeventlogin (struct typelogin *loginstore, DIVERSsysteme *systeme)
 					{return 0;}
 					else if (x >= (systeme->screenw/11)*9 && x <= ((systeme->screenw/11)*9)+(systeme->screenw/11) &&
 					y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12))//						arcade
-					{return 0;}
+					{return 5;}
 					}
 				break;
 			default:

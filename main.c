@@ -32,6 +32,7 @@ int main (int argc, char *argv[])
     struct typeFORthreads online;
     initonline(&online, &systeme);
     pthread_t lethread1;
+    int ret = 0;
 
     SDL_ShowCursor(SDL_DISABLE);
     systeme.screen = SDL_CreateWindow("Reconquete salvatrice", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 0, 0, SDL_WINDOW_FULLSCREEN_DESKTOP);
@@ -60,16 +61,28 @@ int main (int argc, char *argv[])
 	else if (Mix_PlayMusic(sound, -1) < 0){ printf("musique non jouable"); return EXIT_FAILURE;}
 	
 	//si le login est accepté
-	if (login(&systeme) == 2)
+	ret = login(&systeme);
+	while (ret != 0)
 	{
-		//creattion thread pour socket
-		pthread_create(&lethread1, NULL, *thread1, &online);
-		chargersauvegarde(&systeme);
+		if (ret == 2)
+		{
+			//creation thread pour socket
+			pthread_create(&lethread1, NULL, *thread1, &online);
+			chargersauvegarde(&systeme);
 
-		Mix_PauseMusic ();
-		//lancement du jeu
-		//if (map(&systeme, &online) != 1) {return EXIT_FAILURE;}
-		if (chargementcarte(&systeme, &online) != 1) {return EXIT_FAILURE;}
+			Mix_PauseMusic ();
+			//lancement du jeu
+			if (chargementcarte(&systeme, &online) != 1) {return EXIT_FAILURE;}
+		}
+		else if (ret == 5)
+		{
+			chargementarcade(&systeme);
+		}
+		else
+		{
+			printf("login return : %d", ret);
+		}
+		ret = login(&systeme);
 	}
 
 	Mix_FreeMusic(sound);
@@ -99,7 +112,8 @@ int chargementcarte(struct DIVERSsysteme *systeme, struct typeFORthreads *online
 	{
 		srand(temps.temptotal);
 	}
-
+	
+	initcraft(&craft, systeme);
     initobjet(&objet, systeme, &craft);
     initbouton(&bouton, systeme);
     initmonstre(&monstre, systeme);
@@ -110,11 +124,36 @@ int chargementcarte(struct DIVERSsysteme *systeme, struct typeFORthreads *online
     inittemps(&temps, systeme);
     initui(&ui, systeme);
     initchat(&chat, systeme);
-    initcraft(&craft, systeme);
     initpnj(&pnj);
     initrecompense(&recompense, systeme);
     initFORevent(&FORevent, &objet, &bouton, &inventaire, systeme, &deplacement, &chat, &ui, &craft, &monstre, &perso, &pnj);
     
     map(systeme, online, &bouton, &objet, &monstre, &perso, &inventaire, &deplacement, &temps, &ui, &chat, &craft, &carte, &pnj, &recompense, &FORevent);
 	return 1;
+}
+
+int chargementarcade (struct DIVERSsysteme *systeme)
+{
+	PACKmonstre monstre;
+	DIVERSinventaire inventaire;
+	DIVERSchat chat;
+	DIVERSui ui;
+	DIVERSdeplacement deplacement;
+	DIVERScraft craft;
+	PACKobjet objet;
+	PERSO perso;
+	PACKrecompense recompense;
+	
+	initmonstre(&monstre, systeme);
+	initinventaire(&inventaire, systeme);
+	initchat(&chat, systeme);
+	initui(&ui, systeme);
+	initdeplacement(&deplacement, systeme);
+	initcraft(&craft, systeme);
+	initobjet(&objet, systeme, &craft);
+	initperso(&perso, systeme);
+	initrecompense(&recompense, systeme);
+	
+	lancementcombat(&monstre, &inventaire, &chat, &ui, &deplacement, &objet, &perso, systeme, &recompense, true, 0);
+	return 0;
 }

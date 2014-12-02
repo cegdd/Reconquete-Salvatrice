@@ -23,7 +23,10 @@ int map (DIVERSsysteme *systeme, typeFORthreads *online, PACKbouton *bouton , PA
 		DIVERStemps *temps, DIVERSui *ui, DIVERSchat *chat, DIVERScraft *craft, DIVERSmap *carte, PACKpnj *pnj, PACKrecompense *recompense, typeFORevent *FORevent);
 void lancementcombat(PACKmonstre *monstre, DIVERSinventaire *inventaire, DIVERSchat *chat, DIVERSui *ui,
 					DIVERSdeplacement *deplacement, PACKobjet *objet, PERSO *perso, DIVERSsysteme *systeme,
-					PACKrecompense *recompense);
+					PACKrecompense *recompense, bool arcademode, int index);
+void detectioncombat(PACKmonstre *monstre, DIVERSinventaire *inventaire, DIVERSchat *chat, DIVERSui *ui,
+					DIVERSdeplacement *deplacement, PACKobjet *objet, PERSO *perso, DIVERSsysteme *systeme,
+					PACKrecompense *recompense, bool arcademode);
 
 void ANIMpersomarche(DIVERSdeplacement *deplacement, DIVERStemps *temps);
 void ANIMmonstre(PACKmonstre *monstre, DIVERStemps *temps);
