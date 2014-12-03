@@ -32,6 +32,11 @@ float combat (float vie, struct RAT *rat, struct DIVERSsysteme *systeme, PERSO *
 
 	//initialisation des variables
 	initcombatstore(&BTLstr, systeme, vie, &direction, arcademode);
+	
+	if (arcademode == true)
+	{
+		BTLstr.ptVie.h = systeme->screenh*0.2;
+	}
 
 	while (BTLstr.continuer == -1)
 	{
@@ -87,7 +92,7 @@ float combat (float vie, struct RAT *rat, struct DIVERSsysteme *systeme, PERSO *
 		{
 			fps++;
 			BTLstr.tempsaffichage = BTLstr.temps;
-			afficherCOMBAT(&BTLstr, systeme, perso, rat, inventaire, objet);
+			afficherCOMBAT(&BTLstr, systeme, perso, rat, inventaire, objet, arcademode);
 			if (fps%20 == 1)
 			{
 				ajoutermonstre(&BTLstr, systeme);
@@ -95,7 +100,7 @@ float combat (float vie, struct RAT *rat, struct DIVERSsysteme *systeme, PERSO *
 		}
 		else if (BTLstr.temps - BTLstr.tempsseconde >= 1000)//1000
 		{
-			sprintf(BTLstr.StringVie, "fps : %d",BTLstr.NBennemi);//fps
+			sprintf(BTLstr.StringVie, "fps : %d\nennemi en vie : %d \nennemi vaincu : %d \n score : %d", fps, BTLstr.NBennemi, BTLstr.ennemivaincue, BTLstr.arcadescore);//fps
 			BTLstr.tVie = imprime (BTLstr.StringVie, systeme->screenw*0.3, NOIR, systeme, NULL);
 			fps = 0;
 			BTLstr.tempsseconde = BTLstr.temps;
@@ -123,7 +128,6 @@ float combat (float vie, struct RAT *rat, struct DIVERSsysteme *systeme, PERSO *
 	}
 	else
     {
-        printf("erreur de sortie en combat");
         return BTL_WON;
     }
 }
@@ -152,8 +156,9 @@ void ajoutermonstre(typecombat *BTLstr, DIVERSsysteme *systeme)
 	//s'il n'est pas déjà vivant
 	if (BTLstr->ennemi[index].vie <= 0)
 	{
-		float lrand1 = rand()%systeme->screenw;
-		float lrand2 = rand()%systeme->screenh;
+		float randside = rand()%4;
+		float randwidth = rand()%systeme->screenw;
+		float randhigh = rand()%systeme->screenh;
 		BTLstr->ennemi[index].vie = 10;
 		BTLstr->ennemi[index].tempsanimation = 0;
 		BTLstr->ennemi[index].Direction = rand()%8;
@@ -168,8 +173,28 @@ void ajoutermonstre(typecombat *BTLstr, DIVERSsysteme *systeme)
 		{
 			BTLstr->ennemi[index].relevancy[index2] = 0;
 		}
-		BTLstr->ennemi[index].position.x = lrand1;
-		BTLstr->ennemi[index].position.y = lrand2;
+		//haut -> bas -> gauche -> droite
+		if (randside == 0)
+		{
+			BTLstr->ennemi[index].position.y = -100;
+			BTLstr->ennemi[index].position.x = randwidth;
+		}
+		else if (randside == 1)
+		{
+			BTLstr->ennemi[index].position.y = systeme->screenh + 100;
+			BTLstr->ennemi[index].position.x = randwidth;
+		}
+		else if (randside == 2)
+		{
+			BTLstr->ennemi[index].position.y = randhigh;
+			BTLstr->ennemi[index].position.x = -100;
+		}
+		else
+		{
+			BTLstr->ennemi[index].position.y = randhigh;
+			BTLstr->ennemi[index].position.x = systeme->screenw + 100;
+		}
+		
 		BTLstr->ennemi[index].position.w = systeme->screenw*0.073206442;//100
 		BTLstr->ennemi[index].position.h = systeme->screenh*0.032552083;//25
 		;
@@ -178,7 +203,9 @@ void ajoutermonstre(typecombat *BTLstr, DIVERSsysteme *systeme)
 	}
 }
 
-void afficherCOMBAT(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso, RAT *rat, DIVERSinventaire *inventaire, PACKobjet *objet)
+void afficherCOMBAT(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso, 
+					RAT *rat, DIVERSinventaire *inventaire, PACKobjet *objet, 
+					bool arcademode)
 {
 	int calcul, index;
 
@@ -187,16 +214,18 @@ void afficherCOMBAT(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso, RA
 	SDL_RenderCopy(systeme->renderer, BTLstr->fond, NULL, &BTLstr->pecran);
 
 	//loot au sol
-	for (index = 0; index < BTLstr->NBlootsol ; index++)
+	if (arcademode == false)
 	{
-		if (BTLstr->lootsol[index] != BTL_OBJ_FLOOR)
+		for (index = 0; index < BTLstr->NBlootsol ; index++)
 		{
-			BTLstr->plootsol[index].w = BTLstr->oldplootsol[index].w * BTLstr->animobjet;
-			BTLstr->plootsol[index].h = BTLstr->oldplootsol[index].h * BTLstr->animobjet;
+			if (BTLstr->lootsol[index] != BTL_OBJ_FLOOR)
+			{
+				BTLstr->plootsol[index].w = BTLstr->oldplootsol[index].w * BTLstr->animobjet;
+				BTLstr->plootsol[index].h = BTLstr->oldplootsol[index].h * BTLstr->animobjet;
+			}
+			SDL_RenderCopy(systeme->renderer, objet->objet[BTLstr->IDlootsol[index]].texture, NULL, &BTLstr->plootsol[index]);
 		}
-		SDL_RenderCopy(systeme->renderer, objet->objet[BTLstr->IDlootsol[index]].texture, NULL, &BTLstr->plootsol[index]);
 	}
-
 	//ennemi
 	for (index = 0; index < BTLstr->NBennemi ; index++)
 	{
@@ -205,7 +234,10 @@ void afficherCOMBAT(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso, RA
 		{
 			BTLstr->ennemi[index].position.w = BTLstr->ennemi[index].STATICposition.w * BTLstr->animobjet;
 			BTLstr->ennemi[index].position.h = BTLstr->ennemi[index].STATICposition.h * BTLstr->animobjet;
-			SDL_RenderCopy(systeme->renderer, BTLstr->peau, NULL, &BTLstr->ennemi[index].position);
+			if (arcademode == false)
+			{	SDL_RenderCopy(systeme->renderer, BTLstr->peau, NULL, &BTLstr->ennemi[index].position);}
+			else
+			{	SDL_RenderCopy(systeme->renderer, BTLstr->piece, NULL, &BTLstr->ennemi[index].position);}
 		}
 		//si elles sont mortes et pas ramasser
 		else if (BTLstr->ennemi[index].vie <= 0 && BTLstr->ennemi[index].looted == 0)
@@ -213,7 +245,10 @@ void afficherCOMBAT(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso, RA
 			calcul =90+(45 * BTLstr->ennemi[index].Direction);
 			SDL_RenderCopyEx(systeme->renderer,rat->texture[2], NULL, &BTLstr->ennemi[index].position, calcul,NULL, SDL_FLIP_NONE);
 		}
-		else if (BTLstr->ennemi[index].vie > 0)//si elles sont vivantes
+	}
+	for (index = 0; index < BTLstr->NBennemi ; index++)
+	{
+		if (BTLstr->ennemi[index].vie > 0)//si elles sont vivantes
 		{
 			calcul =90+(45 * BTLstr->ennemi[index].Direction);
 			SDL_RenderCopyEx(systeme->renderer, rat->texture[BTLstr->ennemi[index].indexanim], NULL, &BTLstr->ennemi[index].position, calcul,NULL, SDL_FLIP_NONE);
@@ -338,6 +373,8 @@ void COMBATgestionDEGAT (typecombat *BTLstr, DIVERSui *ui)
 				}
 				BTLstr->DepartBalle[BTLstr->ResultatHitbox] = UNUSED; // pour projectile
 				BTLstr->ennemi[index].vie = 0;
+				BTLstr->ennemivaincue++;
+				BTLstr->arcadescore += 5;
 			}
 		}
 	}
@@ -448,7 +485,15 @@ void COMBATgestionOBJETsol(typecombat *BTLstr, DIVERSsysteme *systeme, PACKrecom
 
 	for (index = 0 ; index < BTLstr->NBennemi ; index++)
 	{
-		if (BTLstr->ennemi[index].vie > 0){}
+		//s'il est vivant
+		if (BTLstr->ennemi[index].vie > 0)
+		{
+			if (colisionbox(&BTLstr->ennemi[index].position, &BTLstr->Pperso, 0))
+			{
+				printf("%d",BTLstr->arcadescore);
+				BTLstr->continuer = BTL_LOST;
+			}
+		}
 		else if (BTLstr->ennemi[index].ontheway == 1 && BTLstr->ennemi[index].position.x < systeme->screenw)
 		{
 			BTLstr->ennemi[index].wayx += BTLstr->ennemi[index].dx;
@@ -462,6 +507,8 @@ void COMBATgestionOBJETsol(typecombat *BTLstr, DIVERSsysteme *systeme, PACKrecom
 			//si on marche dessus
 			if (colisionbox(&BTLstr->ennemi[index].position, &BTLstr->Pperso, 0))
 			{
+				BTLstr->arcadescore += 10;
+				
 				//ajout aux récompenses
 				ADDloot(recompense, 0, 1);
 

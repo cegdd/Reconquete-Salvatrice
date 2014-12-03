@@ -24,7 +24,7 @@ float combat (float vie, struct RAT *rat, DIVERSsysteme *systeme, PERSO *perso, 
 int Hitboxjoueur (SDL_Rect pmob, SDL_Rect pperso, float *ptrvie, PERSO *perso);
 
 void afficherCOMBAT(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso, RAT *rat,
-                    DIVERSinventaire *inventaire, PACKobjet *objet);
+                    DIVERSinventaire *inventaire, PACKobjet *objet, bool arcademode);
 
 void COMBATgestionCLICetCOLISION (typecombat *BTLstr, DIVERSui *ui);
 void COMBATgestionDEGAT (typecombat *BTLstr, DIVERSui *ui);

@@ -875,6 +875,8 @@ void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, float vi
 	BTLstr->persobouge = 0;
 	BTLstr->animobjet = 1;
 	BTLstr->animobjetway = 0;
+	BTLstr->ennemivaincue = 0;
+	BTLstr->arcadescore = 0;
 
 	BTLstr->temps = 0;
 	BTLstr->tempsaffichage = 0;
@@ -996,12 +998,13 @@ void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, float vi
 
 	BTLstr->ptVie.x = systeme->screenw*0.015;
 	BTLstr->ptVie.y = systeme->screenh*0.026;
-	BTLstr->ptVie.w = systeme->screenw*0.29;
+	BTLstr->ptVie.w = systeme->screenw*0.6;
 	BTLstr->ptVie.h = systeme->screenh*0.065;
 
 	BTLstr->fond = LoadingImage				("rs/fonds/fondcombat.png", 0, systeme);
 	BTLstr->curseur = LoadingImage			("rs/images/curseur.png", 0, systeme);
 	BTLstr->balle = LoadingImage			("rs/images/balle.png", 0, systeme);
+	BTLstr->piece = LoadingImage			("rs/images/piece.png", 0, systeme);
 	BTLstr->peau = LoadingImage			    ("rs/objets/0#0.png", 0, systeme);
 
 	sprintf(BTLstr->StringVie, "vie de %s : %.1f", systeme->sauvegarde[0], vie);

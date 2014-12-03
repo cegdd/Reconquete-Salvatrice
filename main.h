@@ -509,6 +509,8 @@ struct typecombat
     int indexanimperso;
     int persobouge;
     int alive;
+    int ennemivaincue;
+    int arcadescore;
 
     int animobjetway;
     int NBlootsol;
@@ -535,6 +537,7 @@ struct typecombat
     SDL_Texture *curseur;
     SDL_Texture *balle;
     SDL_Texture *peau;
+    SDL_Texture *piece;
 
     SDL_Rect Pperso;
     SDL_Rect pcurseur;

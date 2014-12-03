@@ -76,6 +76,7 @@ int main (int argc, char *argv[])
 		}
 		else if (ret == 5)
 		{
+			Mix_PauseMusic ();
 			chargementarcade(&systeme);
 		}
 		else
