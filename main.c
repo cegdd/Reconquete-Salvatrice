@@ -78,6 +78,7 @@ int main (int argc, char *argv[])
 		{
 			Mix_PauseMusic ();
 			chargementarcade(&systeme);
+			if (Mix_PlayMusic(sound, -1) < 0){ printf("musique non jouable"); return EXIT_FAILURE;}
 		}
 		else
 		{

@@ -29,7 +29,7 @@ void afficherCOMBAT(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso, RA
 void COMBATgestionCLICetCOLISION (typecombat *BTLstr, DIVERSui *ui);
 void COMBATgestionDEGAT (typecombat *BTLstr, DIVERSui *ui);
 void COMBATgestionENNEMI(typecombat *BTLstr, struct RAT *rat, DIVERSsysteme *systeme);
-void COMBATgestionOBJETsol(typecombat *BTLstr, DIVERSsysteme *systeme, PACKrecompense *recompense);
+void COMBATgestionOBJETsol(typecombat *BTLstr, DIVERSsysteme *systeme, PACKrecompense *recompense, bool arcademode, DIVERSui *ui);
 
 void COMBATanimationPERSO(typecombat *BTLstr);
 void COMBATanimationMOB(typecombat *BTLstr);

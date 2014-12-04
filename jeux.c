@@ -20,6 +20,7 @@
 #include "systeme.h"
 #include "tool.h"
 #include "CaC.h"
+#include "ui.h"
 
 float combat (float vie, struct RAT *rat, struct DIVERSsysteme *systeme, PERSO *perso, DIVERSinventaire *inventaire,
               PACKrecompense *recompense, PACKobjet *objet, DIVERSui *ui, bool arcademode)
@@ -79,7 +80,7 @@ float combat (float vie, struct RAT *rat, struct DIVERSsysteme *systeme, PERSO *
 			#endif // ARRET_MOB
 
 			//gestion des objets au sol
-			COMBATgestionOBJETsol(&BTLstr, systeme, recompense);
+			COMBATgestionOBJETsol(&BTLstr, systeme, recompense, arcademode, ui);
 			//animations
 			COMBATanimationPERSO(&BTLstr);
 			COMBATanimationMOB	(&BTLstr);
@@ -479,18 +480,27 @@ void ADDloot(PACKrecompense *recompense, int id, int nombre)
 	recompense->recompenseNB[index] += nombre;
 }
 
-void COMBATgestionOBJETsol(typecombat *BTLstr, DIVERSsysteme *systeme, PACKrecompense *recompense)
+void COMBATgestionOBJETsol(typecombat *BTLstr, DIVERSsysteme *systeme, PACKrecompense *recompense, bool arcademode, DIVERSui *ui)
 {
 	int index;
 
 	for (index = 0 ; index < BTLstr->NBennemi ; index++)
 	{
 		//s'il est vivant
-		if (BTLstr->ennemi[index].vie > 0)
+		if (BTLstr->ennemi[index].vie > 0 && arcademode == true)
 		{
-			if (colisionbox(&BTLstr->ennemi[index].position, &BTLstr->Pperso, 0))
+			if (checkdistance(&BTLstr->Pperso, &BTLstr->ennemi[index].position, 50) == -1)
 			{
-				printf("%d",BTLstr->arcadescore);
+				char score[20];
+				sprintf(score,"%d",BTLstr->arcadescore);
+				
+				ui->ttextedialogue = fenetredialogue(systeme->screenw*0.4, systeme->screenh*0.8, &ui->pdialogue, &ui->ptextedialogue, score, BLANC, systeme);
+				ui->dialogueactif = 1;
+				SDL_RenderCopy(systeme->renderer, systeme->noir, NULL, &systeme->pecran);
+				SDL_RenderCopy(systeme->renderer, ui->ttextedialogue, NULL, &systeme->pecran);
+				SDL_RenderPresent(systeme->renderer);
+				SDL_Delay(1000);
+				
 				BTLstr->continuer = BTL_LOST;
 			}
 		}
