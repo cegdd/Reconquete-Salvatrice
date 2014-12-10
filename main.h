@@ -26,7 +26,7 @@
 #define REGEN 2.5
 
 //combat
-#define NBcailloux 5
+#define NBcailloux 50
 #define PRECISIONcailloux 384 //nombre de calcul par tir
 #define DEGATcailloux 10
 #define DEGATsubitCHOC 3  //6 a 10
