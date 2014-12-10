@@ -858,7 +858,6 @@ void initonline(typeFORthreads *online, DIVERSsysteme *systeme)
 void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, float vie, struct DIRECTION *direction, bool arcademode)
 {
 	int index, index2;
-
 	BTLstr->continuer = -1;
 	BTLstr->echap = 0;
 	BTLstr->doublesaut = 0;
@@ -898,10 +897,9 @@ void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, float vi
 		BTLstr->NBennemi = rand()%150+5;//max déclaré 128        rand()%45+5
 	}
 	else
-	{
-		BTLstr->NBennemi = 0;
+	{//valeur maximum pour tout initialisé
+		BTLstr->NBennemi = LIMITEmobARCADE;
 	}
-	BTLstr->alive = BTLstr->NBennemi;
 
 	for (index = 0 ; index < BTLstr->NBlootsol ; index++)
 	{
@@ -931,6 +929,7 @@ void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, float vi
 		float lrand1 = rand()%systeme->screenw;
 		float lrand2 = rand()%systeme->screenh;
 		BTLstr->ennemi[index].vie = 10;
+		BTLstr->ennemi[index].mort = false;
 		BTLstr->ennemi[index].tempsanimation = 0;
 		BTLstr->ennemi[index].Direction = rand()%8;
 		BTLstr->ennemi[index].indexanim = 0;
@@ -952,6 +951,12 @@ void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, float vi
 		BTLstr->ennemi[index].STATICposition.w = BTLstr->ennemi[index].position.w;
 		BTLstr->ennemi[index].STATICposition.h = BTLstr->ennemi[index].position.h;
 	}
+	
+	if (arcademode == true)
+	{//remise a zero du compteur pour le mode arcade
+		BTLstr->NBennemi = 0;
+		BTLstr->alive = BTLstr->NBennemi;
+	}
 
 	for (index = 0 ; index < 48 ; index++)
 	{
@@ -966,6 +971,7 @@ void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, float vi
 
 	for (index = 0 ; index < NBcailloux ; index++)
 	{
+		printf("%d", index);
 	    BTLstr->i[index] = 0;
 		BTLstr->DepartBalle[index] = UNUSED;
 

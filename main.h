@@ -26,13 +26,13 @@
 #define REGEN 2.5
 
 //combat
-#define NBcailloux 50
+#define NBcailloux 5
 #define PRECISIONcailloux 384 //nombre de calcul par tir
 #define DEGATcailloux 10
 #define DEGATsubitCHOC 3  //6 a 10
 #define DEGATsubitDUREE 0.3  //0.8
 #define VITESSE 3
-#define LIMITEmobARCADE 256
+#define LIMITEmobARCADE 512
 
 #define BTL_WON 1
 #define BTL_LOST 0
@@ -153,6 +153,7 @@ struct mob
     float dy;
 
 	float vie;
+	bool mort;
 
 	SDL_Rect position;
 	SDL_Rect STATICposition;

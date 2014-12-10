@@ -129,7 +129,6 @@ void COMBATgestionprojectile (typecombat *BTLstr)
 		}
 		else
 		{
-			BTLstr->DepartBalle[index] = RUNNING;
 		}
 	}
 }
@@ -142,7 +141,7 @@ void gestiontir(typecombat *BTLstr)
     BTLstr->DepartBalle[BTLstr->tableauutile] = RUNNING;
     BTLstr->i[BTLstr->tableauutile] = 0;
     BTLstr->tableauutile++;
-    if (BTLstr->tableauutile == 20)
+    if (BTLstr->tableauutile == NBcailloux)
 	{
 		BTLstr->tableauutile = 0;
 	}

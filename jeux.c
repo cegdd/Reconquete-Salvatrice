@@ -140,68 +140,70 @@ void ajoutermonstre(typecombat *BTLstr, DIVERSsysteme *systeme)
 	
 	if (BTLstr->NBennemi < LIMITEmobARCADE)
 	{
-		BTLstr->NBennemi++;
 		index = BTLstr->NBennemi;
+		BTLstr->NBennemi++;
+		
 	}
 	else
 	{
 		for(index = 0 ; index < LIMITEmobARCADE ; index++)
 		{
-			if (BTLstr->ennemi[index].vie <= 0)
+			if (BTLstr->ennemi[index].mort == true)
 			{
 				break;
+			}
+			else
+			{
+				return;
 			}
 		}
 	}
 	
-	//s'il n'est pas déjà vivant
-	if (BTLstr->ennemi[index].vie <= 0)
+	float randside = rand()%4;
+	float randwidth = rand()%systeme->screenw;
+	float randhigh = rand()%systeme->screenh;
+	BTLstr->ennemi[index].vie = 10;
+	BTLstr->ennemi[index].mort = false;
+	BTLstr->ennemi[index].tempsanimation = 0;
+	BTLstr->ennemi[index].Direction = rand()%8;
+	BTLstr->ennemi[index].indexanim = 0;
+	BTLstr->ennemi[index].mind = 0;
+	BTLstr->ennemi[index].mindtime = 0;
+	BTLstr->ennemi[index].looted = 0;
+	BTLstr->ennemi[index].ontheway = 0;
+	BTLstr->ennemi[index].wayx = 0;
+	BTLstr->ennemi[index].wayy = 0;
+	for (index2 = 0 ; index2 < 8 ; index2++)
 	{
-		float randside = rand()%4;
-		float randwidth = rand()%systeme->screenw;
-		float randhigh = rand()%systeme->screenh;
-		BTLstr->ennemi[index].vie = 10;
-		BTLstr->ennemi[index].tempsanimation = 0;
-		BTLstr->ennemi[index].Direction = rand()%8;
-		BTLstr->ennemi[index].indexanim = 0;
-		BTLstr->ennemi[index].mind = 0;
-		BTLstr->ennemi[index].mindtime = 0;
-		BTLstr->ennemi[index].looted = 0;
-		BTLstr->ennemi[index].ontheway = 0;
-		BTLstr->ennemi[index].wayx = 0;
-		BTLstr->ennemi[index].wayy = 0;
-		for (index2 = 0 ; index2 < 8 ; index2++)
-		{
-			BTLstr->ennemi[index].relevancy[index2] = 0;
-		}
-		//haut -> bas -> gauche -> droite
-		if (randside == 0)
-		{
-			BTLstr->ennemi[index].position.y = -100;
-			BTLstr->ennemi[index].position.x = randwidth;
-		}
-		else if (randside == 1)
-		{
-			BTLstr->ennemi[index].position.y = systeme->screenh + 100;
-			BTLstr->ennemi[index].position.x = randwidth;
-		}
-		else if (randside == 2)
-		{
-			BTLstr->ennemi[index].position.y = randhigh;
-			BTLstr->ennemi[index].position.x = -100;
-		}
-		else
-		{
-			BTLstr->ennemi[index].position.y = randhigh;
-			BTLstr->ennemi[index].position.x = systeme->screenw + 100;
-		}
-		
-		BTLstr->ennemi[index].position.w = systeme->screenw*0.073206442;//100
-		BTLstr->ennemi[index].position.h = systeme->screenh*0.032552083;//25
-		;
-		BTLstr->ennemi[index].STATICposition.w = BTLstr->ennemi[index].position.w;
-		BTLstr->ennemi[index].STATICposition.h = BTLstr->ennemi[index].position.h;
+		BTLstr->ennemi[index].relevancy[index2] = 0;
 	}
+	//haut -> bas -> gauche -> droite
+	if (randside == 0)
+	{
+		BTLstr->ennemi[index].position.y = -100;
+		BTLstr->ennemi[index].position.x = randwidth;
+	}
+	else if (randside == 1)
+	{
+		BTLstr->ennemi[index].position.y = systeme->screenh + 100;
+		BTLstr->ennemi[index].position.x = randwidth;
+	}
+	else if (randside == 2)
+	{
+		BTLstr->ennemi[index].position.y = randhigh;
+		BTLstr->ennemi[index].position.x = -100;
+	}
+	else
+	{
+		BTLstr->ennemi[index].position.y = randhigh;
+		BTLstr->ennemi[index].position.x = systeme->screenw + 100;
+	}
+	
+	BTLstr->ennemi[index].position.w = systeme->screenw*0.073206442;//100
+	BTLstr->ennemi[index].position.h = systeme->screenh*0.032552083;//25
+	;
+	BTLstr->ennemi[index].STATICposition.w = BTLstr->ennemi[index].position.w;
+	BTLstr->ennemi[index].STATICposition.h = BTLstr->ennemi[index].position.h;
 }
 
 void afficherCOMBAT(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso, 
@@ -274,11 +276,11 @@ void afficherCOMBAT(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso,
     }
 	SDL_RenderCopyEx(systeme->renderer, perso->cheveuxbrun, NULL, &BTLstr->Pperso, degre,NULL, SDL_FLIP_NONE);
 
-	for(BTLstr->irect = 0 ; BTLstr->irect < NBcailloux ; BTLstr->irect++)
+	for(index = 0 ; index < NBcailloux ; index++)
 	{
-		if (BTLstr->DepartBalle[BTLstr->irect] == RUNNING)
+		if (BTLstr->DepartBalle[index] == RUNNING)
 		{
-			SDL_RenderCopy(systeme->renderer, BTLstr->balle, NULL, &BTLstr->pballe[BTLstr->irect]);
+			SDL_RenderCopy(systeme->renderer, BTLstr->balle, NULL, &BTLstr->pballe[index]);
 		}
 
 	}
@@ -374,6 +376,7 @@ void COMBATgestionDEGAT (typecombat *BTLstr, DIVERSui *ui)
 				}
 				BTLstr->DepartBalle[BTLstr->ResultatHitbox] = UNUSED; // pour projectile
 				BTLstr->ennemi[index].vie = 0;
+				BTLstr->ennemi[index].mort = true;
 				BTLstr->ennemivaincue++;
 				BTLstr->arcadescore += 5;
 			}
