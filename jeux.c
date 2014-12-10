@@ -37,6 +37,7 @@ float combat (float vie, struct RAT *rat, struct DIVERSsysteme *systeme, PERSO *
 	if (arcademode == true)
 	{
 		BTLstr.ptVie.h = systeme->screenh*0.2;
+		BTLstr.ptVie.w = systeme->screenw*0.6;
 	}
 
 	while (BTLstr.continuer == -1)
@@ -101,7 +102,14 @@ float combat (float vie, struct RAT *rat, struct DIVERSsysteme *systeme, PERSO *
 		}
 		else if (BTLstr.temps - BTLstr.tempsseconde >= 1000)//1000
 		{
-			sprintf(BTLstr.StringVie, "fps : %d\nennemi en vie : %d \nennemi vaincu : %d \n score : %d", fps, BTLstr.NBennemi, BTLstr.ennemivaincue, BTLstr.arcadescore);//fps
+			if (arcademode == true)
+			{
+				sprintf(BTLstr.StringVie, "fps : %d\nennemi en vie : %d \nennemi vaincu : %d \n score : %d", fps, BTLstr.NBennemi, BTLstr.ennemivaincue, BTLstr.arcadescore);//fps
+			}
+			else
+			{
+								sprintf(BTLstr.StringVie, "fps : %d", fps);
+			}
 			BTLstr.tVie = imprime (BTLstr.StringVie, systeme->screenw*0.3, NOIR, systeme, NULL);
 			fps = 0;
 			BTLstr.tempsseconde = BTLstr.temps;
@@ -258,7 +266,7 @@ void afficherCOMBAT(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso,
 		}
 	}
 
-	SDL_RenderCopy											(systeme->renderer, BTLstr->tVie, NULL, &BTLstr->ptVie);
+	SDL_RenderCopy(systeme->renderer, BTLstr->tVie, NULL, &BTLstr->ptVie);
 
 	//joueur
 

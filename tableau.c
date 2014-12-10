@@ -1004,7 +1004,7 @@ void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, float vi
 
 	BTLstr->ptVie.x = systeme->screenw*0.015;
 	BTLstr->ptVie.y = systeme->screenh*0.026;
-	BTLstr->ptVie.w = systeme->screenw*0.6;
+	BTLstr->ptVie.w = systeme->screenw*0.3;
 	BTLstr->ptVie.h = systeme->screenh*0.065;
 
 	BTLstr->fond = LoadingImage				("rs/fonds/fondcombat.png", 0, systeme);

@@ -37,6 +37,7 @@ int main (int argc, char *argv[])
     SDL_ShowCursor(SDL_DISABLE);
     systeme.screen = SDL_CreateWindow("Reconquete salvatrice", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 0, 0, SDL_WINDOW_FULLSCREEN_DESKTOP);
     systeme.renderer = SDL_CreateRenderer(systeme.screen, -1, SDL_RENDERER_ACCELERATED);
+    SDL_MaximizeWindow(systeme.screen);
 	SDL_GetWindowSize(systeme.screen , &systeme.screenw , &systeme.screenh);
 
 	initsystem(&systeme);
@@ -52,7 +53,7 @@ int main (int argc, char *argv[])
 	sprintf(systeme.sauvegarde[1], "mdpbidon");
 	pthread_create(&lethread1, NULL, *thread1, &online);
 	chargersauvegarde(&systeme);
-	map(&systeme, &online);
+	if (chargementcarte(&systeme, &online) != 1) {return EXIT_FAILURE;}
 	return EXIT_SUCCESS;
 	#endif // FASTLOG
 
