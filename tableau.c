@@ -389,7 +389,7 @@ void initperso(PERSO *perso, DIVERSsysteme *systeme)//														perso
 	perso->textureperso[0] = LoadingImage("rs/images/perso1.png", 0, systeme);
 	perso->textureperso[1] = LoadingImage("rs/images/perso2.png", 0, systeme);
 	perso->textureperso[2] = LoadingImage("rs/images/perso0.png", 0, systeme);
-	perso->texture_poing[0] = LoadingImage("rs/images/perso_poing0.png", 0, systeme);
+	//perso->texture_poing[0] = LoadingImage("rs/images/perso_poing0.png", 0, systeme);
 	perso->cheveuxbrun = LoadingImage("rs/images/cheveux0.png", 0, systeme);
 	perso->cheveuxblanc = LoadingImage("rs/images/cheveux3.png", 0, systeme);
 
@@ -658,6 +658,7 @@ void initcraft(DIVERScraft *craft, DIVERSsysteme *systeme)//												craft
 	craft->Uicraft = LoadingImage			("rs/ui/uicraft.png", 0, systeme);
 	craft->BGcraft = LoadingImage			("rs/ui/BGcraft.png", 0, systeme);
 	craft->tetabli = LoadingImage			("rs/images/etabli.png", 0, systeme);
+	printf("%p\n", &craft->tetabli);
 
 	craft->puicraft.x = systeme->screenw-50;
 	craft->puicraft.y = 0;

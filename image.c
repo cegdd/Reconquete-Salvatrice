@@ -11,7 +11,13 @@ typedef struct TEXTE TEXTE;
 
 SDL_Texture* LoadingImage(char* emplacement, int transparence, DIVERSsysteme *systeme)
 {
-	SDL_Texture *texture = IMG_LoadTexture(systeme->renderer, emplacement);
+	SDL_Texture *texture = NULL;
+	texture = IMG_LoadTexture(systeme->renderer, emplacement);
+	if (texture == NULL)
+	{
+		printf("%s\n", SDL_GetError());
+		printf("probleme chargement de l'image %s\n", emplacement);
+	}
 
 	if (transparence > 0)
 	{

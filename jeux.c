@@ -95,7 +95,7 @@ float combat (float vie, struct RAT *rat, struct DIVERSsysteme *systeme, PERSO *
 			fps++;
 			BTLstr.tempsaffichage = BTLstr.temps;
 			afficherCOMBAT(&BTLstr, systeme, perso, rat, inventaire, objet, arcademode);
-			if (fps%20 == 1)
+			if (fps%20 == 1 && arcademode == true)
 			{
 				ajoutermonstre(&BTLstr, systeme);
 			}
@@ -515,6 +515,8 @@ void COMBATgestionOBJETsol(typecombat *BTLstr, DIVERSsysteme *systeme, PACKrecom
 				BTLstr->continuer = BTL_LOST;
 			}
 		}
+		else if (BTLstr->ennemi[index].vie > 0 && arcademode == false)
+		{}
 		else if (BTLstr->ennemi[index].ontheway == 1 && BTLstr->ennemi[index].position.x < systeme->screenw)
 		{
 			BTLstr->ennemi[index].wayx += BTLstr->ennemi[index].dx;

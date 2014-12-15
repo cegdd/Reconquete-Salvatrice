@@ -544,8 +544,10 @@ void afficherMAP(DIVERSmap *carte, DIVERSsysteme *systeme, DIVERScraft *craft)
 		SDL_RenderCopy(systeme->renderer, carte->tilemap[index], NULL, &carte->pmap[index]);
 	}
 
-	//affichage établi
 	SDL_RenderCopy(systeme->renderer, craft->tetabli, NULL, &craft->petabli);
+	printf("%s\n", SDL_GetError());
+	printf("%p\n", &craft->tetabli);
+	
 
 	//affichage de la grille de colision
     /*
