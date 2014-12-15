@@ -655,11 +655,6 @@ void initcraft(DIVERScraft *craft, DIVERSsysteme *systeme)//												craft
 	craft->planactif = -1;
 	craft->planpointer = -1;
 
-	craft->Uicraft = LoadingImage			("rs/ui/uicraft.png", 0, systeme);
-	craft->BGcraft = LoadingImage			("rs/ui/BGcraft.png", 0, systeme);
-	craft->tetabli = LoadingImage			("rs/images/etabli.png", 0, systeme);
-	printf("%p\n", &craft->tetabli);
-
 	craft->puicraft.x = systeme->screenw-50;
 	craft->puicraft.y = 0;
 	craft->puicraft.w = 50;
@@ -698,6 +693,10 @@ void initcraft(DIVERScraft *craft, DIVERSsysteme *systeme)//												craft
 
 		craft->tcomponame[index] = imprime("rien", systeme->screenw, ROUGE, systeme, NULL);
 	}
+	
+	craft->Uicraft = LoadingImage			("rs/ui/uicraft.png", 0, systeme);
+	craft->BGcraft = LoadingImage			("rs/ui/BGcraft.png", 0, systeme);
+	craft->tetabli = LoadingImage			("rs/images/etabli.png", 0, systeme);
 }
 
 void initmap (DIVERSmap *carte, DIVERSsysteme *systeme, PERSO *perso)//										map
@@ -972,7 +971,6 @@ void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, float vi
 
 	for (index = 0 ; index < NBcailloux ; index++)
 	{
-		printf("%d", index);
 	    BTLstr->i[index] = 0;
 		BTLstr->DepartBalle[index] = UNUSED;
 

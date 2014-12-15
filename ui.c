@@ -291,7 +291,6 @@ void afficherCRAFT(DIVERScraft *craft, DIVERSui *ui, PACKbouton *bouton, PACKobj
 		}
 	}
 	//affichage des plans
-	printf("%d", craft->bcraftactif);
 	for (index = 0 ; index < 10 ; index++)
 	{
 		if (craft->bcraftactif != -1)
@@ -312,7 +311,6 @@ void afficherCRAFT(DIVERScraft *craft, DIVERSui *ui, PACKbouton *bouton, PACKobj
 			}
 		}
 	}
-		printf ("colonne %d egale a %d\n", craft->bcraftactif, craft->planparonglets[craft->bcraftactif]);
 	
 	//affichage de la composition du plan
 	if (craft->planactif >= 0 && craft->planactif < 10)
@@ -545,8 +543,6 @@ void afficherMAP(DIVERSmap *carte, DIVERSsysteme *systeme, DIVERScraft *craft)
 	}
 
 	SDL_RenderCopy(systeme->renderer, craft->tetabli, NULL, &craft->petabli);
-	printf("%s\n", SDL_GetError());
-	printf("%p\n", &craft->tetabli);
 	
 
 	//affichage de la grille de colision

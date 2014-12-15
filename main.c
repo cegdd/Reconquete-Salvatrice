@@ -105,11 +105,11 @@ int chargementcarte(struct DIVERSsysteme *systeme, struct typeFORthreads *online
     DIVERStemps temps;
     DIVERSui ui;
     DIVERSchat chat;
-    DIVERScraft craft;
     DIVERSmap carte;
     PACKpnj pnj;
     PACKrecompense recompense;
     typeFORevent FORevent;
+    DIVERScraft craft;
 
     if (temps.temptotal != 0)
 	{
@@ -118,6 +118,7 @@ int chargementcarte(struct DIVERSsysteme *systeme, struct typeFORthreads *online
 	
 	initcraft(&craft, systeme);
     initobjet(&objet, systeme, &craft);
+    initcraft(&craft, systeme);
     initbouton(&bouton, systeme);
     initmonstre(&monstre, systeme);
     initinventaire(&inventaire, systeme);
@@ -130,6 +131,7 @@ int chargementcarte(struct DIVERSsysteme *systeme, struct typeFORthreads *online
     initpnj(&pnj);
     initrecompense(&recompense, systeme);
     initFORevent(&FORevent, &objet, &bouton, &inventaire, systeme, &deplacement, &chat, &ui, &craft, &monstre, &perso, &pnj);
+    SDL_RenderCopy(systeme->renderer, craft.tetabli, NULL, &craft.petabli);
     
     map(systeme, online, &bouton, &objet, &monstre, &perso, &inventaire, &deplacement, &temps, &ui, &chat, &craft, &carte, &pnj, &recompense, &FORevent);
 	return 1;

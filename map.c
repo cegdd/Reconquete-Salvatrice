@@ -36,7 +36,7 @@ int map (DIVERSsysteme *systeme, typeFORthreads *online, PACKbouton *bouton , PA
     }
     checkandrefreshstuff(perso, objet, systeme, ui);
     checkinventaire(objet, inventaire);
-
+    
 //#############################################################################################################################################################
 //											##################### Boucle De Jeu #####################																					#
 //######################################################################################################################################################################
@@ -82,6 +82,7 @@ int map (DIVERSsysteme *systeme, typeFORthreads *online, PACKbouton *bouton , PA
 
             //affichage de la carte
             afficherMAP(carte, systeme, craft);
+            SDL_RenderCopy(systeme->renderer, craft->tetabli, NULL, &craft->petabli);
             //affichage des pnj
             afficherPNJ(perso, pnj, systeme);
             //affichage des mobs
