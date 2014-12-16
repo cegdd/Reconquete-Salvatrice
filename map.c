@@ -23,6 +23,15 @@ int map (DIVERSsysteme *systeme, typeFORthreads *online, PACKbouton *bouton , PA
 		DIVERStemps *temps, DIVERSui *ui, DIVERSchat *chat, DIVERScraft *craft, DIVERSmap *carte, PACKpnj *pnj, PACKrecompense *recompense, typeFORevent *FORevent)
 {
     chargement(systeme);
+    #if FASTLOG == 1
+    int indextmp;
+    for (indextmp = 0 ; indextmp < 10 ; indextmp++)
+    {
+		insertionsac(objet, 2);
+		insertionsac(objet, 7);
+	}
+	
+    #endif
 
     online->jeuxACTIF = 1;
 
