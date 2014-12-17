@@ -705,29 +705,29 @@ void eventmapsourisgaucheup(typeFORevent *FORevent)
                 }
             }
 		}
-		else
+		else//souris en haut a droite
 		{
 			if (FORevent->systeme->pp.x >= FORevent->systeme->screenw*0.622 && FORevent->systeme->pp.x <= FORevent->systeme->screenw*0.732 &&
 				FORevent->systeme->pp.y >= FORevent->systeme->screenh*0.39 && FORevent->systeme->pp.y <= FORevent->systeme->screenh*0.456)
 			{
 				bool checkcompo = true;
-				for (index = 0 ; index < FORevent->objet->PLANstuff[FORevent->craft->bcraftactif][0].compodifferente ; index++)
+				for (index = 0 ; index < FORevent->objet->PLANstuff[FORevent->craft->bcraftactif][FORevent->craft->planactif].compodifferente ; index++)
 				{
-					if (FORevent->objet->PLANstuff[FORevent->craft->bcraftactif][0].compodispo[index] == false)
+					if (FORevent->objet->PLANstuff[FORevent->craft->bcraftactif][FORevent->craft->planactif].compodispo[index] == false)
 					{
 						checkcompo = false;
 					}
 				}
 				if (checkcompo == true)
 				{
-					for (index = 0 ; index < FORevent->objet->PLANstuff[FORevent->craft->bcraftactif][0].compodifferente ; index++)
+					for (index = 0 ; index < FORevent->objet->PLANstuff[FORevent->craft->bcraftactif][FORevent->craft->planactif].compodifferente ; index++)
 					{
-						for (index2 = 0 ; index2 < FORevent->objet->PLANstuff[FORevent->craft->bcraftactif][0].compoNB[index] ; index2++)
+						for (index2 = 0 ; index2 < FORevent->objet->PLANstuff[FORevent->craft->bcraftactif][FORevent->craft->planactif].compoNB[index] ; index2++)
 						{
-							effacerID(FORevent->objet,FORevent->objet->PLANstuff[FORevent->craft->bcraftactif][0].compoID[index]);
+							effacerID(FORevent->objet,FORevent->objet->PLANstuff[FORevent->craft->bcraftactif][FORevent->craft->planactif].compoID[index]);
 						}
 					}
-					insertionsac(FORevent->objet, FORevent->objet->PLANstuff[FORevent->craft->bcraftactif][0].resultatID);
+					insertionsac(FORevent->objet, FORevent->objet->PLANstuff[FORevent->craft->bcraftactif][FORevent->craft->planactif].resultatID);
 					checkinventaire(FORevent->objet, FORevent->inventaire);
 				}
 				FORevent->bouton->crafter.etat = 1;
