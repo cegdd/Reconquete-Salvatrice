@@ -386,12 +386,32 @@ void initperso(PERSO *perso, DIVERSsysteme *systeme)//														perso
 
 	sprintf(perso->slife, "vie : - /%d", perso->lifemax);
 
-	perso->textureperso[0] = LoadingImage("rs/images/perso1.png", 0, systeme);
-	perso->textureperso[1] = LoadingImage("rs/images/perso2.png", 0, systeme);
-	perso->textureperso[2] = LoadingImage("rs/images/perso0.png", 0, systeme);
-	//perso->texture_poing[0] = LoadingImage("rs/images/perso_poing0.png", 0, systeme);
+	perso->tperso = LoadingImage("rs/images/character.png", 0, systeme);
 	perso->cheveuxbrun = LoadingImage("rs/images/cheveux0.png", 0, systeme);
 	perso->cheveuxblanc = LoadingImage("rs/images/cheveux3.png", 0, systeme);
+	
+	for (index = 0 ; index < 9 ; index++)
+	{
+		perso->spriteup[index].h = 48;
+		perso->spriteup[index].w = 48;
+	}
+	
+	perso->spriteup[0].x = 0;
+	perso->spriteup[0].y = 146;
+	perso->spriteup[1].x = 48;
+	perso->spriteup[1].y = 146;
+	perso->spriteup[2].x = 96;
+	perso->spriteup[2].y = 146;
+	perso->spriteup[3].x = 146;
+	perso->spriteup[3].y = 146;
+	perso->spriteup[4].x = 0;
+	perso->spriteup[4].y = 194;
+	perso->spriteup[5].x = 48;
+	perso->spriteup[5].y = 194;
+	perso->spriteup[6].x = 96;
+	perso->spriteup[6].y = 194;
+	perso->spriteup[7].x = 146;
+	perso->spriteup[7].y = 194;
 
 	perso->tpseudo = imprime (systeme->sauvegarde[0], systeme->screenw,BLANC, systeme, NULL);
 	perso->tlife = imprime (perso->slife, systeme->screenw, BLANC, systeme, NULL);

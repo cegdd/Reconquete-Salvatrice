@@ -568,7 +568,7 @@ void afficherMAP(DIVERSmap *carte, DIVERSsysteme *systeme, DIVERScraft *craft)
 
 void afficherPNJ(PERSO *perso, PACKpnj *pnj, DIVERSsysteme *systeme)
 {
-	SDL_RenderCopyEx(systeme->renderer, perso->textureperso[2], NULL, &pnj->toumai, -90,NULL, SDL_FLIP_NONE);
+	SDL_RenderCopyEx(systeme->renderer, perso->tperso, &perso->spriteup[0], &pnj->toumai, -90,NULL, SDL_FLIP_NONE);
 	SDL_RenderCopyEx(systeme->renderer, perso->cheveuxblanc, NULL, &pnj->toumai, -90,NULL, SDL_FLIP_NONE);
 }
 
@@ -597,8 +597,7 @@ void afficherJOUEURS(PERSO *perso, DIVERSdeplacement *deplacement, DIVERSsysteme
 		calcul = 180+(45 * deplacement->direction.direction);
 	}
 
-	SDL_RenderCopyEx(systeme->renderer, perso->textureperso[deplacement->indexanimperso], NULL, &perso->pperso, calcul,NULL, SDL_FLIP_NONE);
-	SDL_RenderCopyEx(systeme->renderer, perso->cheveuxbrun, NULL, &perso->pperso, calcul,NULL, SDL_FLIP_NONE);
+	SDL_RenderCopyEx(systeme->renderer, perso->tperso, &perso->spriteup[deplacement->indexanimperso], &perso->pperso, calcul,NULL, SDL_FLIP_NONE);
 	perso->ptpseudo.x = perso->pperso.x;
 	perso->ptpseudo.y = perso->pperso.y - 33;
 	SDL_RenderCopy(systeme->renderer, perso->tpseudo, NULL, &perso->ptpseudo);
@@ -628,7 +627,7 @@ void afficherJOUEURS(PERSO *perso, DIVERSdeplacement *deplacement, DIVERSsysteme
 			online->joueurs[index].ppseudo.y = online->joueurs[index].posjoueurscalculer.y - 33;
 			online->joueurs[index].ppseudo.w = 100;
 			online->joueurs[index].ppseudo.h = 30;
-			SDL_RenderCopyEx			(systeme->renderer, perso->textureperso[2], NULL, &online->joueurs[index].posjoueurscalculer, calcul,NULL, SDL_FLIP_NONE);
+			SDL_RenderCopyEx			(systeme->renderer, perso->tperso, &perso->spriteup[0], &online->joueurs[index].posjoueurscalculer, calcul,NULL, SDL_FLIP_NONE);
 			SDL_RenderCopyEx			(systeme->renderer, perso->cheveuxbrun, NULL, &online->joueurs[index].posjoueurscalculer, calcul,NULL, SDL_FLIP_NONE);
 			SDL_RenderCopy				(systeme->renderer, online->joueurs[index].tpseudo, NULL, &online->joueurs[index].ppseudo);
 		}

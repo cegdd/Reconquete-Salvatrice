@@ -178,7 +178,7 @@ struct PERSO
 	int force;
 	int portee;
 
-	SDL_Texture *textureperso[3];
+	SDL_Texture *tperso;
 	SDL_Texture *texture_poing[1];
 	SDL_Texture *tpseudo;
 	SDL_Texture *cheveuxbrun ;
@@ -189,6 +189,9 @@ struct PERSO
 	SDL_Texture *tregenlife;
 	SDL_Texture *tforce;
 	SDL_Texture *tportee;
+	
+	SDL_Rect spriteup[8];
+	SDL_Rect spritehit;
 
 	SDL_Rect pperso;
 	SDL_Rect pperso_poing;

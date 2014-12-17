@@ -365,14 +365,14 @@ void ANIMpersomarche(DIVERSdeplacement *deplacement, DIVERStemps *temps)
 		{
 			temps->tempsanimationjoueur = temps->tpact;
 			deplacement->indexanimperso++;
-            if(deplacement->indexanimperso >= 2)
+            if(deplacement->indexanimperso >= 8)
             {
                 deplacement->indexanimperso = 0;
             }
 		}
 		else
 		{
-			deplacement->indexanimperso = 2;
+			deplacement->indexanimperso = 0;
 		}
     }
 }

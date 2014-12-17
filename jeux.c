@@ -280,7 +280,7 @@ void afficherCOMBAT(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso,
     }
     else
     {
-        SDL_RenderCopyEx(systeme->renderer, perso->textureperso[BTLstr->indexanimperso], NULL, &BTLstr->Pperso, degre,NULL, SDL_FLIP_NONE);
+        SDL_RenderCopyEx(systeme->renderer, perso->tperso, &perso->spriteup[BTLstr->indexanimperso], &BTLstr->Pperso, degre,NULL, SDL_FLIP_NONE);
     }
 	SDL_RenderCopyEx(systeme->renderer, perso->cheveuxbrun, NULL, &BTLstr->Pperso, degre,NULL, SDL_FLIP_NONE);
 
