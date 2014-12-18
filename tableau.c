@@ -419,8 +419,10 @@ void initperso(PERSO *perso, DIVERSsysteme *systeme)//														perso
 	perso->pperso.w = 68;
 	perso->pperso.h = 51;
 
-	perso->pperso_poing.w = 68;
-	perso->pperso_poing.h = 76;
+	perso->pperso_poing.w = 48;
+	perso->pperso_poing.h = 48;
+	perso->pperso_poing.x = 96;
+	perso->pperso_poing.y = 288;
 
 	perso->centrecorp.x = 34;
 	perso->centrecorp.y = 25;

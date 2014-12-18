@@ -274,15 +274,12 @@ void afficherCOMBAT(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso,
 
 	if (BTLstr->poing_tendu == true)
     {
-        perso->pperso_poing.x = BTLstr->Pperso.x;
-        perso->pperso_poing.y = BTLstr->Pperso.y;
-        SDL_RenderCopyEx(systeme->renderer, perso->texture_poing[0], NULL, &perso->pperso_poing, degre, &perso->centrecorp, SDL_FLIP_NONE);
+        SDL_RenderCopyEx(systeme->renderer, perso->tperso, &perso->pperso_poing, &BTLstr->Pperso, degre, &perso->centrecorp, SDL_FLIP_NONE);
     }
     else
     {
         SDL_RenderCopyEx(systeme->renderer, perso->tperso, &perso->spriteup[BTLstr->indexanimperso], &BTLstr->Pperso, degre,NULL, SDL_FLIP_NONE);
     }
-	SDL_RenderCopyEx(systeme->renderer, perso->cheveuxbrun, NULL, &BTLstr->Pperso, degre,NULL, SDL_FLIP_NONE);
 
 	for(index = 0 ; index < NBcailloux ; index++)
 	{
@@ -343,7 +340,7 @@ int Hitboxjoueur (SDL_Rect pmob, SDL_Rect pperso, float *ptrvie, PERSO *perso)
 
 void COMBATgestionCLICetCOLISION (typecombat *BTLstr, DIVERSui *ui)
 {
-    if (BTLstr->letirdemander == true && ui->casestuff[ARME].IDobjet == 3)
+    if (ui->casestuff[ARME].IDobjet == 3)
     {
         gestiontir(BTLstr);
         COMBATgestionprojectile(BTLstr);
@@ -357,7 +354,7 @@ void COMBATgestionDEGAT (typecombat *BTLstr, DIVERSui *ui)
 
 	for (index = 0; index < BTLstr->NBennemi ; index++)
 	{
-		if(BTLstr->ennemi[index].vie > 0)
+		if(BTLstr->ennemi[index].vie > 0 && BTLstr->letirdemander == true)
 		{
 		    BTLstr->ResultatHitbox = -1;//initialisation
 
@@ -369,10 +366,7 @@ void COMBATgestionDEGAT (typecombat *BTLstr, DIVERSui *ui)
             //décision dégat mains nue
             else if (ui->casestuff[ARME].IDobjet == -1)
             {
-                if (BTLstr->letirdemander == true)
-                {
                     BTLstr->ResultatHitbox = HitboxPoing(BTLstr, index);
-                }
             }
 
 			//si dégat infligé

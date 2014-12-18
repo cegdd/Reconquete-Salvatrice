@@ -24,9 +24,9 @@ int HitboxPoing(typecombat *BTLstr, int index)
                 pix.y = l;
 
                 //définition du poing
-                if (checkdistance(&pix, &BTLstr->Pperso, 50) == -1 && checkdistance(&pix, &BTLstr->Pperso, 35) == 1)
+                if (checkdistance(&pix, &BTLstr->Pperso, 30) == -1 && checkdistance(&pix, &BTLstr->Pperso, 20) == 1)
                 {
-                    if (colisionfromage(&BTLstr->Pperso, &BTLstr->pcurseur, &pix, 20) == true)
+                    if (colisionfromage(&BTLstr->Pperso, &BTLstr->pcurseur, &pix, 40) == true)
                    {
                         #if TESTGRID == 1
                         BTLstr->calque[k][l] = 1;
