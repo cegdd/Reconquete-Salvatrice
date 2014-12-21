@@ -29,7 +29,7 @@
 #define NBcailloux 50
 #define PRECISIONcailloux 384 //nombre de calcul par tir
 #define DEGATcailloux 10
-#define DEGATsubitCHOC 3  //6 a 10
+#define DEGATsubitCHOC 10  //6 a 10
 #define DEGATsubitDUREE 0.3  //0.8
 #define VITESSE 3
 #define LIMITEmobARCADE 512
@@ -498,6 +498,7 @@ struct typecombat
     char calque[1366][768];
 	int NBennemi;
 	struct mob ennemi[LIMITEmobARCADE];
+	int premiercoup[LIMITEmobARCADE];
 
     char StringVie[48];
     char StringCailloux[128];

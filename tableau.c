@@ -920,7 +920,7 @@ void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, float vi
 	BTLstr->NBlootsol = rand()%5;  //max déclaré 64
 	if (arcademode == false)
 	{
-		BTLstr->NBennemi = rand()%150+5;//max déclaré 128        rand()%45+5
+		BTLstr->NBennemi = rand()%45+5;//max déclaré 128        rand()%45+5
 	}
 	else
 	{//valeur maximum pour tout initialisé
@@ -949,9 +949,10 @@ void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, float vi
 		BTLstr->lootsolWAYY[index] = 0;
 	}
 
-	for (index = 0 ; index < BTLstr->NBennemi ; index++)
+	for (index = 0 ; index < BTLstr->NBennemi ; index++)//adapté pour le mode arcade
 	{
-
+		
+		BTLstr->premiercoup[index] = 0;
 		float lrand1 = rand()%systeme->screenw;
 		float lrand2 = rand()%systeme->screenh;
 		BTLstr->ennemi[index].vie = 10;

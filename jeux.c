@@ -38,6 +38,7 @@ float combat (float vie, struct RAT *rat, struct DIVERSsysteme *systeme, PERSO *
 	{
 		BTLstr.ptVie.h = systeme->screenh*0.2;
 		BTLstr.ptVie.w = systeme->screenw*0.6;
+		perso->life = perso->lifemax;
 	}
 
 	while (BTLstr.continuer == -1)
@@ -62,7 +63,7 @@ float combat (float vie, struct RAT *rat, struct DIVERSsysteme *systeme, PERSO *
 			SDL_GetMouseState(&BTLstr.px, &BTLstr.py);
 
 			//actualisation des coordonées
-			syncdata(&BTLstr, perso);
+			SyncData(&BTLstr, perso);
 			
 			//gestion des attaques
 			COMBATgestionCLICetCOLISION (&BTLstr, ui);
@@ -79,7 +80,7 @@ float combat (float vie, struct RAT *rat, struct DIVERSsysteme *systeme, PERSO *
 			#endif // ARRET_MOB
 
 			//gestion des objets au sol
-			COMBATgestionOBJETsol(&BTLstr, systeme, recompense, arcademode, ui);
+			COMBATgestionOBJETsol(&BTLstr, systeme, recompense, arcademode, ui, perso);
 			//animations
 			COMBATanimationPERSO(&BTLstr);
 			COMBATanimationMOB	(&BTLstr);
@@ -257,7 +258,7 @@ void afficherCOMBAT(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso,
 				SDL_RenderCopyEx(systeme->renderer,rat->texture[2], NULL, &BTLstr->ennemi[index].position, calcul,NULL, SDL_FLIP_NONE);
 			}
 			else
-			{				SDL_RenderCopyEx(systeme->renderer,BTLstr->piece, NULL, &BTLstr->ennemi[index].position, calcul,NULL, SDL_FLIP_NONE);}
+			{	SDL_RenderCopyEx(systeme->renderer,BTLstr->piece, NULL, &BTLstr->ennemi[index].position, calcul,NULL, SDL_FLIP_NONE);}
 		}
 	}
 	for (index = 0; index < BTLstr->NBennemi ; index++)
@@ -306,42 +307,23 @@ void afficherCOMBAT(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso,
 	SDL_RenderPresent(systeme->renderer);
 }
 
-int Hitboxjoueur (SDL_Rect pmob, SDL_Rect pperso, float *ptrvie, PERSO *perso)
+void Hitboxjoueur (typecombat *BTLstr, PERSO *perso, int id)
 {
-	static int premiercoup;
-	if (pperso.x + pperso.w < pmob.x)
+	if (BTLstr->premiercoup[id] == 0)
 	{
-		premiercoup = 0;
-		return 1;
-	}
-	else if ( pperso.x > pmob.x + pmob.w)
-	{
-		premiercoup = 0;
-		return 2;
-	}
-
-	if(pmob.y < pperso.y + pperso.h && pmob.y + pmob.h > pperso.y &&
-			pmob.x < pperso.x+pperso.w && pmob.x+pmob.w > pperso.x)
-	{
-		if (premiercoup == 0)
+		if (DEGATsubitCHOC >= perso->defense/2)
 		{
-			if (DEGATsubitCHOC >= perso->defense/2)
-			{
-				*ptrvie = *ptrvie -((DEGATsubitCHOC)-(perso->defense/2));
-			}
-			premiercoup = 1;
+			perso->life = perso->life - ((DEGATsubitCHOC)-(perso->defense/2));
 		}
-		else
-		{
-			if (DEGATsubitDUREE >= perso->defense)
-			{
-				float degat = DEGATsubitDUREE-perso->defense;
-				*ptrvie = *ptrvie - degat;
-			}
-		}
-		return 0;
 	}
-	return -1;
+	else
+	{
+		if (DEGATsubitDUREE >= perso->defense)
+		{
+			float degat = DEGATsubitDUREE-perso->defense;
+			perso->life = perso->life - degat;
+		}
+	}
 }
 
 void COMBATgestionCLICetCOLISION (typecombat *BTLstr, DIVERSui *ui)
@@ -491,32 +473,25 @@ void ADDloot(PACKrecompense *recompense, int id, int nombre)
 	recompense->recompenseNB[index] += nombre;
 }
 
-void COMBATgestionOBJETsol(typecombat *BTLstr, DIVERSsysteme *systeme, PACKrecompense *recompense, bool arcademode, DIVERSui *ui)
+void COMBATgestionOBJETsol(typecombat *BTLstr, DIVERSsysteme *systeme, PACKrecompense *recompense, bool arcademode,
+							DIVERSui *ui, PERSO *perso)
 {
 	int index;
 
 	for (index = 0 ; index < BTLstr->NBennemi ; index++)
 	{
 		//s'il est vivant
-		if (BTLstr->ennemi[index].vie > 0 && arcademode == true)
+		if (BTLstr->ennemi[index].vie > 0)
 		{
 			if (checkdistance(&BTLstr->Pperso, &BTLstr->ennemi[index].position, 50) == -1)
 			{
-				char score[20];
-				sprintf(score,"%d",BTLstr->arcadescore);
-				
-				ui->ttextedialogue = fenetredialogue(systeme->screenw*0.4, systeme->screenh*0.8, &ui->pdialogue, &ui->ptextedialogue, score, BLANC, systeme);
-				ui->dialogueactif = 1;
-				SDL_RenderCopy(systeme->renderer, systeme->noir, NULL, &systeme->pecran);
-				SDL_RenderCopy(systeme->renderer, ui->ttextedialogue, NULL, &systeme->pecran);
-				SDL_RenderPresent(systeme->renderer);
-				SDL_Delay(1000);
-				
-				BTLstr->continuer = BTL_LOST;
+				JoueurToucher(BTLstr, systeme, perso, ui, index);
+			}
+			else
+			{
+				BTLstr->premiercoup[index] = 0;
 			}
 		}
-		else if (BTLstr->ennemi[index].vie > 0 && arcademode == false)
-		{}
 		else if (BTLstr->ennemi[index].ontheway == 1 && BTLstr->ennemi[index].position.x < systeme->screenw)
 		{
 			BTLstr->ennemi[index].wayx += BTLstr->ennemi[index].dx;
@@ -615,7 +590,7 @@ void COMBATgestionOBJETsol(typecombat *BTLstr, DIVERSsysteme *systeme, PACKrecom
 	}
 }
 
-void syncdata(typecombat *BTLstr, PERSO *perso)
+void SyncData(typecombat *BTLstr, PERSO *perso)
 {
 	BTLstr->pcurseur.x = BTLstr->px;
 	BTLstr->pcurseur.y = BTLstr->py;
@@ -624,4 +599,33 @@ void syncdata(typecombat *BTLstr, PERSO *perso)
 	
 	perso->BarreDeVie->position.x = BTLstr->Pperso.x;
 	perso->BarreDeVie->position.y = BTLstr->Pperso.y -20;
+	perso->BarreDeVie->position.w = CalculerBarreDeVie(perso->lifemax, perso->life, BTLstr->Pperso.w);
+}
+
+int CalculerBarreDeVie(int VieDeBase, int VieActuelle, int width)
+{
+	return (VieDeBase / width) * VieActuelle;
+}
+
+void JoueurToucher(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso, DIVERSui *ui, int id)
+{
+	if (perso->life > 0)
+	{
+		Hitboxjoueur (BTLstr, perso, id);
+		BTLstr->premiercoup[id] = 1;
+	}
+	else
+	{
+		char score[20];
+		sprintf(score,"%d",BTLstr->arcadescore);
+		
+		ui->ttextedialogue = fenetredialogue(systeme->screenw*0.4, systeme->screenh*0.8, &ui->pdialogue, &ui->ptextedialogue, score, BLANC, systeme);
+		ui->dialogueactif = 1;
+		SDL_RenderCopy(systeme->renderer, systeme->noir, NULL, &systeme->pecran);
+		SDL_RenderCopy(systeme->renderer, ui->ttextedialogue, NULL, &systeme->pecran);
+		SDL_RenderPresent(systeme->renderer);
+		SDL_Delay(1000);
+		
+		BTLstr->continuer = BTL_LOST;
+	}
 }

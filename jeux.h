@@ -20,7 +20,7 @@ typedef struct DIVERSui DIVERSui;
 
 float combat (float vie, struct RAT *rat, DIVERSsysteme *systeme, PERSO *perso, DIVERSinventaire *inventaire, PACKrecompense *recompense
 				, PACKobjet *objet, DIVERSui *ui, bool arcademode);
-int Hitboxjoueur (SDL_Rect pmob, SDL_Rect pperso, float *ptrvie, PERSO *perso);
+void Hitboxjoueur (typecombat *BTLstr, PERSO *perso, int id);
 
 void afficherCOMBAT(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso, RAT *rat,
                     DIVERSinventaire *inventaire, PACKobjet *objet, bool arcademode);
@@ -28,14 +28,17 @@ void afficherCOMBAT(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso, RA
 void COMBATgestionCLICetCOLISION (typecombat *BTLstr, DIVERSui *ui);
 void COMBATgestionDEGAT (typecombat *BTLstr, DIVERSui *ui);
 void COMBATgestionENNEMI(typecombat *BTLstr, struct RAT *rat, DIVERSsysteme *systeme);
-void COMBATgestionOBJETsol(typecombat *BTLstr, DIVERSsysteme *systeme, PACKrecompense *recompense, bool arcademode, DIVERSui *ui);
-
+void COMBATgestionOBJETsol(typecombat *BTLstr, DIVERSsysteme *systeme, PACKrecompense *recompense, bool arcademode,
+							DIVERSui *ui, PERSO *perso);
+							
 void COMBATanimationPERSO(typecombat *BTLstr);
 void COMBATanimationMOB(typecombat *BTLstr);
 void COMBATanimationOBJET(typecombat *BTLstr);
 
 void ADDloot(PACKrecompense *recompense, int id, int nombre);
 void ajoutermonstre(typecombat *BTLstr, DIVERSsysteme *systeme);
-void syncdata(typecombat *BTLstr, PERSO *perso);
+void SyncData(typecombat *BTLstr, PERSO *perso);
+int CalculerBarreDeVie(int VieDeBase, int VieActuelle, int width);
+void JoueurToucher(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso, DIVERSui *ui, int id);
 
 #endif
