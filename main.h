@@ -7,7 +7,7 @@
 //#####     OS     ######//
 #define WINDOWS 0
 //####logging rapide#####//
-#define FASTLOG 1
+#define FASTLOG 0
 //#######################//
 
 #define LOOTMAX 50
@@ -49,6 +49,12 @@ enum{BLANC, ROUGE, GRIS, NOIR, VERT, BLEU};
 enum{UP, UPRIGHT, RIGHT, RIGHTDOWN, DOWN, DOWNLEFT, LEFT, LEFTUP};
 enum{UNUSED, GO, RUNNING, STOP};
 
+struct BARREVIE
+{
+	SDL_Texture *texture;
+	SDL_Rect position;
+	int life;
+};
 struct GRILLE
 {
 	unsigned int value : 1;
@@ -168,6 +174,8 @@ struct EMPLACEMENT
 
 struct PERSO
 {
+	struct BARREVIE *BarreDeVie;
+	
 	int lifemax;
 	char slife[50];
 	int stuff[7];

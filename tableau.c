@@ -9,6 +9,7 @@
 #include "main.h"
 #include "image.h"
 #include "objet.h"
+#include "tool.h"
 
 typedef struct plan plan;
 typedef struct PACKobjet PACKobjet;
@@ -27,6 +28,7 @@ typedef struct DIVERSmap DIVERSmap;
 typedef struct PACKrecompense PACKrecompense;
 typedef struct typeFORevent typeFORevent;
 typedef struct typeFORthreads typeFORthreads;
+typedef struct BARREVIE BARREVIE;
 
 
 int TotalTableauInt(int *ptrTableau, int nbcase)
@@ -448,6 +450,8 @@ void initperso(PERSO *perso, DIVERSsysteme *systeme)//														perso
 	perso->tforce = imprime (string, systeme->screenw, BLANC, systeme, NULL);
 	sprintf(string, "portee :");
 	perso->tportee = imprime (string, systeme->screenw, BLANC, systeme, NULL);
+	
+	perso->BarreDeVie = AddLifeBar(100, perso->pperso.w, systeme);
 }
 
 void initdeplacement(DIVERSdeplacement *deplacement, DIVERSsysteme *systeme)//								deplacement
@@ -1001,7 +1005,6 @@ void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, float vi
 		BTLstr->pballe[index].w = systeme->screenw*0.0146;
 		BTLstr->pballe[index].h = systeme->screenh*0.026;
 	}
-
 
 	BTLstr->pecran.x = 0;
 	BTLstr->pecran.y = 0;

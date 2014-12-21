@@ -3,6 +3,7 @@
 
 #include <SDL2/SDL_ttf.h>
 
+typedef struct BARREVIE BARREVIE;
 typedef struct plan plan;
 typedef struct PACKobjet PACKobjet;
 typedef struct PACKbouton PACKbouton;

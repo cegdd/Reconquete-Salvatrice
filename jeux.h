@@ -20,7 +20,6 @@ typedef struct DIVERSui DIVERSui;
 
 float combat (float vie, struct RAT *rat, DIVERSsysteme *systeme, PERSO *perso, DIVERSinventaire *inventaire, PACKrecompense *recompense
 				, PACKobjet *objet, DIVERSui *ui, bool arcademode);
-
 int Hitboxjoueur (SDL_Rect pmob, SDL_Rect pperso, float *ptrvie, PERSO *perso);
 
 void afficherCOMBAT(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso, RAT *rat,
@@ -37,5 +36,6 @@ void COMBATanimationOBJET(typecombat *BTLstr);
 
 void ADDloot(PACKrecompense *recompense, int id, int nombre);
 void ajoutermonstre(typecombat *BTLstr, DIVERSsysteme *systeme);
+void syncdata(typecombat *BTLstr, PERSO *perso);
 
 #endif

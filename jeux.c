@@ -62,10 +62,8 @@ float combat (float vie, struct RAT *rat, struct DIVERSsysteme *systeme, PERSO *
 			SDL_GetMouseState(&BTLstr.px, &BTLstr.py);
 
 			//actualisation des coordonées
-			BTLstr.pcurseur.x = BTLstr.px;
-			BTLstr.pcurseur.y = BTLstr.py;
-			BTLstr.canonx = BTLstr.Pperso.x + (BTLstr.Pperso.w/2);
-			BTLstr.canony = BTLstr.Pperso.y + (BTLstr.Pperso.h/2);
+			syncdata(&BTLstr, perso);
+			
 			//gestion des attaques
 			COMBATgestionCLICetCOLISION (&BTLstr, ui);
 
@@ -253,8 +251,13 @@ void afficherCOMBAT(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso,
 		//si elles sont mortes et pas ramasser
 		else if (BTLstr->ennemi[index].vie <= 0 && BTLstr->ennemi[index].looted == 0)
 		{
-			calcul =90+(45 * BTLstr->ennemi[index].Direction);
-			SDL_RenderCopyEx(systeme->renderer,rat->texture[2], NULL, &BTLstr->ennemi[index].position, calcul,NULL, SDL_FLIP_NONE);
+			if (arcademode == false)
+			{
+				calcul =90+(45 * BTLstr->ennemi[index].Direction);
+				SDL_RenderCopyEx(systeme->renderer,rat->texture[2], NULL, &BTLstr->ennemi[index].position, calcul,NULL, SDL_FLIP_NONE);
+			}
+			else
+			{				SDL_RenderCopyEx(systeme->renderer,BTLstr->piece, NULL, &BTLstr->ennemi[index].position, calcul,NULL, SDL_FLIP_NONE);}
 		}
 	}
 	for (index = 0; index < BTLstr->NBennemi ; index++)
@@ -280,7 +283,10 @@ void afficherCOMBAT(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso,
     {
         SDL_RenderCopyEx(systeme->renderer, perso->tperso, &perso->spriteup[BTLstr->indexanimperso], &BTLstr->Pperso, degre,NULL, SDL_FLIP_NONE);
     }
-
+    //barre de vie
+    SDL_RenderCopy(systeme->renderer, perso->BarreDeVie->texture, NULL, &perso->BarreDeVie->position);
+    
+	//projectiles
 	for(index = 0 ; index < NBcailloux ; index++)
 	{
 		if (BTLstr->DepartBalle[index] == RUNNING)
@@ -340,7 +346,7 @@ int Hitboxjoueur (SDL_Rect pmob, SDL_Rect pperso, float *ptrvie, PERSO *perso)
 
 void COMBATgestionCLICetCOLISION (typecombat *BTLstr, DIVERSui *ui)
 {
-    if (ui->casestuff[ARME].IDobjet == 3)
+    if (BTLstr->letirdemander == true && ui->casestuff[ARME].IDobjet == 3)
     {
         gestiontir(BTLstr);
         COMBATgestionprojectile(BTLstr);
@@ -354,7 +360,7 @@ void COMBATgestionDEGAT (typecombat *BTLstr, DIVERSui *ui)
 
 	for (index = 0; index < BTLstr->NBennemi ; index++)
 	{
-		if(BTLstr->ennemi[index].vie > 0 && BTLstr->letirdemander == true)
+		if(BTLstr->ennemi[index].vie > 0)
 		{
 		    BTLstr->ResultatHitbox = -1;//initialisation
 
@@ -395,16 +401,16 @@ void COMBATanimationPERSO(typecombat *BTLstr)
 		{
 			BTLstr->tempsanimationjoueur = BTLstr->temps;
 			BTLstr->indexanimperso++;
-			if(BTLstr->indexanimperso >= 2)
+			if(BTLstr->indexanimperso >= 8)
 			{
 				BTLstr->indexanimperso = 0;
 			}
 		}
 		else
 		{
-			BTLstr->indexanimperso = 2;
+			BTLstr->indexanimperso = 0;
 		}
-	}
+	} 
 }
 
 void COMBATanimationMOB(typecombat *BTLstr)
@@ -607,4 +613,15 @@ void COMBATgestionOBJETsol(typecombat *BTLstr, DIVERSsysteme *systeme, PACKrecom
 			}
 		}
 	}
+}
+
+void syncdata(typecombat *BTLstr, PERSO *perso)
+{
+	BTLstr->pcurseur.x = BTLstr->px;
+	BTLstr->pcurseur.y = BTLstr->py;
+	BTLstr->canonx = BTLstr->Pperso.x + (BTLstr->Pperso.w/2);
+	BTLstr->canony = BTLstr->Pperso.y + (BTLstr->Pperso.h/2);
+	
+	perso->BarreDeVie->position.x = BTLstr->Pperso.x;
+	perso->BarreDeVie->position.y = BTLstr->Pperso.y -20;
 }

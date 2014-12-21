@@ -7,6 +7,7 @@
 
 typedef struct DIVERSsysteme DIVERSsysteme;
 typedef struct typecombat typecombat;
+typedef struct BARREVIE BARREVIE;
 
 void DrawTestGrid(typecombat *BTLstr, DIVERSsysteme *systeme)
 {
@@ -71,4 +72,17 @@ void UnWriteCircleTestGrid (typecombat *BTLstr, SDL_Point *middle, int width)
             }
         }
     }
+}
+
+BARREVIE* AddLifeBar(int life, int lenght, DIVERSsysteme *systeme)
+{
+	BARREVIE *new = malloc(sizeof(BARREVIE));
+	
+	new->life = life;
+	new->texture = systeme->noir;
+	new->position.x = -1;
+	new->position.y = -1;
+	new->position.w = lenght;
+	new->position.h = 5;
+	return new;
 }
