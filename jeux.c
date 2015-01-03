@@ -258,7 +258,11 @@ void afficherCOMBAT(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso,
 				SDL_RenderCopyEx(systeme->renderer,rat->texture[2], NULL, &BTLstr->ennemi[index].position, calcul,NULL, SDL_FLIP_NONE);
 			}
 			else
-			{	SDL_RenderCopyEx(systeme->renderer,BTLstr->piece, NULL, &BTLstr->ennemi[index].position, calcul,NULL, SDL_FLIP_NONE);}
+			{	
+				BTLstr->ennemi[index].position.w = 50;
+				BTLstr->ennemi[index].position.h = 50;
+				SDL_RenderCopy(systeme->renderer,BTLstr->piece, NULL, &BTLstr->ennemi[index].position);
+			}
 		}
 	}
 	for (index = 0; index < BTLstr->NBennemi ; index++)
