@@ -881,7 +881,7 @@ void initonline(typeFORthreads *online, DIVERSsysteme *systeme)
 
 }
 
-void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, float vie, struct DIRECTION *direction, bool arcademode)
+void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, struct DIRECTION *direction, bool arcademode)
 {
 	int index, index2;
 	BTLstr->continuer = -1;
@@ -1037,8 +1037,5 @@ void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, float vi
 	BTLstr->balle = LoadingImage			("rs/images/balle.png", 0, systeme);
 	BTLstr->piece = LoadingImage			("rs/images/piece.png", 0, systeme);
 	BTLstr->peau = LoadingImage			    ("rs/objets/0#0.png", 0, systeme);
-
-	sprintf(BTLstr->StringVie, "vie de %s : %.1f", systeme->sauvegarde[0], vie);
-	BTLstr->tVie = imprime (BTLstr->StringVie, systeme->screenw*0.35, NOIR, systeme, NULL);
 }
 

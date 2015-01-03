@@ -40,5 +40,6 @@ void ajoutermonstre(typecombat *BTLstr, DIVERSsysteme *systeme);
 void SyncData(typecombat *BTLstr, PERSO *perso);
 int CalculerBarreDeVie(int VieDeBase, int VieActuelle, int width);
 void JoueurToucher(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso, DIVERSui *ui, int id);
+int JoueurMort(typecombat *BTLstr, DIVERSsysteme *systeme, DIVERSui *ui);
 
 #endif

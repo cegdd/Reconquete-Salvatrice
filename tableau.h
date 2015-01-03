@@ -47,6 +47,6 @@ void initFORevent(typeFORevent *FORevent, PACKobjet *objet, PACKbouton *bouton, 
 				PERSO *perso, PACKpnj *pnj);
 void initonline(typeFORthreads *online, DIVERSsysteme *systeme);
 
-void initcombatstore(typecombat *BTLstr, DIVERSsysteme *systeme, float vie, DIRECTION *direction, bool arcademode);
+void initcombatstore(typecombat *BTLstr, DIVERSsysteme *systeme, DIRECTION *direction, bool arcademode);
 
 #endif
