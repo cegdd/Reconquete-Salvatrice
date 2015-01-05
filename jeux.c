@@ -289,6 +289,7 @@ void afficherCOMBAT(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso,
         SDL_RenderCopyEx(systeme->renderer, perso->tperso, &perso->spriteup[BTLstr->indexanimperso], &BTLstr->Pperso, degre,NULL, SDL_FLIP_NONE);
     }
     //barre de vie
+    SDL_RenderCopy(systeme->renderer, perso->BarreDeVie->BGtexture, NULL, &perso->BarreDeVie->BGposition);
     SDL_RenderCopy(systeme->renderer, perso->BarreDeVie->texture, NULL, &perso->BarreDeVie->position);
     
 	//projectiles
@@ -605,21 +606,29 @@ void SyncData(typecombat *BTLstr, PERSO *perso)
 	perso->BarreDeVie->position.x = BTLstr->Pperso.x;
 	perso->BarreDeVie->position.y = BTLstr->Pperso.y -20;
 	perso->BarreDeVie->position.w = CalculerBarreDeVie(perso->lifemax, perso->life, BTLstr->Pperso.w);
+	perso->BarreDeVie->BGposition.x = perso->BarreDeVie->position.x - 1;
+	perso->BarreDeVie->BGposition.y = perso->BarreDeVie->position.y - 1;
 }
 
 int CalculerBarreDeVie(int VieDeBase, int VieActuelle, int width)
 {
-	return (VieDeBase / width) * VieActuelle;
+	return ((float)width / (float)VieDeBase) * (float)VieActuelle;
 }
 
 int JoueurMort(typecombat *BTLstr, DIVERSsysteme *systeme, DIVERSui *ui)
 {
-	char score[20];
+	char score[20];/*
+	SDL_Rect posBG;
+	posBG.x = (systeme->pecran.w/2) - 200;
+	posBG.w = (systeme->pecran.w/2);
+	posBG.y = (systeme->pecran.h/2) - 400;
+	posBG.h = (systeme->pecran.h/4)*3;*/
+	
 	sprintf(score,"%d",BTLstr->arcadescore);
 	
 	ui->ttextedialogue = fenetredialogue(systeme->screenw*0.4, systeme->screenh*0.8, &ui->pdialogue, &ui->ptextedialogue, score, BLANC, systeme);
 	ui->dialogueactif = 1;
-	SDL_RenderCopy(systeme->renderer, systeme->noir, NULL, &systeme->pecran);
+	SDL_RenderCopy(systeme->renderer, systeme->BG, NULL, &systeme->pecran);
 	SDL_RenderCopy(systeme->renderer, ui->ttextedialogue, NULL, &systeme->pecran);
 	SDL_RenderPresent(systeme->renderer);
 	SDL_Delay(1000);

@@ -516,6 +516,7 @@ void initsystem(DIVERSsysteme *systeme)//																	systeme
 	systeme->pointeur = LoadingImage				("rs/images/p.png", 0, systeme);
 	systeme->BGmort = LoadingImage				("rs/fonds/mort.png", 0, systeme);
 	systeme->BG = LoadingImage	("rs/ui/BG.png", 0, systeme);
+	systeme->BGblanc = LoadingImage	("rs/ui/bgb.png", 0, systeme);
 	systeme->noir = LoadingImage	("rs/images/noir.png", 0, systeme);
 
 	systeme->police = TTF_OpenFont("rs/divers/dalek.ttf", TAILLEPOLICE);

@@ -52,7 +52,10 @@ enum{UNUSED, GO, RUNNING, STOP};
 struct BARREVIE
 {
 	SDL_Texture *texture;
+	SDL_Texture *BGtexture;
 	SDL_Rect position;
+	SDL_Rect BGposition;
+	
 	int life;
 };
 struct GRILLE
@@ -312,6 +315,7 @@ struct DIVERSsysteme
     SDL_Texture *pointeur;
     SDL_Texture *BGmort;
     SDL_Texture *BG;
+    SDL_Texture *BGblanc;
     SDL_Texture *noir;
 
     SDL_Event evenement;

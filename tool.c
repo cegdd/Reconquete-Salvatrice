@@ -80,9 +80,12 @@ BARREVIE* AddLifeBar(int life, int lenght, DIVERSsysteme *systeme)
 	
 	new->life = life;
 	new->texture = systeme->noir;
+	new->BGtexture = systeme->BGblanc;
 	new->position.x = -1;
 	new->position.y = -1;
 	new->position.w = lenght;
 	new->position.h = 5;
+	new->BGposition.w = lenght+2;
+	new->BGposition.h = 7;
 	return new;
 }
