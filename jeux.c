@@ -38,7 +38,7 @@ float combat (float vie, struct RAT *rat, struct DIVERSsysteme *systeme, PERSO *
 	{
 		BTLstr.ptVie.h = systeme->screenh*0.2;
 		BTLstr.ptVie.w = systeme->screenw*0.6;
-		perso->life = 100;
+		perso->life = 0;// should be 100
 	}
 
 	while (BTLstr.continuer == -1)
@@ -617,21 +617,18 @@ int CalculerBarreDeVie(int VieDeBase, int VieActuelle, int width)
 
 int JoueurMort(typecombat *BTLstr, DIVERSsysteme *systeme, DIVERSui *ui)
 {
-	char score[20];/*
-	SDL_Rect posBG;
-	posBG.x = (systeme->pecran.w/2) - 200;
-	posBG.w = (systeme->pecran.w/2);
-	posBG.y = (systeme->pecran.h/2) - 400;
-	posBG.h = (systeme->pecran.h/4)*3;*/
+	char score[20];
+	SDL_Texture *tscore;
+	SDL_Rect pBG, pscore;
 	
 	sprintf(score,"%d",BTLstr->arcadescore);
 	
-	ui->ttextedialogue = fenetredialogue(systeme->screenw*0.4, systeme->screenh*0.8, &ui->pdialogue, &ui->ptextedialogue, score, BLANC, systeme);
+	tscore = fenetredialogue(systeme->pecran.w/3, systeme->pecran.h*0.911, &pBG, &pscore, score, BLANC, systeme);
 	ui->dialogueactif = 1;
-	SDL_RenderCopy(systeme->renderer, systeme->BG, NULL, &systeme->pecran);
-	SDL_RenderCopy(systeme->renderer, ui->ttextedialogue, NULL, &systeme->pecran);
+	SDL_RenderCopy(systeme->renderer, systeme->BG, NULL, &pBG);
+	SDL_RenderCopy(systeme->renderer, tscore, NULL, &pscore);
 	SDL_RenderPresent(systeme->renderer);
-	SDL_Delay(1000);
+	SDL_Delay(5000);
 	
 	BTLstr->continuer = BTL_LOST;
 	return 0;

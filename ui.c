@@ -162,12 +162,24 @@ void gestionui (DIVERSsysteme *systeme, DIVERSui *ui, DIVERScraft *craft, PACKbo
 
 SDL_Texture *fenetredialogue(int x, int y, SDL_Rect* pdialogue, SDL_Rect* ptextedialogue, char texte[],
 							int couleur, DIVERSsysteme *systeme)
-{
-	pdialogue->x = (systeme->screenw-x)/2;      pdialogue->y = (systeme->screenh-y)/2;       pdialogue->w = x;       pdialogue->h = y;
-	SDL_Texture *tdialogue = NULL;
-		ptextedialogue->x = pdialogue->x+20;      ptextedialogue->y = pdialogue->y+10;       ptextedialogue->w = x-70;       ptextedialogue->h = y-60;
-		return imprime(texte, x, couleur, systeme, NULL);
-	return tdialogue;
+{//pdialogue is the background and ptextedialogue is the text inside.
+//just set "x" and "y" and everything will be automaticaly set up.
+
+	SDL_Texture *texture;
+	int lenght;
+	texture = imprime(texte, x, couleur, systeme, &lenght);
+	
+	pdialogue->x = (systeme->screenw-x)/2;
+	pdialogue->y = (systeme->screenh-y)/2;
+	pdialogue->w = x;
+	pdialogue->h = y;
+	
+	ptextedialogue->w = lenght;
+	ptextedialogue->x = pdialogue->x + (pdialogue->w/2) - (lenght/2);
+	ptextedialogue->y = pdialogue->y + 10;
+	ptextedialogue->h = 25;
+	
+	return texture;
 }
 
 void testcoin(DIVERSsysteme *systeme, DIVERSui *ui, DIVERSchat *chat, DIVERSinventaire *inventaire)
