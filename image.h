@@ -10,7 +10,7 @@ SDL_Texture* LoadingImage(char* emplacement, int transparence, DIVERSsysteme *sy
 Uint32 obtenirPixel(SDL_Surface *surface[], int pixx, int pixy);
 Uint32 obtenirPixel2(SDL_Surface *surface, int pixx, int pixy);
 void chargement (DIVERSsysteme *systeme);
-SDL_Texture* imprime (char s[], int len, int couleur, DIVERSsysteme *systeme, int *lenghtRetour);
+SDL_Texture* imprime (char s[], int len, int couleur, DIVERSsysteme *systeme, int *LenghtReturn, int *HighReturn);
 void ANIMmort (DIVERSsysteme *systeme);
 
 #endif

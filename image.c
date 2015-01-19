@@ -113,7 +113,7 @@ void chargement (DIVERSsysteme *systeme)
     SDL_RenderPresent(systeme->renderer);
 }
 
-SDL_Texture* imprime (char s[], int len, int couleur, DIVERSsysteme *systeme, int *lenghtRetour)
+SDL_Texture* imprime (char s[], int len, int couleur, DIVERSsysteme *systeme, int *LenghtReturn, int *HighReturn)
 {
 
     SDL_Surface *SurfTemp = NULL;
@@ -150,9 +150,9 @@ SDL_Texture* imprime (char s[], int len, int couleur, DIVERSsysteme *systeme, in
     }
     SDL_Texture *TextureTemp = SDL_CreateTextureFromSurface(systeme->renderer, SurfTemp);
 
-    if (lenghtRetour != NULL)
+    if (LenghtReturn != NULL && HighReturn)
     {
-        SDL_QueryTexture(TextureTemp, NULL, NULL, lenghtRetour, NULL);
+        SDL_QueryTexture(TextureTemp, NULL, NULL, LenghtReturn, HighReturn);
     }
     SDL_FreeSurface(SurfTemp);
 	return TextureTemp;

@@ -167,7 +167,7 @@ SDL_Texture *fenetredialogue(int x, int y, SDL_Rect* pdialogue, SDL_Rect* ptexte
 
 	SDL_Texture *texture;
 	int lenght;
-	texture = imprime(texte, x, couleur, systeme, &lenght);
+	texture = imprime(texte, x, couleur, systeme, &lenght, NULL);
 	
 	pdialogue->x = (systeme->screenw-x)/2;
 	pdialogue->y = (systeme->screenh-y)/2;
@@ -334,13 +334,15 @@ void afficherCRAFT(DIVERScraft *craft, DIVERSui *ui, PACKbouton *bouton, PACKobj
 				if (inventaire->totalID[objet->PLANstuff[craft->bcraftactif][craft->planactif].compoID[index]] >= objet->PLANstuff[craft->bcraftactif][craft->planactif].compoNB[index])
 				{
 					//objet dispo
-					craft->tcomponame[index] = imprime (objet->PLANstuff[craft->bcraftactif][craft->planactif].textecompo[index], systeme->screenw, VERT, systeme, NULL);
+					craft->tcomponame[index] = imprime (objet->PLANstuff[craft->bcraftactif][craft->planactif].textecompo[index],
+						systeme->screenw, VERT, systeme, NULL, NULL);
 					objet->PLANstuff[craft->bcraftactif][craft->planactif].compodispo[index] = true;
 				}
 				else
 				{
 					//objet pas dispo
-					craft->tcomponame[index] = imprime (objet->PLANstuff[craft->bcraftactif][craft->planactif].textecompo[index], systeme->screenw, ROUGE, systeme, NULL);
+					craft->tcomponame[index] = imprime (objet->PLANstuff[craft->bcraftactif][craft->planactif].textecompo[index],
+						systeme->screenw, ROUGE, systeme, NULL, NULL);
 					objet->PLANstuff[craft->bcraftactif][craft->planactif].compodispo[index] = false;
 				}
 
@@ -437,7 +439,7 @@ void afficherINVENTAIRE(DIVERSinventaire *inventaire, DIVERSui *ui, PACKobjet *o
 				{
 					sprintf (snbobjet, "%d", objet->sac1[index].NBobjet);
 					SDL_DestroyTexture(inventaire->tnbobjet);
-					inventaire->tnbobjet = imprime(snbobjet, systeme->screenw, ROUGE, systeme, NULL);
+					inventaire->tnbobjet = imprime(snbobjet, systeme->screenw, ROUGE, systeme, NULL, NULL);
 					SDL_RenderCopy	(systeme->renderer, inventaire->tnbobjet, NULL, &inventaire->pnbobjet[index]);
 				}
 			}

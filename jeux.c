@@ -109,7 +109,7 @@ float combat (float vie, struct RAT *rat, struct DIVERSsysteme *systeme, PERSO *
 			{
 								sprintf(BTLstr.StringVie, "fps : %d", fps);
 			}
-			BTLstr.tVie = imprime (BTLstr.StringVie, systeme->screenw*0.3, NOIR, systeme, NULL);
+			BTLstr.tVie = imprime (BTLstr.StringVie, systeme->screenw*0.3, NOIR, systeme, NULL, NULL);
 			fps = 0;
 			BTLstr.tempsseconde = BTLstr.temps;
 
@@ -621,7 +621,7 @@ int JoueurMort(typecombat *BTLstr, DIVERSsysteme *systeme, DIVERSui *ui)
 	SDL_Texture *tscore;
 	SDL_Rect pBG, pscore;
 	
-	sprintf(score,"%d",BTLstr->arcadescore);
+	sprintf(score,"%d\n%d",BTLstr->arcadescore ,BTLstr->arcadescore);
 	
 	tscore = fenetredialogue(systeme->pecran.w/3, systeme->pecran.h*0.911, &pBG, &pscore, score, BLANC, systeme);
 	ui->dialogueactif = 1;

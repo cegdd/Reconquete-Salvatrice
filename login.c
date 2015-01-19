@@ -285,8 +285,8 @@ void InitLoginStore(typelogin *loginstore, DIVERSsysteme *systeme)
 {
 	loginstore->police = TTF_OpenFont("rs/divers/police1.ttf", 32);
 
-	loginstore->pseudo.texture = imprime ("pseudo :", systeme->screenw, BLEU, systeme, &loginstore->pseudo.lenght);
-	loginstore->mdp.texture = imprime ("mot de passe :", systeme->screenw, BLEU, systeme, &loginstore->mdp.lenght);
+	loginstore->pseudo.texture = imprime ("pseudo :", systeme->screenw, BLEU, systeme, &loginstore->pseudo.lenght, NULL);
+	loginstore->mdp.texture = imprime ("mot de passe :", systeme->screenw, BLEU, systeme, &loginstore->mdp.lenght, NULL);
 
 	loginstore->couleurNoir.r = 0;
 	loginstore->couleurNoir.g = 0;
@@ -528,10 +528,10 @@ void affichageloggin(typelogin *loginstore, DIVERSsysteme *systeme, bouton *opti
     //mot de passe et pseudo
 
     if (loginstore->mdpcacher == 0)
-    {   loginstore->LEmdp.texture = imprime(systeme->sauvegarde[1], systeme->screenw, NOIR, systeme, &loginstore->LEmdp.lenght);}
+    {   loginstore->LEmdp.texture = imprime(systeme->sauvegarde[1], systeme->screenw, NOIR, systeme, &loginstore->LEmdp.lenght, NULL);}
     else
-    {   loginstore->LEmdp.texture = imprime(loginstore->mdpshow, systeme->screenw, NOIR, systeme, &loginstore->LEmdp.lenght);}
-    loginstore->LEpseudo.texture = imprime(systeme->sauvegarde[0], systeme->screenw, NOIR, systeme, &loginstore->LEpseudo.lenght);
+    {   loginstore->LEmdp.texture = imprime(loginstore->mdpshow, systeme->screenw, NOIR, systeme, &loginstore->LEmdp.lenght, NULL);}
+    loginstore->LEpseudo.texture = imprime(systeme->sauvegarde[0], systeme->screenw, NOIR, systeme, &loginstore->LEpseudo.lenght, NULL);
 
     loginstore->LEpseudo.position.w = loginstore->LEpseudo.lenght;
     loginstore->LEmdp.position.w = loginstore->LEmdp.lenght;

@@ -80,7 +80,7 @@ void initinventaire(DIVERSinventaire *inventaire, DIVERSsysteme *systeme)//					
 
 	char nom[32];
 	sprintf(nom, "clic droit : équiper");
-	inventaire->taideclicdroit = imprime (nom, systeme->screenw, GRIS, systeme, NULL);
+	inventaire->taideclicdroit = imprime (nom, systeme->screenw, GRIS, systeme, NULL, NULL);
 	SDL_QueryTexture(inventaire->taideclicdroit, NULL, NULL, &inventaire->LARGEURaideclicdroit, NULL);
 
 	inventaire->puiinventaire.x = systeme->screenw-50;
@@ -241,46 +241,46 @@ void initobjet(PACKobjet *objet, DIVERSsysteme *systeme, DIVERScraft *craft)//		
 		if(objet->objet[index].def != 0)
 		{
 			sprintf(nom, "défense : %d", objet->objet[index].def);
-			objet->objet[index].texturedef = imprime (nom, systeme->screenw, BLANC, systeme, NULL);
+			objet->objet[index].texturedef = imprime (nom, systeme->screenw, BLANC, systeme, NULL, NULL);
 			SDL_QueryTexture(objet->objet[index].texturedef, NULL, NULL, &objet->objet[index].LARGEURdef, NULL);
 		}
 		if(objet->objet[index].life != 0)
 		{
 			sprintf(nom, "santé : +%d", objet->objet[index].life);
-			objet->objet[index].texturelife = imprime (nom, systeme->screenw, BLANC, systeme, NULL);
+			objet->objet[index].texturelife = imprime (nom, systeme->screenw, BLANC, systeme, NULL, NULL);
 			SDL_QueryTexture(objet->objet[index].texturelife, NULL, NULL, &objet->objet[index].LARGEURlife, NULL);
 		}
 		if(objet->objet[index].regenlife != 0)
 		{
 			sprintf(nom, "régénération : %d/sec", objet->objet[index].regenlife);
-			objet->objet[index].textureregenlife = imprime (nom, systeme->screenw, BLANC, systeme, NULL);
+			objet->objet[index].textureregenlife = imprime (nom, systeme->screenw, BLANC, systeme, NULL, NULL);
 			SDL_QueryTexture(objet->objet[index].textureregenlife, NULL, NULL, &objet->objet[index].LARGEURregenlife, NULL);
 		}
 
 		if(objet->objet[index].force != 0)
 		{
 			sprintf(nom, "force : %d", objet->objet[index].force);
-			objet->objet[index].textureforce = imprime (nom, systeme->screenw, BLANC, systeme, NULL);
+			objet->objet[index].textureforce = imprime (nom, systeme->screenw, BLANC, systeme, NULL, NULL);
 			SDL_QueryTexture(objet->objet[index].textureforce, NULL, NULL, &objet->objet[index].LARGEURforce, NULL);
 		}
 
 		if(objet->objet[index].portee != 0)
 		{
 			sprintf(nom, "portee : +%d%%", objet->objet[index].portee);
-			objet->objet[index].textureportee = imprime (nom, systeme->screenw, BLANC, systeme, NULL);
+			objet->objet[index].textureportee = imprime (nom, systeme->screenw, BLANC, systeme, NULL, NULL);
 			SDL_QueryTexture(objet->objet[index].textureportee, NULL, NULL, &objet->objet[index].LARGEURportee, NULL);
 		}
 
 		sprintf(nom, "%d", objet->objet[index].empilage);
-		objet->objet[index].texturenombre = imprime (nom, systeme->screenw, ROUGE, systeme, NULL);
+		objet->objet[index].texturenombre = imprime (nom, systeme->screenw, ROUGE, systeme, NULL, NULL);
 
 		objet->objet[index].texturenom[0] = NULL;
 		objet->objet[index].texturenom[1] = NULL;
 		objet->objet[index].texturenom[2] = NULL;
 
-		objet->objet[index].texturenom[0] = imprime (objet->objet[index].nom, systeme->screenw, BLANC, systeme, NULL);
-		objet->objet[index].texturenom[1] = imprime (objet->objet[index].nom, systeme->screenw, GRIS, systeme, NULL);
-		objet->objet[index].texturenom[2] = imprime (objet->objet[index].nom, systeme->screenw, ROUGE, systeme, NULL);
+		objet->objet[index].texturenom[0] = imprime (objet->objet[index].nom, systeme->screenw, BLANC, systeme, NULL, NULL);
+		objet->objet[index].texturenom[1] = imprime (objet->objet[index].nom, systeme->screenw, GRIS, systeme, NULL, NULL);
+		objet->objet[index].texturenom[2] = imprime (objet->objet[index].nom, systeme->screenw, ROUGE, systeme, NULL, NULL);
 		SDL_QueryTexture(objet->objet[index].texturenom[0], NULL, NULL, &objet->objet[index].LARGEURnom, NULL);
 	}
 
@@ -415,8 +415,8 @@ void initperso(PERSO *perso, DIVERSsysteme *systeme)//														perso
 	perso->spriteup[7].x = 146;
 	perso->spriteup[7].y = 194;
 
-	perso->tpseudo = imprime (systeme->sauvegarde[0], systeme->screenw,BLANC, systeme, NULL);
-	perso->tlife = imprime (perso->slife, systeme->screenw, BLANC, systeme, NULL);
+	perso->tpseudo = imprime (systeme->sauvegarde[0], systeme->screenw,BLANC, systeme, NULL, NULL);
+	perso->tlife = imprime (perso->slife, systeme->screenw, BLANC, systeme, NULL, NULL);
 
 	perso->pperso.w = 68;
 	perso->pperso.h = 51;
@@ -443,13 +443,13 @@ void initperso(PERSO *perso, DIVERSsysteme *systeme)//														perso
 		perso->stuff[index] = 0;
 	}
 	sprintf(string, "defense :");
-	perso->tdefense = imprime (string, systeme->screenw, BLANC, systeme, NULL);
+	perso->tdefense = imprime (string, systeme->screenw, BLANC, systeme, NULL, NULL);
 	sprintf(string, "regen vie :");
-	perso->tregenlife = imprime (string, systeme->screenw, BLANC, systeme, NULL);
+	perso->tregenlife = imprime (string, systeme->screenw, BLANC, systeme, NULL, NULL);
 	sprintf(string, "force :");
-	perso->tforce = imprime (string, systeme->screenw, BLANC, systeme, NULL);
+	perso->tforce = imprime (string, systeme->screenw, BLANC, systeme, NULL, NULL);
 	sprintf(string, "portee :");
-	perso->tportee = imprime (string, systeme->screenw, BLANC, systeme, NULL);
+	perso->tportee = imprime (string, systeme->screenw, BLANC, systeme, NULL, NULL);
 	
 	perso->BarreDeVie = AddLifeBar(100, perso->pperso.w, systeme);
 }
@@ -489,8 +489,8 @@ void inittemps(DIVERStemps *temps, DIVERSsysteme *systeme)//												temps
 	sprintf(temps->stringtempstotal, "age du personnage :\n - j - h - min - sec");
 	sprintf(temps->StringI, "IPS => 0");
 
-	temps->tfps = imprime (temps->StringI, systeme->screenw, BLANC, systeme, NULL);
-	temps->ttemps = imprime (temps->stringtempstotal, systeme->screenw, BLANC, systeme, NULL);
+	temps->tfps = imprime (temps->StringI, systeme->screenw, BLANC, systeme, NULL, NULL);
+	temps->ttemps = imprime (temps->stringtempstotal, systeme->screenw, BLANC, systeme, NULL, NULL);
 
 	temps->ptFps.x = systeme->screenw*0.75;
 	temps->ptFps.y = systeme->screenh*0.2;
@@ -571,7 +571,7 @@ void initui(DIVERSui *ui, DIVERSsysteme *systeme)//															ui
 
 	for(index = 0 ; index < 7 ; index++)
 	{
-		ui->tdesignationstuff[index] = imprime (ui->designationstuff[index], systeme->screenw, BLANC, systeme, NULL);
+		ui->tdesignationstuff[index] = imprime (ui->designationstuff[index], systeme->screenw, BLANC, systeme, NULL, NULL);
 		ui->casestuff[index].IDobjet = atoi(systeme->sauvegarde[index+10]);
 		ui->casestuff[index].NBobjet = 0;
 	}
@@ -718,7 +718,7 @@ void initcraft(DIVERScraft *craft, DIVERSsysteme *systeme)//												craft
 		craft->posimagecompocraft[index].w = systeme->screenw*0.0337;
 		craft->posimagecompocraft[index].h = systeme->screenh*0.0599;
 
-		craft->tcomponame[index] = imprime("rien", systeme->screenw, ROUGE, systeme, NULL);
+		craft->tcomponame[index] = imprime("rien", systeme->screenw, ROUGE, systeme, NULL, NULL);
 	}
 	
 	craft->Uicraft = LoadingImage			("rs/ui/uicraft.png", 0, systeme);
@@ -810,8 +810,8 @@ void initrecompense (PACKrecompense *recompense, DIVERSsysteme *systeme)//						
 		recompense->recompenseID[index] = -1;
 	}
 
-	recompense->tvictoire = imprime("VICTOIRE", systeme->screenw, ROUGE, systeme, NULL);
-	recompense->ttexterecompensecombat = imprime("vous avez gagné :", systeme->screenw, BLANC, systeme, NULL);
+	recompense->tvictoire = imprime("VICTOIRE", systeme->screenw, ROUGE, systeme, NULL, NULL);
+	recompense->ttexterecompensecombat = imprime("vous avez gagné :", systeme->screenw, BLANC, systeme, NULL, NULL);
 
 	recompense->pBGrecompense.x = systeme->screenw*0.333;
 	recompense->pBGrecompense.y = systeme->screenh*0.044;

@@ -186,15 +186,15 @@ int map (DIVERSsysteme *systeme, typeFORthreads *online, PACKbouton *bouton , PA
             SDL_DestroyTexture(perso->tlife);
             SDL_DestroyTexture(temps->ttemps);
 
-            temps->tfps = imprime (temps->StringI, systeme->screenw, BLANC, systeme, NULL);
-            perso->tlife = imprime (perso->slife, systeme->screenw, BLANC, systeme, NULL);
-            temps->ttemps = imprime (temps->stringtempstotal, systeme->screenw, BLANC, systeme, NULL);
+            temps->tfps = imprime (temps->StringI, systeme->screenw, BLANC, systeme, NULL, NULL);
+            perso->tlife = imprime (perso->slife, systeme->screenw, BLANC, systeme, NULL, NULL);
+            temps->ttemps = imprime (temps->stringtempstotal, systeme->screenw, BLANC, systeme, NULL, NULL);
 
             for(index = 0; index < 10 ; index++)
             {
                 chat->pstringchat[index].y = (systeme->screenh*0.5)+(online->chat.poschat[index]*(systeme->screenh*0.047));
                 SDL_DestroyTexture(chat->tstringchat[index]);
-                chat->tstringchat[index] = imprime(online->chat.schat[index], systeme->screenw, BLANC, systeme, NULL);
+                chat->tstringchat[index] = imprime(online->chat.schat[index], systeme->screenw, BLANC, systeme, NULL, NULL);
             }
 
             temps->i = 0;
@@ -335,7 +335,7 @@ void lancementcombat(PACKmonstre *monstre, DIVERSinventaire *inventaire, DIVERSc
 				//ecriture de la récompense
 				sprintf(slootcombat, "-> %d %s", recompense->recompenseNB[indexloot], objet->objet[recompense->recompenseID[indexloot]].nom);
 				SDL_DestroyTexture(recompense->ttextelootcombat[indexloot]);
-				recompense->ttextelootcombat[indexloot] = imprime(slootcombat, systeme->screenw, BLANC, systeme, NULL);
+				recompense->ttextelootcombat[indexloot] = imprime(slootcombat, systeme->screenw, BLANC, systeme, NULL, NULL);
 
 				for (index2 = 0 ; index2 < recompense->recompenseNB[indexloot] ; index2++)
 				{
@@ -351,7 +351,7 @@ void lancementcombat(PACKmonstre *monstre, DIVERSinventaire *inventaire, DIVERSc
 		deplacement->direction.droite = 0;
 		sprintf(perso->slife, "vie : %0.1f/%d", perso->life, perso->lifemax);
 		SDL_DestroyTexture(perso->tlife);
-		perso->tlife = imprime (perso->slife, systeme->screenw, BLANC, systeme, NULL);
+		perso->tlife = imprime (perso->slife, systeme->screenw, BLANC, systeme, NULL, NULL);
 
 		checkinventaire(objet, inventaire);
 	}
@@ -413,7 +413,7 @@ void gestionchat(DIVERSchat *chat, DIVERSsysteme *systeme, typeFORthreads *onlin
         }
         chat->lettre = '\0';
         SDL_DestroyTexture(chat->tbufferchat);
-        chat->tbufferchat = imprime(online->chat.bufferchat, systeme->screenw, BLANC, systeme, NULL);
+        chat->tbufferchat = imprime(online->chat.bufferchat, systeme->screenw, BLANC, systeme, NULL, NULL);
     }
 }
 

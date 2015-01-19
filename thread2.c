@@ -69,7 +69,8 @@ void* thread2(void  *data)
             id[0] = '0';
             intid = atoi(id);
             sprintf(online->joueurs[intid].pseudo, "%s", arg1);
-            online->joueurs[index].tpseudo = imprime(online->joueurs[intid].pseudo, online->systeme->screenw, BLANC, online->systeme, NULL);
+            online->joueurs[index].tpseudo = imprime(online->joueurs[intid].pseudo, online->systeme->screenw, BLANC,
+				online->systeme, NULL, NULL);
             online->joueurs[intid].enligne = true;
         }
         else if (id[0] == 'w')//========================================================>    w

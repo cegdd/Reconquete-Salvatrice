@@ -60,19 +60,19 @@ void checkandrefreshstuff(PERSO *perso, PACKobjet *objet, DIVERSsysteme *systeme
     char string[64];
     sprintf(string, "defense : %d", perso->defense);
     SDL_DestroyTexture(perso->tdefense);
-    perso->tdefense = imprime (string, systeme->screenw, BLANC, systeme, NULL);
+    perso->tdefense = imprime (string, systeme->screenw, BLANC, systeme, NULL, NULL);
 
     sprintf(string, "regen vie : +%d/sec", perso->regenlife);
     SDL_DestroyTexture(perso->tregenlife);
-    perso->tregenlife = imprime (string, systeme->screenw, BLANC, systeme, NULL);
+    perso->tregenlife = imprime (string, systeme->screenw, BLANC, systeme, NULL, NULL);
 
     sprintf(string, "portee : +%d%%", perso->portee);
     SDL_DestroyTexture(perso->tportee);
-    perso->tportee = imprime (string, systeme->screenw, BLANC, systeme, NULL);
+    perso->tportee = imprime (string, systeme->screenw, BLANC, systeme, NULL, NULL);
 
     sprintf(string, "force : %d", perso->force);
     SDL_DestroyTexture(perso->tforce);
-    perso->tforce = imprime (string, systeme->screenw, BLANC, systeme, NULL);
+    perso->tforce = imprime (string, systeme->screenw, BLANC, systeme, NULL, NULL);
 }
 
 void checkinventaire(PACKobjet *objet, DIVERSinventaire *inventaire)
