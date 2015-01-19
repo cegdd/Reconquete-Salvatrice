@@ -150,7 +150,15 @@ SDL_Texture* imprime (char s[], int len, int couleur, DIVERSsysteme *systeme, in
     }
     SDL_Texture *TextureTemp = SDL_CreateTextureFromSurface(systeme->renderer, SurfTemp);
 
-    if (LenghtReturn != NULL && HighReturn)
+    if (LenghtReturn != NULL)
+    {
+        SDL_QueryTexture(TextureTemp, NULL, NULL, LenghtReturn, NULL);
+    }
+    else if (HighReturn != NULL)
+    {
+        SDL_QueryTexture(TextureTemp, NULL, NULL, NULL, HighReturn);
+    }
+    else if (LenghtReturn != NULL && HighReturn != NULL)
     {
         SDL_QueryTexture(TextureTemp, NULL, NULL, LenghtReturn, HighReturn);
     }
