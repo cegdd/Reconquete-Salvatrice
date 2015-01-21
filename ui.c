@@ -166,18 +166,39 @@ SDL_Texture *fenetredialogue(int x, int y, SDL_Rect* pdialogue, SDL_Rect* ptexte
 //just set "x" and "y" and everything will be automaticaly set up.
 
 	SDL_Texture *texture;
-	int lenght;
-	texture = imprime(texte, x, couleur, systeme, &lenght, NULL);
+	int lenght, high;
+	
+	if (texte != NULL)
+	{
+		texture = imprime(texte, x, couleur, systeme, &lenght, &high);
+	}
 	
 	pdialogue->x = (systeme->screenw-x)/2;
 	pdialogue->y = (systeme->screenh-y)/2;
 	pdialogue->w = x;
 	pdialogue->h = y;
 	
+	if (ptextedialogue != NULL)
+	{
+		ptextedialogue->w = lenght;
+		ptextedialogue->h = high;
+		ptextedialogue->x = pdialogue->x + (pdialogue->w/2) - (lenght/2);
+		ptextedialogue->y = pdialogue->y + 10;
+	}
+	
+	return texture;
+}
+
+SDL_Texture *DrawText(SDL_Rect* ptextedialogue, char texte[], int color, DIVERSsysteme *systeme)
+{
+	SDL_Texture *texture;
+	int lenght, high;
+	texture = imprime(texte, ptextedialogue->x, color, systeme, &lenght, &high);
+	
+	ptextedialogue->x = ptextedialogue->x + (ptextedialogue->w/2) - (lenght/2);
+	ptextedialogue->y = ptextedialogue->y + (ptextedialogue->h/2) - (high/2);
 	ptextedialogue->w = lenght;
-	ptextedialogue->x = pdialogue->x + (pdialogue->w/2) - (lenght/2);
-	ptextedialogue->y = pdialogue->y + 10;
-	ptextedialogue->h = 25;
+	ptextedialogue->h = high;
 	
 	return texture;
 }

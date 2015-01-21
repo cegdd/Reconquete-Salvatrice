@@ -617,19 +617,74 @@ int CalculerBarreDeVie(int VieDeBase, int VieActuelle, int width)
 
 int JoueurMort(typecombat *BTLstr, DIVERSsysteme *systeme, DIVERSui *ui)
 {
-	char score[20];
-	SDL_Texture *tscore;
-	SDL_Rect pBG, pscore;
+	char score[64][20];
+	SDL_Texture *texture[64];
+	SDL_Rect position[64];
+	int index;
 	
-	sprintf(score,"%d\n%d",BTLstr->arcadescore ,BTLstr->arcadescore);
-	
-	tscore = fenetredialogue(systeme->pecran.w/3, systeme->pecran.h*0.911, &pBG, &pscore, score, BLANC, systeme);
+	//setting background
+	texture[0] = fenetredialogue(systeme->pecran.w/3, systeme->pecran.h*0.911, &position[0], NULL, NULL, BLANC, systeme);
 	ui->dialogueactif = 1;
-	SDL_RenderCopy(systeme->renderer, systeme->BG, NULL, &pBG);
-	SDL_RenderCopy(systeme->renderer, tscore, NULL, &pscore);
+	//setting up all texts
+	int ret = PositionOfDeathDisplay(texture, position, score, BTLstr, systeme);
+	
+	//rendering Background and texts
+	SDL_RenderCopy(systeme->renderer, systeme->BG, NULL, &position[0]);
+	for(index = 1 ; index <= ret ; index++)
+	{
+		SDL_RenderCopy(systeme->renderer, texture[index], NULL, &position[index]);
+	}
 	SDL_RenderPresent(systeme->renderer);
 	SDL_Delay(5000);
 	
 	BTLstr->continuer = BTL_LOST;
 	return 0;
+}
+
+int PositionOfDeathDisplay(SDL_Texture *texture[], SDL_Rect position[], char score[][20],
+							typecombat *BTLstr, DIVERSsysteme *systeme)
+{
+	int PosUsed = 0;
+	
+	PosUsed++;
+	position[PosUsed].x = position[0].x;
+	position[PosUsed].y = position[0].y;
+	position[PosUsed].w = position[0].w;
+	position[PosUsed].h = (systeme->pecran.h * 0.1) * PosUsed; //50*PosUsed
+	sprintf(score[PosUsed],"1: 3000");
+	texture[PosUsed] = DrawText(&position[PosUsed], score[PosUsed], BLANC, systeme);
+	
+	PosUsed++;
+	position[PosUsed].x = position[0].x;
+	position[PosUsed].y = position[0].y;
+	position[PosUsed].w = position[0].w;
+	position[PosUsed].h = (systeme->pecran.h * 0.1) * PosUsed; //50*PosUsed
+	sprintf(score[PosUsed],"2: 1200");
+	texture[PosUsed] = DrawText(&position[PosUsed], score[PosUsed], BLANC, systeme);
+	
+	PosUsed++;
+	position[PosUsed].x = position[0].x;
+	position[PosUsed].y = position[0].y;
+	position[PosUsed].w = position[0].w;
+	position[PosUsed].h = (systeme->pecran.h * 0.1) * PosUsed; //50*PosUsed
+	sprintf(score[PosUsed],"3: 990");
+	texture[PosUsed] = DrawText(&position[PosUsed], score[PosUsed], BLANC, systeme);
+	
+	PosUsed++;
+	position[PosUsed].x = position[0].x;
+	position[PosUsed].y = position[0].y;
+	position[PosUsed].w = position[0].w;
+	position[PosUsed].h = (systeme->pecran.h * 0.1) * PosUsed; //50*PosUsed
+	sprintf(score[PosUsed],"4: 460");
+	texture[PosUsed] = DrawText(&position[PosUsed], score[PosUsed], BLANC, systeme);
+	
+	PosUsed++;
+	position[PosUsed].x = position[0].x;
+	position[PosUsed].y = position[0].y;
+	position[PosUsed].w = position[0].w;
+	position[PosUsed].h = (systeme->pecran.h * 0.1) * PosUsed; //50*PosUsed
+	sprintf(score[PosUsed],"5: 75");
+	texture[PosUsed] = DrawText(&position[PosUsed], score[PosUsed], BLANC, systeme);
+	
+	return PosUsed;
 }

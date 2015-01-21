@@ -24,6 +24,8 @@ void gestionui (DIVERSsysteme *systeme, DIVERSui *ui, DIVERScraft *craft, PACKbo
 			DIVERSinventaire *inventaire, PACKobjet *objet, PERSO *perso, PACKpnj *pnj);
 SDL_Texture *fenetredialogue(int x, int y, SDL_Rect* pdialogue, SDL_Rect* ptextedialogue, char texte[],
 							int couleur, DIVERSsysteme *systeme);
+SDL_Texture *DrawText(SDL_Rect* ptextedialogue, char texte[], int color, DIVERSsysteme *systeme);
+
 void testcoin(DIVERSsysteme *systeme, DIVERSui *ui, DIVERSchat *chat, DIVERSinventaire *inventaire);
 int calculclicinventaire(int *ptrpy, int *ptrpx, DIVERSsysteme *systeme);
 void afficherCRAFT(DIVERScraft *craft, DIVERSui *ui, PACKbouton *bouton, PACKobjet *objet, DIVERSinventaire *inventaire, DIVERSsysteme *systeme);

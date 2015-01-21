@@ -42,4 +42,7 @@ int CalculerBarreDeVie(int VieDeBase, int VieActuelle, int width);
 void JoueurToucher(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso, DIVERSui *ui, int id);
 int JoueurMort(typecombat *BTLstr, DIVERSsysteme *systeme, DIVERSui *ui);
 
+int PositionOfDeathDisplay(SDL_Texture *texture[], SDL_Rect position[], char score[][20],
+							typecombat *BTLstr, DIVERSsysteme *systeme);
+
 #endif

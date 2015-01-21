@@ -149,8 +149,12 @@ SDL_Texture* imprime (char s[], int len, int couleur, DIVERSsysteme *systeme, in
         SurfTemp = TTF_RenderText_Blended_Wrapped(systeme->police, (const char *)s, Bleu, len);
     }
     SDL_Texture *TextureTemp = SDL_CreateTextureFromSurface(systeme->renderer, SurfTemp);
-
-    if (LenghtReturn != NULL)
+    
+    if (LenghtReturn != NULL && HighReturn != NULL)
+    {
+        SDL_QueryTexture(TextureTemp, NULL, NULL, LenghtReturn, HighReturn);
+    }
+    else if (LenghtReturn != NULL)
     {
         SDL_QueryTexture(TextureTemp, NULL, NULL, LenghtReturn, NULL);
     }
@@ -158,10 +162,7 @@ SDL_Texture* imprime (char s[], int len, int couleur, DIVERSsysteme *systeme, in
     {
         SDL_QueryTexture(TextureTemp, NULL, NULL, NULL, HighReturn);
     }
-    else if (LenghtReturn != NULL && HighReturn != NULL)
-    {
-        SDL_QueryTexture(TextureTemp, NULL, NULL, LenghtReturn, HighReturn);
-    }
+    
     SDL_FreeSurface(SurfTemp);
 	return TextureTemp;
 }
