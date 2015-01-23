@@ -1028,10 +1028,11 @@ void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, struct D
 	BTLstr->testcontact.w = 10;
 	BTLstr->testcontact.h = 10;
 
-	BTLstr->ptVie.x = systeme->screenw*0.015;
-	BTLstr->ptVie.y = systeme->screenh*0.026;
-	BTLstr->ptVie.w = systeme->screenw*0.3;
-	BTLstr->ptVie.h = systeme->screenh*0.065;
+	BTLstr->ptVie.x = 0;
+	BTLstr->ptVie.y = 0;
+	BTLstr->ptVie.w = systeme->screenw*0.073;//100
+	BTLstr->ptVie.h = systeme->screenh*0.05;//32
+	BTLstr->tVie = imprime ("", systeme->screenw*0.3, NOIR, systeme, NULL, NULL);
 
 	BTLstr->fond = LoadingImage				("rs/fonds/fondcombat.png", 0, systeme);
 	BTLstr->curseur = LoadingImage			("rs/images/curseur.png", 0, systeme);

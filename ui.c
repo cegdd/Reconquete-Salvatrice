@@ -189,13 +189,27 @@ SDL_Texture *fenetredialogue(int x, int y, SDL_Rect* pdialogue, SDL_Rect* ptexte
 	return texture;
 }
 
-SDL_Texture *DrawText(SDL_Rect* ptextedialogue, char texte[], int color, DIVERSsysteme *systeme)
+SDL_Texture *DrawText(SDL_Rect* ptextedialogue, char texte[], int color, int ALIGN, DIVERSsysteme *systeme)
 {
 	SDL_Texture *texture;
 	int lenght, high;
 	texture = imprime(texte, ptextedialogue->x, color, systeme, &lenght, &high);
 	
-	ptextedialogue->x = ptextedialogue->x + (ptextedialogue->w/2) - (lenght/2);
+	switch(ALIGN)
+	{
+		case ALIGN_LEFT:
+			ptextedialogue->x = 0;
+			break;
+		case ALIGN_RIGHT:
+			ptextedialogue->x = (ptextedialogue->x + ptextedialogue->w) - lenght;
+			break;
+		case ALIGN_CENTER:
+			ptextedialogue->x = ptextedialogue->x + (ptextedialogue->w/2) - (lenght/2);
+			break;
+		default:
+			break;
+	}
+	
 	ptextedialogue->y = ptextedialogue->y + (ptextedialogue->h/2) - (high/2);
 	ptextedialogue->w = lenght;
 	ptextedialogue->h = high;
@@ -604,7 +618,7 @@ void afficherMAP(DIVERSmap *carte, DIVERSsysteme *systeme, DIVERScraft *craft)
 void afficherPNJ(PERSO *perso, PACKpnj *pnj, DIVERSsysteme *systeme)
 {
 	SDL_RenderCopyEx(systeme->renderer, perso->tperso, &perso->spriteup[0], &pnj->toumai, -90,NULL, SDL_FLIP_NONE);
-	SDL_RenderCopyEx(systeme->renderer, perso->cheveuxblanc, NULL, &pnj->toumai, -90,NULL, SDL_FLIP_NONE);
+	//SDL_RenderCopyEx(systeme->renderer, perso->cheveuxblanc, NULL, &pnj->toumai, -90,NULL, SDL_FLIP_NONE);
 }
 
 void afficherMOB(PACKmonstre *monstre, DIVERSsysteme *systeme)

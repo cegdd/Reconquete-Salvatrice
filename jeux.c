@@ -38,7 +38,11 @@ float combat (float vie, struct RAT *rat, struct DIVERSsysteme *systeme, PERSO *
 	{
 		BTLstr.ptVie.h = systeme->screenh*0.2;
 		BTLstr.ptVie.w = systeme->screenw*0.6;
-		perso->life = 0;// should be 100
+		perso->life = 100;// should be 100
+	}
+	else
+	{
+		perso->life = vie;
 	}
 
 	while (BTLstr.continuer == -1)
@@ -97,7 +101,8 @@ float combat (float vie, struct RAT *rat, struct DIVERSsysteme *systeme, PERSO *
 			}
 			
 			//si joueur mort
-			if (perso->life  <= 0) { JoueurMort(&BTLstr, systeme, ui);}
+			if (perso->life  <= 0 && arcademode == true) { JoueurMort(&BTLstr, systeme, ui);}
+			else if (perso->life <= 0) {BTLstr.continuer = BTL_LOST;}
 		}
 		else if (BTLstr.temps - BTLstr.tempsseconde >= 1000)//1000
 		{
@@ -107,9 +112,9 @@ float combat (float vie, struct RAT *rat, struct DIVERSsysteme *systeme, PERSO *
 			}
 			else
 			{
-								sprintf(BTLstr.StringVie, "fps : %d", fps);
+				sprintf(BTLstr.StringVie, "fps : %d", fps);
 			}
-			BTLstr.tVie = imprime (BTLstr.StringVie, systeme->screenw*0.3, NOIR, systeme, NULL, NULL);
+			BTLstr.tVie = DrawText(&BTLstr.ptVie, BTLstr.StringVie, NOIR, ALIGN_LEFT, systeme);
 			fps = 0;
 			BTLstr.tempsseconde = BTLstr.temps;
 
@@ -136,7 +141,7 @@ float combat (float vie, struct RAT *rat, struct DIVERSsysteme *systeme, PERSO *
 	}
 	else
     {
-        return BTL_WON;
+        return BTL_LOST;
     }
 }
 
@@ -267,18 +272,18 @@ void afficherCOMBAT(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso,
 	}
 	for (index = 0; index < BTLstr->NBennemi ; index++)
 	{
-		if (BTLstr->ennemi[index].vie > 0)//si elles sont vivantes
+		if (BTLstr->ennemi[index].vie > 0)//if they're alive
 		{
 			calcul =90+(45 * BTLstr->ennemi[index].Direction);
 			SDL_RenderCopyEx(systeme->renderer, rat->texture[BTLstr->ennemi[index].indexanim], NULL, &BTLstr->ennemi[index].position, calcul,NULL, SDL_FLIP_NONE);
 		}
 	}
-
+	//text on top of the screen
 	SDL_RenderCopy(systeme->renderer, BTLstr->tVie, NULL, &BTLstr->ptVie);
 
-	//joueur
+	//player
 
-	double degre = FindAngle(&BTLstr->Pperso, &BTLstr->pcurseur) + 90; //obtention de l'angle
+	double degre = FindAngle(&BTLstr->Pperso, &BTLstr->pcurseur) + 90; // finding angle
 
 	if (BTLstr->poing_tendu == true)
     {
@@ -652,7 +657,7 @@ int PositionOfDeathDisplay(SDL_Texture *texture[], SDL_Rect position[], char sco
 	position[PosUsed].w = position[0].w;
 	position[PosUsed].h = (systeme->pecran.h * 0.1) * PosUsed; //50*PosUsed
 	sprintf(score[PosUsed],"1: 3000");
-	texture[PosUsed] = DrawText(&position[PosUsed], score[PosUsed], BLANC, systeme);
+	texture[PosUsed] = DrawText(&position[PosUsed], score[PosUsed], BLANC, ALIGN_CENTER, systeme);
 	
 	PosUsed++;
 	position[PosUsed].x = position[0].x;
@@ -660,7 +665,7 @@ int PositionOfDeathDisplay(SDL_Texture *texture[], SDL_Rect position[], char sco
 	position[PosUsed].w = position[0].w;
 	position[PosUsed].h = (systeme->pecran.h * 0.1) * PosUsed; //50*PosUsed
 	sprintf(score[PosUsed],"2: 1200");
-	texture[PosUsed] = DrawText(&position[PosUsed], score[PosUsed], BLANC, systeme);
+	texture[PosUsed] = DrawText(&position[PosUsed], score[PosUsed], BLANC, ALIGN_CENTER, systeme);
 	
 	PosUsed++;
 	position[PosUsed].x = position[0].x;
@@ -668,7 +673,7 @@ int PositionOfDeathDisplay(SDL_Texture *texture[], SDL_Rect position[], char sco
 	position[PosUsed].w = position[0].w;
 	position[PosUsed].h = (systeme->pecran.h * 0.1) * PosUsed; //50*PosUsed
 	sprintf(score[PosUsed],"3: 990");
-	texture[PosUsed] = DrawText(&position[PosUsed], score[PosUsed], BLANC, systeme);
+	texture[PosUsed] = DrawText(&position[PosUsed], score[PosUsed], BLANC, ALIGN_CENTER, systeme);
 	
 	PosUsed++;
 	position[PosUsed].x = position[0].x;
@@ -676,7 +681,7 @@ int PositionOfDeathDisplay(SDL_Texture *texture[], SDL_Rect position[], char sco
 	position[PosUsed].w = position[0].w;
 	position[PosUsed].h = (systeme->pecran.h * 0.1) * PosUsed; //50*PosUsed
 	sprintf(score[PosUsed],"4: 460");
-	texture[PosUsed] = DrawText(&position[PosUsed], score[PosUsed], BLANC, systeme);
+	texture[PosUsed] = DrawText(&position[PosUsed], score[PosUsed], BLANC, ALIGN_CENTER, systeme);
 	
 	PosUsed++;
 	position[PosUsed].x = position[0].x;
@@ -684,7 +689,7 @@ int PositionOfDeathDisplay(SDL_Texture *texture[], SDL_Rect position[], char sco
 	position[PosUsed].w = position[0].w;
 	position[PosUsed].h = (systeme->pecran.h * 0.1) * PosUsed; //50*PosUsed
 	sprintf(score[PosUsed],"5: 75");
-	texture[PosUsed] = DrawText(&position[PosUsed], score[PosUsed], BLANC, systeme);
+	texture[PosUsed] = DrawText(&position[PosUsed], score[PosUsed], BLANC, ALIGN_CENTER, systeme);
 	
 	return PosUsed;
 }

@@ -7,7 +7,7 @@
 //#####     OS     ######//
 #define WINDOWS 0
 //####logging rapide#####//
-#define FASTLOG 0
+#define FASTLOG 1
 //#######################//
 
 #define LOOTMAX 50
@@ -48,6 +48,7 @@ enum{RESSOURCE, EQUIPEMENT};
 enum{BLANC, ROUGE, GRIS, NOIR, VERT, BLEU};
 enum{UP, UPRIGHT, RIGHT, RIGHTDOWN, DOWN, DOWNLEFT, LEFT, LEFTUP};
 enum{UNUSED, GO, RUNNING, STOP};
+enum{ALIGN_RIGHT, ALIGN_LEFT, ALIGN_CENTER};
 
 struct BARREVIE
 {
