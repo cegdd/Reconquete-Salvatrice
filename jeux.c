@@ -250,7 +250,7 @@ void afficherCOMBAT(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso,
     SDL_RenderCopy(systeme->renderer, perso->BarreDeVie->texture, NULL, &perso->BarreDeVie->position);
     for (index = 0 ; index < BTLstr->NBennemi ; index++)
     {
-		if (BTLstr->creature[index].isdead == false)
+		if (BTLstr->creature[index].isdead == false && BTLstr->creature[index].life < BTLstr->creature[index].lifemax)
 		{
 			SDL_RenderCopy(systeme->renderer, BTLstr->creature[index].BarreDeVie->BGtexture, NULL, &BTLstr->creature[index].BarreDeVie->BGposition);
 			SDL_RenderCopy(systeme->renderer, BTLstr->creature[index].BarreDeVie->texture, NULL, &BTLstr->creature[index].BarreDeVie->position);
@@ -575,9 +575,10 @@ void SyncData(typecombat *BTLstr, PERSO *perso)
 	
 	for(index = 0 ; index < BTLstr->NBennemi ; index++)
 	{
-		BTLstr->creature[index].BarreDeVie->position.x = BTLstr->Pperso.x;
-		BTLstr->creature[index].BarreDeVie->position.y = BTLstr->Pperso.y -20;
-		BTLstr->creature[index].BarreDeVie->position.w = CalculerBarreDeVie(perso->lifemax, perso->life, BTLstr->Pperso.w);
+		BTLstr->creature[index].BarreDeVie->position.x = BTLstr->creature[index].position.x;
+		BTLstr->creature[index].BarreDeVie->position.y = BTLstr->creature[index].position.y -20;
+		BTLstr->creature[index].BarreDeVie->position.w = CalculerBarreDeVie(BTLstr->creature[index].lifemax,
+						BTLstr->creature[index].life, BTLstr->creature[index].position.w);
 		BTLstr->creature[index].BarreDeVie->BGposition.x = BTLstr->creature[index].BarreDeVie->position.x - 1;
 		BTLstr->creature[index].BarreDeVie->BGposition.y = BTLstr->creature[index].BarreDeVie->position.y - 1;
 	}

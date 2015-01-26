@@ -135,6 +135,7 @@ struct CREATURE
 	char name [48];
 	bool isdead;
 	float life;
+	float lifemax;
 	int ID;
 	
 	int tempsanimation;

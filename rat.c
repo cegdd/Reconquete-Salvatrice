@@ -138,7 +138,7 @@ void ADD_Rat(int MemoryArea, typecombat *BTLstr, DIVERSsysteme *systeme)
 	float randhigh = rand()%systeme->screenh;
 	
 	BTLstr->creature[MemoryArea].life = 30;
-	BTLstr->creature[MemoryArea].life = 30;
+	BTLstr->creature[MemoryArea].lifemax = 30;
 	BTLstr->creature[MemoryArea].isdead = false;
 	BTLstr->creature[MemoryArea].tempsanimation = 0;
 	BTLstr->creature[MemoryArea].Direction = rand()%8;
