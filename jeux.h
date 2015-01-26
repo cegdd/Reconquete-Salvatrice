@@ -36,7 +36,7 @@ void COMBATanimationMOB(typecombat *BTLstr);
 void COMBATanimationOBJET(typecombat *BTLstr);
 
 void ADDloot(PACKrecompense *recompense, int id, int nombre);
-void ajoutermonstre(typecombat *BTLstr, DIVERSsysteme *systeme);
+int FindCreatureMemoryArea(typecombat *BTLstr);
 void SyncData(typecombat *BTLstr, PERSO *perso);
 int CalculerBarreDeVie(int VieDeBase, int VieActuelle, int width);
 void JoueurToucher(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso, DIVERSui *ui, int id);
@@ -44,5 +44,6 @@ int JoueurMort(typecombat *BTLstr, DIVERSsysteme *systeme, DIVERSui *ui);
 
 int PositionOfDeathDisplay(SDL_Texture *texture[], SDL_Rect position[], char score[][20],
 							typecombat *BTLstr, DIVERSsysteme *systeme);
+void Hit_Creature(int index, typecombat *BTLstr);
 
 #endif

@@ -7,7 +7,7 @@
 //#####     OS     ######//
 #define WINDOWS 0
 //####logging rapide#####//
-#define FASTLOG 1
+#define FASTLOG 0
 //#######################//
 
 #define LOOTMAX 50
@@ -58,6 +58,7 @@ struct BARREVIE
 	SDL_Rect BGposition;
 	
 	int life;
+	int baselife;
 };
 struct GRILLE
 {
@@ -124,29 +125,18 @@ struct BOUTON
 	SDL_Rect position;
 	int etat;
 };
-struct RAT
+struct CREATURE
 {
 	SDL_Texture *texture[3];
-
 	SDL_Rect position;
-	char nom [48];
-	int etat;
-	int indexanim;
-	int tempsanim;
-	int direction;
-
-	int prctloot[LOOTMAX];
-	int maxloot[LOOTMAX];
-	int nombreloot;
-	int idloot[LOOTMAX];
-};
-struct PACKmonstre
-{
-	struct RAT rat[3];
-};
-
-struct mob
-{
+	SDL_Rect STATICposition;
+	struct BARREVIE *BarreDeVie;
+	
+	char name [48];
+	bool isdead;
+	float life;
+	int ID;
+	
 	int tempsanimation;
 	int Direction;
 	int indexanim;
@@ -161,14 +151,34 @@ struct mob
     int oldposy;
     float dx;
     float dy;
-
-	float vie;
-	bool mort;
-
-	SDL_Rect position;
-	SDL_Rect STATICposition;
 };
-
+struct RAT
+{
+	//graphic
+	SDL_Texture *texture[3];
+	SDL_Rect position;
+	
+	
+	//general
+	char nom [48];
+	int etat;
+	float life;
+	
+	//animation
+	int indexanim;
+	int tempsanim;
+	int direction;
+	
+	//loot
+	int prctloot[LOOTMAX];
+	int maxloot[LOOTMAX];
+	int nombreloot;
+	int idloot[LOOTMAX];
+};
+struct PACKmonstre
+{
+	struct RAT rat[3];
+};
 
 struct EMPLACEMENT
 {
@@ -480,6 +490,7 @@ struct typeFORthreads
 		SDL_Rect posjoueurscalculer;
 		SDL_Rect oldposjoueurs;
 	}joueurs[MAX_JOUEURS];
+
 	struct typeFORchat
 	{
 	    bool lancermessage;
@@ -502,7 +513,7 @@ struct typecombat
 {
     char calque[1366][768];
 	int NBennemi;
-	struct mob ennemi[LIMITEmobARCADE];
+	struct CREATURE creature[LIMITEmobARCADE];
 	int premiercoup[LIMITEmobARCADE];
 
     char StringVie[48];
@@ -539,12 +550,13 @@ struct typecombat
     float lootsolWAYX[64];
     float lootsolWAYY[64];
 
-    int temps;
-    int tempscalcul;
-    int tempsaffichage;
-    int tempsseconde;
-    int tempsanimationjoueur;
-    int tempsanimationobjet;
+    long temps;
+    long tempscalcul;
+    long tempsaffichage;
+    long tempsseconde;
+    long tempsanimationjoueur;
+    long tempsanimationobjet;
+    long TimeAddEnnemy;
 
     double degre;
 

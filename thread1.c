@@ -36,7 +36,7 @@ void* thread1(void  *data)
         {
             perror("erreur-->connect");
         }
-		SDL_Delay(500);
+		SDL_Delay(5000);
 	}
 	while (online->jeuxACTIF != 1)
 	{

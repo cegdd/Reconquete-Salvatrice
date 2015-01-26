@@ -14,7 +14,7 @@ int HitboxPoing(typecombat *BTLstr, int index)
     SDL_Rect pix = {k, l, 1, 1};
 
 
-    if (checkdistance(&BTLstr->ennemi[index].position, &BTLstr->Pperso, 120) == -1 )//degrossissage pour calcul précis
+    if (checkdistance(&BTLstr->creature[index].position, &BTLstr->Pperso, 120) == -1 )//degrossissage pour calcul précis
     {
         for(k = BTLstr->Pperso.x -20; k <= BTLstr->Pperso.x + BTLstr->Pperso.w +20; k++)
         {//parcour des pixels autour du joueur (environ 11000)
@@ -31,7 +31,7 @@ int HitboxPoing(typecombat *BTLstr, int index)
                         #if TESTGRID == 1
                         BTLstr->calque[k][l] = 1;
                         #endif // TESTGRID
-                        if (TestColision_Rat(&BTLstr->ennemi[index].position, pix.x, pix.y, BTLstr->ennemi[index].Direction) == 1)
+                        if (TestColision_Rat(&BTLstr->creature[index].position, pix.x, pix.y, BTLstr->creature[index].Direction) == 1)
                         {
                             return 0;
                         }

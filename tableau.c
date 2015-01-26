@@ -364,6 +364,7 @@ void initmonstre(PACKmonstre *monstre, DIVERSsysteme *systeme)//											monst
 		monstre->rat[index].position.h = systeme->screenh*0.039;
 
 		monstre->rat[index].etat = 0;
+		monstre->rat[index].life = 20;
 		monstre->rat[index].indexanim = 0;
 		monstre->rat[index].tempsanim = 0;
 		monstre->rat[index].direction = rand()%8;
@@ -954,37 +955,32 @@ void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, struct D
 	{
 		
 		BTLstr->premiercoup[index] = 0;
-		float lrand1 = rand()%systeme->screenw;
-		float lrand2 = rand()%systeme->screenh;
-		BTLstr->ennemi[index].vie = 10;
-		BTLstr->ennemi[index].mort = false;
-		BTLstr->ennemi[index].tempsanimation = 0;
-		BTLstr->ennemi[index].Direction = rand()%8;
-		BTLstr->ennemi[index].indexanim = 0;
-		BTLstr->ennemi[index].mind = 0;
-		BTLstr->ennemi[index].mindtime = 0;
-		BTLstr->ennemi[index].looted = 0;
-		BTLstr->ennemi[index].ontheway = 0;
-		BTLstr->ennemi[index].wayx = 0;
-		BTLstr->ennemi[index].wayy = 0;
+		BTLstr->creature[index].isdead = true;
+		BTLstr->creature[index].tempsanimation = 0;
+		BTLstr->creature[index].Direction = 0;
+		BTLstr->creature[index].indexanim = 0;
+		BTLstr->creature[index].mind = 0;
+		BTLstr->creature[index].mindtime = 0;
+		BTLstr->creature[index].looted = 0;
+		BTLstr->creature[index].ontheway = 0;
+		BTLstr->creature[index].wayx = 0;
+		BTLstr->creature[index].wayy = 0;
 		for (index2 = 0 ; index2 < 8 ; index2++)
 		{
-			BTLstr->ennemi[index].relevancy[index2] = 0;
+			BTLstr->creature[index].relevancy[index2] = 0;
 		}
-		BTLstr->ennemi[index].position.x = lrand1;
-		BTLstr->ennemi[index].position.y = lrand2;
-		BTLstr->ennemi[index].position.w = systeme->screenw*0.073206442;//100
-		BTLstr->ennemi[index].position.h = systeme->screenh*0.032552083;//25
-		;
-		BTLstr->ennemi[index].STATICposition.w = BTLstr->ennemi[index].position.w;
-		BTLstr->ennemi[index].STATICposition.h = BTLstr->ennemi[index].position.h;
+		BTLstr->creature[index].position.x = 0;
+		BTLstr->creature[index].position.y = 0;
+		BTLstr->creature[index].position.w = 0;
+		BTLstr->creature[index].position.h = 0;
+		
+		BTLstr->creature[index].STATICposition.w = 0;
+		BTLstr->creature[index].STATICposition.h = 0;
 	}
 	
-	if (arcademode == true)
-	{//remise a zero du compteur pour le mode arcade
-		BTLstr->NBennemi = 0;
-		BTLstr->alive = BTLstr->NBennemi;
-	}
+	//remise a zero du compteur
+	BTLstr->NBennemi = 0;
+	BTLstr->alive = BTLstr->NBennemi;
 
 	for (index = 0 ; index < 48 ; index++)
 	{

@@ -76,7 +76,7 @@ int HitboxBalle(typecombat *BTLstr, int index)
 
 	for (i = 0 ; i < NBcailloux ; i++)
 	{   //tri et degrossissage pour calcul précis
-	    if (checkdistance(&BTLstr->ennemi[index].position, &BTLstr->pballe[i], 120) == -1 && BTLstr->DepartBalle[i] == RUNNING )
+	    if (checkdistance(&BTLstr->creature[index].position, &BTLstr->pballe[i], 120) == -1 && BTLstr->DepartBalle[i] == RUNNING )
         {
             #if TESTGRID == 1
             point.x = pballe[i].x;
@@ -93,7 +93,7 @@ int HitboxBalle(typecombat *BTLstr, int index)
 
                     if (checkdistance(&pix, &BTLstr->pballe[i], 10) == -1 )
                     {
-                        if (TestColision_Rat(&BTLstr->ennemi[index].position, pix.x, pix.y, BTLstr->ennemi[index].Direction) == 1)
+                        if (TestColision_Rat(&BTLstr->creature[index].position, pix.x, pix.y, BTLstr->creature[index].Direction) == 1)
                         {
                             #if TESTGRID == 1
                             point.x = pballe[i].x;
