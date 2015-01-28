@@ -70,6 +70,7 @@ struct bouton
 	SDL_Texture *normal;
 	SDL_Texture *survoler;
 	SDL_Texture *cliquer;
+	SDL_Texture *impossible;
 	SDL_Rect pos;
 };
 typedef struct typelogin typelogin;

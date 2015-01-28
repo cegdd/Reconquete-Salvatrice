@@ -165,95 +165,102 @@ int boucleeventlogin (struct typelogin *loginstore, DIVERSsysteme *systeme)
 
 	if (x >= systeme->screenw/11 && x <= (systeme->screenw/11)+(systeme->screenw/11) &&
 		y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12) &&
-		loginstore->etatoption != 2 && loginstore->optionactif == 0)//													option
+		loginstore->etatoption != B_CLIQUER && loginstore->optionactif == 0)//													option
 	{
-		loginstore->etatoption = 1;
-		loginstore->etatjouer = 0;
-		loginstore->etatcreer = 0;
-		loginstore->etatquitter = 0;
-		loginstore->etatarcade = 0;
+		loginstore->etatoption = B_SURVOLER;
+		loginstore->etatjouer = B_NORMAL;
+		loginstore->etatcreer = B_NORMAL;
+		loginstore->etatquitter = B_NORMAL;
+		loginstore->etatarcade = B_NORMAL;
 	}
 	else if (x >= (systeme->screenw/11)*3 && x <= ((systeme->screenw/11)*3)+(systeme->screenw/11) &&
 			y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12) &&
-			loginstore->etatjouer != 2 && loginstore->optionactif == 0)//												jouer
+			loginstore->etatjouer != B_CLIQUER && loginstore->optionactif == 0)//												jouer
 	{
-		loginstore->etatoption = 0;
-		loginstore->etatjouer = 1;
-		loginstore->etatcreer = 0;
-		loginstore->etatquitter = 0;
-		loginstore->etatarcade = 0;
+		loginstore->etatoption = B_NORMAL;
+		loginstore->etatjouer = B_SURVOLER;
+		loginstore->etatcreer = B_NORMAL;
+		loginstore->etatquitter = B_NORMAL;
+		loginstore->etatarcade = B_NORMAL;
 	}
 	else if (x >= (systeme->screenw/11)*5 && x <= ((systeme->screenw/11)*5)+(systeme->screenw/11) &&
 			y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12) &&
-			loginstore->etatcreer != 2 && loginstore->optionactif == 0)//												creer
+			loginstore->etatcreer != B_CLIQUER && loginstore->optionactif == 0)//												creer
 	{
-		loginstore->etatoption = 0;
-		loginstore->etatjouer = 0;
-		loginstore->etatcreer = 1;
-		loginstore->etatquitter = 0;
-		loginstore->etatarcade = 0;
+		loginstore->etatoption = B_NORMAL;
+		loginstore->etatjouer = B_NORMAL;
+		loginstore->etatcreer = B_SURVOLER;
+		loginstore->etatquitter = B_NORMAL;
+		loginstore->etatarcade = B_NORMAL;
 	}
 	else if (x >= (systeme->screenw/11)*7 && x <= ((systeme->screenw/11)*7)+(systeme->screenw/11) &&
 			y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12) &&
-			loginstore->etatquitter != 2 && loginstore->optionactif == 0)//												quitter
+			loginstore->etatquitter != B_CLIQUER && loginstore->optionactif == 0)//												quitter
 	{
-		loginstore->etatoption = 0;
-		loginstore->etatjouer = 0;
-		loginstore->etatcreer = 0;
-		loginstore->etatquitter = 1;
-		loginstore->etatarcade = 0;
+		loginstore->etatoption = B_NORMAL;
+		loginstore->etatjouer = B_NORMAL;
+		loginstore->etatcreer = B_NORMAL;
+		loginstore->etatquitter = B_SURVOLER;
+		loginstore->etatarcade = B_NORMAL;
 	}
 	else if (x >= (systeme->screenw/11)*9 && x <= ((systeme->screenw/11)*9)+(systeme->screenw/11) &&
 			y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12) &&
-			loginstore->etatarcade != 2 && loginstore->optionactif == 0)//												arcade
+			loginstore->etatarcade != B_CLIQUER && loginstore->optionactif == 0)//												arcade
 	{
-		loginstore->etatoption = 0;
-		loginstore->etatjouer = 0;
-		loginstore->etatcreer = 0;
-		loginstore->etatquitter = 0;
-		loginstore->etatarcade = 1;
+		loginstore->etatoption = B_NORMAL;
+		loginstore->etatjouer = B_NORMAL;
+		loginstore->etatcreer = B_NORMAL;
+		loginstore->etatquitter = B_NORMAL;
+		loginstore->etatarcade = B_SURVOLER;
 	}
-	else if ( loginstore->etatoption != 2 && loginstore->etatjouer != 2 && loginstore->etatcreer != 2 &&
-			loginstore->etatquitter != 2 && loginstore->optionactif == 0 && loginstore->etatarcade != 2)
+	else if ( loginstore->etatoption != B_CLIQUER && loginstore->etatjouer != B_CLIQUER && loginstore->etatcreer != B_CLIQUER &&
+			loginstore->etatquitter != B_CLIQUER && loginstore->optionactif == 0 && loginstore->etatarcade != B_CLIQUER)
 	{
-		loginstore->etatoption = 0;
-		loginstore->etatjouer = 0;
-		loginstore->etatcreer = 0;
-		loginstore->etatquitter = 0;
-		loginstore->etatarcade = 0;
+		loginstore->etatoption = B_NORMAL;
+		loginstore->etatjouer = B_NORMAL;
+		loginstore->etatcreer = B_NORMAL;
+		loginstore->etatquitter = B_NORMAL;
+		loginstore->etatarcade = B_NORMAL;
 	}
 	else if ( loginstore->optionactif == 1 &&
 			x >= (systeme->screenw/11)*4 && x <= ((systeme->screenw/11)*4)+(systeme->screenw/11) &&
 			y >= (systeme->screenh/30)*14 && y <= ((systeme->screenh/30)*14)+(systeme->screenh/18) &&
-			loginstore->etatazerty != 2)
+			loginstore->etatazerty != B_CLIQUER)
 	{
-		loginstore->etatazerty = 1;
-		if (loginstore->etatqwerty != 2) {loginstore->etatqwerty = 0;}
-		if (loginstore->etatqwerty != 2) {loginstore->etatqwertz = 0;}
+		loginstore->etatazerty = B_SURVOLER;
+		if (loginstore->etatqwerty != B_CLIQUER) {loginstore->etatqwerty = B_NORMAL;}
+		if (loginstore->etatqwerty != B_CLIQUER) {loginstore->etatqwertz = B_NORMAL;}
 	}
 	else if ( loginstore->optionactif == 1 &&
 			x >= (systeme->screenw/11)*6 && x <= ((systeme->screenw/11)*6)+(systeme->screenw/11) &&
 			y >= (systeme->screenh/30)*14 && y <= ((systeme->screenh/30)*14)+(systeme->screenh/18) &&
-			loginstore->etatqwerty != 2)
+			loginstore->etatqwerty != B_CLIQUER)
 	{
-		loginstore->etatqwerty = 1;
-		if (loginstore->etatazerty != 2) {loginstore->etatazerty = 0;}
-		if (loginstore->etatqwertz != 2) {loginstore->etatqwertz = 0;}
+		loginstore->etatqwerty = B_SURVOLER;
+		if (loginstore->etatazerty != B_CLIQUER) {loginstore->etatazerty = B_NORMAL;}
+		if (loginstore->etatqwertz != B_CLIQUER) {loginstore->etatqwertz = B_NORMAL;}
 	}
 	else if ( loginstore->optionactif == 1 &&
 			x >= (systeme->screenw/11)*8 && x <= ((systeme->screenw/11)*8)+(systeme->screenw/11) &&
 			y >= (systeme->screenh/30)*14 && y <= ((systeme->screenh/30)*14)+(systeme->screenh/18) &&
-			loginstore->etatqwertz != 2)
+			loginstore->etatqwertz != B_CLIQUER)
 	{
-		loginstore->etatqwertz = 1;
-		if (loginstore->etatazerty != 2) {loginstore->etatazerty = 0;}
-		if (loginstore->etatqwerty != 2) {loginstore->etatqwerty = 0;}
+		loginstore->etatqwertz = B_SURVOLER;
+		if (loginstore->etatazerty != B_CLIQUER) {loginstore->etatazerty = B_NORMAL;}
+		if (loginstore->etatqwerty != B_CLIQUER) {loginstore->etatqwerty = B_NORMAL;}
 	}
 	else if ( loginstore->optionactif == 1)
 	{
-		if (loginstore->etatqwertz != 2){loginstore->etatqwertz = 0;}
-		if (loginstore->etatazerty != 2){loginstore->etatazerty = 0;}
-		if (loginstore->etatqwerty != 2){loginstore->etatqwerty = 0;}
+		if (loginstore->etatqwertz != B_CLIQUER){loginstore->etatqwertz = B_NORMAL;}
+		if (loginstore->etatazerty != B_CLIQUER){loginstore->etatazerty = B_NORMAL;}
+		if (loginstore->etatqwerty != B_CLIQUER){loginstore->etatqwerty = B_NORMAL;}
+	}
+	
+	//blocking impossible button
+	if(loginstore->longpseudo <= 0 || loginstore->longmdp <= 0)
+	{
+		loginstore->etatjouer = B_IMPOSSIBLE;
+		loginstore->etatcreer = B_IMPOSSIBLE;
 	}
 
 	while(SDL_PollEvent(&loginstore->evenement) == 1)
@@ -378,27 +385,35 @@ int boucleeventlogin (struct typelogin *loginstore, DIVERSsysteme *systeme)
 				if (x >= systeme->screenw/11 && x <= (systeme->screenw/11)+(systeme->screenw/11) &&
 				y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12))//							option
 				{
-					loginstore->etatoption = 2;
+					loginstore->etatoption = B_CLIQUER;
 				}
 				else if (x >= (systeme->screenw/11)*3 && x <= ((systeme->screenw/11)*3)+(systeme->screenw/11) &&
 				y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12))//						jouer
 				{
-					loginstore->etatjouer = 2;
+					//blocking impossible button
+					if(loginstore->longpseudo > 0 && loginstore->longmdp > 0)
+					{
+						loginstore->etatjouer = B_CLIQUER;
+					}
 				}
 				else if (x >= (systeme->screenw/11)*5 && x <= ((systeme->screenw/11)*5)+(systeme->screenw/11) &&
 				y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12))//						creer
 				{
-					loginstore->etatcreer = 2;
+					//blocking impossible button
+					if(loginstore->longpseudo > 0 && loginstore->longmdp > 0)
+					{
+						loginstore->etatcreer = B_CLIQUER;
+					}
 				}
 				else if (x >= (systeme->screenw/11)*7 && x <= ((systeme->screenw/11)*7)+(systeme->screenw/11) &&
 				y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12))//						quitter
 				{
-					loginstore->etatquitter = 2;
+					loginstore->etatquitter = B_CLIQUER;
 				}
 				else if (x >= (systeme->screenw/11)*9 && x <= ((systeme->screenw/11)*7)+(systeme->screenw/11) &&
 				y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12))//						arcade
 				{
-					loginstore->etatarcade = 2;
+					loginstore->etatarcade = B_CLIQUER;
 				}
 
 				if ( loginstore->optionactif == 1 &&
@@ -406,9 +421,9 @@ int boucleeventlogin (struct typelogin *loginstore, DIVERSsysteme *systeme)
 				y >= (systeme->screenh/30)*14 && y <= ((systeme->screenh/30)*14)+(systeme->screenh/18))
 				{
 					//azerty
-					loginstore->etatazerty = 2;
-					loginstore->etatqwerty = 0;
-					loginstore->etatqwertz = 0;
+					loginstore->etatazerty = B_CLIQUER;
+					loginstore->etatqwerty = B_NORMAL;
+					loginstore->etatqwertz = B_NORMAL;
 					systeme->typeclavier = '1';
 				}
 				else if ( loginstore->optionactif == 1 &&
@@ -416,9 +431,9 @@ int boucleeventlogin (struct typelogin *loginstore, DIVERSsysteme *systeme)
 				y >= (systeme->screenh/30)*14 && y <= ((systeme->screenh/30)*14)+(systeme->screenh/18))
 				{
 					//qwerty
-					loginstore->etatqwertz = 0;
-					loginstore->etatazerty = 0;
-					loginstore->etatqwerty = 2;
+					loginstore->etatqwertz = B_NORMAL;
+					loginstore->etatazerty = B_NORMAL;
+					loginstore->etatqwerty = B_CLIQUER;
 					systeme->typeclavier = '3';
 				}
 				else if ( loginstore->optionactif == 1 &&
@@ -426,19 +441,19 @@ int boucleeventlogin (struct typelogin *loginstore, DIVERSsysteme *systeme)
 				y >= (systeme->screenh/30)*14 && y <= ((systeme->screenh/30)*14)+(systeme->screenh/18))
 				{
 					//qwertz
-					loginstore->etatqwerty = 0;
-					loginstore->etatazerty = 0;
-					loginstore->etatqwertz = 2;
+					loginstore->etatqwerty = B_NORMAL;
+					loginstore->etatazerty = B_NORMAL;
+					loginstore->etatqwertz = B_CLIQUER;
 					systeme->typeclavier = '2';
 				}
 				break;
 			case SDL_MOUSEBUTTONUP:
 				if( loginstore->evenement.button.button == SDL_BUTTON_LEFT )
 					{
-					if (loginstore->etatoption == 2){loginstore->etatoption = 0;}
-					else if (loginstore->etatjouer == 2){loginstore->etatjouer = 0;}
-					else if (loginstore->etatcreer == 2){loginstore->etatcreer = 0;}
-					else if (loginstore->etatquitter == 2){loginstore->etatquitter = 0;}
+					if (loginstore->etatoption == B_CLIQUER){loginstore->etatoption = B_NORMAL;}
+					else if (loginstore->etatjouer == B_CLIQUER){loginstore->etatjouer = B_NORMAL;}
+					else if (loginstore->etatcreer == B_CLIQUER){loginstore->etatcreer = B_NORMAL;}
+					else if (loginstore->etatquitter == B_CLIQUER){loginstore->etatquitter = B_NORMAL;}
 
 					if (loginstore->diall == 1 && loginstore->optionactif == 0)
 							{loginstore->diall = 0;
@@ -473,10 +488,12 @@ int boucleeventlogin (struct typelogin *loginstore, DIVERSsysteme *systeme)
 					y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12))//						option
 					{return 4;}
 					else if (x >= (systeme->screenw/11)*3 && x <= ((systeme->screenw/11)*3)+(systeme->screenw/11) &&
-					y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12))//						jouer
+					y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12) &&
+					loginstore->longpseudo > 0 && loginstore->longmdp > 0)//													jouer
 					{return 2;}
 					else if (x >= (systeme->screenw/11)*5 && x <= ((systeme->screenw/11)*5)+(systeme->screenw/11) &&
-					y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12))//						creer
+					y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12) &&
+					loginstore->longpseudo > 0 && loginstore->longmdp > 0)//													creer
 					{return 3;}
 					else if (x >= (systeme->screenw/11)*7 && x <= ((systeme->screenw/11)*7)+(systeme->screenw/11) &&
 					y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12))//						quitter

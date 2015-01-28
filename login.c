@@ -357,13 +357,13 @@ void InitLoginStore(typelogin *loginstore, DIVERSsysteme *systeme)
 	loginstore->diall = 0;
 	loginstore->optionactif = 0;
 	loginstore->mdpcacher = 1;
-	loginstore->etatoption = 0;
-	loginstore->etatjouer = 0;
-	loginstore->etatcreer = 0;
-	loginstore->etatquitter = 0;
-	loginstore->etatazerty = 0;
-	loginstore->etatqwerty = 0;
-	loginstore->etatqwertz = 0;
+	loginstore->etatoption = B_NORMAL;
+	loginstore->etatjouer = B_NORMAL;
+	loginstore->etatcreer = B_NORMAL;
+	loginstore->etatquitter = B_NORMAL;
+	loginstore->etatazerty = B_NORMAL;
+	loginstore->etatqwerty = B_NORMAL;
+	loginstore->etatqwertz = B_NORMAL;
 	loginstore->tpact = 0;
 	loginstore->tpapr = 0;
 	loginstore->lettre = '0';
@@ -378,9 +378,9 @@ void InitLoginStore(typelogin *loginstore, DIVERSsysteme *systeme)
 		loginstore->mdpshow[loginstore->i] = '\0';
 	}
 
-	if (systeme->typeclavier == '1') {loginstore->etatazerty =2;}
-	else if (systeme->typeclavier == '2') {loginstore->etatqwerty =2;}
-	else if (systeme->typeclavier == '3') {loginstore->etatqwertz =2;}
+	if (systeme->typeclavier == '1') {loginstore->etatazerty = B_CLIQUER;}
+	else if (systeme->typeclavier == '2') {loginstore->etatqwerty = B_CLIQUER;}
+	else if (systeme->typeclavier == '3') {loginstore->etatqwertz = B_CLIQUER;}
 
 	sprintf(loginstore->info, "Pseudo incorrect \n\nveuillez entrer un pseudo et un mot de passe.");
 	sprintf(loginstore->info2, "Pseudo incorrect\n\nLe pseudo que vous avez entre existe deja, veuillez en choisir un autre.");
@@ -412,6 +412,7 @@ void Initbouton(bouton *option, bouton *jouer, bouton *creer, bouton *quitter, b
 	jouer->normal = LoadingImage		("rs/ui/jouer.png", 0, systeme);
 	jouer->survoler = LoadingImage		("rs/ui/jouer2.png", 0, systeme);
 	jouer->cliquer = LoadingImage		("rs/ui/jouer3.png", 0, systeme);
+	jouer->impossible = LoadingImage		("rs/ui/jouernon.png", 0, systeme);
 	jouer->pos.x = (systeme->screenw/11)*3;
 	jouer->pos.y = (systeme->screenh/6)*5;
 	jouer->pos.w = systeme->screenw/11;
@@ -420,6 +421,7 @@ void Initbouton(bouton *option, bouton *jouer, bouton *creer, bouton *quitter, b
 	creer->normal = LoadingImage		("rs/ui/creer.png", 0, systeme);
 	creer->survoler = LoadingImage		("rs/ui/creer2.png", 0, systeme);
 	creer->cliquer = LoadingImage		("rs/ui/creer3.png", 0, systeme);
+	creer->impossible = LoadingImage		("rs/ui/creernon.png", 0, systeme);
 	creer->pos.x = (systeme->screenw/11)*5;
 	creer->pos.y = (systeme->screenh/6)*5;
 	creer->pos.w = systeme->screenw/11;
@@ -490,39 +492,43 @@ void affichageloggin(typelogin *loginstore, DIVERSsysteme *systeme, bouton *opti
         SDL_RenderCopy(systeme->renderer, loginstore->lacase0, NULL, &loginstore->pcase);
     }
 
-    if (loginstore->etatoption == 0)
+    if (loginstore->etatoption == B_NORMAL)
     {   SDL_RenderCopy(systeme->renderer, option->normal, NULL, &option->pos);}
-    else if (loginstore->etatoption == 1)
+    else if (loginstore->etatoption == B_SURVOLER)
     {   SDL_RenderCopy(systeme->renderer, option->survoler, NULL, &option->pos);}
-    else
+    else if (loginstore->etatoption == B_CLIQUER)
     {   SDL_RenderCopy(systeme->renderer, option->cliquer, NULL, &option->pos);}
 
-    if (loginstore->etatjouer == 0)
+    if (loginstore->etatjouer == B_NORMAL)
     {   SDL_RenderCopy(systeme->renderer, jouer->normal, NULL, &jouer->pos);}
-    else if (loginstore->etatjouer == 1)
+    else if (loginstore->etatjouer == B_SURVOLER)
     {   SDL_RenderCopy(systeme->renderer, jouer->survoler, NULL, &jouer->pos);}
-    else
+    else if (loginstore->etatjouer == B_CLIQUER)
     {   SDL_RenderCopy(systeme->renderer, jouer->cliquer, NULL, &jouer->pos);}
+    else if (loginstore->etatjouer == B_IMPOSSIBLE)
+    {   SDL_RenderCopy(systeme->renderer, jouer->impossible, NULL, &jouer->pos);}
 
-    if (loginstore->etatquitter == 0)
+    if (loginstore->etatquitter == B_NORMAL)
     {   SDL_RenderCopy(systeme->renderer, quitter->normal, NULL, &quitter->pos);}
-    else if (loginstore->etatquitter == 1)
+    else if (loginstore->etatquitter == B_SURVOLER)
     {   SDL_RenderCopy(systeme->renderer, quitter->survoler, NULL, &quitter->pos);}
-    else
+    else if (loginstore->etatquitter == B_CLIQUER)
     {   SDL_RenderCopy(systeme->renderer, quitter->cliquer, NULL, &quitter->pos);}
 
-    if (loginstore->etatcreer == 0)
+    if (loginstore->etatcreer == B_NORMAL)
     {   SDL_RenderCopy(systeme->renderer, creer->normal, NULL, &creer->pos);}
-    else if (loginstore->etatcreer == 1)
+    else if (loginstore->etatcreer == B_SURVOLER)
     {   SDL_RenderCopy(systeme->renderer, creer->survoler, NULL, &creer->pos);}
-    else
+    else if (loginstore->etatcreer == B_CLIQUER)
     {   SDL_RenderCopy(systeme->renderer, creer->cliquer, NULL, &creer->pos);}
+    else if (loginstore->etatcreer == B_IMPOSSIBLE)
+    {   SDL_RenderCopy(systeme->renderer, creer->impossible, NULL, &creer->pos);}
     
-    if (loginstore->etatarcade == 0)
+    if (loginstore->etatarcade == B_NORMAL)
     {   SDL_RenderCopy(systeme->renderer, arcade->normal, NULL, &arcade->pos);}
-    else if (loginstore->etatarcade == 1)
+    else if (loginstore->etatarcade == B_SURVOLER)
     {   SDL_RenderCopy(systeme->renderer, arcade->survoler, NULL, &arcade->pos);}
-    else
+    else if (loginstore->etatarcade == B_CLIQUER)
     {   SDL_RenderCopy(systeme->renderer, arcade->cliquer, NULL, &arcade->pos);}
 
     //mot de passe et pseudo
@@ -554,25 +560,25 @@ void affichageloggin(typelogin *loginstore, DIVERSsysteme *systeme, bouton *opti
     }
     if (loginstore->optionactif == 1)
     {
-        if (loginstore->etatazerty == 0)
+        if (loginstore->etatazerty == B_NORMAL)
         {   SDL_RenderCopy(systeme->renderer, azerty->normal, NULL, &azerty->pos);}
-        else if (loginstore->etatazerty == 1)
+        else if (loginstore->etatazerty == B_SURVOLER)
         {   SDL_RenderCopy(systeme->renderer, azerty->survoler, NULL, &azerty->pos);}
-        else
+        else if (loginstore->etatazerty == B_CLIQUER)
         {   SDL_RenderCopy(systeme->renderer, azerty->cliquer, NULL, &azerty->pos);}
 
-        if (loginstore->etatqwerty == 0)
+        if (loginstore->etatqwerty == B_NORMAL)
         {   SDL_RenderCopy(systeme->renderer, qwerty->normal, NULL, &qwerty->pos);}
-        else if (loginstore->etatqwerty == 1)
+        else if (loginstore->etatqwerty == B_SURVOLER)
         {   SDL_RenderCopy(systeme->renderer, qwerty->survoler, NULL, &qwerty->pos);}
-        else
+        else if (loginstore->etatqwerty == B_CLIQUER)
         {   SDL_RenderCopy(systeme->renderer, qwerty->cliquer, NULL, &qwerty->pos);}
 
-        if (loginstore->etatqwertz == 0)
+        if (loginstore->etatqwertz == B_NORMAL)
         {   SDL_RenderCopy(systeme->renderer, qwertz->normal, NULL, &qwertz->pos);}
-        else if (loginstore->etatqwertz == 1)
+        else if (loginstore->etatqwertz == B_SURVOLER)
         {   SDL_RenderCopy(systeme->renderer, qwertz->survoler, NULL, &qwertz->pos);}
-        else
+        else if (loginstore->etatqwertz == B_CLIQUER)
         {   SDL_RenderCopy(systeme->renderer, qwertz->cliquer, NULL, &qwertz->pos);}
     }
 
