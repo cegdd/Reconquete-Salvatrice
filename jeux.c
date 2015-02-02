@@ -38,7 +38,7 @@ float combat (float vie, struct RAT *rat, struct DIVERSsysteme *systeme, PERSO *
 	{
 		BTLstr.ptVie.h = systeme->screenh*0.2;
 		BTLstr.ptVie.w = systeme->screenw*0.6;
-		perso->life = 100;// should be 100
+		perso->life = 1000000;// should be 100
 	}
 	else
 	{
@@ -290,7 +290,7 @@ void Hitboxjoueur (typecombat *BTLstr, PERSO *perso, int id)
 	{
 		if (DEGATsubitDUREE >= perso->defense)
 		{
-			float degat = DEGATsubitDUREE-perso->defense;
+			float degat = DEGATsubitDUREE-(perso->defense/100);
 			perso->life = perso->life - degat;
 		}
 	}

@@ -13,9 +13,10 @@
 #include "sauvegarde.h"
 #include "jeux.h"
 #include "tableau.h"
+#include "queue.h"
 
 int main (int argc, char *argv[])
-{
+{	
 	if (argc == *argv[0]){}//juste pour les warnings
 	srand(2);
 

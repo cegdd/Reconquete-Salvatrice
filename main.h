@@ -71,6 +71,7 @@ struct TEXTE
 	SDL_Texture *texture;
 	SDL_Rect position;
 	int lenght;
+	int high;
 };
 
 struct CHOSE
