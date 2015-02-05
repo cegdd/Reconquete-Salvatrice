@@ -160,6 +160,6 @@ int chargementarcade (struct DIVERSsysteme *systeme)
 	initperso(&perso, systeme);
 	initrecompense(&recompense, systeme);
 	
-	lancementcombat(&monstre, &inventaire, &chat, &ui, &deplacement, &objet, &perso, systeme, &recompense, true, 0);
+	lancementcombat(&monstre, &inventaire, &chat, &ui, &deplacement, &objet, &perso, systeme, &recompense, true);
 	return 0;
 }

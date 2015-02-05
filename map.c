@@ -132,7 +132,7 @@ int map (DIVERSsysteme *systeme, typeFORthreads *online, PACKbouton *bouton , PA
 
             for (index = 0 ; index < 3 ; index++)
 			{
-				if (monstre->rat[index].etat != 0)
+				if (monstre->rat[index].etat != alive)// != 0
 				{
 					monstre->rat[index].etat++;
 				}
@@ -240,16 +240,16 @@ void detectioncombat(PACKmonstre *monstre, DIVERSinventaire *inventaire, DIVERSc
     {
 		if (monstre->rat[index].etat >= TEMPSREPOPBATMOUTHS)
         {
-            monstre->rat[index].etat = 0;
+            monstre->rat[index].etat = alive;
         }
         
         if (perso->pperso.x+perso->pperso.w >= monstre->rat[index].position.x &&
                 perso->pperso.y+perso->pperso.h >= monstre->rat[index].position.y &&
                 perso->pperso.y <= monstre->rat[index].position.y+monstre->rat[index].position.h &&
                 perso->pperso.x <= monstre->rat[index].position.x+monstre->rat[index].position.w &&
-                monstre->rat[index].etat == 0)
+                monstre->rat[index].etat == alive)
         {
-			lancementcombat(monstre, inventaire, chat, ui, deplacement, objet, perso, systeme, recompense, arcademode, index);
+			monstre->rat[index].etat = lancementcombat(monstre, inventaire, chat, ui, deplacement, objet, perso, systeme, recompense, arcademode);
 		}
 	}
 }
@@ -260,9 +260,9 @@ void detectioncombat(PACKmonstre *monstre, DIVERSinventaire *inventaire, DIVERSc
 
 
 
-void lancementcombat(PACKmonstre *monstre, DIVERSinventaire *inventaire, DIVERSchat *chat, DIVERSui *ui,
+int lancementcombat(PACKmonstre *monstre, DIVERSinventaire *inventaire, DIVERSchat *chat, DIVERSui *ui,
                      DIVERSdeplacement *deplacement, PACKobjet *objet, PERSO *perso,DIVERSsysteme *systeme,
-                     PACKrecompense *recompense, bool arcademode, int index)
+                     PACKrecompense *recompense, bool arcademode)
 {
     int indexloot = 0, index2, RETcombat;
     char slootcombat[120];
@@ -296,11 +296,18 @@ void lancementcombat(PACKmonstre *monstre, DIVERSinventaire *inventaire, DIVERSc
 	}
 	
 	//############lancement du combat############
-	RETcombat = combat(perso->life, &monstre->rat[index], systeme, perso, inventaire, recompense, objet, ui, arcademode);
+	RETcombat = combat(perso->life, &monstre->rat[0], systeme, perso, inventaire, recompense, objet, ui, arcademode);
 	
 	if (arcademode == false)
 	{
-		//si joueur mort
+		deplacement->direction.bas = 0;
+		deplacement->direction.haut = 0;
+		deplacement->direction.gauche = 0;
+		deplacement->direction.droite = 0;
+		checkinventaire(objet, inventaire);
+		
+		
+		//if player dead
 		if (RETcombat == BTL_LOST)
 		{
 			//ecran de mort
@@ -311,21 +318,20 @@ void lancementcombat(PACKmonstre *monstre, DIVERSinventaire *inventaire, DIVERSc
 			perso->pperso.x = systeme->screenw/2;
 			perso->pperso.y = systeme->screenh/2;
 			perso->life = perso->lifemax;
+			
+			return alive;
 		}
 		//si le joueur a fui
 		else if (RETcombat == BTL_LEAVED)
 		{
-			monstre->rat[index].etat = 1;
-
 			ui->ttextedialogue = fenetredialogue(systeme->screenw*0.4, systeme->screenh*0.8, &ui->pdialogue, &ui->ptextedialogue, "Vous avez fui,\ntous les objets obtenu pendant le combat on été abandonné sur place.\n\n\n\n(entrée/échap pour continuer)\n",
 									  BLANC, systeme);
 			ui->dialogueactif = 1;
+			return dead;
 		}
 		//si joueur vivant
 		else
 		{
-			//creature morte
-			monstre->rat[index].etat = 1;
 			//dialogue de récompense
 			ui->dialogueactif = 2;
 
@@ -345,16 +351,8 @@ void lancementcombat(PACKmonstre *monstre, DIVERSinventaire *inventaire, DIVERSc
 				indexloot++;
 			}
 		}
-		deplacement->direction.bas = 0;
-		deplacement->direction.haut = 0;
-		deplacement->direction.gauche = 0;
-		deplacement->direction.droite = 0;
-		sprintf(perso->slife, "vie : %0.1f/%d", perso->life, perso->lifemax);
-		SDL_DestroyTexture(perso->tlife);
-		perso->tlife = imprime (perso->slife, systeme->screenw, BLANC, systeme, NULL, NULL);
-
-		checkinventaire(objet, inventaire);
 	}
+	return dead;
 }
 
 void ANIMpersomarche(DIVERSdeplacement *deplacement, DIVERStemps *temps)

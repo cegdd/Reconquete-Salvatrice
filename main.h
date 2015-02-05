@@ -51,8 +51,8 @@ enum{UP, UPRIGHT, RIGHT, RIGHTDOWN, DOWN, DOWNLEFT, LEFT, LEFTUP};//direction
 enum{UNUSED, GO, RUNNING, STOP};//projectil
 enum{ALIGN_RIGHT, ALIGN_LEFT, ALIGN_CENTER};//text
 enum{B_NORMAL, B_SURVOLER, B_CLIQUER, B_IMPOSSIBLE};//bouton
-enum{RAT_BLANC, RAT_VERT, RAT_JAUNE, RAT_ORANGE, RAT_ROUGE};
-
+enum{RAT_BLANC, RAT_VERT, RAT_JAUNE, RAT_ORANGE, RAT_ROUGE};//creature
+enum{alive, dead}; 
 struct BARREVIE
 {
 	SDL_Texture *texture;
@@ -167,7 +167,6 @@ struct RAT
 	//general
 	char nom [48];
 	int etat;
-	float life;
 	File queue;
 	
 	//animation

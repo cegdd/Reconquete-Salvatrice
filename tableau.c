@@ -363,8 +363,7 @@ void initmonstre(PACKmonstre *monstre, DIVERSsysteme *systeme)//											monst
 		monstre->rat[index].position.w = systeme->screenw*0.0732;
 		monstre->rat[index].position.h = systeme->screenh*0.039;
 
-		monstre->rat[index].etat = 0;
-		monstre->rat[index].life = 20;
+		monstre->rat[index].etat = alive;
 		monstre->rat[index].indexanim = 0;
 		monstre->rat[index].tempsanim = 0;
 		monstre->rat[index].direction = rand()%8;
