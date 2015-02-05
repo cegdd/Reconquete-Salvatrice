@@ -628,7 +628,7 @@ void afficherMOB(PACKmonstre *monstre, DIVERSsysteme *systeme)
 	{
 		if (monstre->rat[index].etat == 0)
 		{
-			SDL_RenderCopyEx(systeme->renderer, monstre->rat[index].texture[monstre->rat[index].indexanim], NULL, &monstre->rat[index].position, monstre->rat[index].direction*45, NULL, SDL_FLIP_NONE);
+			SDL_RenderCopyEx(systeme->renderer, monstre->rat[index].texture[RAT_BLANC][monstre->rat[index].indexanim], NULL, &monstre->rat[index].position, monstre->rat[index].direction*45, NULL, SDL_FLIP_NONE);
 		}
 	}
 }

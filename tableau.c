@@ -370,9 +370,25 @@ void initmonstre(PACKmonstre *monstre, DIVERSsysteme *systeme)//											monst
 		monstre->rat[index].direction = rand()%8;
 		sprintf(monstre->rat[index].nom, "rat");
 
-		monstre->rat[index].texture[0] = LoadingImage	("rs/images/mob0.0.png", 0, systeme);
-		monstre->rat[index].texture[1] = LoadingImage	("rs/images/mob0.1.png", 0, systeme);
-		monstre->rat[index].texture[2] = LoadingImage	("rs/images/mob0.2.png", 0, systeme);
+		monstre->rat[index].texture[RAT_BLANC][0] = LoadingImage	("rs/images/mob0.0.png", 0, systeme);
+		monstre->rat[index].texture[RAT_BLANC][1] = LoadingImage	("rs/images/mob0.1.png", 0, systeme);
+		monstre->rat[index].texture[RAT_BLANC][2] = LoadingImage	("rs/images/mob0.2.png", 0, systeme);
+		
+		monstre->rat[index].texture[RAT_VERT][0] = LoadingImage		("rs/images/mob1.0.png", 0, systeme);
+		monstre->rat[index].texture[RAT_VERT][1] = LoadingImage		("rs/images/mob1.1.png", 0, systeme);
+		monstre->rat[index].texture[RAT_VERT][2] = LoadingImage		("rs/images/mob1.2.png", 0, systeme);
+		
+		monstre->rat[index].texture[RAT_JAUNE][0] = LoadingImage	("rs/images/mob2.0.png", 0, systeme);
+		monstre->rat[index].texture[RAT_JAUNE][1] = LoadingImage	("rs/images/mob2.1.png", 0, systeme);
+		monstre->rat[index].texture[RAT_JAUNE][2] = LoadingImage	("rs/images/mob2.2.png", 0, systeme);
+		
+		monstre->rat[index].texture[RAT_ORANGE][0] = LoadingImage	("rs/images/mob3.0.png", 0, systeme);
+		monstre->rat[index].texture[RAT_ORANGE][1] = LoadingImage	("rs/images/mob3.1.png", 0, systeme);
+		monstre->rat[index].texture[RAT_ORANGE][2] = LoadingImage	("rs/images/mob3.2.png", 0, systeme);
+		
+		monstre->rat[index].texture[RAT_ROUGE][0] = LoadingImage	("rs/images/mob4.0.png", 0, systeme);
+		monstre->rat[index].texture[RAT_ROUGE][1] = LoadingImage	("rs/images/mob4.1.png", 0, systeme);
+		monstre->rat[index].texture[RAT_ROUGE][2] = LoadingImage	("rs/images/mob4.2.png", 0, systeme);
 	}
 }
 
@@ -885,6 +901,11 @@ void initonline(typeFORthreads *online, DIVERSsysteme *systeme)
 
 void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, struct DIRECTION *direction, bool arcademode)
 {
+	
+	Add_Creature_Queue(&BTLstr->CreatureQueue, RAT_BLANC ,15);
+	Add_Creature_Queue(&BTLstr->CreatureQueue, RAT_VERT ,5);
+	Add_Creature_Queue(&BTLstr->CreatureQueue, RAT_JAUNE ,1);
+	
 	int index, index2;
 	BTLstr->continuer = -1;
 	BTLstr->echap = 0;

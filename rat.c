@@ -3,6 +3,7 @@
 #include "systeme.h"
 #include "main.h"
 #include "tool.h"
+#include "image.h"
 
 typedef struct typecombat typecombat;
 
@@ -130,15 +131,49 @@ int TestColision_Rat(SDL_Rect *rat, int x, int y, int direction)
     return 0;
 }
 
-void ADD_Rat(int MemoryArea, typecombat *BTLstr, DIVERSsysteme *systeme)
+void ADD_Rat(int type, int MemoryArea, typecombat *BTLstr, DIVERSsysteme *systeme, RAT *rat)
 {
 	int index;
 	float randside = rand()%4;
 	float randwidth = rand()%systeme->screenw;
 	float randhigh = rand()%systeme->screenh;
 	
-	BTLstr->creature[MemoryArea].life = 30;
-	BTLstr->creature[MemoryArea].lifemax = 30;
+	switch(type)
+	{
+		case RAT_BLANC:
+			BTLstr->creature[MemoryArea].life = 10;
+			BTLstr->creature[MemoryArea].texture[0] = rat->texture[RAT_BLANC][0];
+			BTLstr->creature[MemoryArea].texture[1] = rat->texture[RAT_BLANC][1];
+			BTLstr->creature[MemoryArea].texture[2] = rat->texture[RAT_BLANC][2];
+			break;
+		case RAT_VERT:
+			BTLstr->creature[MemoryArea].life = 25;
+			BTLstr->creature[MemoryArea].texture[0] = rat->texture[RAT_VERT][0];
+			BTLstr->creature[MemoryArea].texture[1] = rat->texture[RAT_VERT][1];
+			BTLstr->creature[MemoryArea].texture[2] = rat->texture[RAT_VERT][2];
+			break;
+		case RAT_JAUNE:
+			BTLstr->creature[MemoryArea].life = 70;
+			BTLstr->creature[MemoryArea].texture[0] = rat->texture[RAT_JAUNE][0];
+			BTLstr->creature[MemoryArea].texture[1] = rat->texture[RAT_JAUNE][1];
+			BTLstr->creature[MemoryArea].texture[2] = rat->texture[RAT_JAUNE][2];
+			break;
+		case RAT_ORANGE:
+			BTLstr->creature[MemoryArea].life = 180;
+			BTLstr->creature[MemoryArea].texture[0] = rat->texture[RAT_ORANGE][0];
+			BTLstr->creature[MemoryArea].texture[1] = rat->texture[RAT_ORANGE][1];
+			BTLstr->creature[MemoryArea].texture[2] = rat->texture[RAT_ORANGE][2];
+			break;
+		case RAT_ROUGE:
+			BTLstr->creature[MemoryArea].life = 300;
+			BTLstr->creature[MemoryArea].texture[0] = rat->texture[RAT_ROUGE][0];
+			BTLstr->creature[MemoryArea].texture[1] = rat->texture[RAT_ROUGE][1];
+			BTLstr->creature[MemoryArea].texture[2] = rat->texture[RAT_ROUGE][2];
+			break;
+		default:
+			break;
+	}
+	BTLstr->creature[MemoryArea].lifemax = BTLstr->creature[MemoryArea].life;
 	BTLstr->creature[MemoryArea].isdead = false;
 	BTLstr->creature[MemoryArea].tempsanimation = 0;
 	BTLstr->creature[MemoryArea].Direction = rand()%8;

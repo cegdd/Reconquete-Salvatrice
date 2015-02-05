@@ -38,7 +38,7 @@ float combat (float vie, struct RAT *rat, struct DIVERSsysteme *systeme, PERSO *
 	{
 		BTLstr.ptVie.h = systeme->screenh*0.2;
 		BTLstr.ptVie.w = systeme->screenw*0.6;
-		perso->life = 1000000;// should be 100
+		perso->life = 100;// should be 100
 	}
 	else
 	{
@@ -101,7 +101,7 @@ float combat (float vie, struct RAT *rat, struct DIVERSsysteme *systeme, PERSO *
 		{
 			if (arcademode == true)
 			{
-				sprintf(BTLstr.StringVie, "fps : %d       ennemi en vie : %d         ennemi vaincu : %d         score : %d", fps, BTLstr.NBennemi, BTLstr.ennemivaincue, BTLstr.arcadescore);//fps
+				sprintf(BTLstr.StringVie, "fps : %d       ennemi en vie : %d         ennemi vaincu : %d         score : %d", fps, BTLstr.alive, BTLstr.ennemivaincue, BTLstr.arcadescore);//fps
 			}
 			else
 			{
@@ -115,7 +115,7 @@ float combat (float vie, struct RAT *rat, struct DIVERSsysteme *systeme, PERSO *
 			BTLstr.alive = 0;
 			for(index = 0 ; index < BTLstr.NBennemi ; index++)
 			{
-				if (BTLstr.creature[index].life > 0)
+				if (BTLstr.creature[index].isdead == false)
 				{
 					BTLstr.alive += 1;
 				}
@@ -127,13 +127,41 @@ float combat (float vie, struct RAT *rat, struct DIVERSsysteme *systeme, PERSO *
 		//adding creature ~60/sec
 		if (BTLstr.temps - BTLstr.TimeAddEnnemy >= 64)//64
 		{
+			
+			
 			BTLstr.TimeAddEnnemy = BTLstr.temps;
 			if ( arcademode == true)
 			{
 				int ret = FindCreatureMemoryArea(&BTLstr);
 				if (ret != -1)
 				{
-					ADD_Rat(ret, &BTLstr, systeme);
+					int ret2 = Read_Creature_Queue(&BTLstr.CreatureQueue);
+					printf("%d\n",ret2);
+					switch (ret2)
+					{
+						case RAT_BLANC:
+							BTLstr.NBennemi++;
+							ADD_Rat(RAT_BLANC, ret, &BTLstr, systeme, rat);
+							break;
+						case RAT_VERT:
+							BTLstr.NBennemi++;
+							ADD_Rat(RAT_VERT, ret, &BTLstr, systeme, rat);
+							break;
+						case RAT_JAUNE:
+							BTLstr.NBennemi++;
+							ADD_Rat(RAT_JAUNE, ret, &BTLstr, systeme, rat);
+							break;
+						case RAT_ORANGE:
+							BTLstr.NBennemi++;
+							ADD_Rat(RAT_ORANGE, ret, &BTLstr, systeme, rat);
+							break;
+						case RAT_ROUGE:
+							BTLstr.NBennemi++;
+							ADD_Rat(RAT_ROUGE, ret, &BTLstr, systeme, rat);
+							break;
+						default:
+							break;
+					}
 				}
 			}
 		}
@@ -162,7 +190,6 @@ int FindCreatureMemoryArea(typecombat *BTLstr)
 	{
 		if (BTLstr->creature[index].isdead == true)
 		{
-			BTLstr->NBennemi++;
 			return index;
 		}
 	}
@@ -207,12 +234,12 @@ void afficherCOMBAT(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso,
 			{	SDL_RenderCopy(systeme->renderer, BTLstr->piece, NULL, &BTLstr->creature[index].position);}
 		}
 		//si elles sont mortes et pas ramasser
-		else if (BTLstr->creature[index].life <= 0 && BTLstr->creature[index].looted == 0)
+		else if (BTLstr->creature[index].isdead == true && BTLstr->creature[index].looted == 0)
 		{
 			if (arcademode == false)
 			{
 				calcul =90+(45 * BTLstr->creature[index].Direction);
-				SDL_RenderCopyEx(systeme->renderer,rat->texture[2], NULL, &BTLstr->creature[index].position, calcul,NULL, SDL_FLIP_NONE);
+				SDL_RenderCopyEx(systeme->renderer,rat->texture[RAT_BLANC][2], NULL, &BTLstr->creature[index].position, calcul,NULL, SDL_FLIP_NONE);
 			}
 			else
 			{	
@@ -221,13 +248,10 @@ void afficherCOMBAT(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso,
 				SDL_RenderCopy(systeme->renderer,BTLstr->piece, NULL, &BTLstr->creature[index].position);
 			}
 		}
-	}
-	for (index = 0; index < BTLstr->NBennemi ; index++)
-	{
-		if (BTLstr->creature[index].life > 0)//if they're alive
+		else if(BTLstr->creature[index].isdead == false)//if they're alive
 		{
 			calcul =90+(45 * BTLstr->creature[index].Direction);
-			SDL_RenderCopyEx(systeme->renderer, rat->texture[BTLstr->creature[index].indexanim], NULL, &BTLstr->creature[index].position, calcul,NULL, SDL_FLIP_NONE);
+			SDL_RenderCopyEx(systeme->renderer, BTLstr->creature[index].texture[BTLstr->creature[index].indexanim], NULL, &BTLstr->creature[index].position, calcul,NULL, SDL_FLIP_NONE);
 		}
 	}
 	//text on top of the screen
@@ -668,8 +692,7 @@ void Hit_Creature(int index, typecombat *BTLstr)
 	BTLstr->creature[index].life -= 10;
 	if (BTLstr->creature[index].life <= 0)
 	{
-		BTLstr->creature[index].isdead = true;
-		BTLstr->NBennemi--;
+		BTLstr->creature[index].isdead = true;	
 		BTLstr->arcadescore += 5;
 	}
 }

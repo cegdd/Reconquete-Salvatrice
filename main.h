@@ -3,6 +3,7 @@
 
 #include <stdbool.h>
 #include <SDL2/SDL_ttf.h>
+#include "queue.h"
 
 //#####     OS     ######//
 #define WINDOWS 0
@@ -50,6 +51,7 @@ enum{UP, UPRIGHT, RIGHT, RIGHTDOWN, DOWN, DOWNLEFT, LEFT, LEFTUP};//direction
 enum{UNUSED, GO, RUNNING, STOP};//projectil
 enum{ALIGN_RIGHT, ALIGN_LEFT, ALIGN_CENTER};//text
 enum{B_NORMAL, B_SURVOLER, B_CLIQUER, B_IMPOSSIBLE};//bouton
+enum{RAT_BLANC, RAT_VERT, RAT_JAUNE, RAT_ORANGE, RAT_ROUGE};
 
 struct BARREVIE
 {
@@ -158,7 +160,7 @@ struct CREATURE
 struct RAT
 {
 	//graphic
-	SDL_Texture *texture[3];
+	SDL_Texture *texture[5][3];
 	SDL_Rect position;
 	
 	
@@ -166,6 +168,7 @@ struct RAT
 	char nom [48];
 	int etat;
 	float life;
+	File queue;
 	
 	//animation
 	int indexanim;
@@ -514,6 +517,8 @@ struct typeFORthreads
 
 struct typecombat
 {
+	File CreatureQueue;
+	
     char calque[1366][768];
 	int NBennemi;
 	struct CREATURE creature[LIMITEmobARCADE];
