@@ -355,6 +355,20 @@ void initmonstre(PACKmonstre *monstre, DIVERSsysteme *systeme)//											monst
 	monstre->rat[0].maxloot[0] = 1; //peau
 	monstre->rat[0].idloot[0] = 0; //peau
 	monstre->rat[0].nombreloot = 1;
+	
+	Add_Creature_Queue(&monstre->rat[0].queue, RAT_BLANC , 15);
+	Add_Creature_Queue(&monstre->rat[0].queue, RAT_VERT , 5);
+	Add_Creature_Queue(&monstre->rat[0].queue, RAT_JAUNE , 1);
+	
+	Add_Creature_Queue(&monstre->rat[1].queue, RAT_BLANC , 5);
+	Add_Creature_Queue(&monstre->rat[1].queue, RAT_VERT , 15);
+	Add_Creature_Queue(&monstre->rat[1].queue, RAT_JAUNE , 7);
+	Add_Creature_Queue(&monstre->rat[1].queue, RAT_ORANGE , 2);
+	
+	Add_Creature_Queue(&monstre->rat[2].queue, RAT_VERT , 5);
+	Add_Creature_Queue(&monstre->rat[2].queue, RAT_JAUNE , 17);
+	Add_Creature_Queue(&monstre->rat[2].queue, RAT_ORANGE , 9);
+	Add_Creature_Queue(&monstre->rat[2].queue, RAT_ROUGE , 1);
 
 
 //rat
@@ -364,6 +378,7 @@ void initmonstre(PACKmonstre *monstre, DIVERSsysteme *systeme)//											monst
 		monstre->rat[index].position.h = systeme->screenh*0.039;
 
 		monstre->rat[index].etat = alive;
+		monstre->rat[index].Engaged = false;
 		monstre->rat[index].indexanim = 0;
 		monstre->rat[index].tempsanim = 0;
 		monstre->rat[index].direction = rand()%8;
@@ -899,12 +914,7 @@ void initonline(typeFORthreads *online, DIVERSsysteme *systeme)
 }
 
 void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, struct DIRECTION *direction, bool arcademode)
-{
-	
-	Add_Creature_Queue(&BTLstr->CreatureQueue, RAT_BLANC ,15);
-	Add_Creature_Queue(&BTLstr->CreatureQueue, RAT_VERT ,5);
-	Add_Creature_Queue(&BTLstr->CreatureQueue, RAT_JAUNE ,1);
-	
+{	
 	int index, index2;
 	BTLstr->continuer = -1;
 	BTLstr->echap = 0;
@@ -924,6 +934,7 @@ void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, struct D
 	BTLstr->animobjetway = 0;
 	BTLstr->ennemivaincue = 0;
 	BTLstr->arcadescore = 0;
+	BTLstr->IndexCreature = -1;
 
 	BTLstr->temps = 0;
 	BTLstr->tempsaffichage = 0;
@@ -976,6 +987,7 @@ void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, struct D
 		
 		BTLstr->premiercoup[index] = 0;
 		BTLstr->creature[index].isdead = true;
+		BTLstr->creature[index].iserasable = true;
 		BTLstr->creature[index].tempsanimation = 0;
 		BTLstr->creature[index].Direction = 0;
 		BTLstr->creature[index].indexanim = 0;

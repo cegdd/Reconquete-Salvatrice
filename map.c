@@ -59,8 +59,8 @@ int map (DIVERSsysteme *systeme, typeFORthreads *online, PACKbouton *bouton , PA
             temps->tpapr = temps->tpact;
             temps->i++;
 
-			//sichronisation des positions
-			sinchronisationposition(pnj, carte, monstre, craft, systeme, online, perso);
+			//sichronisation des données
+			sinchronisation(pnj, carte, monstre, craft, systeme, online, perso);
 
             //animation personnage qui marche
             ANIMpersomarche(deplacement, temps);
@@ -130,7 +130,7 @@ int map (DIVERSsysteme *systeme, typeFORthreads *online, PACKbouton *bouton , PA
         {
             temps->temptotal++;
 
-            for (index = 0 ; index < 3 ; index++)
+            for (index = 0 ; index < 3 ; index++)// popping time
 			{
 				if (monstre->rat[index].etat != alive)// != 0
 				{
@@ -138,7 +138,7 @@ int map (DIVERSsysteme *systeme, typeFORthreads *online, PACKbouton *bouton , PA
 				}
 			}
 
-			//si premiere seconde du joueur
+			//if it's the first second of this player
             if (temps->temptotal == 1)
             {
                 char texte[2548] = "           Toumai :\n\nBonjour à toi jeune ...\njeune quoi exactement?\nJe suis vieux, mes yeux sont fatigués\nmais mon esprit reste vif!\nEt à ta démarche je devine que tu n'es\npas du coin.\nJ'ignore ce que tu viens faire ici mais je dois te prévenir :\n\nles lieux ne sont pas sûrs!\nEt en tant que sage de la tribue, je dois m'assurer que tu puisses survivre au moins quelques jours.\nRamène moi 5 cadavres de batmouths et je croirais peut-être en ton avenir.\nAvec une bonne pierre entre les 2 yeux je ne donne pas cher de leurs vies! \n\n   APPUIE SUR ENTRÉE POUR CONTINUER";
@@ -234,22 +234,19 @@ void detectioncombat(PACKmonstre *monstre, DIVERSinventaire *inventaire, DIVERSc
                      DIVERSdeplacement *deplacement, PACKobjet *objet, PERSO *perso,DIVERSsysteme *systeme,
                      PACKrecompense *recompense, bool arcademode)
 {
-	int index = 0;
+	int index;
 	
 	for(index = 0 ; index < 3 ; index++)
     {
-		if (monstre->rat[index].etat >= TEMPSREPOPBATMOUTHS)
-        {
-            monstre->rat[index].etat = alive;
-        }
-        
         if (perso->pperso.x+perso->pperso.w >= monstre->rat[index].position.x &&
                 perso->pperso.y+perso->pperso.h >= monstre->rat[index].position.y &&
                 perso->pperso.y <= monstre->rat[index].position.y+monstre->rat[index].position.h &&
                 perso->pperso.x <= monstre->rat[index].position.x+monstre->rat[index].position.w &&
                 monstre->rat[index].etat == alive)
         {
+			monstre->rat[index].Engaged = true;
 			monstre->rat[index].etat = lancementcombat(monstre, inventaire, chat, ui, deplacement, objet, perso, systeme, recompense, arcademode);
+			monstre->rat[index].Engaged = false;
 		}
 	}
 }
@@ -296,7 +293,7 @@ int lancementcombat(PACKmonstre *monstre, DIVERSinventaire *inventaire, DIVERSch
 	}
 	
 	//############lancement du combat############
-	RETcombat = combat(perso->life, &monstre->rat[0], systeme, perso, inventaire, recompense, objet, ui, arcademode);
+	RETcombat = combat(perso->life, monstre, systeme, perso, inventaire, recompense, objet, ui, arcademode);
 	
 	if (arcademode == false)
 	{
@@ -415,9 +412,11 @@ void gestionchat(DIVERSchat *chat, DIVERSsysteme *systeme, typeFORthreads *onlin
     }
 }
 
-void sinchronisationposition(PACKpnj *pnj, DIVERSmap *carte, PACKmonstre *monstre, DIVERScraft *craft, DIVERSsysteme *systeme
+void sinchronisation(PACKpnj *pnj, DIVERSmap *carte, PACKmonstre *monstre, DIVERScraft *craft, DIVERSsysteme *systeme
 							, typeFORthreads *online, PERSO *perso)
 {
+	int index;
+	
 	pnj->toumai.x = carte->pmap[0].x + 160;
 	pnj->toumai.y = carte->pmap[0].y + 575;
 	carte->pmx = carte->pmap[0].x * -1;
@@ -436,6 +435,14 @@ void sinchronisationposition(PACKpnj *pnj, DIVERSmap *carte, PACKmonstre *monstr
 
 	online->posjoueurx = carte->pmx + perso->pperso.x;
 	online->posjoueury = carte->pmy + perso->pperso.y;
+	
+	for (index = 0 ; index < 3 ; index++)
+	{
+		if (monstre->rat[index].etat >= TEMPSREPOPBATMOUTHS)
+		{
+			monstre->rat[index].etat = alive;
+		}
+	}
 }
 
 

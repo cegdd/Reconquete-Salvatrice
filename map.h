@@ -32,7 +32,7 @@ void ANIMpersomarche(DIVERSdeplacement *deplacement, DIVERStemps *temps);
 void ANIMmonstre(PACKmonstre *monstre, DIVERStemps *temps);
 
 void gestionchat(DIVERSchat *chat, DIVERSsysteme *systeme, typeFORthreads *online);
-void sinchronisationposition(PACKpnj *pnj, DIVERSmap *carte, PACKmonstre *monstre, DIVERScraft *craft, DIVERSsysteme *systeme
+void sinchronisation(PACKpnj *pnj, DIVERSmap *carte, PACKmonstre *monstre, DIVERScraft *craft, DIVERSsysteme *systeme
 							, typeFORthreads *online, PERSO *perso);
 
 int calcultempssecondes(int temptotal);

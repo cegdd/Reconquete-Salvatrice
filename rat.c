@@ -175,6 +175,7 @@ void ADD_Rat(int type, int MemoryArea, typecombat *BTLstr, DIVERSsysteme *system
 	}
 	BTLstr->creature[MemoryArea].lifemax = BTLstr->creature[MemoryArea].life;
 	BTLstr->creature[MemoryArea].isdead = false;
+	BTLstr->creature[MemoryArea].iserasable = false;
 	BTLstr->creature[MemoryArea].tempsanimation = 0;
 	BTLstr->creature[MemoryArea].Direction = rand()%8;
 	BTLstr->creature[MemoryArea].indexanim = 0;

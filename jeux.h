@@ -17,8 +17,9 @@ typedef struct DIVERSinventaire DIVERSinventaire;
 typedef struct PACKrecompense PACKrecompense;
 typedef struct PACKobjet PACKobjet;
 typedef struct DIVERSui DIVERSui;
+typedef struct PACKmonstre PACKmonstre;
 
-float combat (float vie, struct RAT *rat, DIVERSsysteme *systeme, PERSO *perso, DIVERSinventaire *inventaire, PACKrecompense *recompense
+float combat (float vie, PACKmonstre *monstre, DIVERSsysteme *systeme, PERSO *perso, DIVERSinventaire *inventaire, PACKrecompense *recompense
 				, PACKobjet *objet, DIVERSui *ui, bool arcademode);
 void Hitboxjoueur (typecombat *BTLstr, PERSO *perso, int id);
 
@@ -45,5 +46,6 @@ int JoueurMort(typecombat *BTLstr, DIVERSsysteme *systeme, DIVERSui *ui);
 int PositionOfDeathDisplay(SDL_Texture *texture[], SDL_Rect position[], char score[][20],
 							typecombat *BTLstr, DIVERSsysteme *systeme);
 void Hit_Creature(int index, typecombat *BTLstr);
+int FindCreature( PACKmonstre *monstre);
 
 #endif

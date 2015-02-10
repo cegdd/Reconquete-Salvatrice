@@ -138,6 +138,7 @@ struct CREATURE
 	
 	char name [48];
 	bool isdead;
+	bool iserasable;
 	float life;
 	float lifemax;
 	int ID;
@@ -163,10 +164,10 @@ struct RAT
 	SDL_Texture *texture[5][3];
 	SDL_Rect position;
 	
-	
 	//general
 	char nom [48];
 	int etat;
+	bool Engaged;
 	File queue;
 	
 	//animation
@@ -515,9 +516,7 @@ struct typeFORthreads
 };
 
 struct typecombat
-{
-	File CreatureQueue;
-	
+{	
     char calque[1366][768];
 	int NBennemi;
 	struct CREATURE creature[LIMITEmobARCADE];
@@ -547,6 +546,7 @@ struct typecombat
     int alive;
     int ennemivaincue;
     int arcadescore;
+    int IndexCreature;
 
     int animobjetway;
     int NBlootsol;
