@@ -246,6 +246,7 @@ void detectioncombat(PACKmonstre *monstre, DIVERSinventaire *inventaire, DIVERSc
         {
 			monstre->rat[index].Engaged = true;
 			monstre->rat[index].etat = lancementcombat(monstre, inventaire, chat, ui, deplacement, objet, perso, systeme, recompense, arcademode);
+			initqueue(&monstre->rat[index].queue, monstre->rat[index].ID);
 			monstre->rat[index].Engaged = false;
 		}
 	}
@@ -421,10 +422,10 @@ void sinchronisation(PACKpnj *pnj, DIVERSmap *carte, PACKmonstre *monstre, DIVER
 	pnj->toumai.y = carte->pmap[0].y + 575;
 	carte->pmx = carte->pmap[0].x * -1;
 	carte->pmy = carte->pmap[0].y * -1;
-	monstre->rat[0].position.x = carte->pmap[0].x + 1150;
-	monstre->rat[0].position.y = carte->pmap[0].y + 1500;
-	monstre->rat[1].position.x = carte->pmap[0].x + 540;
-	monstre->rat[1].position.y = carte->pmap[0].y + 1232;
+	monstre->rat[1].position.x = carte->pmap[0].x + 1150;
+	monstre->rat[1].position.y = carte->pmap[0].y + 1500;
+	monstre->rat[0].position.x = carte->pmap[0].x + 540;
+	monstre->rat[0].position.y = carte->pmap[0].y + 1232;
 	monstre->rat[2].position.x = carte->pmap[0].x + 347;
 	monstre->rat[2].position.y = carte->pmap[0].y + 1432;
 	craft->petabli.x = carte->pmap[0].x + 830;

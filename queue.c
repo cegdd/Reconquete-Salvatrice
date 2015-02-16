@@ -1,9 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "queue.h"
+#include "jeux.h"
+#include "main.h"
 
 typedef struct Element Element;
 typedef struct File File;
+typedef struct PACKmonstre PACKmonstre;
 
 void Add_Creature_Queue(File *file, int nvNombre, int quantity)
 {
@@ -42,7 +45,7 @@ int Read_Creature_Queue(File *file)
 {
     if (file == NULL)
     {
-        exit(EXIT_FAILURE);
+        return -1;
     }
 
     int nombreDefile = -1;
@@ -56,6 +59,42 @@ int Read_Creature_Queue(File *file)
         file->premier = elementDefile->suivant;
         free(elementDefile);
     }
+    else
+    {
+		return -1;
+	}
 
     return nombreDefile;
+}
+
+void initqueue(File *file, int ID)
+{
+	int ret = 0;
+	
+	while(ret != -1)
+	{
+		ret = Read_Creature_Queue(file);
+	}
+	
+	switch(ID)
+	{
+		case 0:
+			Add_Creature_Queue(file, RAT_BLANC , 15);
+			Add_Creature_Queue(file, RAT_VERT , 5);
+			Add_Creature_Queue(file, RAT_JAUNE , 1);
+			break;
+		case 1:
+			Add_Creature_Queue(file, RAT_BLANC , 5);
+			Add_Creature_Queue(file, RAT_VERT , 15);
+			Add_Creature_Queue(file, RAT_JAUNE , 7);
+			Add_Creature_Queue(file, RAT_ORANGE , 2);
+			break;
+		case 2:
+			Add_Creature_Queue(file, RAT_VERT , 5);
+			Add_Creature_Queue(file, RAT_JAUNE , 17);
+			Add_Creature_Queue(file, RAT_ORANGE , 9);
+			Add_Creature_Queue(file, RAT_ROUGE , 1);
+			break;
+	}
+	
 }

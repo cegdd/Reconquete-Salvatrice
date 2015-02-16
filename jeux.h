@@ -1,11 +1,15 @@
 #ifndef JEUXH
 #define JEUXH
 
+#include <stdbool.h>
+#include <SDL2/SDL.h>
+
 //####grille de test#####//
 #define TESTGRID 0
 //###arret des ennemis###//
 #define ARRET_MOB 0
 //#######################//
+
 
 
 typedef struct DIRECTION DIRECTION;
@@ -46,6 +50,7 @@ int JoueurMort(typecombat *BTLstr, DIVERSsysteme *systeme, DIVERSui *ui);
 int PositionOfDeathDisplay(SDL_Texture *texture[], SDL_Rect position[], char score[][20],
 							typecombat *BTLstr, DIVERSsysteme *systeme);
 void Hit_Creature(int index, typecombat *BTLstr);
-int FindCreature( PACKmonstre *monstre);
+int FindCreatureEngaged( PACKmonstre *monstre);
+int FindCreatureID( PACKmonstre *monstre, int ID);
 
 #endif

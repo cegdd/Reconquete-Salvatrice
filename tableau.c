@@ -10,6 +10,7 @@
 #include "image.h"
 #include "objet.h"
 #include "tool.h"
+#include "queue.h"
 
 typedef struct plan plan;
 typedef struct PACKobjet PACKobjet;
@@ -350,25 +351,18 @@ void initbouton(PACKbouton *bouton, DIVERSsysteme *systeme)//												bouton
 void initmonstre(PACKmonstre *monstre, DIVERSsysteme *systeme)//											monstre
 {
 	int index;
+	monstre->rat[0].ID = 0;
+	monstre->rat[1].ID = 1;
+	monstre->rat[2].ID = 2;
 
 	monstre->rat[0].prctloot[0] = 100; //peau
 	monstre->rat[0].maxloot[0] = 1; //peau
 	monstre->rat[0].idloot[0] = 0; //peau
 	monstre->rat[0].nombreloot = 1;
 	
-	Add_Creature_Queue(&monstre->rat[0].queue, RAT_BLANC , 15);
-	Add_Creature_Queue(&monstre->rat[0].queue, RAT_VERT , 5);
-	Add_Creature_Queue(&monstre->rat[0].queue, RAT_JAUNE , 1);
-	
-	Add_Creature_Queue(&monstre->rat[1].queue, RAT_BLANC , 5);
-	Add_Creature_Queue(&monstre->rat[1].queue, RAT_VERT , 15);
-	Add_Creature_Queue(&monstre->rat[1].queue, RAT_JAUNE , 7);
-	Add_Creature_Queue(&monstre->rat[1].queue, RAT_ORANGE , 2);
-	
-	Add_Creature_Queue(&monstre->rat[2].queue, RAT_VERT , 5);
-	Add_Creature_Queue(&monstre->rat[2].queue, RAT_JAUNE , 17);
-	Add_Creature_Queue(&monstre->rat[2].queue, RAT_ORANGE , 9);
-	Add_Creature_Queue(&monstre->rat[2].queue, RAT_ROUGE , 1);
+	initqueue(&monstre->rat[0].queue, 0);
+	initqueue(&monstre->rat[1].queue, 1);
+	initqueue(&monstre->rat[2].queue, 2);
 
 
 //rat

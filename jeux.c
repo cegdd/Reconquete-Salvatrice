@@ -34,7 +34,7 @@ float combat (float vie, PACKmonstre *monstre, struct DIVERSsysteme *systeme, PE
 	//initialisation des variables
 	initcombatstore(&BTLstr, systeme, &direction, arcademode);
 	//finding who we are fighting
-	BTLstr.IndexCreature = FindCreature(monstre);
+	BTLstr.IndexCreature = FindCreatureEngaged(monstre);
 	if (BTLstr.IndexCreature == -1 && arcademode == false)	{	return -1;	} //if creature not found
 	else if ( arcademode == true) { BTLstr.IndexCreature = 1;	}	//if arcademode
 	
@@ -711,13 +711,27 @@ void Hit_Creature(int index, typecombat *BTLstr)
 	}
 }
 
-int FindCreature( PACKmonstre *monstre)
+int FindCreatureEngaged( PACKmonstre *monstre)
 {
 	int index;
 	
-	for (index = 0 ; index < 2 ; index ++)
+	for (index = 0 ; index < 3 ; index ++)
 	{
 		if (monstre->rat[index].Engaged == true)
+		{
+			return index;
+		}
+	}
+	return -1;
+}
+
+int FindCreatureID( PACKmonstre *monstre, int ID)
+{
+	int index;
+	
+	for (index = 0 ; index < 3 ; index ++)
+	{
+		if (monstre->rat[index].ID == ID)
 		{
 			return index;
 		}
