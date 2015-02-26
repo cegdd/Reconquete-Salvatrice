@@ -8,9 +8,11 @@
 //#####     OS     ######//
 #define WINDOWS 0
 //####logging rapide ####//
-#define FASTLOG 0
+#define FASTLOG 1
 //####  battle log   ####//
 #define BATTLE_LOG 0
+//####    cheat     ####//
+#define CHEAT 1
 //#######################//
 
 #define LOOTMAX 50
@@ -32,7 +34,7 @@
 #define NBcailloux 50
 #define PRECISIONcailloux 384 //nombre de calcul par tir
 #define DEGATcailloux 10
-#define DEGATsubitCHOC 10  //6 a 10
+#define DEGATsubitCHOC 10.0  //6 a 10
 #define DEGATsubitDUREE 0.3  //0.8
 #define VITESSE 3
 #define LIMITEmobARCADE 512
@@ -204,7 +206,7 @@ struct PERSO
 	int stuff[7];
 
 	int regenlife;
-	int defense;
+	float defense;
 	float life;
 	int force;
 	int portee;

@@ -18,15 +18,16 @@
 #include "tableau.h"
 #include "systeme.h"
 #include "listechaine.h"
-//map(systeme, online, &bouton, &objet, &monstre, &perso, &inventaire, &temps, &ui, &chat, &craft, &carte, &pnj, &recompense, &FORevent)
+
 int map (DIVERSsysteme *systeme, typeFORthreads *online, PACKbouton *bouton , PACKobjet *objet, PACKmonstre *monstre, PERSO *perso, DIVERSinventaire *inventaire, DIVERSdeplacement *deplacement, 
 		DIVERStemps *temps, DIVERSui *ui, DIVERSchat *chat, DIVERScraft *craft, DIVERSmap *carte, PACKpnj *pnj, PACKrecompense *recompense, typeFORevent *FORevent)
 {
     chargement(systeme);
-    #if FASTLOG == 1
+    #if CHEAT == 1
     int indextmp;
     for (indextmp = 0 ; indextmp < 10 ; indextmp++)
     {
+		insertionsac(objet, 0);
 		insertionsac(objet, 2);
 		insertionsac(objet, 7);
 	}

@@ -58,7 +58,7 @@ void checkandrefreshstuff(PERSO *perso, PACKobjet *objet, DIVERSsysteme *systeme
 		perso->life = perso->lifemax;
 	}
     char string[64];
-    sprintf(string, "defense : %d", perso->defense);
+    sprintf(string, "defense : %f", perso->defense);
     SDL_DestroyTexture(perso->tdefense);
     perso->tdefense = imprime (string, systeme->screenw, BLANC, systeme, NULL, NULL);
 

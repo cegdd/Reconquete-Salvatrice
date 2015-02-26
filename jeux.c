@@ -347,15 +347,14 @@ void Hitboxjoueur (typecombat *BTLstr, PERSO *perso, int id)
 	{
 		if (DEGATsubitCHOC >= perso->defense/2)
 		{
-			perso->life = perso->life - ((DEGATsubitCHOC)-(perso->defense/2));
+			perso->life -= ((DEGATsubitCHOC)-(perso->defense/2));
 		}
 	}
 	else
 	{
-		if (DEGATsubitDUREE >= perso->defense)
+		if (DEGATsubitDUREE >= perso->defense/100)
 		{
-			float degat = DEGATsubitDUREE-(perso->defense/100);
-			perso->life = perso->life - degat;
+			perso->life -= (DEGATsubitDUREE-(perso->defense/100));
 		}
 	}
 	BTLstr->premiercoup[id] = 1;
