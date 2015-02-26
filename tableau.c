@@ -371,7 +371,7 @@ void initmonstre(PACKmonstre *monstre, DIVERSsysteme *systeme)//											monst
 		monstre->rat[index].position.w = systeme->screenw*0.0732;
 		monstre->rat[index].position.h = systeme->screenh*0.039;
 
-		monstre->rat[index].etat = alive;
+		monstre->rat[index].etat = ALIVE;
 		monstre->rat[index].Engaged = false;
 		monstre->rat[index].indexanim = 0;
 		monstre->rat[index].tempsanim = 0;
@@ -936,6 +936,7 @@ void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, struct D
 	BTLstr->tempscalcul = 0;
 	BTLstr->tempsanimationjoueur = 0;
 	BTLstr->tempsanimationobjet = 0;
+	BTLstr->TimeAddEnnemy = 0;
 
 	direction->bas = 0;
 	direction->droite = 0;
@@ -945,14 +946,7 @@ void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, struct D
 	direction->olddirection = 0;
 
 	BTLstr->NBlootsol = rand()%5;  //max déclaré 64
-	if (arcademode == false)
-	{
-		BTLstr->NBennemi = rand()%45+5;//max déclaré 128        rand()%45+5
-	}
-	else
-	{//valeur maximum pour tout initialisé
-		BTLstr->NBennemi = LIMITEmobARCADE;
-	}
+
 
 	for (index = 0 ; index < BTLstr->NBlootsol ; index++)
 	{
@@ -976,7 +970,7 @@ void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, struct D
 		BTLstr->lootsolWAYY[index] = 0;
 	}
 
-	for (index = 0 ; index < BTLstr->NBennemi ; index++)//adapté pour le mode arcade
+	for (index = 0 ; index < LIMITEmobARCADE ; index++)//adapté pour le mode arcade
 	{
 		
 		BTLstr->premiercoup[index] = 0;
@@ -1003,10 +997,6 @@ void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, struct D
 		BTLstr->creature[index].STATICposition.w = 0;
 		BTLstr->creature[index].STATICposition.h = 0;
 	}
-	
-	//remise a zero du compteur
-	BTLstr->NBennemi = 0;
-	BTLstr->alive = BTLstr->NBennemi;
 
 	for (index = 0 ; index < 48 ; index++)
 	{

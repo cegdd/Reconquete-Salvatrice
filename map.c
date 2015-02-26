@@ -132,7 +132,7 @@ int map (DIVERSsysteme *systeme, typeFORthreads *online, PACKbouton *bouton , PA
 
             for (index = 0 ; index < 3 ; index++)// popping time
 			{
-				if (monstre->rat[index].etat != alive)// != 0
+				if (monstre->rat[index].etat != ALIVE)// != 0
 				{
 					monstre->rat[index].etat++;
 				}
@@ -242,7 +242,7 @@ void detectioncombat(PACKmonstre *monstre, DIVERSinventaire *inventaire, DIVERSc
                 perso->pperso.y+perso->pperso.h >= monstre->rat[index].position.y &&
                 perso->pperso.y <= monstre->rat[index].position.y+monstre->rat[index].position.h &&
                 perso->pperso.x <= monstre->rat[index].position.x+monstre->rat[index].position.w &&
-                monstre->rat[index].etat == alive)
+                monstre->rat[index].etat == ALIVE)
         {
 			monstre->rat[index].Engaged = true;
 			monstre->rat[index].etat = lancementcombat(monstre, inventaire, chat, ui, deplacement, objet, perso, systeme, recompense, arcademode);
@@ -317,7 +317,7 @@ int lancementcombat(PACKmonstre *monstre, DIVERSinventaire *inventaire, DIVERSch
 			perso->pperso.y = systeme->screenh/2;
 			perso->life = perso->lifemax;
 			
-			return alive;
+			return ALIVE;
 		}
 		//si le joueur a fui
 		else if (RETcombat == BTL_LEAVED)
@@ -325,7 +325,7 @@ int lancementcombat(PACKmonstre *monstre, DIVERSinventaire *inventaire, DIVERSch
 			ui->ttextedialogue = fenetredialogue(systeme->screenw*0.4, systeme->screenh*0.8, &ui->pdialogue, &ui->ptextedialogue, "Vous avez fui,\ntous les objets obtenu pendant le combat on été abandonné sur place.\n\n\n\n(entrée/échap pour continuer)\n",
 									  BLANC, systeme);
 			ui->dialogueactif = 1;
-			return dead;
+			return DEAD;
 		}
 		//si joueur vivant
 		else
@@ -350,7 +350,7 @@ int lancementcombat(PACKmonstre *monstre, DIVERSinventaire *inventaire, DIVERSch
 			}
 		}
 	}
-	return dead;
+	return DEAD;
 }
 
 void ANIMpersomarche(DIVERSdeplacement *deplacement, DIVERStemps *temps)
@@ -441,7 +441,7 @@ void sinchronisation(PACKpnj *pnj, DIVERSmap *carte, PACKmonstre *monstre, DIVER
 	{
 		if (monstre->rat[index].etat >= TEMPSREPOPBATMOUTHS)
 		{
-			monstre->rat[index].etat = alive;
+			monstre->rat[index].etat = ALIVE;
 		}
 	}
 }

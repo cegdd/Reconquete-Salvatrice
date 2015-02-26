@@ -626,7 +626,7 @@ void afficherMOB(PACKmonstre *monstre, DIVERSsysteme *systeme)
 	int index;
 	for (index = 0 ; index < 3 ; index++)
 	{
-		if (monstre->rat[index].etat == alive)
+		if (monstre->rat[index].etat == ALIVE)
 		{
 			SDL_RenderCopyEx(systeme->renderer, monstre->rat[index].texture[RAT_BLANC][monstre->rat[index].indexanim], NULL, &monstre->rat[index].position, monstre->rat[index].direction*45, NULL, SDL_FLIP_NONE);
 		}

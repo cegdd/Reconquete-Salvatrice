@@ -7,8 +7,10 @@
 
 //#####     OS     ######//
 #define WINDOWS 0
-//####logging rapide#####//
-#define FASTLOG 1
+//####logging rapide ####//
+#define FASTLOG 0
+//####  battle log   ####//
+#define BATTLE_LOG 0
 //#######################//
 
 #define LOOTMAX 50
@@ -52,7 +54,7 @@ enum{UNUSED, GO, RUNNING, STOP};//projectil
 enum{ALIGN_RIGHT, ALIGN_LEFT, ALIGN_CENTER};//text
 enum{B_NORMAL, B_SURVOLER, B_CLIQUER, B_IMPOSSIBLE};//bouton
 enum{RAT_BLANC, RAT_VERT, RAT_JAUNE, RAT_ORANGE, RAT_ROUGE};//creature
-enum{alive, dead}; 
+enum{ALIVE, DEAD}; 
 struct BARREVIE
 {
 	SDL_Texture *texture;
@@ -519,7 +521,6 @@ struct typeFORthreads
 struct typecombat
 {	
     char calque[1366][768];
-	int NBennemi;
 	struct CREATURE creature[LIMITEmobARCADE];
 	int premiercoup[LIMITEmobARCADE];
 

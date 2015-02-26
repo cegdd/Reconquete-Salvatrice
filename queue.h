@@ -6,6 +6,7 @@ typedef struct File File;
 
 void Add_Creature_Queue(File *file, int nvNombre, int quantity);
 int Read_Creature_Queue(File *file);
+void Free_Queue_Element(File *file);
 void initqueue(File *file, int ID);
 
 struct Element

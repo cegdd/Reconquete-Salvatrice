@@ -40,6 +40,16 @@ void Add_Creature_Queue(File *file, int nvNombre, int quantity)
 	}
 }
 
+void Free_Queue_Element(File *file)
+{
+	if (file->premier != NULL)
+    {
+		Element *elementDefile = file->premier;
+		
+		file->premier = file->premier->suivant;
+        free(elementDefile);
+    }	
+}
 
 int Read_Creature_Queue(File *file)
 {
@@ -53,11 +63,8 @@ int Read_Creature_Queue(File *file)
     /* On vérifie s'il y a quelque chose à défiler */
     if (file->premier != NULL)
     {
-        Element *elementDefile = file->premier;
 
-        nombreDefile = elementDefile->nombre;
-        file->premier = elementDefile->suivant;
-        free(elementDefile);
+        nombreDefile = file->premier->nombre;
     }
     else
     {
@@ -74,6 +81,7 @@ void initqueue(File *file, int ID)
 	while(ret != -1)
 	{
 		ret = Read_Creature_Queue(file);
+		Free_Queue_Element(file);
 	}
 	
 	switch(ID)
