@@ -8,7 +8,7 @@
 //#####     OS     ######//
 #define WINDOWS 0
 //####logging rapide ####//
-#define FASTLOG 1
+#define FASTLOG 0
 //####  battle log   ####//
 #define BATTLE_LOG 0
 //####    cheat     ####//
@@ -522,6 +522,8 @@ struct typeFORthreads
 
 struct typecombat
 {	
+	struct BOUTON rejouer;
+	struct BOUTON quitter;
     char calque[1366][768];
 	struct CREATURE creature[LIMITEmobARCADE];
 	int premiercoup[LIMITEmobARCADE];

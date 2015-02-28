@@ -1051,5 +1051,24 @@ void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, struct D
 	BTLstr->balle = LoadingImage			("rs/images/balle.png", 0, systeme);
 	BTLstr->piece = LoadingImage			("rs/images/piece.png", 0, systeme);
 	BTLstr->peau = LoadingImage			    ("rs/objets/0#0.png", 0, systeme);
+	
+	//bouton rejouer
+	BTLstr->rejouer.normal = LoadingImage				("rs/ui/jouer.png", 0, systeme);
+	BTLstr->rejouer.survoler = LoadingImage				("rs/ui/jouer2.png", 0, systeme);
+	BTLstr->rejouer.cliquer = LoadingImage				("rs/ui/jouer3.png", 0, systeme);
+	BTLstr->rejouer.position.x = 460;
+	BTLstr->rejouer.position.y = 650;
+	BTLstr->rejouer.position.w = systeme->screenw * 0.1464;
+	BTLstr->rejouer.position.h = systeme->screenh * 0.065;
+	BTLstr->rejouer.etat = B_NORMAL;
+	//bouton quitter
+	BTLstr->quitter.normal = LoadingImage				("rs/ui/logquitter.png", 0, systeme);
+	BTLstr->quitter.survoler = LoadingImage				("rs/ui/logquitter2.png", 0, systeme);
+	BTLstr->quitter.cliquer = LoadingImage				("rs/ui/logquitter3.png", 0, systeme);
+	BTLstr->quitter.position.x = 700;
+	BTLstr->quitter.position.y = 650;
+	BTLstr->quitter.position.w = systeme->screenw * 0.1464;
+	BTLstr->quitter.position.h = systeme->screenh * 0.065;
+	BTLstr->quitter.etat = B_NORMAL;
 }
 

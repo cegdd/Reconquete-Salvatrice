@@ -146,7 +146,7 @@ float combat (float vie, PACKmonstre *monstre, struct DIVERSsysteme *systeme, PE
 		}
 		
 		//adding creature ~1.25/sec
-		if (BTLstr.temps - BTLstr.TimeAddEnnemy >= 0.1250)
+		if (BTLstr.temps - BTLstr.TimeAddEnnemy >= 1250)
 		{
 			BTLstr.TimeAddEnnemy = BTLstr.temps;
 			
@@ -685,6 +685,22 @@ int JoueurMort(typecombat *BTLstr, DIVERSsysteme *systeme, DIVERSui *ui)
 	{
 		SDL_RenderCopy(systeme->renderer, texture[index], NULL, &position[index]);
 	}
+	
+	//rendering button "play again"
+	if (BTLstr->rejouer.etat == B_SURVOLER)
+	{	SDL_RenderCopy(systeme->renderer, BTLstr->rejouer.survoler, NULL, &BTLstr->rejouer.position);	}
+	else if (BTLstr->rejouer.etat == B_CLIQUER)
+	{	SDL_RenderCopy(systeme->renderer, BTLstr->rejouer.cliquer, NULL, &BTLstr->rejouer.position);	}
+	else
+	{	SDL_RenderCopy(systeme->renderer, BTLstr->rejouer.normal, NULL, &BTLstr->rejouer.position);		}
+	//rendering button "quit"
+	if (BTLstr->quitter.etat == B_SURVOLER)
+	{	SDL_RenderCopy(systeme->renderer, BTLstr->quitter.survoler, NULL, &BTLstr->quitter.position);	}
+	else if (BTLstr->quitter.etat == B_CLIQUER)
+	{	SDL_RenderCopy(systeme->renderer, BTLstr->quitter.cliquer, NULL, &BTLstr->quitter.position);	}
+	else
+	{	SDL_RenderCopy(systeme->renderer, BTLstr->quitter.normal, NULL, &BTLstr->quitter.position);		}
+
 	SDL_RenderPresent(systeme->renderer);
 	SDL_Delay(5000);
 	
