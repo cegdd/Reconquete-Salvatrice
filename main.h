@@ -8,7 +8,7 @@
 //#####     OS     ######//
 #define WINDOWS 0
 //####logging rapide ####//
-#define FASTLOG 0
+#define FASTLOG 1
 //####  battle log   ####//
 #define BATTLE_LOG 0
 //####    cheat     ####//
@@ -46,7 +46,6 @@
 #define BTL_OBJ_MOVE -1
 #define BTL_OBJ_TOOK -2
 #define BTL_OBJ_FLOOR 0
-
 
 enum{ARME, TORSE, COU, DOS, PIED, TAILLE, TETE};//body area for item
 enum{RESSOURCE, EQUIPEMENT};//type of item

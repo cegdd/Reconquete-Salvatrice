@@ -40,7 +40,7 @@ int main (int argc, char *argv[])
     systeme.renderer = SDL_CreateRenderer(systeme.screen, -1, SDL_RENDERER_ACCELERATED);
     SDL_MaximizeWindow(systeme.screen);
 	SDL_GetWindowSize(systeme.screen , &systeme.screenw , &systeme.screenh);
-
+	
 	initsystem(&systeme);
 	initsauvegarde(systeme.sauvegarde, NBargSAVE, C);
 
@@ -64,17 +64,19 @@ int main (int argc, char *argv[])
 	
 	//si le login est accepté
 	ret = login(&systeme);
+	
+	pthread_create(&lethread1, NULL, *thread1, &online);
 	while (ret != 0)
 	{
 		if (ret == 2)
 		{
 			//creation thread pour socket
-			pthread_create(&lethread1, NULL, *thread1, &online);
 			chargersauvegarde(&systeme);
 
 			Mix_PauseMusic ();
 			//lancement du jeu
 			if (chargementcarte(&systeme, &online) != 1) {return EXIT_FAILURE;}
+			return EXIT_SUCCESS;
 		}
 		else if (ret == 5)
 		{
