@@ -8,7 +8,7 @@
 //#####     OS     ######//
 #define WINDOWS 0
 //####logging rapide ####//
-#define FASTLOG 1
+#define FASTLOG 0
 //####  battle log   ####//
 #define BATTLE_LOG 0
 //####    cheat     ####//

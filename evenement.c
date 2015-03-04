@@ -884,3 +884,27 @@ void sourisactionzone(typeFORevent *FORevent)
 		}
 	}
 }
+
+bool LoopEventBattleDeath (typecombat *BTLstr, DIVERSsysteme *systeme, SDL_Event *event)
+{
+	while(SDL_PollEvent(event) == 1)
+	{
+		switch(event->type)
+		{
+			case SDL_MOUSEBUTTONUP:
+				if(event->button.button == SDL_BUTTON_LEFT )
+				{
+					return false;
+				}
+				break;
+            case SDL_MOUSEBUTTONDOWN:
+				if(event->button.button == SDL_BUTTON_LEFT )
+				{
+				}
+				break;
+			default:
+				break;
+		}
+	}
+	return true;
+}

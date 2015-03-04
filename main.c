@@ -64,13 +64,12 @@ int main (int argc, char *argv[])
 	
 	//si le login est accepté
 	ret = login(&systeme);
-	
-	pthread_create(&lethread1, NULL, *thread1, &online);
 	while (ret != 0)
 	{
 		if (ret == 2)
 		{
 			//creation thread pour socket
+			pthread_create(&lethread1, NULL, *thread1, &online);
 			chargersauvegarde(&systeme);
 
 			Mix_PauseMusic ();

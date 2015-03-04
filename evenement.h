@@ -11,21 +11,15 @@ typedef struct DIRECTION DIRECTION;
 typedef struct DIVERSui DIVERSui;
 
 void boucleevent (bool *lancermessage, typeFORevent *FORevent);
-
 int boucleeventcombat (typecombat *BTLstr, DIVERSsysteme *systeme, DIRECTION *direction, DIVERSui *ui);
-
 int boucleeventlogin (typelogin *loginstore, DIVERSsysteme *systeme);
+bool LoopEventBattleDeath (typecombat *BTLstr, DIVERSsysteme *systeme, SDL_Event *event);
 
 void eventmapclavierdown(typeFORevent *FORevent);
-
 void eventmapclavierup(bool *lancermessage, typeFORevent *FORevent);
-
 void eventmapsourisgaucheup(typeFORevent *FORevent);
-
 void eventmapsourisdroiteup(typeFORevent *FORevent);
-
 void eventmapsourisgauchedown(typeFORevent *FORevent);
-
 void eventmapsourisdroitedown(typeFORevent *FORevent);
 
 void sourisactionzone(typeFORevent *FORevent);

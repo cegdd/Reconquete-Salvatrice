@@ -68,7 +68,7 @@ float combat (float vie, PACKmonstre *monstre, struct DIVERSsysteme *systeme, PE
 			direction.direction = directionperso(&direction);
 			//deplacement
 			deplacementperso(NULL, perso, &direction, systeme, &BTLstr.Pperso.x, &BTLstr.Pperso.y, 0);
-			//recupération coordonées souris
+			//recording mouse position
 			SDL_GetMouseState(&BTLstr.px, &BTLstr.py);
 
 			//actualisation des coordonées
@@ -103,6 +103,7 @@ float combat (float vie, PACKmonstre *monstre, struct DIVERSsysteme *systeme, PE
 			fps++;
 			BTLstr.tempsaffichage = BTLstr.temps;
 			afficherCOMBAT(&BTLstr, systeme, perso, monstre->rat, inventaire, objet, arcademode);
+			SDL_RenderPresent(systeme->renderer);
 		}
 		
 		else if (BTLstr.temps - BTLstr.tempsseconde >= 1000)//1000
@@ -134,7 +135,7 @@ float combat (float vie, PACKmonstre *monstre, struct DIVERSsysteme *systeme, PE
 				#if BATTLE_LOG == 1
 				printf("player is dead\n");
 				#endif
-				JoueurMort(&BTLstr, systeme, ui);
+				JoueurMort(&BTLstr, systeme, ui, perso, monstre->rat, inventaire, objet, arcademode);
 			}
 			else if (perso->life <= 0)
 			{
@@ -337,8 +338,6 @@ void afficherCOMBAT(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso,
 	SDL_RenderCopy	(systeme->renderer, inventaire->Uiinventaire, NULL, &inventaire->puiinventaire);
 
 	SDL_RenderCopy(systeme->renderer, BTLstr->curseur, NULL, &BTLstr->pcurseur);
-
-	SDL_RenderPresent(systeme->renderer);
 }
 
 void Hitboxjoueur (typecombat *BTLstr, PERSO *perso, int id)
@@ -665,19 +664,42 @@ int CalculerBarreDeVie(int VieDeBase, int VieActuelle, int width)
 	return ((float)width / (float)VieDeBase) * (float)VieActuelle;
 }
 
-int JoueurMort(typecombat *BTLstr, DIVERSsysteme *systeme, DIVERSui *ui)
+int JoueurMort(typecombat *BTLstr, DIVERSsysteme *systeme, DIVERSui *ui, PERSO *perso, struct RAT *rat,
+				DIVERSinventaire *inventaire, PACKobjet *objet, bool arcademode)
 {
-
+	SDL_Event event;
 	char score[64][20];
 	SDL_Texture *texture[64];
 	SDL_Rect position[64];
-	int index;
+	bool continuer = true;
 	
 	//setting background
 	texture[0] = fenetredialogue(systeme->pecran.w/3, systeme->pecran.h*0.911, &position[0], NULL, NULL, BLANC, systeme);
 	ui->dialogueactif = 1;
 	//setting up all texts
 	int ret = PositionOfDeathDisplay(texture, position, score, BTLstr, systeme);
+	
+	while (continuer == true)
+	{
+		continuer = LoopEventBattleDeath (BTLstr, systeme, &event);
+		//recording mouse position
+		SDL_GetMouseState(&BTLstr->pcurseur.x, &BTLstr->pcurseur.y);
+		
+		afficherCOMBAT(BTLstr, systeme, perso, rat, inventaire, objet, arcademode);
+		DrawDeathDisplay(BTLstr, systeme, texture, position, ret);
+		SDL_RenderCopy(systeme->renderer, BTLstr->curseur, NULL, &BTLstr->pcurseur);
+		SDL_RenderPresent(systeme->renderer);
+		
+		SDL_Delay(5);
+	}
+	
+	BTLstr->continuer = BTL_LOST;
+	return 0;
+}
+
+void DrawDeathDisplay(typecombat *BTLstr, DIVERSsysteme *systeme, SDL_Texture *texture[], SDL_Rect position[], int ret)
+{
+	int index;
 	
 	//rendering Background and texts
 	SDL_RenderCopy(systeme->renderer, systeme->BG, NULL, &position[0]);
@@ -700,12 +722,6 @@ int JoueurMort(typecombat *BTLstr, DIVERSsysteme *systeme, DIVERSui *ui)
 	{	SDL_RenderCopy(systeme->renderer, BTLstr->quitter.cliquer, NULL, &BTLstr->quitter.position);	}
 	else
 	{	SDL_RenderCopy(systeme->renderer, BTLstr->quitter.normal, NULL, &BTLstr->quitter.position);		}
-
-	SDL_RenderPresent(systeme->renderer);
-	SDL_Delay(5000);
-	
-	BTLstr->continuer = BTL_LOST;
-	return 0;
 }
 
 int PositionOfDeathDisplay(SDL_Texture *texture[], SDL_Rect position[], char score[][20],
