@@ -51,7 +51,7 @@ int PositionOfDeathDisplay(SDL_Texture *texture[], SDL_Rect position[], char sco
 void Hit_Creature(int index, typecombat *BTLstr);
 int FindCreatureEngaged( PACKmonstre *monstre);
 int FindCreatureID( PACKmonstre *monstre, int ID);
-int JoueurMort(typecombat *BTLstr, DIVERSsysteme *systeme, DIVERSui *ui, PERSO *perso, struct RAT *rat,
+void JoueurMort(typecombat *BTLstr, DIVERSsysteme *systeme, DIVERSui *ui, PERSO *perso, struct RAT *rat,
 				DIVERSinventaire *inventaire, PACKobjet *objet, bool arcademode);
 
 #endif

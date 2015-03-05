@@ -39,14 +39,11 @@
 #define VITESSE 3
 #define LIMITEmobARCADE 512
 
-#define BTL_WON 1
-#define BTL_LOST 0
-#define BTL_LEAVED 2
-
 #define BTL_OBJ_MOVE -1
 #define BTL_OBJ_TOOK -2
 #define BTL_OBJ_FLOOR 0
 
+enum{BTL_LOST, BTL_WON, BTL_LEAVED, BTL_RESTART};//for battle
 enum{ARME, TORSE, COU, DOS, PIED, TAILLE, TETE};//body area for item
 enum{RESSOURCE, EQUIPEMENT};//type of item
 enum{BLANC, ROUGE, GRIS, NOIR, VERT, BLEU};//text color

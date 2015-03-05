@@ -870,14 +870,14 @@ void sourisactionzone(typeFORevent *FORevent)
 			(FORevent->ui->coinbas == 0 && FORevent->ui->coinhaut == 0))
 	{
 		//position toumaï
-		if (colisionbox(&FORevent->systeme->pp, &FORevent->pnj->toumai, 1) &&
+		if (colisionbox(&FORevent->systeme->pp, &FORevent->pnj->toumai, true) &&
 				checkdistance(&FORevent->perso->pperso, &FORevent->pnj->toumai, 300) == -1)
 		{
 			FORevent->ui->lancedialogue = 2;
 			FORevent->pnj->toumaiParle = true;
 		}
 		//position etabli
-		else if (colisionbox(&FORevent->systeme->pp, &FORevent->craft->petabli, 1) &&
+		else if (colisionbox(&FORevent->systeme->pp, &FORevent->craft->petabli, true) &&
 				checkdistance(&FORevent->perso->pperso, &FORevent->craft->petabli, 250) == -1)
 		{
 			FORevent->craft->actif = true;
@@ -885,8 +885,33 @@ void sourisactionzone(typeFORevent *FORevent)
 	}
 }
 
-bool LoopEventBattleDeath (typecombat *BTLstr, DIVERSsysteme *systeme, SDL_Event *event)
+int LoopEventBattleDeath (typecombat *BTLstr, DIVERSsysteme *systeme, SDL_Event *event)
 {
+	SDL_Rect curseurtmp;
+	
+	curseurtmp.x = BTLstr->pcurseur.x + (BTLstr->pcurseur.w/2);
+	curseurtmp.y = BTLstr->pcurseur.y + (BTLstr->pcurseur.h/2);
+	
+	if (colisionbox(&curseurtmp, &BTLstr->quitter.position, true) == 1 &&
+		BTLstr->quitter.etat != B_CLIQUER &&
+		BTLstr->rejouer.etat != B_CLIQUER)
+	{
+		BTLstr->quitter.etat = B_SURVOLER;
+		BTLstr->rejouer.etat = B_NORMAL;
+	}
+	else if (colisionbox(&curseurtmp, &BTLstr->rejouer.position, true) == 1 &&
+		BTLstr->quitter.etat != B_CLIQUER &&
+		BTLstr->rejouer.etat != B_CLIQUER)
+	{
+		BTLstr->quitter.etat = B_NORMAL;
+		BTLstr->rejouer.etat = B_SURVOLER;
+	}
+	else if (BTLstr->quitter.etat != B_CLIQUER && BTLstr->rejouer.etat != B_CLIQUER)
+	{
+		BTLstr->quitter.etat = B_NORMAL;
+		BTLstr->rejouer.etat = B_NORMAL;
+	}
+	
 	while(SDL_PollEvent(event) == 1)
 	{
 		switch(event->type)
@@ -894,17 +919,37 @@ bool LoopEventBattleDeath (typecombat *BTLstr, DIVERSsysteme *systeme, SDL_Event
 			case SDL_MOUSEBUTTONUP:
 				if(event->button.button == SDL_BUTTON_LEFT )
 				{
-					return false;
+					if (BTLstr->quitter.etat == B_CLIQUER)
+					{
+						BTLstr->quitter.etat = B_NORMAL;
+						BTLstr->continuer = BTL_LOST;
+						return 1;
+					}
+					else if (BTLstr->rejouer.etat == B_CLIQUER)
+					{
+						BTLstr->rejouer.etat = B_NORMAL;
+						BTLstr->continuer = BTL_RESTART;
+						return 1;
+					}
 				}
 				break;
             case SDL_MOUSEBUTTONDOWN:
 				if(event->button.button == SDL_BUTTON_LEFT )
 				{
+					if (BTLstr->quitter.etat == B_SURVOLER)
+					{
+						BTLstr->quitter.etat = B_CLIQUER;
+					}
+					else if (BTLstr->rejouer.etat == B_SURVOLER)
+					{
+						BTLstr->rejouer.etat = B_CLIQUER;
+					}
 				}
 				break;
 			default:
 				break;
 		}
 	}
-	return true;
+	
+	return 0;
 }

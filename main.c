@@ -141,26 +141,31 @@ int chargementcarte(struct DIVERSsysteme *systeme, struct typeFORthreads *online
 
 int chargementarcade (struct DIVERSsysteme *systeme)
 {
-	PACKmonstre monstre;
-	DIVERSinventaire inventaire;
-	DIVERSchat chat;
-	DIVERSui ui;
-	DIVERSdeplacement deplacement;
-	DIVERScraft craft;
-	PACKobjet objet;
-	PERSO perso;
-	PACKrecompense recompense;
+	int ret = 2;
 	
-	initmonstre(&monstre, systeme);
-	initinventaire(&inventaire, systeme);
-	initchat(&chat, systeme);
-	initui(&ui, systeme);
-	initdeplacement(&deplacement, systeme);
-	initcraft(&craft, systeme);
-	initobjet(&objet, systeme, &craft);
-	initperso(&perso, systeme);
-	initrecompense(&recompense, systeme);
-	
-	lancementcombat(&monstre, &inventaire, &chat, &ui, &deplacement, &objet, &perso, systeme, &recompense, true);
+	while (ret == 2)
+	{
+		PACKmonstre monstre;
+		DIVERSinventaire inventaire;
+		DIVERSchat chat;
+		DIVERSui ui;
+		DIVERSdeplacement deplacement;
+		DIVERScraft craft;
+		PACKobjet objet;
+		PERSO perso;
+		PACKrecompense recompense;
+		
+		initmonstre(&monstre, systeme);
+		initinventaire(&inventaire, systeme);
+		initchat(&chat, systeme);
+		initui(&ui, systeme);
+		initdeplacement(&deplacement, systeme);
+		initcraft(&craft, systeme);
+		initobjet(&objet, systeme, &craft);
+		initperso(&perso, systeme);
+		initrecompense(&recompense, systeme);
+		
+		ret = lancementcombat(&monstre, &inventaire, &chat, &ui, &deplacement, &objet, &perso, systeme, &recompense, true);
+	}
 	return 0;
 }

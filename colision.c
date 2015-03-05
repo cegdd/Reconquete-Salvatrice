@@ -38,7 +38,7 @@ void deplacementperso(SDL_Surface *mapnb[], PERSO *perso, DIRECTION *direction, 
 		ptemp.y = 0;
 		ptemp.w = systeme->screenw;
 		ptemp.h = systeme->screenh;
-		if (colisionbox(&perso->pperso, &ptemp, 0) == 0)
+		if (colisionbox(&perso->pperso, &ptemp, false) == 0)
 		{
 		}
 		else
@@ -149,17 +149,17 @@ void deplacementperso(SDL_Surface *mapnb[], PERSO *perso, DIRECTION *direction, 
 }
 
 
-int colisionbox(SDL_Rect *A, SDL_Rect *B, int pointeur)
+int colisionbox(SDL_Rect *A, SDL_Rect *B, bool pointeur)
 {
 	//si le pointeur de la souris(A) est dans la zone B
 	//test sur le coin haut/gauche de la zone A
-	if (pointeur == 1 &&
+	if (pointeur == true &&
         A->x >= B->x && A->x <= B->x+B->w && A->y >= B->y && A->y <= B->y+B->h)
 	{
 		return 1;
 	}
 	//sinon si la zone A est dans la sone B
-	else if (pointeur == 0 &&
+	else if (pointeur == false &&
 		A->x+A->w >= B->x && A->x <= B->x+B->w && A->y+A->h >= B->y && A->y <= B->y+B->h)
 	{
 		return 1;

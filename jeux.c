@@ -206,20 +206,7 @@ float combat (float vie, PACKmonstre *monstre, struct DIVERSsysteme *systeme, PE
 			}
 		}
 	}
-
-	//si il fui
-	if (BTLstr.continuer == BTL_LEAVED)
-	{
-		return BTL_LEAVED;
-	}
-	else if (BTLstr.continuer == BTL_WON)
-	{
-		return BTL_WON;
-	}
-	else
-    {
-        return BTL_LOST;
-    }
+	return BTLstr.continuer;
 }
 
 int FindCreatureMemoryArea(typecombat *BTLstr)
@@ -526,7 +513,7 @@ void COMBATgestionOBJETsol(typecombat *BTLstr, DIVERSsysteme *systeme, PACKrecom
 		else if (BTLstr->creature[index].ontheway == 0)
 		{
 			//si on marche dessus
-			if (colisionbox(&BTLstr->creature[index].position, &BTLstr->Pperso, 0))
+			if (colisionbox(&BTLstr->creature[index].position, &BTLstr->Pperso, false))
 			{
 				#if BATTLE_LOG == 1
 				printf("looting creature number : %d\n", index);
@@ -596,7 +583,7 @@ void COMBATgestionOBJETsol(typecombat *BTLstr, DIVERSsysteme *systeme, PACKrecom
 
 		//si il est a terre et que le joueur marche dessus
 		else if (BTLstr->lootsol[index] == BTL_OBJ_FLOOR &&
-				colisionbox(&BTLstr->plootsol[index], &BTLstr->Pperso, 0))
+				colisionbox(&BTLstr->plootsol[index], &BTLstr->Pperso, false))
 		{
 			//ajout aux récompenses
 			ADDloot(recompense, BTLstr->IDlootsol[index], 1);
@@ -664,22 +651,22 @@ int CalculerBarreDeVie(int VieDeBase, int VieActuelle, int width)
 	return ((float)width / (float)VieDeBase) * (float)VieActuelle;
 }
 
-int JoueurMort(typecombat *BTLstr, DIVERSsysteme *systeme, DIVERSui *ui, PERSO *perso, struct RAT *rat,
+void JoueurMort(typecombat *BTLstr, DIVERSsysteme *systeme, DIVERSui *ui, PERSO *perso, struct RAT *rat,
 				DIVERSinventaire *inventaire, PACKobjet *objet, bool arcademode)
 {
 	SDL_Event event;
 	char score[64][20];
 	SDL_Texture *texture[64];
 	SDL_Rect position[64];
-	bool continuer = true;
+	bool continuer = 0;
 	
 	//setting background
 	texture[0] = fenetredialogue(systeme->pecran.w/3, systeme->pecran.h*0.911, &position[0], NULL, NULL, BLANC, systeme);
 	ui->dialogueactif = 1;
+	
 	//setting up all texts
 	int ret = PositionOfDeathDisplay(texture, position, score, BTLstr, systeme);
-	
-	while (continuer == true)
+	while (continuer == 0)
 	{
 		continuer = LoopEventBattleDeath (BTLstr, systeme, &event);
 		//recording mouse position
@@ -690,11 +677,8 @@ int JoueurMort(typecombat *BTLstr, DIVERSsysteme *systeme, DIVERSui *ui, PERSO *
 		SDL_RenderCopy(systeme->renderer, BTLstr->curseur, NULL, &BTLstr->pcurseur);
 		SDL_RenderPresent(systeme->renderer);
 		
-		SDL_Delay(5);
+		SDL_Delay(16);
 	}
-	
-	BTLstr->continuer = BTL_LOST;
-	return 0;
 }
 
 void DrawDeathDisplay(typecombat *BTLstr, DIVERSsysteme *systeme, SDL_Texture *texture[], SDL_Rect position[], int ret)

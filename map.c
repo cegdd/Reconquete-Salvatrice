@@ -318,7 +318,7 @@ int lancementcombat(PACKmonstre *monstre, DIVERSinventaire *inventaire, DIVERSch
 			perso->pperso.y = systeme->screenh/2;
 			perso->life = perso->lifemax;
 			
-			return ALIVE;
+			return ALIVE; //the creature
 		}
 		//si le joueur a fui
 		else if (RETcombat == BTL_LEAVED)
@@ -326,10 +326,10 @@ int lancementcombat(PACKmonstre *monstre, DIVERSinventaire *inventaire, DIVERSch
 			ui->ttextedialogue = fenetredialogue(systeme->screenw*0.4, systeme->screenh*0.8, &ui->pdialogue, &ui->ptextedialogue, "Vous avez fui,\ntous les objets obtenu pendant le combat on été abandonné sur place.\n\n\n\n(entrée/échap pour continuer)\n",
 									  BLANC, systeme);
 			ui->dialogueactif = 1;
-			return DEAD;
+			return DEAD; //the creature
 		}
 		//si joueur vivant
-		else
+		else if (RETcombat == BTL_WON)
 		{
 			//dialogue de récompense
 			ui->dialogueactif = 2;
@@ -351,7 +351,14 @@ int lancementcombat(PACKmonstre *monstre, DIVERSinventaire *inventaire, DIVERSch
 			}
 		}
 	}
-	return DEAD;
+	if (RETcombat == BTL_RESTART)
+	{
+		return 2;
+	}
+	else
+	{
+		return DEAD; //the creature
+	}
 }
 
 void ANIMpersomarche(DIVERSdeplacement *deplacement, DIVERStemps *temps)
