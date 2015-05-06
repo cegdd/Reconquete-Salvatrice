@@ -2,18 +2,20 @@
 #define MAINH
 
 #include <stdbool.h>
-#include <SDL2/SDL_ttf.h>
+#include <SDL_ttf.h>
 #include "queue.h"
 
-//#####     OS     ######//
-#define WINDOWS 0
-//####logging rapide ####//
+/*####     OS     ######*/
+#define WINDOWS 1
+/*####logging rapide ####*/
 #define FASTLOG 0
-//####  battle log   ####//
+/*####  battle log   ####*/
 #define BATTLE_LOG 0
-//####    cheat     ####//
-#define CHEAT 1
-//#######################//
+/*##battle log display##*/
+#define BATTLE_LOG_DISPLAY 0
+/*####    cheat     ####*/
+#define CHEAT 0
+/*#######################*/
 
 #define LOOTMAX 50
 #define NOMBREOBJETS 13
@@ -52,14 +54,14 @@ enum{UNUSED, GO, RUNNING, STOP};//projectil
 enum{ALIGN_RIGHT, ALIGN_LEFT, ALIGN_CENTER};//text
 enum{B_NORMAL, B_SURVOLER, B_CLIQUER, B_IMPOSSIBLE};//bouton
 enum{RAT_BLANC, RAT_VERT, RAT_JAUNE, RAT_ORANGE, RAT_ROUGE};//creature
-enum{ALIVE, DEAD}; 
+enum{ALIVE, DEAD};
 struct BARREVIE
 {
 	SDL_Texture *texture;
 	SDL_Texture *BGtexture;
 	SDL_Rect position;
 	SDL_Rect BGposition;
-	
+
 	int life;
 	int baselife;
 };
@@ -135,14 +137,14 @@ struct CREATURE
 	SDL_Rect position;
 	SDL_Rect STATICposition;
 	struct BARREVIE *BarreDeVie;
-	
+
 	char name [48];
 	bool isdead;
 	bool iserasable;
 	float life;
 	float lifemax;
 	int ID;
-	
+
 	int tempsanimation;
 	int Direction;
 	int indexanim;
@@ -163,19 +165,19 @@ struct RAT
 	//graphic
 	SDL_Texture *texture[5][3];
 	SDL_Rect position;
-	
+
 	//general
 	char nom [48];
 	int etat;
 	bool Engaged;
 	File queue;
 	int ID;
-	
+
 	//animation
 	int indexanim;
 	int tempsanim;
 	int direction;
-	
+
 	//loot
 	int prctloot[LOOTMAX];
 	int maxloot[LOOTMAX];
@@ -196,7 +198,7 @@ struct EMPLACEMENT
 struct PERSO
 {
 	struct BARREVIE *BarreDeVie;
-	
+
 	int lifemax;
 	char slife[50];
 	int stuff[7];
@@ -218,7 +220,7 @@ struct PERSO
 	SDL_Texture *tregenlife;
 	SDL_Texture *tforce;
 	SDL_Texture *tportee;
-	
+
 	SDL_Rect spriteup[8];
 	SDL_Rect spritehit;
 
@@ -517,10 +519,10 @@ struct typeFORthreads
 };
 
 struct typecombat
-{	
+{
 	struct BOUTON rejouer;
 	struct BOUTON quitter;
-    char calque[1366][768];
+    //char calque[1366][768];
 	struct CREATURE creature[LIMITEmobARCADE];
 	int premiercoup[LIMITEmobARCADE];
 
@@ -580,13 +582,10 @@ struct typecombat
 
     SDL_Rect Pperso;
     SDL_Rect pcurseur;
-    SDL_Rect pecran;
     SDL_Rect pballe[NBcailloux];
     SDL_Rect ptVie;
     SDL_Rect plootsol[64];
     SDL_Rect oldplootsol[64];
-
-    SDL_Rect testcontact;
 };
 #endif
 

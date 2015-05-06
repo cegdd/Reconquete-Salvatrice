@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #include <math.h>
 
 #include "image.h"
@@ -167,17 +167,17 @@ SDL_Texture *fenetredialogue(int x, int y, SDL_Rect* pdialogue, SDL_Rect* ptexte
 
 	SDL_Texture *texture;
 	int lenght, high;
-	
+
 	if (texte != NULL)
 	{
 		texture = imprime(texte, x, couleur, systeme, &lenght, &high);
 	}
-	
+
 	pdialogue->x = (systeme->screenw-x)/2;
 	pdialogue->y = (systeme->screenh-y)/2;
 	pdialogue->w = x;
 	pdialogue->h = y;
-	
+
 	if (ptextedialogue != NULL)
 	{
 		ptextedialogue->w = lenght;
@@ -185,16 +185,16 @@ SDL_Texture *fenetredialogue(int x, int y, SDL_Rect* pdialogue, SDL_Rect* ptexte
 		ptextedialogue->x = pdialogue->x + (pdialogue->w/2) - (lenght/2);
 		ptextedialogue->y = pdialogue->y + 10;
 	}
-	
+
 	return texture;
 }
 
-SDL_Texture *DrawText(SDL_Rect* ptextedialogue, char texte[], int color, int ALIGN, DIVERSsysteme *systeme)
+SDL_Texture *DrawSDLText(SDL_Rect* ptextedialogue, char texte[], int color, int ALIGN, DIVERSsysteme *systeme)
 {
 	SDL_Texture *texture;
 	int lenght, high;
 	texture = imprime(texte, ptextedialogue->x, color, systeme, &lenght, &high);
-	
+
 	switch(ALIGN)
 	{
 		case ALIGN_LEFT:
@@ -209,11 +209,11 @@ SDL_Texture *DrawText(SDL_Rect* ptextedialogue, char texte[], int color, int ALI
 		default:
 			break;
 	}
-	
+
 	ptextedialogue->y = ptextedialogue->y + (ptextedialogue->h/2) - (high/2);
 	ptextedialogue->w = lenght;
 	ptextedialogue->h = high;
-	
+
 	return texture;
 }
 
@@ -358,7 +358,7 @@ void afficherCRAFT(DIVERScraft *craft, DIVERSui *ui, PACKbouton *bouton, PACKobj
 			}
 		}
 	}
-	
+
 	//affichage de la composition du plan
 	if (craft->planactif >= 0 && craft->planactif < 10)
 	{
@@ -592,7 +592,7 @@ void afficherMAP(DIVERSmap *carte, DIVERSsysteme *systeme, DIVERScraft *craft)
 	}
 
 	SDL_RenderCopy(systeme->renderer, craft->tetabli, NULL, &craft->petabli);
-	
+
 
 	//affichage de la grille de colision
     /*

@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 #include "main.h"
 #include "systeme.h"
@@ -10,7 +10,7 @@ typedef struct typecombat typecombat;
 typedef struct BARREVIE BARREVIE;
 
 void DrawTestGrid(typecombat *BTLstr, DIVERSsysteme *systeme)
-{
+{/*
     int k, l;
     SDL_Rect tmp = {0, 0, 5, 5};
     for (k = 0 ; k < 1365 ; k=k+6)
@@ -24,11 +24,11 @@ void DrawTestGrid(typecombat *BTLstr, DIVERSsysteme *systeme)
                 SDL_RenderCopy(systeme->renderer, systeme->noir, NULL, &tmp);
             }
         }
-    }
+    }*/
 }
 
 void UnWriteSquareTestGrid(typecombat *BTLstr, SDL_Rect *area)
-{
+{/*
     int k, l;
     for (k = 0 ; k < 1365 ; k++)
     {
@@ -42,11 +42,11 @@ void UnWriteSquareTestGrid(typecombat *BTLstr, SDL_Rect *area)
                 }
             }
         }
-    }
+    }*/
 }
 
 void UnWriteCircleTestGrid (typecombat *BTLstr, SDL_Point *middle, int width)
-{
+{/*
     int k, l;
     SDL_Rect tmp2 = {middle->x - width,
                      middle->y - width,
@@ -71,13 +71,13 @@ void UnWriteCircleTestGrid (typecombat *BTLstr, SDL_Point *middle, int width)
                 }
             }
         }
-    }
+    }*/
 }
 
 BARREVIE* AddLifeBar(int life, int lenght, DIVERSsysteme *systeme)
 {
 	BARREVIE *new = malloc(sizeof(BARREVIE));
-	
+
 	new->life = life;
 	new->texture = systeme->noir;
 	new->BGtexture = systeme->BGblanc;

@@ -2,7 +2,7 @@
 #define JEUXH
 
 #include <stdbool.h>
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 //####grille de test#####//
 #define TESTGRID 0
@@ -27,15 +27,14 @@ float combat (float vie, PACKmonstre *monstre, DIVERSsysteme *systeme, PERSO *pe
 				, PACKobjet *objet, DIVERSui *ui, bool arcademode);
 void Hitboxjoueur (typecombat *BTLstr, PERSO *perso, int id);
 
-void afficherCOMBAT(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso, RAT *rat,
+void afficherCOMBAT(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso,
                     DIVERSinventaire *inventaire, PACKobjet *objet, bool arcademode);
 
 void COMBATgestionCLICetCOLISION (typecombat *BTLstr, DIVERSui *ui);
 void COMBATgestionDEGAT (typecombat *BTLstr, DIVERSui *ui);
 void COMBATgestionENNEMI(typecombat *BTLstr, struct RAT *rat, DIVERSsysteme *systeme);
-void COMBATgestionOBJETsol(typecombat *BTLstr, DIVERSsysteme *systeme, PACKrecompense *recompense, bool arcademode,
-							DIVERSui *ui, PERSO *perso);
-							
+void COMBATgestionOBJETsol(typecombat *BTLstr, DIVERSsysteme *systeme, PACKrecompense *recompense, PERSO *perso);
+
 void COMBATanimationPERSO(typecombat *BTLstr);
 void COMBATanimationMOB(typecombat *BTLstr);
 void COMBATanimationOBJET(typecombat *BTLstr);
@@ -47,11 +46,11 @@ int CalculerBarreDeVie(int VieDeBase, int VieActuelle, int width);
 void JoueurToucher(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso, DIVERSui *ui, int id);
 void DrawDeathDisplay(typecombat *BTLstr, DIVERSsysteme *systeme, SDL_Texture *texture[], SDL_Rect position[], int ret);
 int PositionOfDeathDisplay(SDL_Texture *texture[], SDL_Rect position[], char score[][20],
-							typecombat *BTLstr, DIVERSsysteme *systeme);
+                            DIVERSsysteme *systeme);
 void Hit_Creature(int index, typecombat *BTLstr);
 int FindCreatureEngaged( PACKmonstre *monstre);
 int FindCreatureID( PACKmonstre *monstre, int ID);
-void JoueurMort(typecombat *BTLstr, DIVERSsysteme *systeme, DIVERSui *ui, PERSO *perso, struct RAT *rat,
+void JoueurMort(typecombat *BTLstr, DIVERSsysteme *systeme, DIVERSui *ui, PERSO *perso,
 				DIVERSinventaire *inventaire, PACKobjet *objet, bool arcademode);
 
 #endif

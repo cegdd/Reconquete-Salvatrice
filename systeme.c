@@ -1,4 +1,4 @@
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
@@ -58,7 +58,7 @@ void checkandrefreshstuff(PERSO *perso, PACKobjet *objet, DIVERSsysteme *systeme
 		perso->life = perso->lifemax;
 	}
     char string[64];
-    sprintf(string, "defense : %f", perso->defense);
+    sprintf(string, "defense : %d", (int)perso->defense);
     SDL_DestroyTexture(perso->tdefense);
     perso->tdefense = imprime (string, systeme->screenw, BLANC, systeme, NULL, NULL);
 

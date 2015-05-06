@@ -1,7 +1,7 @@
 #ifndef IMAGEH
 #define IMAGEH
 
-#include <SDL2/SDL_ttf.h>
+#include <SDL_ttf.h>
 
 typedef struct DIVERSsysteme DIVERSsysteme;
 typedef struct TEXTE TEXTE;

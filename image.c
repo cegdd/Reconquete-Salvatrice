@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
-#include <SDL2/SDL_image.h>
+#include <SDL.h>
+#include <SDL_ttf.h>
+#include <SDL_image.h>
 
 #include "main.h"
 
@@ -115,6 +115,10 @@ void chargement (DIVERSsysteme *systeme)
 
 SDL_Texture* imprime (char s[], int len, int couleur, DIVERSsysteme *systeme, int *LenghtReturn, int *HighReturn)
 {
+    if(systeme->police == NULL)
+    {
+        printf ("police not load\n");
+    }
 
     SDL_Surface *SurfTemp = NULL;
 	static SDL_Color Noir = {0, 0, 0, 0};
@@ -144,12 +148,21 @@ SDL_Texture* imprime (char s[], int len, int couleur, DIVERSsysteme *systeme, in
     {
         SurfTemp = TTF_RenderText_Blended_Wrapped(systeme->police, (const char *)s, Vert, len);
     }
-    else if (couleur == BLEU)
+    else/*(couleur == BLEU)*/
     {
         SurfTemp = TTF_RenderText_Blended_Wrapped(systeme->police, (const char *)s, Bleu, len);
     }
-    SDL_Texture *TextureTemp = SDL_CreateTextureFromSurface(systeme->renderer, SurfTemp);
-    
+    SDL_Texture *TextureTemp = NULL;
+    if (SurfTemp != NULL)
+    {
+        TextureTemp = SDL_CreateTextureFromSurface(systeme->renderer, SurfTemp);
+    }
+    else
+    {
+        printf("error for convert string surface to string texture -> return empty texture\n");
+        return systeme->noir;
+    }
+
     if (LenghtReturn != NULL && HighReturn != NULL)
     {
         SDL_QueryTexture(TextureTemp, NULL, NULL, LenghtReturn, HighReturn);
@@ -162,7 +175,7 @@ SDL_Texture* imprime (char s[], int len, int couleur, DIVERSsysteme *systeme, in
     {
         SDL_QueryTexture(TextureTemp, NULL, NULL, NULL, HighReturn);
     }
-    
+
     SDL_FreeSurface(SurfTemp);
 	return TextureTemp;
 }

@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 #include "colision.h"
 #include "ui.h"
@@ -255,7 +255,7 @@ int boucleeventlogin (struct typelogin *loginstore, DIVERSsysteme *systeme)
 		if (loginstore->etatazerty != B_CLIQUER){loginstore->etatazerty = B_NORMAL;}
 		if (loginstore->etatqwerty != B_CLIQUER){loginstore->etatqwerty = B_NORMAL;}
 	}
-	
+
 	//blocking impossible button
 	if(loginstore->longpseudo <= 0 || loginstore->longmdp <= 0)
 	{
@@ -885,13 +885,13 @@ void sourisactionzone(typeFORevent *FORevent)
 	}
 }
 
-int LoopEventBattleDeath (typecombat *BTLstr, DIVERSsysteme *systeme, SDL_Event *event)
+int LoopEventBattleDeath (typecombat *BTLstr, SDL_Event *event)
 {
 	SDL_Rect curseurtmp;
-	
+
 	curseurtmp.x = BTLstr->pcurseur.x + (BTLstr->pcurseur.w/2);
 	curseurtmp.y = BTLstr->pcurseur.y + (BTLstr->pcurseur.h/2);
-	
+
 	if (colisionbox(&curseurtmp, &BTLstr->quitter.position, true) == 1 &&
 		BTLstr->quitter.etat != B_CLIQUER &&
 		BTLstr->rejouer.etat != B_CLIQUER)
@@ -911,7 +911,7 @@ int LoopEventBattleDeath (typecombat *BTLstr, DIVERSsysteme *systeme, SDL_Event 
 		BTLstr->quitter.etat = B_NORMAL;
 		BTLstr->rejouer.etat = B_NORMAL;
 	}
-	
+
 	while(SDL_PollEvent(event) == 1)
 	{
 		switch(event->type)
@@ -950,6 +950,6 @@ int LoopEventBattleDeath (typecombat *BTLstr, DIVERSsysteme *systeme, SDL_Event 
 				break;
 		}
 	}
-	
+
 	return 0;
 }

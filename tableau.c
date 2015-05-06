@@ -1,10 +1,10 @@
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
-#include <SDL2/SDL_ttf.h>
-#include <SDL2/SDL_image.h>
+#include <SDL_ttf.h>
+#include <SDL_image.h>
 
 #include "main.h"
 #include "image.h"
@@ -127,7 +127,7 @@ void initobjet(PACKobjet *objet, DIVERSsysteme *systeme, DIVERScraft *craft)//		
 {
 	char nom[128];
 	int index;
-	
+
 	for(index = 0 ; index < 10 ; index++) { craft->planparonglets[index] = 0;}
 
 //******************* ARME *************************
@@ -359,7 +359,7 @@ void initmonstre(PACKmonstre *monstre, DIVERSsysteme *systeme)//											monst
 	monstre->rat[0].maxloot[0] = 1; //peau
 	monstre->rat[0].idloot[0] = 0; //peau
 	monstre->rat[0].nombreloot = 1;
-	
+
 	initqueue(&monstre->rat[0].queue, 0);
 	initqueue(&monstre->rat[1].queue, 1);
 	initqueue(&monstre->rat[2].queue, 2);
@@ -381,19 +381,19 @@ void initmonstre(PACKmonstre *monstre, DIVERSsysteme *systeme)//											monst
 		monstre->rat[index].texture[RAT_BLANC][0] = LoadingImage	("rs/images/mob0.0.png", 0, systeme);
 		monstre->rat[index].texture[RAT_BLANC][1] = LoadingImage	("rs/images/mob0.1.png", 0, systeme);
 		monstre->rat[index].texture[RAT_BLANC][2] = LoadingImage	("rs/images/mob0.2.png", 0, systeme);
-		
+
 		monstre->rat[index].texture[RAT_VERT][0] = LoadingImage		("rs/images/mob1.0.png", 0, systeme);
 		monstre->rat[index].texture[RAT_VERT][1] = LoadingImage		("rs/images/mob1.1.png", 0, systeme);
 		monstre->rat[index].texture[RAT_VERT][2] = LoadingImage		("rs/images/mob1.2.png", 0, systeme);
-		
+
 		monstre->rat[index].texture[RAT_JAUNE][0] = LoadingImage	("rs/images/mob2.0.png", 0, systeme);
 		monstre->rat[index].texture[RAT_JAUNE][1] = LoadingImage	("rs/images/mob2.1.png", 0, systeme);
 		monstre->rat[index].texture[RAT_JAUNE][2] = LoadingImage	("rs/images/mob2.2.png", 0, systeme);
-		
+
 		monstre->rat[index].texture[RAT_ORANGE][0] = LoadingImage	("rs/images/mob3.0.png", 0, systeme);
 		monstre->rat[index].texture[RAT_ORANGE][1] = LoadingImage	("rs/images/mob3.1.png", 0, systeme);
 		monstre->rat[index].texture[RAT_ORANGE][2] = LoadingImage	("rs/images/mob3.2.png", 0, systeme);
-		
+
 		monstre->rat[index].texture[RAT_ROUGE][0] = LoadingImage	("rs/images/mob4.0.png", 0, systeme);
 		monstre->rat[index].texture[RAT_ROUGE][1] = LoadingImage	("rs/images/mob4.1.png", 0, systeme);
 		monstre->rat[index].texture[RAT_ROUGE][2] = LoadingImage	("rs/images/mob4.2.png", 0, systeme);
@@ -416,13 +416,13 @@ void initperso(PERSO *perso, DIVERSsysteme *systeme)//														perso
 	perso->tperso = LoadingImage("rs/images/character.png", 0, systeme);
 	perso->cheveuxbrun = LoadingImage("rs/images/cheveux0.png", 0, systeme);
 	perso->cheveuxblanc = LoadingImage("rs/images/cheveux3.png", 0, systeme);
-	
+
 	for (index = 0 ; index < 9 ; index++)
 	{
 		perso->spriteup[index].h = 48;
 		perso->spriteup[index].w = 48;
 	}
-	
+
 	perso->spriteup[0].x = 0;
 	perso->spriteup[0].y = 146;
 	perso->spriteup[1].x = 48;
@@ -475,7 +475,7 @@ void initperso(PERSO *perso, DIVERSsysteme *systeme)//														perso
 	perso->tforce = imprime (string, systeme->screenw, BLANC, systeme, NULL, NULL);
 	sprintf(string, "portee :");
 	perso->tportee = imprime (string, systeme->screenw, BLANC, systeme, NULL, NULL);
-	
+
 	perso->BarreDeVie = AddLifeBar(100, perso->pperso.w, systeme);
 }
 
@@ -544,6 +544,8 @@ void initsystem(DIVERSsysteme *systeme)//																	systeme
 	systeme->BGblanc = LoadingImage	("rs/ui/bgb.png", 0, systeme);
 	systeme->noir = LoadingImage	("rs/images/noir.png", 0, systeme);
 
+    systeme->police = NULL;
+    systeme->police1 = NULL;
 	systeme->police = TTF_OpenFont("rs/divers/dalek.ttf", TAILLEPOLICE);
 	systeme->police1 = TTF_OpenFont("rs/divers/police1.ttf", 25);
 
@@ -745,7 +747,7 @@ void initcraft(DIVERScraft *craft, DIVERSsysteme *systeme)//												craft
 
 		craft->tcomponame[index] = imprime("rien", systeme->screenw, ROUGE, systeme, NULL, NULL);
 	}
-	
+
 	craft->Uicraft = LoadingImage			("rs/ui/uicraft.png", 0, systeme);
 	craft->BGcraft = LoadingImage			("rs/ui/BGcraft.png", 0, systeme);
 	craft->tetabli = LoadingImage			("rs/images/etabli.png", 0, systeme);
@@ -907,8 +909,11 @@ void initonline(typeFORthreads *online, DIVERSsysteme *systeme)
 
 }
 
-void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, struct DIRECTION *direction, bool arcademode)
-{	
+void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, struct DIRECTION *direction)
+{
+    #if BATTLE_LOG == 1
+	printf("initialising memory for battle :\n");
+	#endif
 	int index, index2;
 	BTLstr->continuer = -1;
 	BTLstr->echap = 0;
@@ -946,7 +951,9 @@ void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, struct D
 	direction->olddirection = 0;
 
 	BTLstr->NBlootsol = rand()%5;  //max déclaré 64
-
+    #if BATTLE_LOG == 1
+	printf("20%%\n");
+	#endif
 
 	for (index = 0 ; index < BTLstr->NBlootsol ; index++)
 	{
@@ -969,10 +976,13 @@ void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, struct D
 		BTLstr->lootsolWAYX[index] = 0;
 		BTLstr->lootsolWAYY[index] = 0;
 	}
+	#if BATTLE_LOG == 1
+	printf("40%%\n");
+	#endif
 
 	for (index = 0 ; index < LIMITEmobARCADE ; index++)//adapté pour le mode arcade
 	{
-		
+
 		BTLstr->premiercoup[index] = 0;
 		BTLstr->creature[index].isdead = true;
 		BTLstr->creature[index].iserasable = true;
@@ -993,10 +1003,13 @@ void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, struct D
 		BTLstr->creature[index].position.y = 0;
 		BTLstr->creature[index].position.w = 0;
 		BTLstr->creature[index].position.h = 0;
-		
+
 		BTLstr->creature[index].STATICposition.w = 0;
 		BTLstr->creature[index].STATICposition.h = 0;
 	}
+	#if BATTLE_LOG == 1
+	printf("60%%\n");
+	#endif
 
 	for (index = 0 ; index < 48 ; index++)
 	{
@@ -1019,11 +1032,9 @@ void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, struct D
 		BTLstr->pballe[index].w = systeme->screenw*0.0146;
 		BTLstr->pballe[index].h = systeme->screenh*0.026;
 	}
-
-	BTLstr->pecran.x = 0;
-	BTLstr->pecran.y = 0;
-	BTLstr->pecran.w = systeme->screenw;
-	BTLstr->pecran.h = systeme->screenh;
+	#if BATTLE_LOG == 1
+	printf("80%%\n");
+	#endif
 
 	BTLstr->Pperso.x = systeme->screenw/2;
 	BTLstr->Pperso.y = systeme->screenh*0.564;
@@ -1035,23 +1046,22 @@ void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, struct D
 	BTLstr->pcurseur.w = 30;
 	BTLstr->pcurseur.h = 30;
 
-	BTLstr->testcontact.x = 0;
-	BTLstr->testcontact.y = 0;
-	BTLstr->testcontact.w = 10;
-	BTLstr->testcontact.h = 10;
-
 	BTLstr->ptVie.x = 0;
 	BTLstr->ptVie.y = 0;
 	BTLstr->ptVie.w = systeme->screenw*0.073;//100
 	BTLstr->ptVie.h = systeme->screenh*0.05;//32
-	BTLstr->tVie = imprime ("", systeme->screenw*0.3, NOIR, systeme, NULL, NULL);
+	BTLstr->tVie = imprime ("0", systeme->screenw*0.3, NOIR, systeme, NULL, NULL);
 
 	BTLstr->fond = LoadingImage				("rs/fonds/fondcombat.png", 0, systeme);
 	BTLstr->curseur = LoadingImage			("rs/images/curseur.png", 0, systeme);
 	BTLstr->balle = LoadingImage			("rs/images/balle.png", 0, systeme);
 	BTLstr->piece = LoadingImage			("rs/images/piece.png", 0, systeme);
 	BTLstr->peau = LoadingImage			    ("rs/objets/0#0.png", 0, systeme);
-	
+
+	#if BATTLE_LOG == 1
+	printf("90%%\n");
+	#endif
+
 	//bouton rejouer
 	BTLstr->rejouer.normal = LoadingImage				("rs/ui/jouer.png", 0, systeme);
 	BTLstr->rejouer.survoler = LoadingImage				("rs/ui/jouer2.png", 0, systeme);
@@ -1070,5 +1080,8 @@ void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, struct D
 	BTLstr->quitter.position.w = systeme->screenw * 0.1464;
 	BTLstr->quitter.position.h = systeme->screenh * 0.065;
 	BTLstr->quitter.etat = B_NORMAL;
+	#if BATTLE_LOG == 1
+	printf("100%%\n");
+	#endif
 }
 

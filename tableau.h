@@ -1,7 +1,7 @@
 #ifndef TABLEAUH
 #define TABLEAUH
 
-#include <SDL2/SDL_ttf.h>
+#include <SDL_ttf.h>
 
 typedef struct BARREVIE BARREVIE;
 typedef struct plan plan;
@@ -47,6 +47,6 @@ void initFORevent(typeFORevent *FORevent, PACKobjet *objet, PACKbouton *bouton, 
 				PERSO *perso, PACKpnj *pnj);
 void initonline(typeFORthreads *online, DIVERSsysteme *systeme);
 
-void initcombatstore(typecombat *BTLstr, DIVERSsysteme *systeme, DIRECTION *direction, bool arcademode);
+void initcombatstore(typecombat *BTLstr, DIVERSsysteme *systeme, DIRECTION *direction);
 
 #endif

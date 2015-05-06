@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
+#include <SDL.h>
+#include <SDL_ttf.h>
 #include <string.h>
 
 #include "image.h"
@@ -458,7 +458,7 @@ void Initbouton(bouton *option, bouton *jouer, bouton *creer, bouton *quitter, b
 	qwertz->pos.h = systeme->screenh/18;
 	qwertz->pos.x = (systeme->screenw/11)*8;
 	qwertz->pos.y = (systeme->screenh/30)*14;
-	
+
 	arcade->normal = LoadingImage		("rs/ui/arcade.png", 0, systeme);
 	arcade->survoler = LoadingImage		("rs/ui/arcade.png", 0, systeme);
 	arcade->cliquer = LoadingImage		("rs/ui/arcade.png", 0, systeme);
@@ -523,7 +523,7 @@ void affichageloggin(typelogin *loginstore, DIVERSsysteme *systeme, bouton *opti
     {   SDL_RenderCopy(systeme->renderer, creer->cliquer, NULL, &creer->pos);}
     else if (loginstore->etatcreer == B_IMPOSSIBLE)
     {   SDL_RenderCopy(systeme->renderer, creer->impossible, NULL, &creer->pos);}
-    
+
     if (loginstore->etatarcade == B_NORMAL)
     {   SDL_RenderCopy(systeme->renderer, arcade->normal, NULL, &arcade->pos);}
     else if (loginstore->etatarcade == B_SURVOLER)
@@ -531,19 +531,24 @@ void affichageloggin(typelogin *loginstore, DIVERSsysteme *systeme, bouton *opti
     else if (loginstore->etatarcade == B_CLIQUER)
     {   SDL_RenderCopy(systeme->renderer, arcade->cliquer, NULL, &arcade->pos);}
 
+
     //mot de passe et pseudo
-
-    if (loginstore->mdpcacher == 0)
-    {   loginstore->LEmdp.texture = imprime(systeme->sauvegarde[1], systeme->screenw, NOIR, systeme, &loginstore->LEmdp.lenght, NULL);}
-    else
-    {   loginstore->LEmdp.texture = imprime(loginstore->mdpshow, systeme->screenw, NOIR, systeme, &loginstore->LEmdp.lenght, NULL);}
-    loginstore->LEpseudo.texture = imprime(systeme->sauvegarde[0], systeme->screenw, NOIR, systeme, &loginstore->LEpseudo.lenght, NULL);
-
     loginstore->LEpseudo.position.w = loginstore->LEpseudo.lenght;
     loginstore->LEmdp.position.w = loginstore->LEmdp.lenght;
 
-    SDL_RenderCopy(systeme->renderer, loginstore->LEpseudo.texture, NULL, &loginstore->LEpseudo.position);//pseudo
-    SDL_RenderCopy(systeme->renderer, loginstore->LEmdp.texture, NULL, &loginstore->LEmdp.position);//mot de passe
+    if(loginstore->longmdp > 0)
+    {
+        if (loginstore->mdpcacher == 0)
+        {   loginstore->LEmdp.texture = imprime(systeme->sauvegarde[1], systeme->screenw, NOIR, systeme, &loginstore->LEmdp.lenght, NULL);}
+        else
+        {   loginstore->LEmdp.texture = imprime(loginstore->mdpshow, systeme->screenw, NOIR, systeme, &loginstore->LEmdp.lenght, NULL);}
+        SDL_RenderCopy(systeme->renderer, loginstore->LEmdp.texture, NULL, &loginstore->LEmdp.position);//mot de passe
+    }
+    if(loginstore->longpseudo > 0)
+    {
+            loginstore->LEpseudo.texture = imprime(systeme->sauvegarde[0], systeme->screenw, NOIR, systeme, &loginstore->LEpseudo.lenght, NULL);
+            SDL_RenderCopy(systeme->renderer, loginstore->LEpseudo.texture, NULL, &loginstore->LEpseudo.position);//pseudo
+    }
 
     SDL_RenderCopy(systeme->renderer, loginstore->pseudo.texture, NULL, &loginstore->pseudo.position);// demande pseudo
     SDL_RenderCopy(systeme->renderer, loginstore->mdp.texture, NULL, &loginstore->mdp.position);// demande mot de passe
@@ -586,6 +591,8 @@ void affichageloggin(typelogin *loginstore, DIVERSsysteme *systeme, bouton *opti
 
     SDL_RenderPresent(systeme->renderer);
 
-    SDL_DestroyTexture(loginstore->LEpseudo.texture);
-    SDL_DestroyTexture(loginstore->LEmdp.texture);
+    if(loginstore->longpseudo > 0)
+        {SDL_DestroyTexture(loginstore->LEpseudo.texture);}
+    if(loginstore->longmdp > 0)
+        {SDL_DestroyTexture(loginstore->LEmdp.texture);}
 }

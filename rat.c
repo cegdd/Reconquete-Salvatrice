@@ -1,4 +1,4 @@
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 #include "systeme.h"
 #include "main.h"
@@ -133,11 +133,12 @@ int TestColision_Rat(SDL_Rect *rat, int x, int y, int direction)
 
 void ADD_Rat(int type, int MemoryArea, typecombat *BTLstr, DIVERSsysteme *systeme, RAT *rat)
 {
+
 	int index;
 	float randside = rand()%4;
 	float randwidth = rand()%systeme->screenw;
 	float randhigh = rand()%systeme->screenh;
-	
+
 	switch(type)
 	{
 		case RAT_BLANC:
@@ -210,12 +211,12 @@ void ADD_Rat(int type, int MemoryArea, typecombat *BTLstr, DIVERSsysteme *system
 		BTLstr->creature[MemoryArea].position.y = randhigh;
 		BTLstr->creature[MemoryArea].position.x = systeme->screenw + 100;
 	}
-	
+
 	BTLstr->creature[MemoryArea].position.w = systeme->screenw*0.073206442;//100
 	BTLstr->creature[MemoryArea].position.h = systeme->screenh*0.032552083;//25
 	BTLstr->creature[MemoryArea].STATICposition.w = BTLstr->creature[MemoryArea].position.w;
 	BTLstr->creature[MemoryArea].STATICposition.h = BTLstr->creature[MemoryArea].position.h;
-	
+
 	BTLstr->creature[MemoryArea].BarreDeVie = AddLifeBar(BTLstr->creature[MemoryArea].life,
 				BTLstr->creature[MemoryArea].position.w, systeme);
 }

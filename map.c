@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
-#include <SDL2/SDL_ttf.h>
-#include <SDL2/SDL_image.h>
+#include <SDL_ttf.h>
+#include <SDL_image.h>
 #include <math.h>
 
 #include "evenement.h"
@@ -19,7 +19,7 @@
 #include "systeme.h"
 #include "listechaine.h"
 
-int map (DIVERSsysteme *systeme, typeFORthreads *online, PACKbouton *bouton , PACKobjet *objet, PACKmonstre *monstre, PERSO *perso, DIVERSinventaire *inventaire, DIVERSdeplacement *deplacement, 
+int map (DIVERSsysteme *systeme, typeFORthreads *online, PACKbouton *bouton , PACKobjet *objet, PACKmonstre *monstre, PERSO *perso, DIVERSinventaire *inventaire, DIVERSdeplacement *deplacement,
 		DIVERStemps *temps, DIVERSui *ui, DIVERSchat *chat, DIVERScraft *craft, DIVERSmap *carte, PACKpnj *pnj, PACKrecompense *recompense, typeFORevent *FORevent)
 {
     chargement(systeme);
@@ -31,7 +31,7 @@ int map (DIVERSsysteme *systeme, typeFORthreads *online, PACKbouton *bouton , PA
 		insertionsac(objet, 2);
 		insertionsac(objet, 7);
 	}
-	
+
     #endif
 
     online->jeuxACTIF = 1;
@@ -46,7 +46,7 @@ int map (DIVERSsysteme *systeme, typeFORthreads *online, PACKbouton *bouton , PA
     }
     checkandrefreshstuff(perso, objet, systeme, ui);
     checkinventaire(objet, inventaire);
-    
+
 //#############################################################################################################################################################
 //											##################### Boucle De Jeu #####################																					#
 //######################################################################################################################################################################
@@ -193,9 +193,12 @@ int map (DIVERSsysteme *systeme, typeFORthreads *online, PACKbouton *bouton , PA
 
             for(index = 0; index < 10 ; index++)
             {
-                chat->pstringchat[index].y = (systeme->screenh*0.5)+(online->chat.poschat[index]*(systeme->screenh*0.047));
-                SDL_DestroyTexture(chat->tstringchat[index]);
-                chat->tstringchat[index] = imprime(online->chat.schat[index], systeme->screenw, BLANC, systeme, NULL, NULL);
+                if(online->chat.schat[index][0] != '\0')
+                {
+                    chat->pstringchat[index].y = (systeme->screenh*0.5)+(online->chat.poschat[index]*(systeme->screenh*0.047));
+                    SDL_DestroyTexture(chat->tstringchat[index]);
+                    chat->tstringchat[index] = imprime(online->chat.schat[index], systeme->screenw, BLANC, systeme, NULL, NULL);
+                }
             }
 
             temps->i = 0;
@@ -236,7 +239,7 @@ void detectioncombat(PACKmonstre *monstre, DIVERSinventaire *inventaire, DIVERSc
                      PACKrecompense *recompense, bool arcademode)
 {
 	int index;
-	
+
 	for(index = 0 ; index < 3 ; index++)
     {
         if (perso->pperso.x+perso->pperso.w >= monstre->rat[index].position.x &&
@@ -277,7 +280,7 @@ int lancementcombat(PACKmonstre *monstre, DIVERSinventaire *inventaire, DIVERSch
 		systeme->inbattle = true;
 		ui->dialogueactif = 0;
 		deplacement->persobouge = 0;
-	
+
 
 		//initialisation des tableaux de récompense
 		for (index2 = 0 ; index2 < LOOTMAX ; index2++)
@@ -293,10 +296,12 @@ int lancementcombat(PACKmonstre *monstre, DIVERSinventaire *inventaire, DIVERSch
 	{
 		ui->casestuff[ARME].IDobjet = 3;
 	}
-	
+
+	SDL_RenderClear(systeme->renderer);
+
 	//############lancement du combat############
 	RETcombat = combat(perso->life, monstre, systeme, perso, inventaire, recompense, objet, ui, arcademode);
-	
+
 	if (arcademode == false)
 	{
 		deplacement->direction.bas = 0;
@@ -304,8 +309,8 @@ int lancementcombat(PACKmonstre *monstre, DIVERSinventaire *inventaire, DIVERSch
 		deplacement->direction.gauche = 0;
 		deplacement->direction.droite = 0;
 		checkinventaire(objet, inventaire);
-		
-		
+
+
 		//if player dead
 		if (RETcombat == BTL_LOST)
 		{
@@ -317,7 +322,7 @@ int lancementcombat(PACKmonstre *monstre, DIVERSinventaire *inventaire, DIVERSch
 			perso->pperso.x = systeme->screenw/2;
 			perso->pperso.y = systeme->screenh/2;
 			perso->life = perso->lifemax;
-			
+
 			return ALIVE; //the creature
 		}
 		//si le joueur a fui
@@ -425,7 +430,7 @@ void sinchronisation(PACKpnj *pnj, DIVERSmap *carte, PACKmonstre *monstre, DIVER
 							, typeFORthreads *online, PERSO *perso)
 {
 	int index;
-	
+
 	pnj->toumai.x = carte->pmap[0].x + 160;
 	pnj->toumai.y = carte->pmap[0].y + 575;
 	carte->pmx = carte->pmap[0].x * -1;
@@ -444,7 +449,7 @@ void sinchronisation(PACKpnj *pnj, DIVERSmap *carte, PACKmonstre *monstre, DIVER
 
 	online->posjoueurx = carte->pmx + perso->pperso.x;
 	online->posjoueury = carte->pmy + perso->pperso.y;
-	
+
 	for (index = 0 ; index < 3 ; index++)
 	{
 		if (monstre->rat[index].etat >= TEMPSREPOPBATMOUTHS)

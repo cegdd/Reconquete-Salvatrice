@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_mixer.h>
-#include  <pthread.h>
+#include <SDL.h>
+#include <SDL_ttf.h>
+#include <SDL_image.h>
+#include <SDL_mixer.h>
+#include <pthread.h>
 
 #include "main.h"
 #include "thread1.h"
@@ -16,7 +16,7 @@
 #include "queue.h"
 
 int main (int argc, char *argv[])
-{	
+{
 	if (argc == *argv[0]){}//juste pour les warnings
 	srand(2);
 
@@ -32,7 +32,7 @@ int main (int argc, char *argv[])
     struct DIVERSsysteme systeme;
     struct typeFORthreads online;
     initonline(&online, &systeme);
-    pthread_t lethread1;
+    //pthread_t lethread1;
     int ret = 0;
 
     SDL_ShowCursor(SDL_DISABLE);
@@ -40,7 +40,7 @@ int main (int argc, char *argv[])
     systeme.renderer = SDL_CreateRenderer(systeme.screen, -1, SDL_RENDERER_ACCELERATED);
     SDL_MaximizeWindow(systeme.screen);
 	SDL_GetWindowSize(systeme.screen , &systeme.screenw , &systeme.screenh);
-	
+
 	initsystem(&systeme);
 	initsauvegarde(systeme.sauvegarde, NBargSAVE, C);
 
@@ -52,7 +52,7 @@ int main (int argc, char *argv[])
 	#if FASTLOG == 1//juste pour moi, pour éviter le log
 	sprintf(systeme.sauvegarde[0], "cegdd");
 	sprintf(systeme.sauvegarde[1], "mdpbidon");
-	pthread_create(&lethread1, NULL, *thread1, &online);
+	//pthread_create(&lethread1, NULL, *thread1, &online);
 	chargersauvegarde(&systeme);
 	if (chargementcarte(&systeme, &online) != 1) {return EXIT_FAILURE;}
 	return EXIT_SUCCESS;
@@ -61,7 +61,7 @@ int main (int argc, char *argv[])
 	Mix_Music *sound = Mix_LoadMUS("game.mp3");
 	if (sound == NULL){ printf("musique non trouvée"); return EXIT_FAILURE;}
 	else if (Mix_PlayMusic(sound, -1) < 0){ printf("musique non jouable"); return EXIT_FAILURE;}
-	
+
 	//si le login est accepté
 	ret = login(&systeme);
 	while (ret != 0)
@@ -69,7 +69,7 @@ int main (int argc, char *argv[])
 		if (ret == 2)
 		{
 			//creation thread pour socket
-			pthread_create(&lethread1, NULL, *thread1, &online);
+			//pthread_create(&lethread1, NULL, *thread1, &online);
 			chargersauvegarde(&systeme);
 
 			Mix_PauseMusic ();
@@ -117,7 +117,7 @@ int chargementcarte(struct DIVERSsysteme *systeme, struct typeFORthreads *online
 	{
 		srand(temps.temptotal);
 	}
-	
+
 	initcraft(&craft, systeme);
     initobjet(&objet, systeme, &craft);
     initcraft(&craft, systeme);
@@ -134,7 +134,7 @@ int chargementcarte(struct DIVERSsysteme *systeme, struct typeFORthreads *online
     initrecompense(&recompense, systeme);
     initFORevent(&FORevent, &objet, &bouton, &inventaire, systeme, &deplacement, &chat, &ui, &craft, &monstre, &perso, &pnj);
     SDL_RenderCopy(systeme->renderer, craft.tetabli, NULL, &craft.petabli);
-    
+
     map(systeme, online, &bouton, &objet, &monstre, &perso, &inventaire, &deplacement, &temps, &ui, &chat, &craft, &carte, &pnj, &recompense, &FORevent);
 	return 1;
 }
@@ -142,7 +142,7 @@ int chargementcarte(struct DIVERSsysteme *systeme, struct typeFORthreads *online
 int chargementarcade (struct DIVERSsysteme *systeme)
 {
 	int ret = 2;
-	
+
 	while (ret == 2)
 	{
 		PACKmonstre monstre;
@@ -154,7 +154,7 @@ int chargementarcade (struct DIVERSsysteme *systeme)
 		PACKobjet objet;
 		PERSO perso;
 		PACKrecompense recompense;
-		
+
 		initmonstre(&monstre, systeme);
 		initinventaire(&inventaire, systeme);
 		initchat(&chat, systeme);
@@ -164,7 +164,7 @@ int chargementarcade (struct DIVERSsysteme *systeme)
 		initobjet(&objet, systeme, &craft);
 		initperso(&perso, systeme);
 		initrecompense(&recompense, systeme);
-		
+
 		ret = lancementcombat(&monstre, &inventaire, &chat, &ui, &deplacement, &objet, &perso, systeme, &recompense, true);
 	}
 	return 0;

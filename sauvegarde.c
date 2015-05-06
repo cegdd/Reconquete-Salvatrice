@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #include <string.h>
 
 #include "fichier.h"
@@ -13,10 +13,10 @@ void chargersauvegarde(DIVERSsysteme *systeme)
 	char nomfichier[50] = {'\0'};
 	char schiffre[5] = {'\0'};
 	char caractere = '\0';
-	
+
 	char buffer[4096] = {'\0'};
 	char ret[50] = {'\0'};
-	
+
 	sprintf(nomfichier, "rs/sauvegarde/%s.RSCryptedSave", systeme->sauvegarde[0]);
 	crypted = fopen ((const char *) nomfichier, "r");
 
@@ -31,7 +31,7 @@ void chargersauvegarde(DIVERSsysteme *systeme)
 			caractere = fgetc(crypted);
 		}
 		lis(buffer, ret);
-		
+
 		strcpy(systeme->sauvegarde[i], ret);
 		for(index = 0 ; index < 4096 ; index++)
 		{
@@ -40,7 +40,7 @@ void chargersauvegarde(DIVERSsysteme *systeme)
 		iligne = 0;
 	}
 	fclose(crypted);
-	
+
 	sprintf(nomfichier, "rs/sauvegarde/%s.RSsave2", systeme->sauvegarde[0]);
 	fichiersauvegarde = fopen ((const char *) nomfichier, "r");
 
@@ -78,7 +78,7 @@ void sauvegardetout(char sauvegarde[][50],SDL_Rect pmap, PERSO *perso, int tempt
 	char nomfichier[50] = {'\0'};
 	int index;
 	int pseudolen = strlen(sauvegarde[0]);
-	
+
 	sauvegarde[0][pseudolen] = '\0';
 	sprintf(nomfichier, "rs/sauvegarde/%s.RSCryptedSave", sauvegarde[0]);
 
@@ -96,7 +96,7 @@ void sauvegardetout(char sauvegarde[][50],SDL_Rect pmap, PERSO *perso, int tempt
 	{
 		sprintf(sauvegarde[index+10], "%d", ui->casestuff[index].IDobjet);
 	}
-	
+
 	fichier2 = fopen ((const char *) nomfichier, "w+");
 	for (index = 0 ; index < NBargSAVE ; index++)
 	{
@@ -135,7 +135,7 @@ void ecris(char string[50], FILE *fichier)
 {
 	int i = 0, index;
 	int valeur = 0;
-	
+
 	while(string[i] != '\0')
 	{
 		valeur = (int)string[i];
@@ -146,7 +146,7 @@ void ecris(char string[50], FILE *fichier)
 		fputc('0', fichier);
 		i++;
 	}
-	
+
 }
 
 
@@ -154,7 +154,7 @@ void lis(char string[4096], char *ret)
 {
 	int i = 0, index = 0;
 	int compteur = 0;
-	
+
 	while(string[i] != '\0')
 	{
 		while(string[i] == 'O')
