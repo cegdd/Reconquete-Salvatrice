@@ -322,11 +322,15 @@ void InitLoginStore(typelogin *loginstore, DIVERSsysteme *systeme)
 	loginstore->LEmdp.position.h = systeme->screenh/20;
 	loginstore->LEmdp.position.x = ((systeme->screenw-loginstore->LEmdp.position.w)/2)+2;
 	loginstore->LEmdp.position.y = (systeme->screenh/2)+(systeme->screenh/8)+2;
+	loginstore->LEmdp.lenght = -1;
+	loginstore->LEmdp.high = -1;
 
 	loginstore->LEpseudo.position.w = (systeme->screenw/4)-2;
 	loginstore->LEpseudo.position.h = systeme->screenh/20;
 	loginstore->LEpseudo.position.x = ((systeme->screenw-loginstore->LEpseudo.position.w)/2)+2;
 	loginstore->LEpseudo.position.y = (systeme->screenh/2)+2;
+	loginstore->LEpseudo.lenght = -1;
+	loginstore->LEpseudo.high = -1;
 
 	loginstore->pseudo.position.w = loginstore->pseudo.lenght;
 	loginstore->pseudo.position.h = systeme->screenh/20;
@@ -531,10 +535,7 @@ void affichageloggin(typelogin *loginstore, DIVERSsysteme *systeme, bouton *opti
     else if (loginstore->etatarcade == B_CLIQUER)
     {   SDL_RenderCopy(systeme->renderer, arcade->cliquer, NULL, &arcade->pos);}
 
-
     //mot de passe et pseudo
-    loginstore->LEpseudo.position.w = loginstore->LEpseudo.lenght;
-    loginstore->LEmdp.position.w = loginstore->LEmdp.lenght;
 
     if(loginstore->longmdp > 0)
     {
@@ -542,11 +543,13 @@ void affichageloggin(typelogin *loginstore, DIVERSsysteme *systeme, bouton *opti
         {   loginstore->LEmdp.texture = imprime(systeme->sauvegarde[1], systeme->screenw, NOIR, systeme, &loginstore->LEmdp.lenght, NULL);}
         else
         {   loginstore->LEmdp.texture = imprime(loginstore->mdpshow, systeme->screenw, NOIR, systeme, &loginstore->LEmdp.lenght, NULL);}
+        loginstore->LEmdp.position.w = loginstore->LEmdp.lenght;
         SDL_RenderCopy(systeme->renderer, loginstore->LEmdp.texture, NULL, &loginstore->LEmdp.position);//mot de passe
     }
     if(loginstore->longpseudo > 0)
     {
             loginstore->LEpseudo.texture = imprime(systeme->sauvegarde[0], systeme->screenw, NOIR, systeme, &loginstore->LEpseudo.lenght, NULL);
+            loginstore->LEpseudo.position.w = loginstore->LEpseudo.lenght;
             SDL_RenderCopy(systeme->renderer, loginstore->LEpseudo.texture, NULL, &loginstore->LEpseudo.position);//pseudo
     }
 
