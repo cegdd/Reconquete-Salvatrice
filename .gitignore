@@ -41,15 +41,3 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
-
-bin/Debug/rs.exe
-gmon.out
-*.dll
-*.o
-rs.cbp
-*.depend
-rs.layout
-*.RSsave2
-*.RSCryptedSave
-*.RSsave2
-rs/sauvegarde/cegdd.RSsave2

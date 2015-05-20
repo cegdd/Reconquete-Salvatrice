@@ -26,7 +26,7 @@
 #define TAILLESAC 80
 #define C 50
 #define TEMPSREPOPBATMOUTHS 10
-#define TAILLEPOLICE 30
+#define TAILLEPOLICE 18
 #define NBargSAVE 17
 #define IPSERVEUR "88.191.117.41"
 #define BUFFER 25

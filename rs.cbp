@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="rs" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/rs" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/rs" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wmain" />
+			<Add option="-std=c++11" />
+			<Add option="-Wextra" />
+			<Add option="-Wall" />
+			<Add option="-pg" />
+			<Add option="-g" />
+			<Add directory="C:/Users/cegdd/Downloads/SDL2-devel-2.0.3-mingw/SDL2-2.0.3/i686-w64-mingw32/include/SDL2" />
+			<Add directory="C:/Users/cegdd/Downloads/SDL2_image-2.0.0/i686-w64-mingw32/include/SDL2" />
+			<Add directory="C:/Users/cegdd/Downloads/SDL2_mixer-2.0.0/i686-w64-mingw32/include/SDL2" />
+			<Add directory="C:/Users/cegdd/Downloads/SDL2_ttf-2.0.12/i686-w64-mingw32/include/SDL2" />
+		</Compiler>
+		<Linker>
+			<Add option="-pg -lgmon" />
+			<Add library="mingw32" />
+			<Add library="C:\Users\cegdd\Downloads\SDL2-devel-2.0.3-mingw\SDL2-2.0.3\i686-w64-mingw32\lib\libSDL2main.a" />
+			<Add library="C:\Users\cegdd\Downloads\SDL2-devel-2.0.3-mingw\SDL2-2.0.3\i686-w64-mingw32\lib\libSDL2.dll.a" />
+			<Add library="C:\Users\cegdd\Downloads\SDL2_image-2.0.0\i686-w64-mingw32\lib\libSDL2_image.dll.a" />
+			<Add library="C:\Users\cegdd\Downloads\SDL2_ttf-2.0.12\i686-w64-mingw32\lib\libSDL2_ttf.dll.a" />
+			<Add library="C:\Users\cegdd\Downloads\SDL2_mixer-2.0.0\i686-w64-mingw32\lib\libSDL2_mixer.dll.a" />
+			<Add library="ws2_32" />
+		</Linker>
+		<Unit filename=".gitattributes" />
+		<Unit filename=".gitignore" />
+		<Unit filename="CaC.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="CaC.h" />
+		<Unit filename="battledraw.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="battledraw.h" />
+		<Unit filename="clavier.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="clavier.h" />
+		<Unit filename="colision.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="colision.h" />
+		<Unit filename="deplacement.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="deplacement.h" />
+		<Unit filename="evenement.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="evenement.h" />
+		<Unit filename="fichier.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="fichier.h" />
+		<Unit filename="game.mp3" />
+		<Unit filename="ia.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ia.h" />
+		<Unit filename="image.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="image.h" />
+		<Unit filename="jeux.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="jeux.h" />
+		<Unit filename="listechaine.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="listechaine.h" />
+		<Unit filename="login.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="login.h" />
+		<Unit filename="main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="main.h" />
+		<Unit filename="map.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="map.h" />
+		<Unit filename="objet.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="objet.h" />
+		<Unit filename="queue.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="queue.h" />
+		<Unit filename="rat.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="rat.h" />
+		<Unit filename="rs.layout" />
+		<Unit filename="rs/divers/color_grid.png" />
+		<Unit filename="rs/divers/dalek.ttf" />
+		<Unit filename="rs/divers/police1.ttf" />
+		<Unit filename="rs/fonds/fondcombat.png" />
+		<Unit filename="rs/fonds/login.png" />
+		<Unit filename="rs/fonds/mort.png" />
+		<Unit filename="rs/fonds/rs.png" />
+		<Unit filename="rs/histoire/carte/map4.png" />
+		<Unit filename="rs/histoire/ressource.sdk" />
+		<Unit filename="rs/images/balle.png" />
+		<Unit filename="rs/images/cachermdp.png" />
+		<Unit filename="rs/images/case.png" />
+		<Unit filename="rs/images/case0.png" />
+		<Unit filename="rs/images/character.png" />
+		<Unit filename="rs/images/chargement.png" />
+		<Unit filename="rs/images/cheveux0.png" />
+		<Unit filename="rs/images/cheveux1.png" />
+		<Unit filename="rs/images/cheveux2.png" />
+		<Unit filename="rs/images/cheveux3.png" />
+		<Unit filename="rs/images/coche.png" />
+		<Unit filename="rs/images/curseur.png" />
+		<Unit filename="rs/images/enligne.png" />
+		<Unit filename="rs/images/etabli.png" />
+		<Unit filename="rs/images/horsligne.png" />
+		<Unit filename="rs/images/joueurcombat.png" />
+		<Unit filename="rs/images/mob0.0.png" />
+		<Unit filename="rs/images/mob0.1.png" />
+		<Unit filename="rs/images/mob0.2.png" />
+		<Unit filename="rs/images/mob1.0.png" />
+		<Unit filename="rs/images/mob1.1.png" />
+		<Unit filename="rs/images/mob1.2.png" />
+		<Unit filename="rs/images/mob2.0.png" />
+		<Unit filename="rs/images/mob2.1.png" />
+		<Unit filename="rs/images/mob2.2.png" />
+		<Unit filename="rs/images/mob3.0.png" />
+		<Unit filename="rs/images/mob3.1.png" />
+		<Unit filename="rs/images/mob3.2.png" />
+		<Unit filename="rs/images/mob4.0.png" />
+		<Unit filename="rs/images/mob4.1.png" />
+		<Unit filename="rs/images/mob4.2.png" />
+		<Unit filename="rs/images/noir.png" />
+		<Unit filename="rs/images/p.png" />
+		<Unit filename="rs/images/perso0.png" />
+		<Unit filename="rs/images/perso1.png" />
+		<Unit filename="rs/images/perso2.png" />
+		<Unit filename="rs/images/piece.png" />
+		<Unit filename="rs/images/pnj1.png" />
+		<Unit filename="rs/maps/calque0.png" />
+		<Unit filename="rs/maps/calque1.png" />
+		<Unit filename="rs/maps/calque2.png" />
+		<Unit filename="rs/maps/calque3.png" />
+		<Unit filename="rs/maps/calque4.png" />
+		<Unit filename="rs/maps/calque5.png" />
+		<Unit filename="rs/maps/calque6.png" />
+		<Unit filename="rs/maps/calque7.png" />
+		<Unit filename="rs/maps/calque8.png" />
+		<Unit filename="rs/maps/calque9.png" />
+		<Unit filename="rs/maps/map0.png" />
+		<Unit filename="rs/maps/map1.png" />
+		<Unit filename="rs/maps/map2.png" />
+		<Unit filename="rs/maps/map3.png" />
+		<Unit filename="rs/maps/map4.png" />
+		<Unit filename="rs/maps/map5.png" />
+		<Unit filename="rs/maps/map6.png" />
+		<Unit filename="rs/maps/map7.png" />
+		<Unit filename="rs/maps/map8.png" />
+		<Unit filename="rs/maps/map9.png" />
+		<Unit filename="rs/objets/0#0.png" />
+		<Unit filename="rs/objets/1#0.png" />
+		<Unit filename="rs/objets/10#0.png" />
+		<Unit filename="rs/objets/11#0.png" />
+		<Unit filename="rs/objets/12#0.png" />
+		<Unit filename="rs/objets/2#0.png" />
+		<Unit filename="rs/objets/3#0.png" />
+		<Unit filename="rs/objets/4#0.png" />
+		<Unit filename="rs/objets/5#0.png" />
+		<Unit filename="rs/objets/6#0.png" />
+		<Unit filename="rs/objets/7#0.png" />
+		<Unit filename="rs/objets/8#0.png" />
+		<Unit filename="rs/objets/9#0.png" />
+		<Unit filename="rs/options.RSsave" />
+		<Unit filename="rs/sauvegarde/cegdd.RSCryptedSave" />
+		<Unit filename="rs/sauvegarde/cegdd.RSsave2" />
+		<Unit filename="rs/ui/BG.png" />
+		<Unit filename="rs/ui/BGchat.png" />
+		<Unit filename="rs/ui/BGcraft.png" />
+		<Unit filename="rs/ui/BGinventaire.png" />
+		<Unit filename="rs/ui/BGmenu.png" />
+		<Unit filename="rs/ui/BGzonetextechat.png" />
+		<Unit filename="rs/ui/arcade.png" />
+		<Unit filename="rs/ui/arme.png" />
+		<Unit filename="rs/ui/arme1.png" />
+		<Unit filename="rs/ui/arme2.png" />
+		<Unit filename="rs/ui/azerty.png" />
+		<Unit filename="rs/ui/azerty2.png" />
+		<Unit filename="rs/ui/azerty3.png" />
+		<Unit filename="rs/ui/bgb.png" />
+		<Unit filename="rs/ui/caseinventaire.png" />
+		<Unit filename="rs/ui/caseinventaire2.png" />
+		<Unit filename="rs/ui/cou.png" />
+		<Unit filename="rs/ui/cou1.png" />
+		<Unit filename="rs/ui/cou2.png" />
+		<Unit filename="rs/ui/creer.png" />
+		<Unit filename="rs/ui/creer2.png" />
+		<Unit filename="rs/ui/creer3.png" />
+		<Unit filename="rs/ui/creernon.png" />
+		<Unit filename="rs/ui/dialogue.png" />
+		<Unit filename="rs/ui/dos.png" />
+		<Unit filename="rs/ui/dos1.png" />
+		<Unit filename="rs/ui/dos2.png" />
+		<Unit filename="rs/ui/fenetreinfo.png" />
+		<Unit filename="rs/ui/jouer.png" />
+		<Unit filename="rs/ui/jouer2.png" />
+		<Unit filename="rs/ui/jouer3.png" />
+		<Unit filename="rs/ui/jouernon.png" />
+		<Unit filename="rs/ui/logquitter.png" />
+		<Unit filename="rs/ui/logquitter2.png" />
+		<Unit filename="rs/ui/logquitter3.png" />
+		<Unit filename="rs/ui/options.png" />
+		<Unit filename="rs/ui/options2.png" />
+		<Unit filename="rs/ui/options3.png" />
+		<Unit filename="rs/ui/pied.png" />
+		<Unit filename="rs/ui/pied1.png" />
+		<Unit filename="rs/ui/pied2.png" />
+		<Unit filename="rs/ui/quitter.png" />
+		<Unit filename="rs/ui/quitter1.png" />
+		<Unit filename="rs/ui/quitter2.png" />
+		<Unit filename="rs/ui/qwerty.png" />
+		<Unit filename="rs/ui/qwerty2.png" />
+		<Unit filename="rs/ui/qwerty3.png" />
+		<Unit filename="rs/ui/qwertz.png" />
+		<Unit filename="rs/ui/qwertz2.png" />
+		<Unit filename="rs/ui/qwertz3.png" />
+		<Unit filename="rs/ui/sac1.png" />
+		<Unit filename="rs/ui/taille.png" />
+		<Unit filename="rs/ui/taille1.png" />
+		<Unit filename="rs/ui/taille2.png" />
+		<Unit filename="rs/ui/tete.png" />
+		<Unit filename="rs/ui/tete1.png" />
+		<Unit filename="rs/ui/tete2.png" />
+		<Unit filename="rs/ui/torse.png" />
+		<Unit filename="rs/ui/torse1.png" />
+		<Unit filename="rs/ui/torse2.png" />
+		<Unit filename="rs/ui/uichat.png" />
+		<Unit filename="rs/ui/uicraft.png" />
+		<Unit filename="rs/ui/uiinventaire.png" />
+		<Unit filename="rs/ui/uimenu.png" />
+		<Unit filename="sauvegarde.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="sauvegarde.h" />
+		<Unit filename="systeme.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="systeme.h" />
+		<Unit filename="tableau.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="tableau.h" />
+		<Unit filename="thread1.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="thread1.h" />
+		<Unit filename="thread2.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="thread2.h" />
+		<Unit filename="tir.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="tir.h" />
+		<Unit filename="tool.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="tool.h" />
+		<Unit filename="ui.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ui.h" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

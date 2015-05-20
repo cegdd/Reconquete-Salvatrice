@@ -142,9 +142,10 @@ int map (DIVERSsysteme *systeme, typeFORthreads *online, PACKbouton *bouton , PA
 			//if it's the first second of this player
             if (temps->temptotal == 1)
             {
-                char texte[2548] = "           Toumai :\n\nBonjour à toi jeune ...\njeune quoi exactement?\nJe suis vieux, mes yeux sont fatigués\nmais mon esprit reste vif!\nEt à ta démarche je devine que tu n'es\npas du coin.\nJ'ignore ce que tu viens faire ici mais je dois te prévenir :\n\nles lieux ne sont pas sûrs!\nEt en tant que sage de la tribue, je dois m'assurer que tu puisses survivre au moins quelques jours.\nRamène moi 5 cadavres de batmouths et je croirais peut-être en ton avenir.\nAvec une bonne pierre entre les 2 yeux je ne donne pas cher de leurs vies! \n\n   APPUIE SUR ENTRÉE POUR CONTINUER";
+                char texte[2548] = "           Toumai :\n\nBonjour à toi jeune ...\njeune quoi exactement?\nJe suis vieux, mes yeux sont fatigués\nmais mon esprit reste vif!\nEt à ta démarche je devine que tu n'es\npas du coin.\nJ'ignore ce que tu viens faire ici mais je dois te prévenir :\n\nles lieux ne sont pas sûrs!\nEt en tant que sage de la tribue, je dois m'assurer que tu puisses survivre au moins quelques jours.\n Tiens ! Prend ceci, c'est le lance pierre de mon fils.\nAvec une bonne pierre entre les 2 yeux je ne donne pas cher de leurs vies! \n\n   APPUIE SUR ENTRÉE POUR CONTINUER";
                 ui->ttextedialogue = fenetredialogue(systeme->screenw*0.4, systeme->screenh*0.8, &ui->pdialogue, &ui->ptextedialogue, texte, BLANC, systeme);
                 ui->dialogueactif = 1;
+                insertionsac(objet, 3);
             }
 
             if (temps->temptotal - temps->oldipourregen >= 3)

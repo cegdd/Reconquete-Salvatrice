@@ -180,10 +180,10 @@ SDL_Texture *fenetredialogue(int x, int y, SDL_Rect* pdialogue, SDL_Rect* ptexte
 
 	if (ptextedialogue != NULL)
 	{
-		ptextedialogue->w = lenght;
-		ptextedialogue->h = high;
-		ptextedialogue->x = pdialogue->x + (pdialogue->w/2) - (lenght/2);
-		ptextedialogue->y = pdialogue->y + 10;
+		ptextedialogue->w = lenght - (lenght/100)*5;
+		ptextedialogue->h = high - 20;
+		ptextedialogue->x = pdialogue->x + 20 + (pdialogue->w/2) - (lenght/2);
+		ptextedialogue->y = pdialogue->y + 20;
 	}
 
 	return texture;

@@ -547,7 +547,7 @@ void initsystem(DIVERSsysteme *systeme)//																	systeme
     systeme->police = NULL;
     systeme->police1 = NULL;
 	systeme->police = TTF_OpenFont("rs/divers/dalek.ttf", TAILLEPOLICE);
-	systeme->police1 = TTF_OpenFont("rs/divers/police1.ttf", 25);
+	systeme->police1 = TTF_OpenFont("rs/divers/police1.ttf", 18);
 
 	systeme->pp.x = 0;
 	systeme->pp.y = 0;

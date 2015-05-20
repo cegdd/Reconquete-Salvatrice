@@ -283,7 +283,7 @@ int auth(char login[][50])
 
 void InitLoginStore(typelogin *loginstore, DIVERSsysteme *systeme)
 {
-	loginstore->police = TTF_OpenFont("rs/divers/police1.ttf", 32);
+	loginstore->police = TTF_OpenFont("rs/divers/police1.ttf", 20);//32
 
 	loginstore->pseudo.texture = imprime ("pseudo :", systeme->screenw, BLEU, systeme, &loginstore->pseudo.lenght, NULL);
 	loginstore->mdp.texture = imprime ("mot de passe :", systeme->screenw, BLEU, systeme, &loginstore->mdp.lenght, NULL);

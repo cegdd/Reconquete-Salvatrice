@@ -611,7 +611,6 @@ void eventmapclavierup(bool *lancermessage, typeFORevent *FORevent)
 void eventmapsourisgaucheup(typeFORevent *FORevent)
 {
 	int index, index2;
-	int bodypart = FORevent->objet->objet[FORevent->objet->objetenmain.IDobjet].bodypart;
 	bool outside = true;
 	FORevent->bouton->crafter.etat = 0;
 
@@ -653,10 +652,6 @@ void eventmapsourisgaucheup(typeFORevent *FORevent)
 				&& FORevent->systeme->pp.y >= FORevent->ui->pcasestuff[index].y
 				&& FORevent->systeme->pp.y <= FORevent->ui->pcasestuff[index].y + FORevent->ui->pcasestuff[index].h)
 			{
-				if(FORevent->ui->casestuff[bodypart].IDobjet != -1)
-				{
-					insertionsac(FORevent->objet, FORevent->ui->casestuff[bodypart].IDobjet);
-				}
 				equipestuff(FORevent->objet, FORevent->ui, index, FORevent->objet->objetenmain.IDobjet);
 				videemplacement(&FORevent->objet->objetenmain);
 				outside = false;
