@@ -15,11 +15,10 @@
 int login (DIVERSsysteme *systeme)
 {
 	struct typelogin loginstore;
-	struct bouton option, jouer, creer, quitter, azerty, qwerty, qwertz, arcade;
 	//initialisation des variables
 	InitLoginStore(&loginstore, systeme);
 	//initialisation des boutons
-	Initbouton(&option, &jouer, &creer, &quitter, &azerty, &qwerty, &qwertz, &arcade, systeme);
+	Initbouton(&loginstore, systeme);
 
 	while(loginstore.continuer == 1)
 	{
@@ -41,13 +40,13 @@ int login (DIVERSsysteme *systeme)
 				else if (loginstore.continuer == -1)
 				{
 					loginstore.ttextedialogue = fenetredialogue(systeme->screenw*0.3, 240, &loginstore.pdialogue, &loginstore.ptextedialogue, loginstore.info, ROUGE, systeme);
-					loginstore.diall = 1;
+					loginstore.menu = true;
 					loginstore.continuer = 1;
 				}
 				else if (loginstore.continuer == -2)
 				{
 					loginstore.ttextedialogue = fenetredialogue(systeme->screenw*0.3, 240, &loginstore.pdialogue, &loginstore.ptextedialogue, loginstore.info2, ROUGE, systeme);
-					loginstore.diall = 1;
+					loginstore.menu = true;
 					loginstore.continuer = 1;
 				}
 				else {loginstore.continuer = 1;}
@@ -59,31 +58,31 @@ int login (DIVERSsysteme *systeme)
 				if (loginstore.continuer == -1)
 				{
 					loginstore.ttextedialogue = fenetredialogue(systeme->screenw*0.3, systeme->screenh*0.3, &loginstore.pdialogue, &loginstore.ptextedialogue, loginstore.info3, ROUGE, systeme);
-					loginstore.diall = 1;
+					loginstore.menu = true;
 					loginstore.continuer = 1;
 				}
 				else if (loginstore.continuer == -2)
 				{
 					loginstore.ttextedialogue = fenetredialogue(systeme->screenw*0.3, systeme->screenh*0.3, &loginstore.pdialogue, &loginstore.ptextedialogue, loginstore.info4, ROUGE, systeme);
-					loginstore.diall = 1;
+					loginstore.menu = true;
 					loginstore.continuer = 1;
 				}
 			}
 			else if (loginstore.continuer == 4)
 			{
-				loginstore.ttextedialogue = fenetredialogue(systeme->screenw*0.7, systeme->screenh*0.15, &loginstore.pdialogue, &loginstore.ptextedialogue, "Type de clavier :                                                                                      \n",
+				loginstore.ttextedialogue = fenetredialogue(systeme->screenw*0.7, systeme->screenh*0.15, &loginstore.pdialogue, &loginstore.ptextedialogue, " ",
                                                 ROUGE, systeme);
-				loginstore.diall = 1;
+				loginstore.menu = true;
 				loginstore.continuer = 1;
 				loginstore.optionactif = 1;
 			}
 
-			if (loginstore.lettre != '\0' && loginstore.longpseudo < 20 && loginstore.saisiepseudo == 1)
+			if (loginstore.lettre != '\0' && loginstore.longpseudo < 20 && loginstore.saisiepseudo == true)
 			{
 				systeme->sauvegarde[0][loginstore.longpseudo] = loginstore.lettre;
 				loginstore.longpseudo++;
 			}
-			else if (loginstore.lettre != '\0' && loginstore.longmdp < 20 && loginstore.saisiemdp == 1)
+			else if (loginstore.lettre != '\0' && loginstore.longmdp < 20 && loginstore.saisiemdp == true)
 			{
 				systeme->sauvegarde[1][loginstore.longmdp] = loginstore.lettre;
 				loginstore.mdpshow[loginstore.longmdp] = 'X';
@@ -100,7 +99,7 @@ int login (DIVERSsysteme *systeme)
 				loginstore.mdpshow[loginstore.i] = '\0';
 			}
 			//affichage
-			affichageloggin(&loginstore, systeme, &option, &jouer, &creer, &quitter, &azerty, &qwerty, &qwertz, &arcade);
+			affichageloggin(&loginstore, systeme);
 		}
 		else if (loginstore.tpact - loginstore.tpcurseur >= 500)
         {
@@ -122,13 +121,6 @@ int login (DIVERSsysteme *systeme)
 	fclose(loginstore.fichier);
 	return loginstore.continuer;
 }
-
-
-//#################################################################################################################################
-//#################################################################################################################################
-//############################################################## creer joueur #####################################################
-//#################################################################################################################################
-//#################################################################################################################################
 
 
 int creerjoueur(char sauvegarde[][50])
@@ -218,13 +210,6 @@ int creerjoueur(char sauvegarde[][50])
 	return 0;
 }
 
-//#################################################################################################################################
-//#################################################################################################################################
-//############################################################## authentification #####################################################
-//#################################################################################################################################
-//#################################################################################################################################
-
-
 
 int auth(char login[][50])
 {
@@ -288,6 +273,7 @@ int auth(char login[][50])
 	fclose(fichier);
 	return 2;
 }
+
 
 void InitLoginStore(typelogin *loginstore, DIVERSsysteme *systeme)
 {
@@ -378,7 +364,7 @@ void InitLoginStore(typelogin *loginstore, DIVERSsysteme *systeme)
 	loginstore->longpseudo = 0;
 	loginstore->i = 0;
 	loginstore->longmdp = 0;
-	loginstore->diall = 0;
+	loginstore->menu = false;
 	loginstore->optionactif = 0;
 	loginstore->mdpcacher = 1;
 	loginstore->etatoption = B_NORMAL;
@@ -424,155 +410,136 @@ void InitLoginStore(typelogin *loginstore, DIVERSsysteme *systeme)
 	loginstore->ttextedialogue = NULL;
 }
 
-void Initbouton(bouton *option, bouton *jouer, bouton *creer, bouton *quitter, bouton *azerty, bouton *qwerty, bouton *qwertz,
-				bouton *arcade, DIVERSsysteme *systeme)
+
+void Initbouton(typelogin *loginstore, DIVERSsysteme *systeme)
 {
-	option->normal = LoadingImage		("rs/ui/options.png", 0, systeme);
-	option->survoler = LoadingImage		("rs/ui/options2.png", 0, systeme);
-	option->cliquer = LoadingImage		("rs/ui/options3.png", 0, systeme);
-	option->pos.x = systeme->screenw/11;
-	option->pos.y = (systeme->screenh/6)*5;
-	option->pos.w = systeme->screenw/11;
-	option->pos.h = systeme->screenh/12;
+	loginstore->option.normal = LoadingImage		("rs/ui/options.png", 0, systeme);
+	loginstore->option.survoler = LoadingImage		("rs/ui/options2.png", 0, systeme);
+	loginstore->option.cliquer = LoadingImage		("rs/ui/options3.png", 0, systeme);
+	loginstore->option.pos.x = systeme->screenw/11;
+	loginstore->option.pos.y = (systeme->screenh/6)*5;
+	loginstore->option.pos.w = systeme->screenw/11;
+	loginstore->option.pos.h = systeme->screenh/12;
 
-	jouer->normal = LoadingImage		("rs/ui/jouer.png", 0, systeme);
-	jouer->survoler = LoadingImage		("rs/ui/jouer2.png", 0, systeme);
-	jouer->cliquer = LoadingImage		("rs/ui/jouer3.png", 0, systeme);
-	jouer->impossible = LoadingImage		("rs/ui/jouernon.png", 0, systeme);
-	jouer->pos.x = (systeme->screenw/11)*3;
-	jouer->pos.y = (systeme->screenh/6)*5;
-	jouer->pos.w = systeme->screenw/11;
-	jouer->pos.h = systeme->screenh/12;
+	loginstore->jouer.normal = LoadingImage		("rs/ui/jouer.png", 0, systeme);
+	loginstore->jouer.survoler = LoadingImage		("rs/ui/jouer2.png", 0, systeme);
+	loginstore->jouer.cliquer = LoadingImage		("rs/ui/jouer3.png", 0, systeme);
+	loginstore->jouer.impossible = LoadingImage		("rs/ui/jouernon.png", 0, systeme);
+	loginstore->jouer.pos.x = (systeme->screenw/11)*3;
+	loginstore->jouer.pos.y = (systeme->screenh/6)*5;
+	loginstore->jouer.pos.w = systeme->screenw/11;
+	loginstore->jouer.pos.h = systeme->screenh/12;
 
-	creer->normal = LoadingImage		("rs/ui/creer.png", 0, systeme);
-	creer->survoler = LoadingImage		("rs/ui/creer2.png", 0, systeme);
-	creer->cliquer = LoadingImage		("rs/ui/creer3.png", 0, systeme);
-	creer->impossible = LoadingImage		("rs/ui/creernon.png", 0, systeme);
-	creer->pos.x = (systeme->screenw/11)*5;
-	creer->pos.y = (systeme->screenh/6)*5;
-	creer->pos.w = systeme->screenw/11;
-	creer->pos.h = systeme->screenh/12;
+	loginstore->creer.normal = LoadingImage		("rs/ui/creer.png", 0, systeme);
+	loginstore->creer.survoler = LoadingImage		("rs/ui/creer2.png", 0, systeme);
+	loginstore->creer.cliquer = LoadingImage		("rs/ui/creer3.png", 0, systeme);
+	loginstore->creer.impossible = LoadingImage		("rs/ui/creernon.png", 0, systeme);
+	loginstore->creer.pos.x = (systeme->screenw/11)*5;
+	loginstore->creer.pos.y = (systeme->screenh/6)*5;
+	loginstore->creer.pos.w = systeme->screenw/11;
+	loginstore->creer.pos.h = systeme->screenh/12;
 
-	quitter->normal = LoadingImage		("rs/ui/logquitter.png", 0, systeme);
-	quitter->survoler = LoadingImage		("rs/ui/logquitter2.png", 0, systeme);
-	quitter->cliquer = LoadingImage		("rs/ui/logquitter3.png", 0, systeme);
-	quitter->pos.x = (systeme->screenw/11)*7;
-	quitter->pos.y = (systeme->screenh/6)*5;
-	quitter->pos.w = systeme->screenw/11;
-	quitter->pos.h = systeme->screenh/12;
+	loginstore->quitter.normal = LoadingImage		("rs/ui/logquitter.png", 0, systeme);
+	loginstore->quitter.survoler = LoadingImage		("rs/ui/logquitter2.png", 0, systeme);
+	loginstore->quitter.cliquer = LoadingImage		("rs/ui/logquitter3.png", 0, systeme);
+	loginstore->quitter.pos.x = (systeme->screenw/11)*7;
+	loginstore->quitter.pos.y = (systeme->screenh/6)*5;
+	loginstore->quitter.pos.w = systeme->screenw/11;
+	loginstore->quitter.pos.h = systeme->screenh/12;
 
-	azerty->normal = LoadingImage		("rs/ui/azerty.png", 0, systeme);
-	azerty->survoler = LoadingImage		("rs/ui/azerty2.png", 0, systeme);
-	azerty->cliquer = LoadingImage		("rs/ui/azerty3.png", 0, systeme);
-	azerty->pos.w = systeme->screenw/11;
-	azerty->pos.h = systeme->screenh/18;
-	azerty->pos.x = (systeme->screenw/11)*4;
-	azerty->pos.y = (systeme->screenh/30)*14;
+    int menuw = systeme->screenw*0.7;
+    int menuh = systeme->screenh*0.15;
+    int gauche = systeme->screenw*0.15;
+    int haut = systeme->screenh*0.425;
 
-	qwerty->normal = LoadingImage		("rs/ui/qwerty.png", 0, systeme);
-	qwerty->survoler = LoadingImage		("rs/ui/qwerty2.png", 0, systeme);
-	qwerty->cliquer = LoadingImage		("rs/ui/qwerty3.png", 0, systeme);
-	qwerty->pos.w = systeme->screenw/11;
-	qwerty->pos.h = systeme->screenh/18;
-	qwerty->pos.x = (systeme->screenw/11)*6;
-	qwerty->pos.y = (systeme->screenh/30)*14;
+	loginstore->azerty.normal = LoadingImage		("rs/ui/azerty.png", 0, systeme);
+	loginstore->azerty.survoler = LoadingImage		("rs/ui/azerty2.png", 0, systeme);
+	loginstore->azerty.cliquer = LoadingImage		("rs/ui/azerty3.png", 0, systeme);
+	loginstore->azerty.pos.w = menuw/7;
+	loginstore->azerty.pos.h = menuh/3;
+	loginstore->azerty.pos.x = menuw/7+gauche;
+	loginstore->azerty.pos.y = menuh/3+haut;
 
-    qwertz->normal = LoadingImage		("rs/ui/qwertz.png", 0, systeme);
-	qwertz->survoler = LoadingImage		("rs/ui/qwertz2.png", 0, systeme);
-	qwertz->cliquer = LoadingImage		("rs/ui/qwertz3.png", 0, systeme);
-	qwertz->pos.w = systeme->screenw/11;
-	qwertz->pos.h = systeme->screenh/18;
-	qwertz->pos.x = (systeme->screenw/11)*8;
-	qwertz->pos.y = (systeme->screenh/30)*14;
+	loginstore->qwerty.normal = LoadingImage		("rs/ui/qwerty.png", 0, systeme);
+	loginstore->qwerty.survoler = LoadingImage		("rs/ui/qwerty2.png", 0, systeme);
+	loginstore->qwerty.cliquer = LoadingImage		("rs/ui/qwerty3.png", 0, systeme);
+	loginstore->qwerty.pos.w = menuw/7;
+	loginstore->qwerty.pos.h = menuh/3;
+	loginstore->qwerty.pos.x = (menuw/7)*3+gauche;
+	loginstore->qwerty.pos.y = menuh/3+haut;
 
-	arcade->normal = LoadingImage		("rs/ui/arcade.png", 0, systeme);
-	arcade->survoler = LoadingImage		("rs/ui/arcade.png", 0, systeme);
-	arcade->cliquer = LoadingImage		("rs/ui/arcade.png", 0, systeme);
-	arcade->pos.x = (systeme->screenw/11)*9;
-	arcade->pos.y = (systeme->screenh/6)*5;
-	arcade->pos.w = systeme->screenw/11;
-	arcade->pos.h = systeme->screenh/12;
+    loginstore->qwertz.normal = LoadingImage		("rs/ui/qwertz.png", 0, systeme);
+	loginstore->qwertz.survoler = LoadingImage		("rs/ui/qwertz2.png", 0, systeme);
+	loginstore->qwertz.cliquer = LoadingImage		("rs/ui/qwertz3.png", 0, systeme);
+	loginstore->qwertz.pos.w = menuw/7;
+	loginstore->qwertz.pos.h = menuh/3;
+	loginstore->qwertz.pos.x = (menuw/7)*5+gauche;
+	loginstore->qwertz.pos.y = menuh/3+haut;
+
+	loginstore->arcade.normal = LoadingImage		("rs/ui/arcade.png", 0, systeme);
+	loginstore->arcade.survoler = LoadingImage		("rs/ui/arcade.png", 0, systeme);
+	loginstore->arcade.cliquer = LoadingImage		("rs/ui/arcade.png", 0, systeme);
+	loginstore->arcade.pos.x = (systeme->screenw/11)*9;
+	loginstore->arcade.pos.y = (systeme->screenh/6)*5;
+	loginstore->arcade.pos.w = systeme->screenw/11;
+	loginstore->arcade.pos.h = systeme->screenh/12;
 
 }
 
-void affichageloggin(typelogin *loginstore, DIVERSsysteme *systeme, bouton *option, bouton *jouer, bouton *creer, bouton *quitter,
-					bouton *azerty, bouton *qwerty, bouton *qwertz, bouton *arcade)
+void affichageloggin(typelogin *loginstore, DIVERSsysteme *systeme)
 {
     SDL_RenderClear(systeme->renderer);
 
     SDL_RenderCopy(systeme->renderer, loginstore->login, NULL, &loginstore->pecran);//background
 
     if (loginstore->etatoption == B_NORMAL)
-    {   SDL_RenderCopy(systeme->renderer, option->normal, NULL, &option->pos);}
+    {   SDL_RenderCopy(systeme->renderer, loginstore->option.normal, NULL, &loginstore->option.pos);}
     else if (loginstore->etatoption == B_SURVOLER)
-    {   SDL_RenderCopy(systeme->renderer, option->survoler, NULL, &option->pos);}
+    {   SDL_RenderCopy(systeme->renderer, loginstore->option.survoler, NULL, &loginstore->option.pos);}
     else if (loginstore->etatoption == B_CLIQUER)
-    {   SDL_RenderCopy(systeme->renderer, option->cliquer, NULL, &option->pos);}
+    {   SDL_RenderCopy(systeme->renderer, loginstore->option.cliquer, NULL, &loginstore->option.pos);}
 
     if (loginstore->etatjouer == B_NORMAL)
-    {   SDL_RenderCopy(systeme->renderer, jouer->normal, NULL, &jouer->pos);}
+    {   SDL_RenderCopy(systeme->renderer, loginstore->jouer.normal, NULL, &loginstore->jouer.pos);}
     else if (loginstore->etatjouer == B_SURVOLER)
-    {   SDL_RenderCopy(systeme->renderer, jouer->survoler, NULL, &jouer->pos);}
+    {   SDL_RenderCopy(systeme->renderer, loginstore->jouer.survoler, NULL, &loginstore->jouer.pos);}
     else if (loginstore->etatjouer == B_CLIQUER)
-    {   SDL_RenderCopy(systeme->renderer, jouer->cliquer, NULL, &jouer->pos);}
+    {   SDL_RenderCopy(systeme->renderer, loginstore->jouer.cliquer, NULL, &loginstore->jouer.pos);}
     else if (loginstore->etatjouer == B_IMPOSSIBLE)
-    {   SDL_RenderCopy(systeme->renderer, jouer->impossible, NULL, &jouer->pos);}
+    {   SDL_RenderCopy(systeme->renderer, loginstore->jouer.impossible, NULL, &loginstore->jouer.pos);}
 
     if (loginstore->etatquitter == B_NORMAL)
-    {   SDL_RenderCopy(systeme->renderer, quitter->normal, NULL, &quitter->pos);}
+    {   SDL_RenderCopy(systeme->renderer, loginstore->quitter.normal, NULL, &loginstore->quitter.pos);}
     else if (loginstore->etatquitter == B_SURVOLER)
-    {   SDL_RenderCopy(systeme->renderer, quitter->survoler, NULL, &quitter->pos);}
+    {   SDL_RenderCopy(systeme->renderer, loginstore->quitter.survoler, NULL, &loginstore->quitter.pos);}
     else if (loginstore->etatquitter == B_CLIQUER)
-    {   SDL_RenderCopy(systeme->renderer, quitter->cliquer, NULL, &quitter->pos);}
+    {   SDL_RenderCopy(systeme->renderer, loginstore->quitter.cliquer, NULL, &loginstore->quitter.pos);}
 
     if (loginstore->etatcreer == B_NORMAL)
-    {   SDL_RenderCopy(systeme->renderer, creer->normal, NULL, &creer->pos);}
+    {   SDL_RenderCopy(systeme->renderer, loginstore->creer.normal, NULL, &loginstore->creer.pos);}
     else if (loginstore->etatcreer == B_SURVOLER)
-    {   SDL_RenderCopy(systeme->renderer, creer->survoler, NULL, &creer->pos);}
+    {   SDL_RenderCopy(systeme->renderer, loginstore->creer.survoler, NULL, &loginstore->creer.pos);}
     else if (loginstore->etatcreer == B_CLIQUER)
-    {   SDL_RenderCopy(systeme->renderer, creer->cliquer, NULL, &creer->pos);}
+    {   SDL_RenderCopy(systeme->renderer, loginstore->creer.cliquer, NULL, &loginstore->creer.pos);}
     else if (loginstore->etatcreer == B_IMPOSSIBLE)
-    {   SDL_RenderCopy(systeme->renderer, creer->impossible, NULL, &creer->pos);}
+    {   SDL_RenderCopy(systeme->renderer, loginstore->creer.impossible, NULL, &loginstore->creer.pos);}
 
     if (loginstore->etatarcade == B_NORMAL)
-    {   SDL_RenderCopy(systeme->renderer, arcade->normal, NULL, &arcade->pos);}
+    {   SDL_RenderCopy(systeme->renderer, loginstore->arcade.normal, NULL, &loginstore->arcade.pos);}
     else if (loginstore->etatarcade == B_SURVOLER)
-    {   SDL_RenderCopy(systeme->renderer, arcade->survoler, NULL, &arcade->pos);}
+    {   SDL_RenderCopy(systeme->renderer, loginstore->arcade.survoler, NULL, &loginstore->arcade.pos);}
     else if (loginstore->etatarcade == B_CLIQUER)
-    {   SDL_RenderCopy(systeme->renderer, arcade->cliquer, NULL, &arcade->pos);}
+    {   SDL_RenderCopy(systeme->renderer, loginstore->arcade.cliquer, NULL, &loginstore->arcade.pos);}
 
-    if (loginstore->optionactif == 1)
-    {
-        if (loginstore->etatazerty == B_NORMAL)
-        {   SDL_RenderCopy(systeme->renderer, azerty->normal, NULL, &azerty->pos);}
-        else if (loginstore->etatazerty == B_SURVOLER)
-        {   SDL_RenderCopy(systeme->renderer, azerty->survoler, NULL, &azerty->pos);}
-        else if (loginstore->etatazerty == B_CLIQUER)
-        {   SDL_RenderCopy(systeme->renderer, azerty->cliquer, NULL, &azerty->pos);}
-
-        if (loginstore->etatqwerty == B_NORMAL)
-        {   SDL_RenderCopy(systeme->renderer, qwerty->normal, NULL, &qwerty->pos);}
-        else if (loginstore->etatqwerty == B_SURVOLER)
-        {   SDL_RenderCopy(systeme->renderer, qwerty->survoler, NULL, &qwerty->pos);}
-        else if (loginstore->etatqwerty == B_CLIQUER)
-        {   SDL_RenderCopy(systeme->renderer, qwerty->cliquer, NULL, &qwerty->pos);}
-
-        if (loginstore->etatqwertz == B_NORMAL)
-        {   SDL_RenderCopy(systeme->renderer, qwertz->normal, NULL, &qwertz->pos);}
-        else if (loginstore->etatqwertz == B_SURVOLER)
-        {   SDL_RenderCopy(systeme->renderer, qwertz->survoler, NULL, &qwertz->pos);}
-        else if (loginstore->etatqwertz == B_CLIQUER)
-        {   SDL_RenderCopy(systeme->renderer, qwertz->cliquer, NULL, &qwertz->pos);}
-    }
     //mot de passe et pseudo
 
 
-    if (loginstore->saisiepseudo == 1)
+    if (loginstore->saisiepseudo == true)
     {   SDL_RenderCopy(systeme->renderer, loginstore->blueBox, NULL, &loginstore->pcase);     }
     else
     {   SDL_RenderCopy(systeme->renderer, loginstore->whiteBox, NULL, &loginstore->pcase);    }
 
-    if (loginstore->saisiemdp == 1)
+    if (loginstore->saisiemdp == true)
     {   SDL_RenderCopy(systeme->renderer, loginstore->blueBox, NULL, &loginstore->pcase2);     }
     else
     {   SDL_RenderCopy(systeme->renderer, loginstore->whiteBox, NULL, &loginstore->pcase2);   }
@@ -592,7 +559,7 @@ void affichageloggin(typelogin *loginstore, DIVERSsysteme *systeme, bouton *opti
         loginstore->LEpseudo.position.w = loginstore->LEpseudo.lenght;
         SDL_RenderCopy(systeme->renderer, loginstore->LEpseudo.texture, NULL, &loginstore->LEpseudo.position);//login
 
-        if (loginstore->saisiepseudo == 1 && loginstore->clignote == TRUE)
+        if (loginstore->saisiepseudo == true && loginstore->clignote == TRUE)
         {
             loginstore->pcurseurPSEUDO.x = loginstore->LEpseudo.position.x + loginstore->LEpseudo.position.w + 2;
             loginstore->pcurseurPSEUDO.y = loginstore->LEpseudo.position.y + 5;
@@ -637,10 +604,35 @@ void affichageloggin(typelogin *loginstore, DIVERSsysteme *systeme, bouton *opti
     if (loginstore->mdpcacher == 1)
     {   SDL_RenderCopy(systeme->renderer, loginstore->coche, NULL, &loginstore->pcoche);}//tick
 
-    if (loginstore->diall == 1)
+
+     if (loginstore->menu == true)
     {
         SDL_RenderCopy	(systeme->renderer, loginstore->tdialogue, NULL, &loginstore->pdialogue);
         SDL_RenderCopy	(systeme->renderer, loginstore->ttextedialogue, NULL, &loginstore->ptextedialogue);
+    }
+
+    if (loginstore->optionactif == 1)
+    {
+        if (loginstore->etatazerty == B_NORMAL)
+        {   SDL_RenderCopy(systeme->renderer, loginstore->azerty.normal, NULL, &loginstore->azerty.pos);}
+        else if (loginstore->etatazerty == B_SURVOLER)
+        {   SDL_RenderCopy(systeme->renderer, loginstore->azerty.survoler, NULL, &loginstore->azerty.pos);}
+        else if (loginstore->etatazerty == B_CLIQUER)
+        {   SDL_RenderCopy(systeme->renderer, loginstore->azerty.cliquer, NULL, &loginstore->azerty.pos);}
+
+        if (loginstore->etatqwerty == B_NORMAL)
+        {   SDL_RenderCopy(systeme->renderer, loginstore->qwertz.normal, NULL, &loginstore->qwerty.pos);}
+        else if (loginstore->etatqwerty == B_SURVOLER)
+        {   SDL_RenderCopy(systeme->renderer, loginstore->qwertz.survoler, NULL, &loginstore->qwerty.pos);}
+        else if (loginstore->etatqwerty == B_CLIQUER)
+        {   SDL_RenderCopy(systeme->renderer, loginstore->qwertz.cliquer, NULL, &loginstore->qwerty.pos);}
+
+        if (loginstore->etatqwertz == B_NORMAL)
+        {   SDL_RenderCopy(systeme->renderer, loginstore->qwerty.normal, NULL, &loginstore->qwertz.pos);}
+        else if (loginstore->etatqwertz == B_SURVOLER)
+        {   SDL_RenderCopy(systeme->renderer, loginstore->qwerty.survoler, NULL, &loginstore->qwertz.pos);}
+        else if (loginstore->etatqwertz == B_CLIQUER)
+        {   SDL_RenderCopy(systeme->renderer, loginstore->qwerty.cliquer, NULL, &loginstore->qwertz.pos);}
     }
 
     SDL_RenderCopy(systeme->renderer, loginstore->pointeur, NULL, &loginstore->ppointeur); //souris

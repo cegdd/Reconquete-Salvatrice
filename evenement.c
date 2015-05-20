@@ -163,9 +163,8 @@ int boucleeventlogin (struct typelogin *loginstore, DIVERSsysteme *systeme)
 	int x = loginstore->ppointeur.x;
 	int y = loginstore->ppointeur.y;
 
-	if (x >= systeme->screenw/11 && x <= (systeme->screenw/11)+(systeme->screenw/11) &&
-		y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12) &&
-		loginstore->etatoption != B_CLIQUER && loginstore->optionactif == 0)//													option
+	if (colisionbox(&loginstore->ppointeur, &loginstore->option.pos, true) &&
+		loginstore->etatoption != B_CLIQUER && loginstore->optionactif == 0)//								option
 	{
 		loginstore->etatoption = B_SURVOLER;
 		loginstore->etatjouer = B_NORMAL;
@@ -173,9 +172,8 @@ int boucleeventlogin (struct typelogin *loginstore, DIVERSsysteme *systeme)
 		loginstore->etatquitter = B_NORMAL;
 		loginstore->etatarcade = B_NORMAL;
 	}
-	else if (x >= (systeme->screenw/11)*3 && x <= ((systeme->screenw/11)*3)+(systeme->screenw/11) &&
-			y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12) &&
-			loginstore->etatjouer != B_CLIQUER && loginstore->optionactif == 0)//												jouer
+	else if (colisionbox(&loginstore->ppointeur, &loginstore->jouer.pos, true) &&
+			loginstore->etatjouer != B_CLIQUER && loginstore->optionactif == 0)//							jouer
 	{
 		loginstore->etatoption = B_NORMAL;
 		loginstore->etatjouer = B_SURVOLER;
@@ -183,9 +181,8 @@ int boucleeventlogin (struct typelogin *loginstore, DIVERSsysteme *systeme)
 		loginstore->etatquitter = B_NORMAL;
 		loginstore->etatarcade = B_NORMAL;
 	}
-	else if (x >= (systeme->screenw/11)*5 && x <= ((systeme->screenw/11)*5)+(systeme->screenw/11) &&
-			y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12) &&
-			loginstore->etatcreer != B_CLIQUER && loginstore->optionactif == 0)//												creer
+	else if (colisionbox(&loginstore->ppointeur, &loginstore->creer.pos, true) &&
+			loginstore->etatcreer != B_CLIQUER && loginstore->optionactif == 0)//							creer
 	{
 		loginstore->etatoption = B_NORMAL;
 		loginstore->etatjouer = B_NORMAL;
@@ -193,9 +190,8 @@ int boucleeventlogin (struct typelogin *loginstore, DIVERSsysteme *systeme)
 		loginstore->etatquitter = B_NORMAL;
 		loginstore->etatarcade = B_NORMAL;
 	}
-	else if (x >= (systeme->screenw/11)*7 && x <= ((systeme->screenw/11)*7)+(systeme->screenw/11) &&
-			y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12) &&
-			loginstore->etatquitter != B_CLIQUER && loginstore->optionactif == 0)//												quitter
+	else if (colisionbox(&loginstore->ppointeur, &loginstore->quitter.pos, true) &&
+			loginstore->etatquitter != B_CLIQUER && loginstore->optionactif == 0)//							quitter
 	{
 		loginstore->etatoption = B_NORMAL;
 		loginstore->etatjouer = B_NORMAL;
@@ -203,9 +199,8 @@ int boucleeventlogin (struct typelogin *loginstore, DIVERSsysteme *systeme)
 		loginstore->etatquitter = B_SURVOLER;
 		loginstore->etatarcade = B_NORMAL;
 	}
-	else if (x >= (systeme->screenw/11)*9 && x <= ((systeme->screenw/11)*9)+(systeme->screenw/11) &&
-			y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12) &&
-			loginstore->etatarcade != B_CLIQUER && loginstore->optionactif == 0)//												arcade
+	else if (colisionbox(&loginstore->ppointeur, &loginstore->arcade.pos, true) &&
+			loginstore->etatarcade != B_CLIQUER && loginstore->optionactif == 0)//							arcade
 	{
 		loginstore->etatoption = B_NORMAL;
 		loginstore->etatjouer = B_NORMAL;
@@ -222,27 +217,21 @@ int boucleeventlogin (struct typelogin *loginstore, DIVERSsysteme *systeme)
 		loginstore->etatquitter = B_NORMAL;
 		loginstore->etatarcade = B_NORMAL;
 	}
-	else if ( loginstore->optionactif == 1 &&
-			x >= (systeme->screenw/11)*4 && x <= ((systeme->screenw/11)*4)+(systeme->screenw/11) &&
-			y >= (systeme->screenh/30)*14 && y <= ((systeme->screenh/30)*14)+(systeme->screenh/18) &&
+	else if ( loginstore->optionactif == 1 && colisionbox(&loginstore->ppointeur, &loginstore->azerty.pos, true) &&
 			loginstore->etatazerty != B_CLIQUER)
 	{
 		loginstore->etatazerty = B_SURVOLER;
 		if (loginstore->etatqwerty != B_CLIQUER) {loginstore->etatqwerty = B_NORMAL;}
 		if (loginstore->etatqwerty != B_CLIQUER) {loginstore->etatqwertz = B_NORMAL;}
 	}
-	else if ( loginstore->optionactif == 1 &&
-			x >= (systeme->screenw/11)*6 && x <= ((systeme->screenw/11)*6)+(systeme->screenw/11) &&
-			y >= (systeme->screenh/30)*14 && y <= ((systeme->screenh/30)*14)+(systeme->screenh/18) &&
+	else if ( loginstore->optionactif == 1 && colisionbox(&loginstore->ppointeur, &loginstore->qwerty.pos, true) &&
 			loginstore->etatqwerty != B_CLIQUER)
 	{
 		loginstore->etatqwerty = B_SURVOLER;
 		if (loginstore->etatazerty != B_CLIQUER) {loginstore->etatazerty = B_NORMAL;}
 		if (loginstore->etatqwertz != B_CLIQUER) {loginstore->etatqwertz = B_NORMAL;}
 	}
-	else if ( loginstore->optionactif == 1 &&
-			x >= (systeme->screenw/11)*8 && x <= ((systeme->screenw/11)*8)+(systeme->screenw/11) &&
-			y >= (systeme->screenh/30)*14 && y <= ((systeme->screenh/30)*14)+(systeme->screenh/18) &&
+	else if ( loginstore->optionactif == 1 && colisionbox(&loginstore->ppointeur, &loginstore->qwertz.pos, true) &&
 			loginstore->etatqwertz != B_CLIQUER)
 	{
 		loginstore->etatqwertz = B_SURVOLER;
@@ -271,124 +260,122 @@ int boucleeventlogin (struct typelogin *loginstore, DIVERSsysteme *systeme)
 				switch (loginstore->evenement.key.keysym.scancode)
 				{
 					case SDL_SCANCODE_RETURN:
-						if (loginstore->diall == 1)
+						if (loginstore->menu == true)
 						{
-							loginstore->diall = 0;
+							loginstore->menu = false;
 							loginstore->optionactif = 0;
 							return 1;
 						}
 						return 2;
 						break;
 					case SDL_SCANCODE_KP_ENTER:
-						if (loginstore->diall == 1)
+						if (loginstore->menu == true)
 						{
-							loginstore->diall = 0;
+							loginstore->menu = false;
 							loginstore->optionactif = 0;
 							return 1;
 						}
 						return 2;
 						break;
 					case SDL_SCANCODE_BACKSPACE:
-						if (loginstore->longpseudo > 0 && loginstore->saisiepseudo == 1)
+						if (loginstore->longpseudo > false && loginstore->saisiepseudo == true)
 						{
 							loginstore->longpseudo = loginstore->longpseudo - 1;
 						}
-						else if (loginstore->longmdp > 0 && loginstore->saisiemdp == 1)
+						else if (loginstore->longmdp > 0 && loginstore->saisiemdp == true)
 						{
 							loginstore->longmdp = loginstore->longmdp - 1;
 						}
 						break;
 					case SDL_SCANCODE_ESCAPE:
-						if (loginstore->diall == 1)
+						if (loginstore->menu == true)
 						{
-							loginstore->diall = 0;
+							loginstore->menu = false;
 							loginstore->optionactif = 0;
 							return 1;
 						}
 						return 0;
 						break;
-					case SDL_SCANCODE_A: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1)
+					case SDL_SCANCODE_A: if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true)
 						{if (systeme->typeclavier == '1') {loginstore->lettre = 'q';}
 						else if (systeme->typeclavier == '2') {loginstore->lettre = 'a';}
 						else if (systeme->typeclavier == '3') {loginstore->lettre = 'a';}}break;
-					case SDL_SCANCODE_B: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1){ loginstore->lettre = 'b';}	break;
-					case SDL_SCANCODE_C: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1){ loginstore->lettre = 'c';}	break;
-					case SDL_SCANCODE_D: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1){ loginstore->lettre = 'd';}	break;
-					case SDL_SCANCODE_E: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1){ loginstore->lettre = 'e';}	break;
-					case SDL_SCANCODE_F: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1){ loginstore->lettre = 'f';}	break;
-					case SDL_SCANCODE_G: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1){ loginstore->lettre = 'g';}	break;
-					case SDL_SCANCODE_H: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1){ loginstore->lettre = 'h';}	break;
-					case SDL_SCANCODE_I: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1){ loginstore->lettre = 'i';}	break;
-					case SDL_SCANCODE_J: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1){ loginstore->lettre = 'j';}	break;
-					case SDL_SCANCODE_K: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1){ loginstore->lettre = 'k';}	break;
-					case SDL_SCANCODE_L: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1){ loginstore->lettre = 'l';}	break;
-					case SDL_SCANCODE_SEMICOLON: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1)
+					case SDL_SCANCODE_B: if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true){ loginstore->lettre = 'b';}	break;
+					case SDL_SCANCODE_C: if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true){ loginstore->lettre = 'c';}	break;
+					case SDL_SCANCODE_D: if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true){ loginstore->lettre = 'd';}	break;
+					case SDL_SCANCODE_E: if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true){ loginstore->lettre = 'e';}	break;
+					case SDL_SCANCODE_F: if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true){ loginstore->lettre = 'f';}	break;
+					case SDL_SCANCODE_G: if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true){ loginstore->lettre = 'g';}	break;
+					case SDL_SCANCODE_H: if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true){ loginstore->lettre = 'h';}	break;
+					case SDL_SCANCODE_I: if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true){ loginstore->lettre = 'i';}	break;
+					case SDL_SCANCODE_J: if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true){ loginstore->lettre = 'j';}	break;
+					case SDL_SCANCODE_K: if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true){ loginstore->lettre = 'k';}	break;
+					case SDL_SCANCODE_L: if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true){ loginstore->lettre = 'l';}	break;
+					case SDL_SCANCODE_SEMICOLON: if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true)
 						{if (systeme->typeclavier == '1') {loginstore->lettre = 'm';}}break;
-					case SDL_SCANCODE_M: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1)
+					case SDL_SCANCODE_M: if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true)
 						{if (systeme->typeclavier == '2') {loginstore->lettre = 'm';}
 						else if (systeme->typeclavier == '3') {loginstore->lettre = 'm';}}break;
-					case SDL_SCANCODE_N: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1){ loginstore->lettre = 'n';}	break;
-					case SDL_SCANCODE_O: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1){ loginstore->lettre = 'o';}	break;
-					case SDL_SCANCODE_P: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1){ loginstore->lettre = 'p';}	break;
-					case SDL_SCANCODE_Q: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1)
+					case SDL_SCANCODE_N: if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true){ loginstore->lettre = 'n';}	break;
+					case SDL_SCANCODE_O: if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true){ loginstore->lettre = 'o';}	break;
+					case SDL_SCANCODE_P: if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true){ loginstore->lettre = 'p';}	break;
+					case SDL_SCANCODE_Q: if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true)
 						{if (systeme->typeclavier == '1') {loginstore->lettre = 'a';}
 						else if (systeme->typeclavier == '2') {loginstore->lettre = 'q';}
 						else if (systeme->typeclavier == '3') {loginstore->lettre = 'q';}}break;
-					case SDL_SCANCODE_R: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1){ loginstore->lettre = 'r';}	break;
-					case SDL_SCANCODE_S: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1){ loginstore->lettre = 's';}	break;
-					case SDL_SCANCODE_T: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1){ loginstore->lettre = 't';}	break;
-					case SDL_SCANCODE_U: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1){ loginstore->lettre = 'u';}	break;
-					case SDL_SCANCODE_V: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1){ loginstore->lettre = 'v';}	break;
-					case SDL_SCANCODE_W: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1)
+					case SDL_SCANCODE_R: if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true){ loginstore->lettre = 'r';}	break;
+					case SDL_SCANCODE_S: if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true){ loginstore->lettre = 's';}	break;
+					case SDL_SCANCODE_T: if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true){ loginstore->lettre = 't';}	break;
+					case SDL_SCANCODE_U: if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true){ loginstore->lettre = 'u';}	break;
+					case SDL_SCANCODE_V: if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true){ loginstore->lettre = 'v';}	break;
+					case SDL_SCANCODE_W: if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true)
 						{if (systeme->typeclavier == '1') {loginstore->lettre = 'z';}
 						else if (systeme->typeclavier == '2') {loginstore->lettre = 'w';}
 						else if (systeme->typeclavier == '3') {loginstore->lettre = 'w';}}break;
-					case SDL_SCANCODE_X: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1){ loginstore->lettre = 'x';}	break;
-					case SDL_SCANCODE_Y: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1)
+					case SDL_SCANCODE_X: if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true){ loginstore->lettre = 'x';}	break;
+					case SDL_SCANCODE_Y: if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true)
 						{if (systeme->typeclavier == '1') {loginstore->lettre = 'y';}
 						else if (systeme->typeclavier == '2') {loginstore->lettre = 'y';}
 						else if (systeme->typeclavier == '3') {loginstore->lettre = 'z';}}break;
-					case SDL_SCANCODE_Z: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1)
+					case SDL_SCANCODE_Z: if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true)
 						{if (systeme->typeclavier == '1') {loginstore->lettre = 'w';}
 						else if (systeme->typeclavier == '2') {loginstore->lettre = 'z';}
 						else if (systeme->typeclavier == '3') {loginstore->lettre = 'z';}}break;
-					case SDL_SCANCODE_0: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1){ loginstore->lettre = '0';}	break;
-					case SDL_SCANCODE_1: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1){ loginstore->lettre = '1';}	break;
-					case SDL_SCANCODE_2: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1){ loginstore->lettre = '2';}	break;
-					case SDL_SCANCODE_3: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1){ loginstore->lettre = '3';}	break;
-					case SDL_SCANCODE_4: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1){ loginstore->lettre = '4';}	break;
-					case SDL_SCANCODE_5: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1){ loginstore->lettre = '5';}	break;
-					case SDL_SCANCODE_6: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1){ loginstore->lettre = '6';}	break;
-					case SDL_SCANCODE_7: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1){ loginstore->lettre = '7';}	break;
-					case SDL_SCANCODE_8: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1){ loginstore->lettre = '8';}	break;
-					case SDL_SCANCODE_9: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1){ loginstore->lettre = '9';}	break;
-					case SDL_SCANCODE_KP_0: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1){ loginstore->lettre = '0';}	break;
-					case SDL_SCANCODE_KP_1: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1){ loginstore->lettre = '1';}	break;
-					case SDL_SCANCODE_KP_2: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1){ loginstore->lettre = '2';}	break;
-					case SDL_SCANCODE_KP_3: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1){ loginstore->lettre = '3';}	break;
-					case SDL_SCANCODE_KP_4: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1){ loginstore->lettre = '4';}	break;
-					case SDL_SCANCODE_KP_5: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1){ loginstore->lettre = '5';}	break;
-					case SDL_SCANCODE_KP_6: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1){ loginstore->lettre = '6';}	break;
-					case SDL_SCANCODE_KP_7: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1){ loginstore->lettre = '7';}	break;
-					case SDL_SCANCODE_KP_8: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1){ loginstore->lettre = '8';}	break;
-					case SDL_SCANCODE_KP_9: if (loginstore->saisiepseudo == 1 || loginstore->saisiemdp == 1){ loginstore->lettre = '9';}	break;
+					case SDL_SCANCODE_0:    if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true){ loginstore->lettre = '0';}	break;
+					case SDL_SCANCODE_1:    if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true){ loginstore->lettre = '1';}	break;
+					case SDL_SCANCODE_2:    if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true){ loginstore->lettre = '2';}	break;
+					case SDL_SCANCODE_3:    if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true){ loginstore->lettre = '3';}	break;
+					case SDL_SCANCODE_4:    if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true){ loginstore->lettre = '4';}	break;
+					case SDL_SCANCODE_5:    if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true){ loginstore->lettre = '5';}	break;
+					case SDL_SCANCODE_6:    if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true){ loginstore->lettre = '6';}	break;
+					case SDL_SCANCODE_7:    if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true){ loginstore->lettre = '7';}	break;
+					case SDL_SCANCODE_8:    if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true){ loginstore->lettre = '8';}	break;
+					case SDL_SCANCODE_9:    if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true){ loginstore->lettre = '9';}	break;
+					case SDL_SCANCODE_KP_0: if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true){ loginstore->lettre = '0';}	break;
+					case SDL_SCANCODE_KP_1: if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true){ loginstore->lettre = '1';}	break;
+					case SDL_SCANCODE_KP_2: if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true){ loginstore->lettre = '2';}	break;
+					case SDL_SCANCODE_KP_3: if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true){ loginstore->lettre = '3';}	break;
+					case SDL_SCANCODE_KP_4: if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true){ loginstore->lettre = '4';}	break;
+					case SDL_SCANCODE_KP_5: if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true){ loginstore->lettre = '5';}	break;
+					case SDL_SCANCODE_KP_6: if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true){ loginstore->lettre = '6';}	break;
+					case SDL_SCANCODE_KP_7: if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true){ loginstore->lettre = '7';}	break;
+					case SDL_SCANCODE_KP_8: if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true){ loginstore->lettre = '8';}	break;
+					case SDL_SCANCODE_KP_9: if (loginstore->saisiepseudo == true || loginstore->saisiemdp == true){ loginstore->lettre = '9';}	break;
 					case SDL_SCANCODE_TAB:
-						if (loginstore->saisiepseudo == 1) {	loginstore->saisiepseudo = 0;	loginstore->saisiemdp = 1;}
-						else if (loginstore->saisiemdp == 1) {	loginstore->saisiepseudo = 1;	loginstore->saisiemdp = 0;}
-						else { 							loginstore->saisiepseudo = 1;	loginstore->saisiemdp = 0;}
+						if (loginstore->saisiepseudo == true) {	loginstore->saisiepseudo = false;	loginstore->saisiemdp = true;}
+						else if (loginstore->saisiemdp == true) {	loginstore->saisiepseudo = true;	loginstore->saisiemdp = false;}
+						else { 							loginstore->saisiepseudo = true;	loginstore->saisiemdp = false;}
 						break;
 					default:
 						break;
 				}
 				break;
 			case SDL_MOUSEBUTTONDOWN:
-				if (x >= systeme->screenw/11 && x <= (systeme->screenw/11)+(systeme->screenw/11) &&
-				y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12))//							option
+				if (colisionbox(&loginstore->ppointeur, &loginstore->option.pos, true))//					option
 				{
 					loginstore->etatoption = B_CLIQUER;
 				}
-				else if (x >= (systeme->screenw/11)*3 && x <= ((systeme->screenw/11)*3)+(systeme->screenw/11) &&
-				y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12))//						jouer
+				else if (colisionbox(&loginstore->ppointeur, &loginstore->jouer.pos, true))//						jouer
 				{
 					//blocking impossible button
 					if(loginstore->longpseudo > 0 && loginstore->longmdp > 0)
@@ -396,8 +383,7 @@ int boucleeventlogin (struct typelogin *loginstore, DIVERSsysteme *systeme)
 						loginstore->etatjouer = B_CLIQUER;
 					}
 				}
-				else if (x >= (systeme->screenw/11)*5 && x <= ((systeme->screenw/11)*5)+(systeme->screenw/11) &&
-				y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12))//						creer
+				else if (colisionbox(&loginstore->ppointeur, &loginstore->creer.pos, true))//						creer
 				{
 					//blocking impossible button
 					if(loginstore->longpseudo > 0 && loginstore->longmdp > 0)
@@ -405,20 +391,16 @@ int boucleeventlogin (struct typelogin *loginstore, DIVERSsysteme *systeme)
 						loginstore->etatcreer = B_CLIQUER;
 					}
 				}
-				else if (x >= (systeme->screenw/11)*7 && x <= ((systeme->screenw/11)*7)+(systeme->screenw/11) &&
-				y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12))//						quitter
+				else if (colisionbox(&loginstore->ppointeur, &loginstore->quitter.pos, true))//						quitter
 				{
 					loginstore->etatquitter = B_CLIQUER;
 				}
-				else if (x >= (systeme->screenw/11)*9 && x <= ((systeme->screenw/11)*7)+(systeme->screenw/11) &&
-				y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12))//						arcade
+				else if (colisionbox(&loginstore->ppointeur, &loginstore->arcade.pos, true))//						arcade
 				{
 					loginstore->etatarcade = B_CLIQUER;
 				}
 
-				if ( loginstore->optionactif == 1 &&
-				x >= (systeme->screenw/11)*4 && x <= ((systeme->screenw/11)*4)+(systeme->screenw/11) &&
-				y >= (systeme->screenh/30)*14 && y <= ((systeme->screenh/30)*14)+(systeme->screenh/18))
+				if ( loginstore->optionactif == 1 && colisionbox(&loginstore->ppointeur, &loginstore->azerty.pos, true))
 				{
 					//azerty
 					loginstore->etatazerty = B_CLIQUER;
@@ -426,9 +408,7 @@ int boucleeventlogin (struct typelogin *loginstore, DIVERSsysteme *systeme)
 					loginstore->etatqwertz = B_NORMAL;
 					systeme->typeclavier = '1';
 				}
-				else if ( loginstore->optionactif == 1 &&
-				x >= (systeme->screenw/11)*6 && x <= ((systeme->screenw/11)*6)+(systeme->screenw/11) &&
-				y >= (systeme->screenh/30)*14 && y <= ((systeme->screenh/30)*14)+(systeme->screenh/18))
+				else if ( loginstore->optionactif == 1 && colisionbox(&loginstore->ppointeur, &loginstore->qwerty.pos, true))
 				{
 					//qwerty
 					loginstore->etatqwertz = B_NORMAL;
@@ -436,9 +416,7 @@ int boucleeventlogin (struct typelogin *loginstore, DIVERSsysteme *systeme)
 					loginstore->etatqwerty = B_CLIQUER;
 					systeme->typeclavier = '3';
 				}
-				else if ( loginstore->optionactif == 1 &&
-				x >= (systeme->screenw/11)*8 && x <= ((systeme->screenw/11)*8)+(systeme->screenw/11) &&
-				y >= (systeme->screenh/30)*14 && y <= ((systeme->screenh/30)*14)+(systeme->screenh/18))
+				else if ( loginstore->optionactif == 1 && colisionbox(&loginstore->ppointeur, &loginstore->qwertz.pos, true))
 				{
 					//qwertz
 					loginstore->etatqwerty = B_NORMAL;
@@ -455,22 +433,23 @@ int boucleeventlogin (struct typelogin *loginstore, DIVERSsysteme *systeme)
 					else if (loginstore->etatcreer == B_CLIQUER){loginstore->etatcreer = B_NORMAL;}
 					else if (loginstore->etatquitter == B_CLIQUER){loginstore->etatquitter = B_NORMAL;}
 
-					if (loginstore->diall == 1 && loginstore->optionactif == 0)
-							{loginstore->diall = 0;
+					if (loginstore->menu == true && loginstore->optionactif == 0)
+							{
+							    loginstore->menu = false;
 								return 1;
 							}
 
 					if (x >= (systeme->screenw-loginstore->pcase.w)/2 && x <= ((systeme->screenw-loginstore->pcase.w)/2)+(systeme->screenw/4) &&
 						y >= systeme->screenh/2 && y <= (systeme->screenh/2)+(systeme->screenh/20))
 					{
-							loginstore->saisiepseudo = 1;
-						loginstore->saisiemdp = 0;
+							loginstore->saisiepseudo = true;
+						loginstore->saisiemdp = false;
 					}
 					else if (x >= (systeme->screenw-loginstore->pcase.w)/2 && x <= (((systeme->screenw-loginstore->pcase.w)/2)+(systeme->screenw/4)) &&
 							y >= (systeme->screenh/2)+(systeme->screenh/8) && y <= ((systeme->screenh/2)+(systeme->screenh/8)+(systeme->screenh/20)))
 					{
-						loginstore->saisiemdp = 1;
-						loginstore->saisiepseudo = 0;
+						loginstore->saisiemdp = true;
+						loginstore->saisiepseudo = false;
 					}
 					else if (x >= (systeme->screenw/8)*6 && x <= ((systeme->screenw/8)*6)+(systeme->screenw/6) &&
 							y >= (systeme->screenh/8)*5 && y <= ((systeme->screenh/8)*5)+(systeme->screenh/12))
@@ -479,27 +458,22 @@ int boucleeventlogin (struct typelogin *loginstore, DIVERSsysteme *systeme)
 						else	{loginstore->mdpcacher = 1;}
 					}
 					else
-					{loginstore->saisiepseudo = 0;
-						loginstore->saisiemdp = 0;
+					{loginstore->saisiepseudo = false;
+						loginstore->saisiemdp = false;
 					}
 
-					//ATTENTION DON'T USE "1"
-					if (x >= systeme->screenw/11 && x <= (systeme->screenw/11)+(systeme->screenw/11) &&
-					y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12))//						option
+					//CAUTION DON'T USE "1"
+					if (colisionbox(&loginstore->ppointeur, &loginstore->option.pos, true))//			option
 					{return 4;}
-					else if (x >= (systeme->screenw/11)*3 && x <= ((systeme->screenw/11)*3)+(systeme->screenw/11) &&
-					y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12) &&
-					loginstore->longpseudo > 0 && loginstore->longmdp > 0)//													jouer
+					else if (colisionbox(&loginstore->ppointeur, &loginstore->jouer.pos, true) &&
+                        loginstore->longpseudo > 0 && loginstore->longmdp > 0)//				        play
 					{return 2;}
-					else if (x >= (systeme->screenw/11)*5 && x <= ((systeme->screenw/11)*5)+(systeme->screenw/11) &&
-					y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12) &&
-					loginstore->longpseudo > 0 && loginstore->longmdp > 0)//													creer
+					else if (colisionbox(&loginstore->ppointeur, &loginstore->creer.pos, true) &&
+                        loginstore->longpseudo > 0 && loginstore->longmdp > 0)//					    create
 					{return 3;}
-					else if (x >= (systeme->screenw/11)*7 && x <= ((systeme->screenw/11)*7)+(systeme->screenw/11) &&
-					y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12))//						quitter
+					else if (colisionbox(&loginstore->ppointeur, &loginstore->quitter.pos, true))//		quit
 					{return 0;}
-					else if (x >= (systeme->screenw/11)*9 && x <= ((systeme->screenw/11)*9)+(systeme->screenw/11) &&
-					y >= (systeme->screenh/6)*5 && y <= ((systeme->screenh/6)*5)+(systeme->screenh/12))//						arcade
+					else if (colisionbox(&loginstore->ppointeur, &loginstore->arcade.pos, true))//		arcade
 					{return 5;}
 					}
 				break;

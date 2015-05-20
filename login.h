@@ -4,8 +4,27 @@
 typedef struct TEXTE TEXTE;
 #include "main.h"
 
+struct bouton
+{
+	SDL_Texture *alpha100;
+	SDL_Texture *normal;
+	SDL_Texture *survoler;
+	SDL_Texture *cliquer;
+	SDL_Texture *impossible;
+	SDL_Rect pos;
+};
+
 struct typelogin
 {
+
+    struct bouton option;
+    struct bouton jouer;
+    struct bouton creer;
+    struct bouton quitter;
+    struct bouton azerty;
+    struct bouton qwerty;
+    struct bouton qwertz;
+    struct bouton arcade;
 	SDL_Event evenement;
 	TTF_Font *police;
 	SDL_Color couleurNoir;
@@ -31,12 +50,12 @@ struct typelogin
 	bool saisiepseudo;
 	bool saisiemdp;
 	bool clignote;
+	bool menu;
 
 	int continuer;
 	int longpseudo;
 	int i;
 	int longmdp;
-	int diall;
 	int optionactif;
 	int mdpcacher;
 	int etatoption;
@@ -70,15 +89,6 @@ struct typelogin
 	SDL_Texture *ttextedialogue;
 };
 
-struct bouton
-{
-	SDL_Texture *alpha100;
-	SDL_Texture *normal;
-	SDL_Texture *survoler;
-	SDL_Texture *cliquer;
-	SDL_Texture *impossible;
-	SDL_Rect pos;
-};
 typedef struct typelogin typelogin;
 typedef struct bouton bouton;
 
@@ -86,10 +96,8 @@ int auth (char sauvegarde[][50]);
 int login (DIVERSsysteme *systeme);
 int creerjoueur(char sauvegarde[][50]);
 
-void InitLoginStore(typelogin *loginstore, DIVERSsysteme *systeme);
-void Initbouton(bouton *option, bouton *jouer, bouton *creer, bouton *quitter, bouton *azerty, bouton *qwerty, bouton *qwertz,
-				bouton *arcade, DIVERSsysteme *systeme);
-void affichageloggin(typelogin *loginstore, DIVERSsysteme *systeme, bouton *option, bouton *jouer, bouton *creer, bouton *quitter,
-				bouton *azerty, bouton *qwerty, bouton *qwertz, bouton *arcade);
+void InitLoginStore (typelogin *loginstore, DIVERSsysteme *systeme);
+void Initbouton     (typelogin *loginstore, DIVERSsysteme *systeme);
+void affichageloggin(typelogin *loginstore, DIVERSsysteme *systeme);
 
 #endif
