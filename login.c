@@ -86,7 +86,7 @@ int login (DIVERSsysteme *systeme)
 			else if (loginstore.lettre != '\0' && loginstore.longmdp < 20 && loginstore.saisiemdp == 1)
 			{
 				systeme->sauvegarde[1][loginstore.longmdp] = loginstore.lettre;
-				loginstore.mdpshow[loginstore.longmdp] = '*';
+				loginstore.mdpshow[loginstore.longmdp] = 'X';
 				loginstore.longmdp++;
 			}
 
@@ -102,6 +102,14 @@ int login (DIVERSsysteme *systeme)
 			//affichage
 			affichageloggin(&loginstore, systeme, &option, &jouer, &creer, &quitter, &azerty, &qwerty, &qwertz, &arcade);
 		}
+		else if (loginstore.tpact - loginstore.tpcurseur >= 500)
+        {
+            loginstore.tpcurseur = loginstore.tpact;
+            if (loginstore.clignote == TRUE)
+                {   loginstore.clignote = FALSE;    }
+            else
+                {   loginstore.clignote = TRUE;     }
+        }
 		else
 		{
 			SDL_Delay(10);
@@ -283,7 +291,7 @@ int auth(char login[][50])
 
 void InitLoginStore(typelogin *loginstore, DIVERSsysteme *systeme)
 {
-	loginstore->police = TTF_OpenFont("rs/divers/police1.ttf", 20);//32
+	loginstore->police = TTF_OpenFont("rs/divers/police1.ttf", TAILLE_POLICE_LOGIN);
 
 	loginstore->pseudo.texture = imprime ("pseudo :", systeme->screenw, BLEU, systeme, &loginstore->pseudo.lenght, NULL);
 	loginstore->mdp.texture = imprime ("mot de passe :", systeme->screenw, BLEU, systeme, &loginstore->mdp.lenght, NULL);
@@ -307,6 +315,16 @@ void InitLoginStore(typelogin *loginstore, DIVERSsysteme *systeme)
 	loginstore->ppointeur.y = 0;
 	loginstore->ppointeur.w = 40;
 	loginstore->ppointeur.h = 60;
+
+	loginstore->pcurseurMDP.x = 0;
+	loginstore->pcurseurMDP.y = 0;
+	loginstore->pcurseurMDP.w = 3;
+	loginstore->pcurseurMDP.h = TAILLE_POLICE_LOGIN;
+
+	loginstore->pcurseurPSEUDO.x = 0;
+	loginstore->pcurseurPSEUDO.y = 0;
+	loginstore->pcurseurPSEUDO.w = 3;
+	loginstore->pcurseurPSEUDO.h = TAILLE_POLICE_LOGIN;
 
 	loginstore->pcase.w = systeme->screenw/4;
 	loginstore->pcase.h = systeme->screenh/20;
@@ -352,9 +370,11 @@ void InitLoginStore(typelogin *loginstore, DIVERSsysteme *systeme)
 	loginstore->pcoche.x =(systeme->screenw/8)*6;
 	loginstore->pcoche.y =((systeme->screenh/8)*5)-25;
 
-	loginstore->continuer = 1;
-	loginstore->saisiepseudo = false;
+    loginstore->saisiepseudo = true;
 	loginstore->saisiemdp = false;
+	loginstore->clignote = true;
+
+	loginstore->continuer = 1;
 	loginstore->longpseudo = 0;
 	loginstore->i = 0;
 	loginstore->longmdp = 0;
@@ -370,6 +390,7 @@ void InitLoginStore(typelogin *loginstore, DIVERSsysteme *systeme)
 	loginstore->etatqwertz = B_NORMAL;
 	loginstore->tpact = 0;
 	loginstore->tpapr = 0;
+	loginstore->tpcurseur = 0;
 	loginstore->lettre = '0';
 
 	//récupération du type de clavier utilisé
@@ -391,13 +412,14 @@ void InitLoginStore(typelogin *loginstore, DIVERSsysteme *systeme)
 	sprintf(loginstore->info3, "Identifiants incorrects\n\nVotre personnage n'existe pas, creez en un sans attendre !");
 	sprintf(loginstore->info4, "Identifiants incorrects\n\nVotre mot de passe et votre pseudo ne correspondent pas.\n\nessayer un autre mot de passe.");
 
-	loginstore->login = LoadingImage		("rs/fonds/login.png", 0, systeme);
-	loginstore->pointeur = LoadingImage	("rs/images/p.png", 0, systeme);
-	loginstore->lacase = LoadingImage		("rs/images/case.png", 0, systeme);
-	loginstore->lacase0 = LoadingImage		("rs/images/case0.png", 0, systeme);
-	loginstore->tdialogue = LoadingImage		("rs/ui/fenetreinfo.png", 0, systeme);
-	loginstore->cachermdp = LoadingImage		("rs/images/cachermdp.png", 0, systeme);
+	loginstore->login = LoadingImage        ("rs/fonds/login.png", 0, systeme);
+	loginstore->pointeur = LoadingImage	    ("rs/images/p.png", 0, systeme);
+	loginstore->blueBox = LoadingImage		("rs/images/blueBox.png", 0, systeme);
+	loginstore->whiteBox = LoadingImage		("rs/images/whiteBox.png", 0, systeme);
+	loginstore->tdialogue = LoadingImage	("rs/ui/fenetreinfo.png", 0, systeme);
+	loginstore->cachermdp = LoadingImage	("rs/images/cachermdp.png", 0, systeme);
 	loginstore->coche = LoadingImage		("rs/images/coche.png", 0, systeme);
+	loginstore->curseur = systeme->noir;
 
 	loginstore->ttextedialogue = NULL;
 }
@@ -478,23 +500,7 @@ void affichageloggin(typelogin *loginstore, DIVERSsysteme *systeme, bouton *opti
 {
     SDL_RenderClear(systeme->renderer);
 
-    SDL_RenderCopy(systeme->renderer, loginstore->login, NULL, &loginstore->pecran);//						fond
-
-    if (loginstore->saisiepseudo == 1)
-    {
-        SDL_RenderCopy(systeme->renderer, loginstore->lacase, NULL, &loginstore->pcase);//					pseudo case bleu
-        SDL_RenderCopy(systeme->renderer, loginstore->lacase0, NULL, &loginstore->pcase2);
-    }
-    else if (loginstore->saisiemdp == 1)
-    {
-        SDL_RenderCopy(systeme->renderer, loginstore->lacase, NULL, &loginstore->pcase2);//					mdp case bleu
-        SDL_RenderCopy(systeme->renderer, loginstore->lacase0, NULL, &loginstore->pcase);
-    }
-    else
-    {
-        SDL_RenderCopy(systeme->renderer, loginstore->lacase0, NULL, &loginstore->pcase2);
-        SDL_RenderCopy(systeme->renderer, loginstore->lacase0, NULL, &loginstore->pcase);
-    }
+    SDL_RenderCopy(systeme->renderer, loginstore->login, NULL, &loginstore->pecran);//background
 
     if (loginstore->etatoption == B_NORMAL)
     {   SDL_RenderCopy(systeme->renderer, option->normal, NULL, &option->pos);}
@@ -535,37 +541,6 @@ void affichageloggin(typelogin *loginstore, DIVERSsysteme *systeme, bouton *opti
     else if (loginstore->etatarcade == B_CLIQUER)
     {   SDL_RenderCopy(systeme->renderer, arcade->cliquer, NULL, &arcade->pos);}
 
-    //mot de passe et pseudo
-
-    if(loginstore->longmdp > 0)
-    {
-        if (loginstore->mdpcacher == 0)
-        {   loginstore->LEmdp.texture = imprime(systeme->sauvegarde[1], systeme->screenw, NOIR, systeme, &loginstore->LEmdp.lenght, NULL);}
-        else
-        {   loginstore->LEmdp.texture = imprime(loginstore->mdpshow, systeme->screenw, NOIR, systeme, &loginstore->LEmdp.lenght, NULL);}
-        loginstore->LEmdp.position.w = loginstore->LEmdp.lenght;
-        SDL_RenderCopy(systeme->renderer, loginstore->LEmdp.texture, NULL, &loginstore->LEmdp.position);//mot de passe
-    }
-    if(loginstore->longpseudo > 0)
-    {
-            loginstore->LEpseudo.texture = imprime(systeme->sauvegarde[0], systeme->screenw, NOIR, systeme, &loginstore->LEpseudo.lenght, NULL);
-            loginstore->LEpseudo.position.w = loginstore->LEpseudo.lenght;
-            SDL_RenderCopy(systeme->renderer, loginstore->LEpseudo.texture, NULL, &loginstore->LEpseudo.position);//pseudo
-    }
-
-    SDL_RenderCopy(systeme->renderer, loginstore->pseudo.texture, NULL, &loginstore->pseudo.position);// demande pseudo
-    SDL_RenderCopy(systeme->renderer, loginstore->mdp.texture, NULL, &loginstore->mdp.position);// demande mot de passe
-
-
-    SDL_RenderCopy(systeme->renderer, loginstore->cachermdp, NULL, &loginstore->pcachermdp);//coche
-    if (loginstore->mdpcacher == 1)
-    {   SDL_RenderCopy(systeme->renderer, loginstore->coche, NULL, &loginstore->pcoche);}
-
-    if (loginstore->diall == 1)
-    {
-        SDL_RenderCopy	(systeme->renderer, loginstore->tdialogue, NULL, &loginstore->pdialogue);
-        SDL_RenderCopy	(systeme->renderer, loginstore->ttextedialogue, NULL, &loginstore->ptextedialogue);
-    }
     if (loginstore->optionactif == 1)
     {
         if (loginstore->etatazerty == B_NORMAL)
@@ -588,6 +563,84 @@ void affichageloggin(typelogin *loginstore, DIVERSsysteme *systeme, bouton *opti
         {   SDL_RenderCopy(systeme->renderer, qwertz->survoler, NULL, &qwertz->pos);}
         else if (loginstore->etatqwertz == B_CLIQUER)
         {   SDL_RenderCopy(systeme->renderer, qwertz->cliquer, NULL, &qwertz->pos);}
+    }
+    //mot de passe et pseudo
+
+
+    if (loginstore->saisiepseudo == 1)
+    {   SDL_RenderCopy(systeme->renderer, loginstore->blueBox, NULL, &loginstore->pcase);     }
+    else
+    {   SDL_RenderCopy(systeme->renderer, loginstore->whiteBox, NULL, &loginstore->pcase);    }
+
+    if (loginstore->saisiemdp == 1)
+    {   SDL_RenderCopy(systeme->renderer, loginstore->blueBox, NULL, &loginstore->pcase2);     }
+    else
+    {   SDL_RenderCopy(systeme->renderer, loginstore->whiteBox, NULL, &loginstore->pcase2);   }
+
+    if(loginstore->longmdp > 0)
+    {
+        if (loginstore->mdpcacher == 0)
+        {   loginstore->LEmdp.texture = imprime(systeme->sauvegarde[1], systeme->screenw, NOIR, systeme, &loginstore->LEmdp.lenght, NULL);}
+        else
+        {   loginstore->LEmdp.texture = imprime(loginstore->mdpshow, systeme->screenw, NOIR, systeme, &loginstore->LEmdp.lenght, NULL);}
+        loginstore->LEmdp.position.w = loginstore->LEmdp.lenght;
+        SDL_RenderCopy(systeme->renderer, loginstore->LEmdp.texture, NULL, &loginstore->LEmdp.position);//password
+    }
+    if(loginstore->longpseudo > 0)
+    {
+        loginstore->LEpseudo.texture = imprime(systeme->sauvegarde[0], systeme->screenw, NOIR, systeme, &loginstore->LEpseudo.lenght, NULL);
+        loginstore->LEpseudo.position.w = loginstore->LEpseudo.lenght;
+        SDL_RenderCopy(systeme->renderer, loginstore->LEpseudo.texture, NULL, &loginstore->LEpseudo.position);//login
+
+        if (loginstore->saisiepseudo == 1 && loginstore->clignote == TRUE)
+        {
+            loginstore->pcurseurPSEUDO.x = loginstore->LEpseudo.position.x + loginstore->LEpseudo.position.w + 2;
+            loginstore->pcurseurPSEUDO.y = loginstore->LEpseudo.position.y + 5;
+            SDL_RenderCopy(systeme->renderer, loginstore->curseur, NULL, &loginstore->pcurseurPSEUDO);// cursor after login
+        }
+    }
+
+    if (loginstore->saisiemdp == true && loginstore->clignote == true)
+    {
+        if (loginstore->longmdp > 0)
+        {
+            loginstore->pcurseurMDP.x = loginstore->LEmdp.position.x + loginstore->LEmdp.position.w + 2;
+            loginstore->pcurseurMDP.y = loginstore->LEmdp.position.y + 5;
+        }
+        else
+        {
+            loginstore->pcurseurMDP.x = loginstore->pcase2.x + 5;
+            loginstore->pcurseurMDP.y = loginstore->pcase2.y + 5;
+        }
+        SDL_RenderCopy(systeme->renderer, loginstore->curseur, NULL, &loginstore->pcurseurMDP);// cursor after password
+    }
+    else if (loginstore->saisiepseudo == true && loginstore->clignote == true)
+    {
+        if (loginstore->longpseudo > 0)
+        {
+            loginstore->pcurseurPSEUDO.x = loginstore->LEpseudo.position.x + loginstore->LEpseudo.position.w + 2;
+            loginstore->pcurseurPSEUDO.y = loginstore->LEpseudo.position.y + 5;
+        }
+        else
+        {
+            loginstore->pcurseurPSEUDO.x = loginstore->pcase.x + 5;
+            loginstore->pcurseurPSEUDO.y = loginstore->pcase.y + 5;
+        }
+        SDL_RenderCopy(systeme->renderer, loginstore->curseur, NULL, &loginstore->pcurseurPSEUDO);// cursor after login
+    }
+
+    SDL_RenderCopy(systeme->renderer, loginstore->pseudo.texture, NULL, &loginstore->pseudo.position);// ask login
+    SDL_RenderCopy(systeme->renderer, loginstore->mdp.texture, NULL, &loginstore->mdp.position);// ask password
+
+
+    SDL_RenderCopy(systeme->renderer, loginstore->cachermdp, NULL, &loginstore->pcachermdp);//tick box
+    if (loginstore->mdpcacher == 1)
+    {   SDL_RenderCopy(systeme->renderer, loginstore->coche, NULL, &loginstore->pcoche);}//tick
+
+    if (loginstore->diall == 1)
+    {
+        SDL_RenderCopy	(systeme->renderer, loginstore->tdialogue, NULL, &loginstore->pdialogue);
+        SDL_RenderCopy	(systeme->renderer, loginstore->ttextedialogue, NULL, &loginstore->ptextedialogue);
     }
 
     SDL_RenderCopy(systeme->renderer, loginstore->pointeur, NULL, &loginstore->ppointeur); //souris

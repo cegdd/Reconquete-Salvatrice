@@ -546,8 +546,8 @@ void initsystem(DIVERSsysteme *systeme)//																	systeme
 
     systeme->police = NULL;
     systeme->police1 = NULL;
-	systeme->police = TTF_OpenFont("rs/divers/dalek.ttf", TAILLEPOLICE);
-	systeme->police1 = TTF_OpenFont("rs/divers/police1.ttf", 18);
+	systeme->police = TTF_OpenFont("rs/divers/dalek.ttf", TAILLE_POLICE);
+	systeme->police1 = TTF_OpenFont("rs/divers/police1.ttf", TAILLE_POLICE);
 
 	systeme->pp.x = 0;
 	systeme->pp.y = 0;
@@ -678,7 +678,7 @@ void initchat(DIVERSchat *chat, DIVERSsysteme *systeme)//													chat
 		chat->pstringchat[index].x = 0;
 		chat->pstringchat[index].y = (systeme->screenh/2)+(index*32);
 		chat->pstringchat[index].w = 0;
-		chat->pstringchat[index].h = TAILLEPOLICE;
+		chat->pstringchat[index].h = TAILLE_POLICE;
 	}
 	chat->Uichat = LoadingImage			("rs/ui/uichat.png", 0, systeme);
 	chat->BGchat = LoadingImage			("rs/ui/BGchat.png", 0, systeme);

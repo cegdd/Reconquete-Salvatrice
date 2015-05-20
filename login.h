@@ -25,10 +25,14 @@ struct typelogin
 	SDL_Rect ptextedialogue;
 	SDL_Rect pcachermdp;
 	SDL_Rect pcoche;
+	SDL_Rect pcurseurMDP;
+	SDL_Rect pcurseurPSEUDO;
+
+	bool saisiepseudo;
+	bool saisiemdp;
+	bool clignote;
 
 	int continuer;
-	bool saisiepseudo;
-	int saisiemdp;
 	int longpseudo;
 	int i;
 	int longmdp;
@@ -45,6 +49,7 @@ struct typelogin
 	int etatqwertz;
 	int tpact;
 	int tpapr;
+	int tpcurseur;
 
 	char lettre;
 	char mdpshow[21];
@@ -55,9 +60,10 @@ struct typelogin
 	char info4[1024];
 
 	SDL_Texture *login;
+	SDL_Texture *curseur;
 	SDL_Texture *pointeur;
-	SDL_Texture *lacase;
-	SDL_Texture *lacase0;
+	SDL_Texture *blueBox;
+	SDL_Texture *whiteBox;
 	SDL_Texture *tdialogue;
 	SDL_Texture *cachermdp;
 	SDL_Texture *coche;
