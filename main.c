@@ -113,6 +113,7 @@ int chargementcarte(struct DIVERSsysteme *systeme, struct typeFORthreads *online
     typeFORevent FORevent;
     DIVERScraft craft;
 
+    inittemps(&temps, systeme);
     if (temps.temptotal != 0)
 	{
 		srand(temps.temptotal);
@@ -127,7 +128,6 @@ int chargementcarte(struct DIVERSsysteme *systeme, struct typeFORthreads *online
     initdeplacement(&deplacement, systeme);
     initperso(&perso, systeme);
     initmap(&carte, systeme, &perso);
-    inittemps(&temps, systeme);
     initui(&ui, systeme);
     initchat(&chat, systeme);
     initpnj(&pnj);

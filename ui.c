@@ -165,7 +165,7 @@ SDL_Texture *fenetredialogue(int x, int y, SDL_Rect* pdialogue, SDL_Rect* ptexte
 {//pdialogue is the background and ptextedialogue is the text inside.
 //just set "x" and "y" and everything will be automaticaly set up.
 
-	SDL_Texture *texture;
+	SDL_Texture *texture = NULL;
 	int lenght, high;
 
 	if (texte != NULL)
