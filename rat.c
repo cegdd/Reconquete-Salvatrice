@@ -190,7 +190,7 @@ void ADD_Rat(int type, int MemoryArea, typecombat *BTLstr, DIVERSsysteme *system
 	{
 		BTLstr->creature[MemoryArea].relevancy[index] = 0;
 	}
-	//haut -> bas -> gauche -> droite
+	/*haut -> bas -> gauche -> droite*/
 	if (randside == 0)
 	{
 		BTLstr->creature[MemoryArea].position.y = -100;
@@ -212,8 +212,8 @@ void ADD_Rat(int type, int MemoryArea, typecombat *BTLstr, DIVERSsysteme *system
 		BTLstr->creature[MemoryArea].position.x = systeme->screenw + 100;
 	}
 
-	BTLstr->creature[MemoryArea].position.w = systeme->screenw*0.073206442;//100
-	BTLstr->creature[MemoryArea].position.h = systeme->screenh*0.032552083;//25
+	BTLstr->creature[MemoryArea].position.w = systeme->screenw*0.073206442;/*100*/
+	BTLstr->creature[MemoryArea].position.h = systeme->screenh*0.032552083;/*25*/
 	BTLstr->creature[MemoryArea].STATICposition.w = BTLstr->creature[MemoryArea].position.w;
 	BTLstr->creature[MemoryArea].STATICposition.h = BTLstr->creature[MemoryArea].position.h;
 

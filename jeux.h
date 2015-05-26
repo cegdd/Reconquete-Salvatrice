@@ -4,11 +4,11 @@
 #include <stdbool.h>
 #include <SDL.h>
 
-//####grille de test#####//
+/*####grille de test#####*/
 #define TESTGRID 0
-//###arret des ennemis###//
+/*###arret des ennemis###*/
 #define ARRET_MOB 0
-//#######################//
+/*#######################*/
 
 
 

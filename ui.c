@@ -15,7 +15,7 @@ void gestionui (DIVERSsysteme *systeme, DIVERSui *ui, DIVERScraft *craft, PACKbo
 				DIVERSinventaire *inventaire, PACKobjet *objet, PERSO *perso, PACKpnj *pnj)
 {
     int index = 0;
-	//si un dialogue a été lancer
+	/*si un dialogue a été lancer*/
 	if (ui->lancedialogue == 2)
 	{
 		char texte[512] = "Toumai :\n motive le développeur de ce jeu pour qu'il se bouge le cul a faire la suite ;)\n \n \n \n \n";
@@ -23,15 +23,15 @@ void gestionui (DIVERSsysteme *systeme, DIVERSui *ui, DIVERScraft *craft, PACKbo
 		ui->dialogueactif = 1;
 		ui->lancedialogue = 0;
 	}
-	//si la souris a bouger
+	/*si la souris a bouger*/
 	if (systeme->pp.x != systeme->oldpp.x || systeme->pp.y != systeme->oldpp.y)
 	{
 		inventaire->idsurvoler = -1;
 
-		//test des coins
+		/*test des coins*/
 		testcoin(systeme, ui, chat, inventaire);
 
-		//si l'interface de craft est actif
+		/*si l'interface de craft est actif*/
 		if (craft->actif == true)
 		{
 			if (systeme->pp.y >= systeme->screenh*0.467 && systeme->pp.y <= (systeme->screenh*0.467)+(systeme->screenh*0.03))
@@ -117,7 +117,7 @@ void gestionui (DIVERSsysteme *systeme, DIVERSui *ui, DIVERScraft *craft, PACKbo
 				bouton->BoutonQuitter.etat = 0;
 			}
 		}
-		//si l'inventaire est actif
+		/*si l'inventaire est actif*/
 		if (ui->coinbas == 2)
 		{
 			if (systeme->pp.y > systeme->screenh*0.526)
@@ -135,25 +135,25 @@ void gestionui (DIVERSsysteme *systeme, DIVERSui *ui, DIVERScraft *craft, PACKbo
 	}
 
 	if (craft->actif == true &&
-		checkdistance(&perso->pperso, &craft->petabli, 250) == 1) //assez proche de l'etabli pour l'activer
+		checkdistance(&perso->pperso, &craft->petabli, 250) == 1) /*assez proche de l'etabli pour l'activer*/
     {
         craft->actif = false;
     }
     if (ui->dialogueactif == 1&&
-		checkdistance(&perso->pperso, &pnj->toumai, 250) == 1 && //assez distant de toumai pour qu'il se taise
+		checkdistance(&perso->pperso, &pnj->toumai, 250) == 1 && /*assez distant de toumai pour qu'il se taise*/
         pnj->toumaiParle == true)
     {
         pnj->toumaiParle = false;
         ui->dialogueactif = 0;
     }
-    if (checkdistance(&perso->pperso, &pnj->toumai, 3500) == 1 &&//assez loin pour signaler de s'arreter
+    if (checkdistance(&perso->pperso, &pnj->toumai, 3500) == 1 &&/*assez loin pour signaler de s'arreter*/
         ui->distanceprevenu == false)
     {
         ui->distanceprevenu = true;
         ui->ttextedialogue = fenetredialogue(systeme->screenw*0.4, systeme->screenh*0.8, &ui->pdialogue, &ui->ptextedialogue, "stop !\n il n'y rien a voir ici pour l'instant.\n\n\n\n\n\n\n", BLANC, systeme);
         ui->dialogueactif = 1;
     }
-    else if (checkdistance(&perso->pperso, &pnj->toumai, 3500) != 1)//asser proche pour réinitilaliser le conseil
+    else if (checkdistance(&perso->pperso, &pnj->toumai, 3500) != 1)/*asser proche pour réinitilaliser le conseil*/
     {
         ui->distanceprevenu = false;
     }
@@ -162,8 +162,8 @@ void gestionui (DIVERSsysteme *systeme, DIVERSui *ui, DIVERScraft *craft, PACKbo
 
 SDL_Texture *fenetredialogue(int x, int y, SDL_Rect* pdialogue, SDL_Rect* ptextedialogue, char texte[],
 							int couleur, DIVERSsysteme *systeme)
-{//pdialogue is the background and ptextedialogue is the text inside.
-//just set "x" and "y" and everything will be automaticaly set up.
+{/*pdialogue is the background and ptextedialogue is the text inside.*/
+/*just set "x" and "y" and everything will be automaticaly set up.*/
 
 	SDL_Texture *texture = NULL;
 	int lenght, high;
@@ -221,12 +221,12 @@ void testcoin(DIVERSsysteme *systeme, DIVERSui *ui, DIVERSchat *chat, DIVERSinve
 {
 	static int statcoinhaut = 0, statcoinbas = 0;
 
-	if (systeme->pp.x <= 5 && systeme->pp.y >= systeme->screenh-5)//							coin bas gauche
+	if (systeme->pp.x <= 5 && systeme->pp.y >= systeme->screenh-5)/*							coin bas gauche*/
 	{
 		if (statcoinbas != 1)
 		{
 			statcoinbas = 1;
-			if (ui->coinbas == 1)//bas inactif
+			if (ui->coinbas == 1)/*bas inactif*/
 			{
 				ui->coinbas = 0;
 				if (chat->saisiechat== 1)
@@ -236,7 +236,7 @@ void testcoin(DIVERSsysteme *systeme, DIVERSui *ui, DIVERSchat *chat, DIVERSinve
 				inventaire->actif = false;
 				chat->chatactif = false;
 			}
-			else//chat actif
+			else/*chat actif*/
 			{
 				ui->coinbas = 1;
 				if (chat->saisiechat == 2)
@@ -248,12 +248,12 @@ void testcoin(DIVERSsysteme *systeme, DIVERSui *ui, DIVERSchat *chat, DIVERSinve
 			}
 		}
 	}
-	else if (systeme->pp.x >= systeme->screenw-5 && systeme->pp.y >= systeme->screenh-5)//		coin bas droit
+	else if (systeme->pp.x >= systeme->screenw-5 && systeme->pp.y >= systeme->screenh-5)/*		coin bas droit*/
 	{
 		if (statcoinbas != 2)
 		{
 			statcoinbas = 2;
-			if (ui->coinbas == 2)//bas inactif
+			if (ui->coinbas == 2)/*bas inactif*/
 			{
 				ui->coinbas = 0;
 				if (chat->saisiechat== 1)
@@ -263,7 +263,7 @@ void testcoin(DIVERSsysteme *systeme, DIVERSui *ui, DIVERSchat *chat, DIVERSinve
 				inventaire->actif = false;
 				chat->chatactif = false;
 			}
-			else//inventaire actif
+			else/*inventaire actif*/
 			{
 				ui->coinbas = 2;
 				if (chat->saisiechat== 1)
@@ -276,7 +276,7 @@ void testcoin(DIVERSsysteme *systeme, DIVERSui *ui, DIVERSchat *chat, DIVERSinve
 		}
 
 	}
-	else if (systeme->pp.x <= 5 && systeme->pp.y <= 5)//						coin haut gauche
+	else if (systeme->pp.x <= 5 && systeme->pp.y <= 5)/*						coin haut gauche*/
 	{
 		if (statcoinhaut != 1)
 		{
@@ -293,13 +293,13 @@ void testcoin(DIVERSsysteme *systeme, DIVERSui *ui, DIVERSchat *chat, DIVERSinve
 			}
 		}
 	}
-	if (systeme->pp.x > 5 && systeme->pp.x < systeme->screenw-5)//								aucun coin
+	if (systeme->pp.x > 5 && systeme->pp.x < systeme->screenw-5)/*								aucun coin*/
 	{
 
 		statcoinbas = 0;
 		statcoinhaut = 0;
 	}
-	else if (systeme->pp.y < systeme->screenh-5 && systeme->pp.y > 5)//							aucun coin
+	else if (systeme->pp.y < systeme->screenh-5 && systeme->pp.y > 5)/*							aucun coin*/
 	{
 
 		statcoinbas = 0;
@@ -318,10 +318,10 @@ void afficherCRAFT(DIVERScraft *craft, DIVERSui *ui, PACKbouton *bouton, PACKobj
 				DIVERSinventaire *inventaire, DIVERSsysteme *systeme)
 {
 	int index;
-	//affichage du fond
+	/*affichage du fond*/
 	SDL_RenderCopy	(systeme->renderer, craft->BGcraft, NULL, &ui->pUIhaut);
 
-	//affichage des onglets
+	/*affichage des onglets*/
 	for (index = 0 ; index < 7 ; index++)
 	{
 		if (craft->bcraftactif == index)
@@ -337,7 +337,7 @@ void afficherCRAFT(DIVERScraft *craft, DIVERSui *ui, PACKbouton *bouton, PACKobj
 			SDL_RenderCopy	(systeme->renderer, bouton->bcraft[index].normal, NULL, &bouton->bcraft[index].position);
 		}
 	}
-	//affichage des plans
+	/*affichage des plans*/
 	for (index = 0 ; index < 10 ; index++)
 	{
 		if (craft->bcraftactif != -1)
@@ -359,7 +359,7 @@ void afficherCRAFT(DIVERScraft *craft, DIVERSui *ui, PACKbouton *bouton, PACKobj
 		}
 	}
 
-	//affichage de la composition du plan
+	/*affichage de la composition du plan*/
 	if (craft->planactif >= 0 && craft->planactif < 10)
 	{
 		for (index = 0 ; index < objet->PLANstuff[craft->bcraftactif][craft->planactif].compodifferente ; index++)
@@ -368,14 +368,14 @@ void afficherCRAFT(DIVERScraft *craft, DIVERSui *ui, PACKbouton *bouton, PACKobj
 				SDL_DestroyTexture(craft->tcomponame[index]);
 				if (inventaire->totalID[objet->PLANstuff[craft->bcraftactif][craft->planactif].compoID[index]] >= objet->PLANstuff[craft->bcraftactif][craft->planactif].compoNB[index])
 				{
-					//objet dispo
+					/*objet dispo*/
 					craft->tcomponame[index] = imprime (objet->PLANstuff[craft->bcraftactif][craft->planactif].textecompo[index],
 						systeme->screenw, VERT, systeme, NULL, NULL);
 					objet->PLANstuff[craft->bcraftactif][craft->planactif].compodispo[index] = true;
 				}
 				else
 				{
-					//objet pas dispo
+					/*objet pas dispo*/
 					craft->tcomponame[index] = imprime (objet->PLANstuff[craft->bcraftactif][craft->planactif].textecompo[index],
 						systeme->screenw, ROUGE, systeme, NULL, NULL);
 					objet->PLANstuff[craft->bcraftactif][craft->planactif].compodispo[index] = false;
@@ -384,38 +384,38 @@ void afficherCRAFT(DIVERScraft *craft, DIVERSui *ui, PACKbouton *bouton, PACKobj
 				SDL_RenderCopy(systeme->renderer, craft->tcomponame[index], NULL,  &craft->poscompocraft[index]);
 			}
 
-		//image resultat
+		/*image resultat*/
 		SDL_RenderCopy(systeme->renderer, objet->objet[objet->PLANstuff[craft->bcraftactif][craft->planactif].resultatID].texture, NULL, &craft->posimageresultatcraft);
 
-		//si l'objet possède des stats
+		/*si l'objet possède des stats*/
 		if(objet->objet[objet->PLANstuff[craft->bcraftactif][craft->planactif].resultatID].type == 1)
 		{
 			craft->pstats.y = systeme->screenh*0.160;
-			//stat defense
+			/*stat defense*/
 			if(objet->objet[objet->PLANstuff[craft->bcraftactif][craft->planactif].resultatID].def != 0)
 			{
 				craft->pstats.y += systeme->screenh*0.065;
 				SDL_RenderCopy(systeme->renderer, objet->objet[objet->PLANstuff[craft->bcraftactif][craft->planactif].resultatID].texturedef, NULL, &craft->pstats);
 			}
-			//stat life
+			/*stat life*/
 			if(objet->objet[objet->PLANstuff[craft->bcraftactif][craft->planactif].resultatID].life != 0)
 			{
 				craft->pstats.y += systeme->screenh*0.065;
 				SDL_RenderCopy(systeme->renderer, objet->objet[objet->PLANstuff[craft->bcraftactif][craft->planactif].resultatID].texturelife, NULL, &craft->pstats);
 			}
-			//stat regenlife
+			/*stat regenlife*/
 			if(objet->objet[objet->PLANstuff[craft->bcraftactif][craft->planactif].resultatID].regenlife != 0)
 			{
 				craft->pstats.y += systeme->screenh*0.065;
 				SDL_RenderCopy(systeme->renderer, objet->objet[objet->PLANstuff[craft->bcraftactif][craft->planactif].resultatID].textureregenlife, NULL, &craft->pstats);
 			}
-			//stat force
+			/*stat force*/
 			if(objet->objet[objet->PLANstuff[craft->bcraftactif][craft->planactif].resultatID].force != 0)
 			{
 				craft->pstats.y += systeme->screenh*0.065;
 				SDL_RenderCopy(systeme->renderer, objet->objet[objet->PLANstuff[craft->bcraftactif][craft->planactif].resultatID].textureforce, NULL, &craft->pstats);
 			}
-			//stat portée
+			/*stat portée*/
 			if(objet->objet[objet->PLANstuff[craft->bcraftactif][craft->planactif].resultatID].portee != 0)
 			{
 				craft->pstats.y += systeme->screenh*0.065;
@@ -448,24 +448,24 @@ void afficherINVENTAIRE(DIVERSinventaire *inventaire, DIVERSui *ui, PACKobjet *o
 {
 	int index;
 	char snbobjet[4];
-	//background
+	/*background*/
 	SDL_RenderCopy	(systeme->renderer, inventaire->BGinventaire, NULL, &ui->pUIbas);
-	//sacs
+	/*sacs*/
 	SDL_RenderCopy	(systeme->renderer, inventaire->tsacinventaire, NULL, &inventaire->psac);
-	//pour chaques cases
+	/*pour chaques cases*/
 	for (index = 0 ; index < TAILLESAC ; index++)
 	{
-		//la case
+		/*la case*/
 		SDL_RenderCopy	(systeme->renderer, inventaire->tcasesac, NULL, &inventaire->pcaseinventaire[index]);
-		//si la case contient un objet
+		/*si la case contient un objet*/
 		if(objet->sac1[index].NBobjet > 0 && objet->sac1[index].IDobjet > -1)
 		{
-			//image de l'objet
+			/*image de l'objet*/
 			SDL_RenderCopy	(systeme->renderer, objet->objet[objet->sac1[index].IDobjet].texture, NULL, &inventaire->pcaseinventaire[index]);
-			//si il y a plus d'un objet
+			/*si il y a plus d'un objet*/
 			if (objet->sac1[index].NBobjet > 1)
 			{
-				//si le nombre d'objet est égale au nombre maximum empilable
+				/*si le nombre d'objet est égale au nombre maximum empilable*/
 				if (objet->sac1[index].NBobjet == objet->objet[objet->sac1[index].IDobjet].empilage)
 				{
 					SDL_RenderCopy	(systeme->renderer, objet->objet[objet->sac1[index].IDobjet].texturenombre, NULL, &inventaire->pnbobjet[index]);
@@ -491,30 +491,30 @@ void afficherUI(bool enligne, DIVERSui *ui, PACKbouton *bouton, DIVERStemps *tem
                 DIVERSsysteme *systeme, PACKrecompense *recompense, PACKobjet *objet)
 {
 	int index;
-	//coins
+	/*coins*/
 	SDL_RenderCopy	(systeme->renderer, chat->Uichat, NULL, &chat->puichat);
 	SDL_RenderCopy	(systeme->renderer, inventaire->Uiinventaire, NULL, &inventaire->puiinventaire);
 	SDL_RenderCopy	(systeme->renderer, ui->uimenu, NULL, &ui->puimenu);
 
 	if (ui->menuactif == true)
 	{
-		//BackGround
+		/*BackGround*/
 		SDL_RenderCopy	(systeme->renderer, ui->BGmenu, NULL, &ui->pUIhaut);
-		//infos
-		SDL_RenderCopy	(systeme->renderer, temps->ttemps, NULL, &temps->pttemps);//temps
-		SDL_RenderCopy	(systeme->renderer, temps->tfps, NULL, &temps->ptFps);//fps
+		/*infos*/
+		SDL_RenderCopy	(systeme->renderer, temps->ttemps, NULL, &temps->pttemps);/*temps*/
+		SDL_RenderCopy	(systeme->renderer, temps->tfps, NULL, &temps->ptFps);/*fps*/
 
 		perso->pstats.y = systeme->screenh*0.1;
-		SDL_RenderCopy	(systeme->renderer, perso->tlife, NULL, &perso->pstats);//vie
+		SDL_RenderCopy	(systeme->renderer, perso->tlife, NULL, &perso->pstats);/*vie*/
 		perso->pstats.y += perso->pstats.h;
-		SDL_RenderCopy	(systeme->renderer, perso->tdefense, NULL, &perso->pstats);//defense
+		SDL_RenderCopy	(systeme->renderer, perso->tdefense, NULL, &perso->pstats);/*defense*/
 		perso->pstats.y += perso->pstats.h;
-		SDL_RenderCopy	(systeme->renderer, perso->tregenlife, NULL, &perso->pstats);//regen life
+		SDL_RenderCopy	(systeme->renderer, perso->tregenlife, NULL, &perso->pstats);/*regen life*/
 		perso->pstats.y += perso->pstats.h;
-		SDL_RenderCopy	(systeme->renderer, perso->tforce, NULL, &perso->pstats);//force
+		SDL_RenderCopy	(systeme->renderer, perso->tforce, NULL, &perso->pstats);/*force*/
 		perso->pstats.y += perso->pstats.h;
-		SDL_RenderCopy	(systeme->renderer, perso->tportee, NULL, &perso->pstats);//portee
-		//désignation stuff
+		SDL_RenderCopy	(systeme->renderer, perso->tportee, NULL, &perso->pstats);/*portee*/
+		/*désignation stuff*/
 		for (index = 0 ; index < 7 ; index++)
 		{
 			SDL_RenderCopy	(systeme->renderer, inventaire->tcasesac2, NULL, &ui->pcasestuff[index]);
@@ -529,7 +529,7 @@ void afficherUI(bool enligne, DIVERSui *ui, PACKbouton *bouton, DIVERStemps *tem
 		}
 		for (index = 0 ; index < 7 ; index++)
 		{
-		//si pointeur dans case stuff
+		/*si pointeur dans case stuff*/
 			if (systeme->pp.x >= ui->pcasestuff[index].x
 				&& systeme->pp.x <= ui->pcasestuff[index].x + ui->pcasestuff[index].w
 				&& systeme->pp.y >= ui->pcasestuff[index].y
@@ -539,7 +539,7 @@ void afficherUI(bool enligne, DIVERSui *ui, PACKbouton *bouton, DIVERStemps *tem
 				afficherDETAIL(inventaire, objet, systeme, ui->casestuff[index].IDobjet);
 			}
 		}
-		//bouton quitter
+		/*bouton quitter*/
 		switch(bouton->BoutonQuitter.etat)
 		{
 		case 1:
@@ -552,13 +552,13 @@ void afficherUI(bool enligne, DIVERSui *ui, PACKbouton *bouton, DIVERStemps *tem
 			SDL_RenderCopy	(systeme->renderer, bouton->BoutonQuitter.normal, NULL, &bouton->BoutonQuitter.position);
 			break;
 		}
-		//lumieres
+		/*lumieres*/
 		if(enligne == false)	{SDL_RenderCopy(systeme->renderer, ui->lumiereoff, NULL, &ui->plumiere);}
 		else	{SDL_RenderCopy(systeme->renderer, ui->lumiereon, NULL, &ui->plumiere);}
 	}
 
 
-//dialogue
+/*dialogue*/
 	if (ui->dialogueactif == 1)
 	{
 		SDL_RenderCopy	(systeme->renderer, ui->tdialogue, NULL, &ui->pdialogue);
@@ -594,7 +594,7 @@ void afficherMAP(DIVERSmap *carte, DIVERSsysteme *systeme, DIVERScraft *craft)
 	SDL_RenderCopy(systeme->renderer, craft->tetabli, NULL, &craft->petabli);
 
 
-	//affichage de la grille de colision
+	/*affichage de la grille de colision*/
     /*
 	int i, j;
 	SDL_Rect pos;
@@ -618,7 +618,7 @@ void afficherMAP(DIVERSmap *carte, DIVERSsysteme *systeme, DIVERScraft *craft)
 void afficherPNJ(PERSO *perso, PACKpnj *pnj, DIVERSsysteme *systeme)
 {
 	SDL_RenderCopyEx(systeme->renderer, perso->tperso, &perso->spriteup[0], &pnj->toumai, -90,NULL, SDL_FLIP_NONE);
-	//SDL_RenderCopyEx(systeme->renderer, perso->cheveuxblanc, NULL, &pnj->toumai, -90,NULL, SDL_FLIP_NONE);
+	/*SDL_RenderCopyEx(systeme->renderer, perso->cheveuxblanc, NULL, &pnj->toumai, -90,NULL, SDL_FLIP_NONE);*/
 }
 
 void afficherMOB(PACKmonstre *monstre, DIVERSsysteme *systeme)
@@ -636,7 +636,7 @@ void afficherMOB(PACKmonstre *monstre, DIVERSsysteme *systeme)
 void afficherJOUEURS(PERSO *perso, DIVERSdeplacement *deplacement, DIVERSsysteme *systeme, typeFORthreads *online)
 {
     int index, calcul;
-	//joueur client
+	/*joueur client*/
 	if (deplacement->direction.direction == -1)
 	{
 		calcul = 180+(45 * deplacement->direction.olddirection);
@@ -652,7 +652,7 @@ void afficherJOUEURS(PERSO *perso, DIVERSdeplacement *deplacement, DIVERSsysteme
 	SDL_RenderCopy(systeme->renderer, perso->tpseudo, NULL, &perso->ptpseudo);
 
 
-	//joueurs en ligne
+	/*joueurs en ligne*/
 	for(index = 0 ; index < MAX_JOUEURS ; index++)
 	{
 		if (online->joueurs[index].enligne == 1)
@@ -723,14 +723,14 @@ void afficherDETAIL(DIVERSinventaire *inventaire, PACKobjet *objet, DIVERSsystem
 
 	int largeurmax = objet->objet[id].LARGEURnom;
 
-	if(largeurmax < inventaire->LARGEURaideclicdroit)//clic droit
+	if(largeurmax < inventaire->LARGEURaideclicdroit)/*clic droit*/
 	{
 		largeurmax = inventaire->LARGEURaideclicdroit;
 	}
 	if(objet->objet[id].type == 1)
 	{
 		inventaire->pdetail.h += 10;
-		if(objet->objet[id].def > 0)//def
+		if(objet->objet[id].def > 0)/*def*/
 		{
 			if(largeurmax < objet->objet[id].LARGEURdef)
 			{
@@ -738,7 +738,7 @@ void afficherDETAIL(DIVERSinventaire *inventaire, PACKobjet *objet, DIVERSsystem
 			}
 			inventaire->pdetail.h += 40;
 		}
-		if(objet->objet[id].life > 0)//life
+		if(objet->objet[id].life > 0)/*life*/
 		{
 			if(largeurmax < objet->objet[id].LARGEURlife)
 			{
@@ -746,7 +746,7 @@ void afficherDETAIL(DIVERSinventaire *inventaire, PACKobjet *objet, DIVERSsystem
 			}
 			inventaire->pdetail.h += 40;
 		}
-		if(objet->objet[id].regenlife > 0)//regenlife
+		if(objet->objet[id].regenlife > 0)/*regenlife*/
 		{
 			if(largeurmax < objet->objet[id].LARGEURregenlife)
 			{
@@ -754,7 +754,7 @@ void afficherDETAIL(DIVERSinventaire *inventaire, PACKobjet *objet, DIVERSsystem
 			}
 			inventaire->pdetail.h += 40;
 		}
-		if(objet->objet[id].force > 0)//force
+		if(objet->objet[id].force > 0)/*force*/
 		{
 			if(largeurmax < objet->objet[id].LARGEURforce)
 			{
@@ -762,7 +762,7 @@ void afficherDETAIL(DIVERSinventaire *inventaire, PACKobjet *objet, DIVERSsystem
 			}
 			inventaire->pdetail.h += 40;
 		}
-		if(objet->objet[id].portee > 0)//portee
+		if(objet->objet[id].portee > 0)/*portee*/
 		{
 			if(largeurmax < objet->objet[id].LARGEURportee)
 			{
@@ -774,20 +774,20 @@ void afficherDETAIL(DIVERSinventaire *inventaire, PACKobjet *objet, DIVERSsystem
 	inventaire->pdetail.w = largeurmax;
 
 
-//ajustement bas ecran
+/*ajustement bas ecran*/
 	if (inventaire->pdetail.y + inventaire->pdetail.h > systeme->screenh)
 	{
 		inventaire->pdetail.y = systeme->screenh - inventaire->pdetail.h;
 	}
-//ajustement droite ecran
+/*ajustement droite ecran*/
 	if (inventaire->pdetail.x + inventaire->pdetail.w > systeme->screenw)
 	{
 		inventaire->pdetail.x = systeme->screenw - inventaire->pdetail.w -20;
 	}
 
-//affichage
+/*affichage*/
 	inventaire->pdetail.w += 20;
-	SDL_RenderCopy	(systeme->renderer, systeme->BG, NULL, &inventaire->pdetail);//BackGround
+	SDL_RenderCopy	(systeme->renderer, systeme->BG, NULL, &inventaire->pdetail);/*BackGround*/
 
 	inventaire->pdetail.x += 10;
 	inventaire->pdetail.y += 5;
@@ -796,50 +796,50 @@ void afficherDETAIL(DIVERSinventaire *inventaire, PACKobjet *objet, DIVERSsystem
 
 	if(objet->objet[id].type == 1)
 	{
-		SDL_RenderCopy	(systeme->renderer, objet->objet[id].texturenom[2], NULL, &inventaire->pdetail);//nom
+		SDL_RenderCopy	(systeme->renderer, objet->objet[id].texturenom[2], NULL, &inventaire->pdetail);/*nom*/
 		if (objet->objet[id].def > 0)
 		{
 			inventaire->pdetail.y += 40;
 			inventaire->pdetail.h = 40;
 			inventaire->pdetail.w = objet->objet[id].LARGEURdef;
-			SDL_RenderCopy	(systeme->renderer, objet->objet[id].texturedef, NULL, &inventaire->pdetail);//defense
+			SDL_RenderCopy	(systeme->renderer, objet->objet[id].texturedef, NULL, &inventaire->pdetail);/*defense*/
 		}
 		if (objet->objet[id].life > 0)
 		{
 			inventaire->pdetail.y += 40;
 			inventaire->pdetail.h = 40;
 			inventaire->pdetail.w = objet->objet[id].LARGEURlife;
-			SDL_RenderCopy	(systeme->renderer, objet->objet[id].texturelife, NULL, &inventaire->pdetail);//life
+			SDL_RenderCopy	(systeme->renderer, objet->objet[id].texturelife, NULL, &inventaire->pdetail);/*life*/
 		}
 		if (objet->objet[id].regenlife > 0)
 		{
 			inventaire->pdetail.y += 40;
 			inventaire->pdetail.h = 40;
 			inventaire->pdetail.w = objet->objet[id].LARGEURregenlife;
-			SDL_RenderCopy	(systeme->renderer, objet->objet[id].textureregenlife, NULL, &inventaire->pdetail);//regenlife
+			SDL_RenderCopy	(systeme->renderer, objet->objet[id].textureregenlife, NULL, &inventaire->pdetail);/*regenlife*/
 		}
 		if (objet->objet[id].force > 0)
 		{
 			inventaire->pdetail.y += 40;
 			inventaire->pdetail.h = 40;
 			inventaire->pdetail.w = objet->objet[id].LARGEURforce;
-			SDL_RenderCopy	(systeme->renderer, objet->objet[id].textureforce, NULL, &inventaire->pdetail);//force
+			SDL_RenderCopy	(systeme->renderer, objet->objet[id].textureforce, NULL, &inventaire->pdetail);/*force*/
 		}
 		if (objet->objet[id].portee > 0)
 		{
 			inventaire->pdetail.y += 40;
 			inventaire->pdetail.h = 40;
 			inventaire->pdetail.w = objet->objet[id].LARGEURportee;
-			SDL_RenderCopy	(systeme->renderer, objet->objet[id].textureportee, NULL, &inventaire->pdetail);//portee
+			SDL_RenderCopy	(systeme->renderer, objet->objet[id].textureportee, NULL, &inventaire->pdetail);/*portee*/
 		}
 		inventaire->pdetail.y += 35;
 		inventaire->pdetail.h = 30;
 		inventaire->pdetail.w = inventaire->LARGEURaideclicdroit;
-		SDL_RenderCopy	(systeme->renderer, inventaire->taideclicdroit, NULL, &inventaire->pdetail);//aide clic droit
+		SDL_RenderCopy	(systeme->renderer, inventaire->taideclicdroit, NULL, &inventaire->pdetail);/*aide clic droit*/
 	}
 	else
 	{
-		SDL_RenderCopy	(systeme->renderer, objet->objet[id].texturenom[0], NULL, &inventaire->pdetail);//nom
+		SDL_RenderCopy	(systeme->renderer, objet->objet[id].texturenom[0], NULL, &inventaire->pdetail);/*nom*/
 	}
 }
 

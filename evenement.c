@@ -164,7 +164,7 @@ int boucleeventlogin (struct typelogin *loginstore, DIVERSsysteme *systeme)
 	int y = loginstore->ppointeur.y;
 
 	if (colisionbox(&loginstore->ppointeur, &loginstore->option.pos, true) &&
-		loginstore->etatoption != B_CLIQUER && loginstore->optionactif == 0)//								option
+		loginstore->etatoption != B_CLIQUER && loginstore->optionactif == 0)								/*option*/
 	{
 		loginstore->etatoption = B_SURVOLER;
 		loginstore->etatjouer = B_NORMAL;
@@ -173,7 +173,7 @@ int boucleeventlogin (struct typelogin *loginstore, DIVERSsysteme *systeme)
 		loginstore->etatarcade = B_NORMAL;
 	}
 	else if (colisionbox(&loginstore->ppointeur, &loginstore->jouer.pos, true) &&
-			loginstore->etatjouer != B_CLIQUER && loginstore->optionactif == 0)//							jouer
+			loginstore->etatjouer != B_CLIQUER && loginstore->optionactif == 0)							/*play*/
 	{
 		loginstore->etatoption = B_NORMAL;
 		loginstore->etatjouer = B_SURVOLER;
@@ -182,7 +182,7 @@ int boucleeventlogin (struct typelogin *loginstore, DIVERSsysteme *systeme)
 		loginstore->etatarcade = B_NORMAL;
 	}
 	else if (colisionbox(&loginstore->ppointeur, &loginstore->creer.pos, true) &&
-			loginstore->etatcreer != B_CLIQUER && loginstore->optionactif == 0)//							creer
+			loginstore->etatcreer != B_CLIQUER && loginstore->optionactif == 0)							/*create*/
 	{
 		loginstore->etatoption = B_NORMAL;
 		loginstore->etatjouer = B_NORMAL;
@@ -191,7 +191,7 @@ int boucleeventlogin (struct typelogin *loginstore, DIVERSsysteme *systeme)
 		loginstore->etatarcade = B_NORMAL;
 	}
 	else if (colisionbox(&loginstore->ppointeur, &loginstore->quitter.pos, true) &&
-			loginstore->etatquitter != B_CLIQUER && loginstore->optionactif == 0)//							quitter
+			loginstore->etatquitter != B_CLIQUER && loginstore->optionactif == 0)                           /*quit*/
 	{
 		loginstore->etatoption = B_NORMAL;
 		loginstore->etatjouer = B_NORMAL;
@@ -200,7 +200,7 @@ int boucleeventlogin (struct typelogin *loginstore, DIVERSsysteme *systeme)
 		loginstore->etatarcade = B_NORMAL;
 	}
 	else if (colisionbox(&loginstore->ppointeur, &loginstore->arcade.pos, true) &&
-			loginstore->etatarcade != B_CLIQUER && loginstore->optionactif == 0)//							arcade
+			loginstore->etatarcade != B_CLIQUER && loginstore->optionactif == 0)							/*arcade*/
 	{
 		loginstore->etatoption = B_NORMAL;
 		loginstore->etatjouer = B_NORMAL;
@@ -245,7 +245,7 @@ int boucleeventlogin (struct typelogin *loginstore, DIVERSsysteme *systeme)
 		if (loginstore->etatqwerty != B_CLIQUER){loginstore->etatqwerty = B_NORMAL;}
 	}
 
-	//blocking impossible button
+	/*blocking impossible button*/
 	if(loginstore->longpseudo <= 0 || loginstore->longmdp <= 0)
 	{
 		loginstore->etatjouer = B_IMPOSSIBLE;
@@ -371,38 +371,38 @@ int boucleeventlogin (struct typelogin *loginstore, DIVERSsysteme *systeme)
 				}
 				break;
 			case SDL_MOUSEBUTTONDOWN:
-				if (colisionbox(&loginstore->ppointeur, &loginstore->option.pos, true))//					option
+				if (colisionbox(&loginstore->ppointeur, &loginstore->option.pos, true))					/*option*/
 				{
 					loginstore->etatoption = B_CLIQUER;
 				}
-				else if (colisionbox(&loginstore->ppointeur, &loginstore->jouer.pos, true))//						jouer
+				else if (colisionbox(&loginstore->ppointeur, &loginstore->jouer.pos, true))						/*play*/
 				{
-					//blocking impossible button
+					/*blocking impossible button*/
 					if(loginstore->longpseudo > 0 && loginstore->longmdp > 0)
 					{
 						loginstore->etatjouer = B_CLIQUER;
 					}
 				}
-				else if (colisionbox(&loginstore->ppointeur, &loginstore->creer.pos, true))//						creer
+				else if (colisionbox(&loginstore->ppointeur, &loginstore->creer.pos, true))						/*create*/
 				{
-					//blocking impossible button
+					/*blocking impossible button*/
 					if(loginstore->longpseudo > 0 && loginstore->longmdp > 0)
 					{
 						loginstore->etatcreer = B_CLIQUER;
 					}
 				}
-				else if (colisionbox(&loginstore->ppointeur, &loginstore->quitter.pos, true))//						quitter
+				else if (colisionbox(&loginstore->ppointeur, &loginstore->quitter.pos, true))						/*quit*/
 				{
 					loginstore->etatquitter = B_CLIQUER;
 				}
-				else if (colisionbox(&loginstore->ppointeur, &loginstore->arcade.pos, true))//						arcade
+				else if (colisionbox(&loginstore->ppointeur, &loginstore->arcade.pos, true))						/*arcade*/
 				{
 					loginstore->etatarcade = B_CLIQUER;
 				}
 
 				if ( loginstore->optionactif == 1 && colisionbox(&loginstore->ppointeur, &loginstore->azerty.pos, true))
 				{
-					//azerty
+					/*azerty*/
 					loginstore->etatazerty = B_CLIQUER;
 					loginstore->etatqwerty = B_NORMAL;
 					loginstore->etatqwertz = B_NORMAL;
@@ -410,7 +410,7 @@ int boucleeventlogin (struct typelogin *loginstore, DIVERSsysteme *systeme)
 				}
 				else if ( loginstore->optionactif == 1 && colisionbox(&loginstore->ppointeur, &loginstore->qwerty.pos, true))
 				{
-					//qwerty
+					/*qwerty*/
 					loginstore->etatqwertz = B_NORMAL;
 					loginstore->etatazerty = B_NORMAL;
 					loginstore->etatqwerty = B_CLIQUER;
@@ -418,7 +418,7 @@ int boucleeventlogin (struct typelogin *loginstore, DIVERSsysteme *systeme)
 				}
 				else if ( loginstore->optionactif == 1 && colisionbox(&loginstore->ppointeur, &loginstore->qwertz.pos, true))
 				{
-					//qwertz
+					/*qwertz*/
 					loginstore->etatqwerty = B_NORMAL;
 					loginstore->etatazerty = B_NORMAL;
 					loginstore->etatqwertz = B_CLIQUER;
@@ -462,18 +462,18 @@ int boucleeventlogin (struct typelogin *loginstore, DIVERSsysteme *systeme)
 						loginstore->saisiemdp = false;
 					}
 
-					//CAUTION DON'T USE "1"
-					if (colisionbox(&loginstore->ppointeur, &loginstore->option.pos, true))//			option
+					/*CAUTION DON'T USE "1"*/
+					if (colisionbox(&loginstore->ppointeur, &loginstore->option.pos, true)) 			/*option*/
 					{return 4;}
 					else if (colisionbox(&loginstore->ppointeur, &loginstore->jouer.pos, true) &&
-                        loginstore->longpseudo > 0 && loginstore->longmdp > 0)//				        play
+                        loginstore->longpseudo > 0 && loginstore->longmdp > 0)				            /*play*/
 					{return 2;}
 					else if (colisionbox(&loginstore->ppointeur, &loginstore->creer.pos, true) &&
-                        loginstore->longpseudo > 0 && loginstore->longmdp > 0)//					    create
+                        loginstore->longpseudo > 0 && loginstore->longmdp > 0)					        /*create*/
 					{return 3;}
-					else if (colisionbox(&loginstore->ppointeur, &loginstore->quitter.pos, true))//		quit
+					else if (colisionbox(&loginstore->ppointeur, &loginstore->quitter.pos, true))		/*quit*/
 					{return 0;}
-					else if (colisionbox(&loginstore->ppointeur, &loginstore->arcade.pos, true))//		arcade
+					else if (colisionbox(&loginstore->ppointeur, &loginstore->arcade.pos, true))		/*arcade*/
 					{return 5;}
 					}
 				break;
@@ -589,7 +589,7 @@ void eventmapsourisgaucheup(typeFORevent *FORevent)
 	FORevent->bouton->crafter.etat = 0;
 
 
-	//si dans le chat
+	/*if inside the chat*/
 	if (FORevent->ui->coinbas == 1)
 	{
 		if (FORevent->systeme->pp.y > FORevent->systeme->screenh-FORevent->chat->pchatactif.h)
@@ -601,13 +601,13 @@ void eventmapsourisgaucheup(typeFORevent *FORevent)
 			FORevent->chat->saisiechat = 0;
 		}
 	}
-	//si dans l'inventaire
+	/*if inside the inventory*/
 	else if (FORevent->ui->coinbas == 2)
 	{
 		checkinventaire(FORevent->objet, FORevent->inventaire);
-		//case sous pointeur
+		/*box under cursor*/
 		FORevent->inventaire->caseupgauche = calculclicinventaire(&FORevent->systeme->pp.y, &FORevent->systeme->pp.x, FORevent->systeme);
-		//si dans une case de l'inventaire
+		/*if inside a box of the inventory*/
 		if (FORevent->inventaire->caseupgauche  >=0 && FORevent->inventaire->caseupgauche< TAILLESAC)
 		{
 			insertionnumero(FORevent->inventaire->casedowngauche, FORevent->objet->sac1, FORevent->inventaire->caseupgauche, &FORevent->objet->objetenmain, FORevent->objet->objet);
@@ -615,12 +615,12 @@ void eventmapsourisgaucheup(typeFORevent *FORevent)
 		}
 		FORevent->inventaire->casedowngauche = -1;
 	}
-	//si menu est ouvert
+	/*if menu open*/
 	if (FORevent->ui->coinhaut == 1)
 	{
 		for (index = 0 ; index < 7 ; index++)
 		{
-			//si dans une case de stuff
+			/*if inside a box of the stuff*/
 			if (FORevent->systeme->pp.x >= FORevent->ui->pcasestuff[index].x
 				&& FORevent->systeme->pp.x <= FORevent->ui->pcasestuff[index].x + FORevent->ui->pcasestuff[index].w
 				&& FORevent->systeme->pp.y >= FORevent->ui->pcasestuff[index].y
@@ -632,7 +632,7 @@ void eventmapsourisgaucheup(typeFORevent *FORevent)
 				break;
 			}
 		}
-		//test bouton quitter
+		/*test quit button*/
 		if (FORevent->systeme->pp.x >= FORevent->systeme->screenw*0.7 && FORevent->systeme->pp.x <= (FORevent->systeme->screenw*0.7)+(FORevent->systeme->screenw*0.04) &&
 			FORevent->systeme->pp.y >= FORevent->systeme->screenh*0.3 && FORevent->systeme->pp.y <= (FORevent->systeme->screenh*0.3)+(FORevent->systeme->screenw*0.04) &&
 			FORevent->bouton->BoutonQuitter.etat == 2)
@@ -644,13 +644,13 @@ void eventmapsourisgaucheup(typeFORevent *FORevent)
 			FORevent->bouton->BoutonQuitter.etat = 0;
 		}
 	}
-	//si inteface de craft ouvert
+	/*if craft menu open*/
 	else if (FORevent->craft->actif == true)
 	{
 		checkinventaire(FORevent->objet, FORevent->inventaire);
 
 
-		//bouton du bas
+		/*bottom button*/
 
 		if (FORevent->systeme->pp.y >= FORevent->systeme->screenh*0.467 &&
 			FORevent->systeme->pp.y <= (FORevent->systeme->screenh*0.467)+(FORevent->systeme->screenh*0.03))
@@ -668,13 +668,13 @@ void eventmapsourisgaucheup(typeFORevent *FORevent)
 		}
 
 
-		//si souris en haut a gauche
+		/*si souris en haut a gauche*/
 		else if (FORevent->systeme->pp.y <= FORevent->systeme->screenh*0.5 && FORevent->systeme->pp.x <= FORevent->systeme->screenw*0.3)
 		{
-		    //initialisation
+		    /*initialisation*/
 		    FORevent->craft->planactif = -1;
 
-            //parcour des plans
+            /*parcour des plans*/
 		    for(index = 0 ; index < 10 ; index++)
             {
                 if (FORevent->systeme->pp.x >= FORevent->systeme->screenw*0.007 &&
@@ -682,16 +682,16 @@ void eventmapsourisgaucheup(typeFORevent *FORevent)
                     FORevent->systeme->pp.y >= (FORevent->systeme->screenh*0.04)*index &&
                     FORevent->systeme->pp.y <= (FORevent->systeme->screenh*0.04)*(index+1))
                 {
-                    //si un plan est present a cet emplacement
+                    /*si un plan est present a cet emplacement*/
                     if(FORevent->objet->PLANstuff[FORevent->craft->bcraftactif][index].resultatID != -1)
                     {
-                        //j'indique le plan actif
+                        /*j'indique le plan actif*/
                         FORevent->craft->planactif = index;
                     }
                 }
             }
 		}
-		else//souris en haut a droite
+		else/*souris en haut a droite*/
 		{
 			if (FORevent->systeme->pp.x >= FORevent->systeme->screenw*0.622 && FORevent->systeme->pp.x <= FORevent->systeme->screenw*0.732 &&
 				FORevent->systeme->pp.y >= FORevent->systeme->screenh*0.39 && FORevent->systeme->pp.y <= FORevent->systeme->screenh*0.456)
@@ -805,7 +805,7 @@ void eventmapsourisdroiteup(typeFORevent *FORevent)
 		{
 			int id = FORevent->objet->sac1[FORevent->inventaire->caseupdroit].IDobjet;
 			int bodypart = FORevent->objet->objet[id].bodypart;
-			//si objet type equipement
+			/*si objet type equipement*/
 			if (FORevent->objet->objet[id].type == 1)
 			{
 				if(FORevent->ui->casestuff[bodypart].IDobjet != -1)
@@ -833,19 +833,19 @@ void eventmapsourisdroitedown(typeFORevent *FORevent)
 
 void sourisactionzone(typeFORevent *FORevent)
 {
-	//si on ne clique pas sur une UI
+	/*si on ne clique pas sur une UI*/
 	if ((FORevent->ui->coinbas == 0 && FORevent->systeme->pp.y > FORevent->systeme->screenh/2) ||
 			(FORevent->ui->coinhaut == 0 && FORevent->systeme->pp.y < FORevent->systeme->screenh/2) ||
 			(FORevent->ui->coinbas == 0 && FORevent->ui->coinhaut == 0))
 	{
-		//position toumaï
+		/*position toumaï*/
 		if (colisionbox(&FORevent->systeme->pp, &FORevent->pnj->toumai, true) &&
 				checkdistance(&FORevent->perso->pperso, &FORevent->pnj->toumai, 300) == -1)
 		{
 			FORevent->ui->lancedialogue = 2;
 			FORevent->pnj->toumaiParle = true;
 		}
-		//position etabli
+		/*position etabli*/
 		else if (colisionbox(&FORevent->systeme->pp, &FORevent->craft->petabli, true) &&
 				checkdistance(&FORevent->perso->pperso, &FORevent->craft->petabli, 250) == -1)
 		{

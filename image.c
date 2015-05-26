@@ -191,7 +191,7 @@ void ANIMmort (DIVERSsysteme *systeme)
 
 	SDL_RenderCopy(systeme->renderer, systeme->BGmort, NULL, &pecran);
     SDL_RenderPresent(systeme->renderer);
-    #if FASTLOG == 0 //pour moi, pour ne pas attendre
+    #if FASTLOG == 0 /*pour moi, pour ne pas attendre*/
     SDL_Delay(1500);
     #endif
 }

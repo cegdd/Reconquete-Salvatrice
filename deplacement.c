@@ -193,7 +193,7 @@ void basgauche (PERSO *perso, int* x, int* y, DIVERSsysteme *systeme, int enmap)
     {
         if (perso->pperso.y <= (systeme->screenh-perso->pperso.h)/2)
         {
-            perso->pperso.y = perso->pperso.y + 5;   //bas
+            perso->pperso.y = perso->pperso.y + 5;   /*down*/
         }
         else if (*y <= -9222 && perso->pperso.y <= systeme->screenh-perso->pperso.h)
         {
@@ -206,7 +206,7 @@ void basgauche (PERSO *perso, int* x, int* y, DIVERSsysteme *systeme, int enmap)
 
         if (perso->pperso.x >= (systeme->screenw-perso->pperso.w)/2)
         {
-            perso->pperso.x = perso->pperso.x - 5;   //gauche
+            perso->pperso.x = perso->pperso.x - 5;   /*left*/
         }
         else if (*x >= 0 && perso->pperso.x >= -10)
         {
@@ -251,7 +251,7 @@ void gauchehaut (PERSO *perso, int* x, int* y, DIVERSsysteme *systeme, int enmap
     {
         if (perso->pperso.y >= (systeme->screenh-perso->pperso.h)/2)
         {
-            perso->pperso.y = perso->pperso.y - 5;   //haut
+            perso->pperso.y = perso->pperso.y - 5;   /*up*/
         }
         else if (*y >= 0 && perso->pperso.y >= 10)
         {
@@ -264,7 +264,7 @@ void gauchehaut (PERSO *perso, int* x, int* y, DIVERSsysteme *systeme, int enmap
 
         if (perso->pperso.x >= (systeme->screenw-perso->pperso.w)/2)
         {
-            perso->pperso.x = perso->pperso.x - 5;   //gauche
+            perso->pperso.x = perso->pperso.x - 5;   /*left*/
         }
         else if (*x >= 0 && perso->pperso.x >= -10)
         {

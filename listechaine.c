@@ -35,7 +35,7 @@ void insertionsac(PACKobjet *packobjet, int id)
 
 void insertionnumero(int oldcase, EMPLACEMENT *sac, int lacase, EMPLACEMENT *objetenmain, CHOSE *objet)
 {
-	//si le même objet est déjà présent a cet emplacement
+	/*si le même objet est déjà présent a cet emplacement*/
 	if (sac[lacase].NBobjet > 0 && sac[lacase].IDobjet == objetenmain->IDobjet && sac[lacase].NBobjet < objet[objetenmain->IDobjet].empilage)
 	{
 		if (sac[lacase].NBobjet + objetenmain->NBobjet <= objet[objetenmain->IDobjet].empilage)
@@ -50,7 +50,7 @@ void insertionnumero(int oldcase, EMPLACEMENT *sac, int lacase, EMPLACEMENT *obj
 			objetenmain->NBobjet = objetenmain->NBobjet - dif;
 		}
 	}
-	//sinon si un objet différent est déjà présent a cet emplcement
+	/*sinon si un objet différent est déjà présent a cet emplcement*/
 	else if (sac[lacase].NBobjet > 0 && objetenmain->NBobjet > 0)
 	{
 		if (oldcase != -1)

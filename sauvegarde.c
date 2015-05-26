@@ -57,7 +57,7 @@ void chargersauvegarde(DIVERSsysteme *systeme)
 		schiffre[iligne] = '\0';
 		iligne = 0;
 		systeme->saveinventaire[0][i] = atoi(schiffre);
-		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+		/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 		caractere = fgetc(fichiersauvegarde);
 		while (caractere != '#')
 		{
@@ -82,16 +82,16 @@ void sauvegardetout(char sauvegarde[][50],SDL_Rect pmap, PERSO *perso, int tempt
 	sauvegarde[0][pseudolen] = '\0';
 	sprintf(nomfichier, "rs/sauvegarde/%s.RSCryptedSave", sauvegarde[0]);
 
-	sprintf(sauvegarde[0], "%s", sauvegarde[0]);		//pseudo
-	sprintf(sauvegarde[1], "%s", sauvegarde[1]);		//mdp
-	sprintf(sauvegarde[2], "%d", pmap.x);				//map en x
-	sprintf(sauvegarde[3], "%d", pmap.y);				//map en y
-	sprintf(sauvegarde[4], "%d", perso->pperso.x);			//perso en x
-	sprintf(sauvegarde[5], "%d", perso->pperso.y);			//perso en y
-	sprintf(sauvegarde[6], "%d", temptotal);			//temp total de jeu en seconde
-	sprintf(sauvegarde[7], "%d", (int)perso->life);				//quantité de vie
-	sprintf(sauvegarde[8], "%d", unuse);		//nombre de batmoule tuer.
-	sprintf(sauvegarde[9], "%d", tailledusac);		//taille des sacs
+	sprintf(sauvegarde[0], "%s", sauvegarde[0]);		/*pseudo*/
+	sprintf(sauvegarde[1], "%s", sauvegarde[1]);		/*mdp*/
+	sprintf(sauvegarde[2], "%d", pmap.x);				/*map en x*/
+	sprintf(sauvegarde[3], "%d", pmap.y);				/*map en y*/
+	sprintf(sauvegarde[4], "%d", perso->pperso.x);			/*perso en x*/
+	sprintf(sauvegarde[5], "%d", perso->pperso.y);			/*perso en y*/
+	sprintf(sauvegarde[6], "%d", temptotal);			/*temp total de jeu en seconde*/
+	sprintf(sauvegarde[7], "%d", (int)perso->life);				/*quantité de vie*/
+	sprintf(sauvegarde[8], "%d", unuse);		/*nombre de batmoule tuer.*/
+	sprintf(sauvegarde[9], "%d", tailledusac);		/*taille des sacs*/
 	for (index = 0 ; index < 7 ; index++)
 	{
 		sprintf(sauvegarde[index+10], "%d", ui->casestuff[index].IDobjet);

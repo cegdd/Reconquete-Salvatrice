@@ -32,7 +32,7 @@ void deplacementperso(SDL_Surface *mapnb[], PERSO *perso, DIRECTION *direction, 
 	}
 	else
 	{
-		//si perso dans l'écran
+		/*si perso dans l'écran*/
 		SDL_Rect ptemp;
 		ptemp.x = 0;
 		ptemp.y = 0;
@@ -58,13 +58,13 @@ void deplacementperso(SDL_Surface *mapnb[], PERSO *perso, DIRECTION *direction, 
 
 	if(autorisation == false)
 	{
-		//bas
+		/*down*/
 		if(direction->direction == DOWN && *y+perso->pperso.h >= systeme->screenh){cote[DOWN] = 3; cote[RIGHTDOWN] = 3; cote[DOWNLEFT] = 3;}
-		//droite
+		/*right*/
 		if(direction->direction == RIGHT && *x+perso->pperso.w >= systeme->screenw){cote[RIGHT] = 3; cote[UPRIGHT] = 3; cote[RIGHTDOWN] = 3;}
-		//haut
+		/*up*/
 		if(direction->direction == UP && *y < 0){cote[UP] = 3; cote[LEFTUP] = 3; cote[UPRIGHT] = 3;}
-		//gauche
+		/*left*/
 		if(direction->direction == LEFT && *x < 0){cote[LEFT] = 3; cote[LEFTUP] = 3; cote[DOWNLEFT] = 3;}
 
 		if(direction->direction == DOWNLEFT && *y+perso->pperso.h >= systeme->screenh){cote[DOWN] = 3; cote[RIGHTDOWN] = 3; cote[DOWNLEFT] = 3;}
@@ -151,14 +151,14 @@ void deplacementperso(SDL_Surface *mapnb[], PERSO *perso, DIRECTION *direction, 
 
 int colisionbox(SDL_Rect *A, SDL_Rect *B, bool pointeur)
 {
-	//si le pointeur de la souris(A) est dans la zone B
-	//test sur le coin haut/gauche de la zone A
+	/*if cursor of the mouse(A) is inside zone B
+	test on the upleft of zone A*/
 	if (pointeur == true &&
         A->x >= B->x && A->x <= B->x+B->w && A->y >= B->y && A->y <= B->y+B->h)
 	{
 		return 1;
 	}
-	//sinon si la zone A est dans la sone B
+	/*else if zone A is inside B*/
 	else if (pointeur == false &&
 		A->x+A->w >= B->x && A->x <= B->x+B->w && A->y+A->h >= B->y && A->y <= B->y+B->h)
 	{
@@ -172,12 +172,12 @@ bool colisionfromage(SDL_Rect *lanceur, SDL_Rect *recepteur, SDL_Rect *pixeltest
 
 	diff = (FindAngle(lanceur, recepteur)+180) - (FindAngle(lanceur, pixeltest)+180);
 
-	if (diff < 0) //si diff est négatif, on le passe en positif
+	if (diff < 0) /*if "diff" is negative, we switch him to positive*/
     {
         diff *= -1;
     }
 
-	if (diff <= 0 || diff >= marge/2) //si la différence est plus grande que la marge, nous retournons FAUX
+	if (diff <= 0 || diff >= marge/2) /*if the difference is bigger than the gap, we return FALSE*/
     {
         return false;
     }

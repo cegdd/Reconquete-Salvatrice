@@ -55,7 +55,7 @@ void* thread2(void  *data)
         }
         arg2[index2] = '\0';
 
-        if (id[0] == 'p')//========================================================>    p
+        if (id[0] == 'p')/*========================================================>    p*/
         {
             online->joueurs[intid].enligne = true;
             id[0] = '0';
@@ -64,7 +64,7 @@ void* thread2(void  *data)
             online->joueurs[intid].position.y = atoi(arg2);
 
         }
-        else if (id[0] == 'n')//========================================================>    n
+        else if (id[0] == 'n')/*========================================================>    n*/
         {
             id[0] = '0';
             intid = atoi(id);
@@ -73,13 +73,13 @@ void* thread2(void  *data)
 				online->systeme, NULL, NULL);
             online->joueurs[intid].enligne = true;
         }
-        else if (id[0] == 'w')//========================================================>    w
+        else if (id[0] == 'w')/*========================================================>    w*/
         {
             id[0] = '0';
             intid = atoi(id);
             online->joueurs[intid].enligne = false;
         }
-        else if (id[0] == 'c')//========================================================>    c
+        else if (id[0] == 'c')/*========================================================>    c*/
         {
             id[0] = '0';
             intid = atoi(id);
@@ -90,7 +90,7 @@ void* thread2(void  *data)
             recv(online->sock, chattemp[choix], len, 0);
             sprintf(online->chat.schat[choix], "%s : %s", online->joueurs[intid].pseudo, chattemp[choix]);
         }
-        else if (id[0] == 'q')//========================================================>    q
+        else if (id[0] == 'q')/*========================================================>    q*/
         {
             id[0] = '0';
             intid = atoi(id);

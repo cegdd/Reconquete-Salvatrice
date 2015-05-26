@@ -33,12 +33,12 @@
 #define BUFFER 25
 #define REGEN 2.5
 
-//combat
+/*combat*/
 #define NBcailloux 50
-#define PRECISIONcailloux 384 //nombre de calcul par tir
+#define PRECISIONcailloux 384 /*nombre de calcul par tir*/
 #define DEGATcailloux 10
-#define DEGATsubitCHOC 10.0  //6 a 10
-#define DEGATsubitDUREE 0.3  //0.8
+#define DEGATsubitCHOC 10.0  /*6 a 10*/
+#define DEGATsubitDUREE 0.3  /*0.8*/
 #define VITESSE 3
 #define LIMITEmobARCADE 512
 
@@ -46,15 +46,15 @@
 #define BTL_OBJ_TOOK -2
 #define BTL_OBJ_FLOOR 0
 
-enum{BTL_LOST, BTL_WON, BTL_LEAVED, BTL_RESTART};//for battle
-enum{ARME, TORSE, COU, DOS, PIED, TAILLE, TETE};//body area for item
-enum{RESSOURCE, EQUIPEMENT};//type of item
-enum{BLANC, ROUGE, GRIS, NOIR, VERT, BLEU};//text color
-enum{UP, UPRIGHT, RIGHT, RIGHTDOWN, DOWN, DOWNLEFT, LEFT, LEFTUP};//direction
-enum{UNUSED, GO, RUNNING, STOP};//projectil
-enum{ALIGN_RIGHT, ALIGN_LEFT, ALIGN_CENTER};//text
-enum{B_NORMAL, B_SURVOLER, B_CLIQUER, B_IMPOSSIBLE};//bouton
-enum{RAT_BLANC, RAT_VERT, RAT_JAUNE, RAT_ORANGE, RAT_ROUGE};//creature
+enum{BTL_LOST, BTL_WON, BTL_LEAVED, BTL_RESTART};/*for battle*/
+enum{ARME, TORSE, COU, DOS, PIED, TAILLE, TETE};/*body area for item*/
+enum{RESSOURCE, EQUIPEMENT};/*type of item*/
+enum{BLANC, ROUGE, GRIS, NOIR, VERT, BLEU};/*text color*/
+enum{UP, UPRIGHT, RIGHT, RIGHTDOWN, DOWN, DOWNLEFT, LEFT, LEFTUP};/*direction*/
+enum{UNUSED, GO, RUNNING, STOP};/*projectil*/
+enum{ALIGN_RIGHT, ALIGN_LEFT, ALIGN_CENTER};/*text*/
+enum{B_NORMAL, B_SURVOLER, B_CLIQUER, B_IMPOSSIBLE};/*bouton*/
+enum{RAT_BLANC, RAT_VERT, RAT_JAUNE, RAT_ORANGE, RAT_ROUGE};/*creature*/
 enum{ALIVE, DEAD};
 struct BARREVIE
 {
@@ -163,23 +163,23 @@ struct CREATURE
 };
 struct RAT
 {
-	//graphic
+	/*graphic*/
 	SDL_Texture *texture[5][3];
 	SDL_Rect position;
 
-	//general
+	/*general*/
 	char nom [48];
 	int etat;
 	bool Engaged;
 	File queue;
 	int ID;
 
-	//animation
+	/*animation*/
 	int indexanim;
 	int tempsanim;
 	int direction;
 
-	//loot
+	/*loot*/
 	int prctloot[LOOTMAX];
 	int maxloot[LOOTMAX];
 	int nombreloot;
@@ -523,7 +523,7 @@ struct typecombat
 {
 	struct BOUTON rejouer;
 	struct BOUTON quitter;
-    //char calque[1366][768];
+    /*char calque[1366][768];*/
 	struct CREATURE creature[LIMITEmobARCADE];
 	int premiercoup[LIMITEmobARCADE];
 

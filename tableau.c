@@ -42,7 +42,7 @@ int TotalTableauInt(int *ptrTableau, int nbcase)
 	return total;
 }
 
-void initinventaire(DIVERSinventaire *inventaire, DIVERSsysteme *systeme)//									inventaire
+void initinventaire(DIVERSinventaire *inventaire, DIVERSsysteme *systeme)/*									inventaire*/
 {
 	int index, rangerx = -1;
 	for (index = 0 ; index < TAILLESAC ; index++)
@@ -123,14 +123,14 @@ void initPLAN(int type, int index, PACKobjet *objet)
 	objet->PLANstuff[type][index].resultatNB = 0;
 }
 
-void initobjet(PACKobjet *objet, DIVERSsysteme *systeme, DIVERScraft *craft)//													objet
+void initobjet(PACKobjet *objet, DIVERSsysteme *systeme, DIVERScraft *craft)/*													objet*/
 {
 	char nom[128];
 	int index;
 
-	for(index = 0 ; index < 10 ; index++) { craft->planparonglets[index] = 0;}
+	for(index = 0 ; index <= 10 ; index++) { craft->planparonglets[index] = 0;}
 
-//******************* ARME *************************
+/******************** ARME **************************/
 	objet->PLANstuff[ARME][0].compodifferente = 0;
 	addcompo(ARME, 0, 7, 3, objet);
 	addcompo(ARME, 0, 0, 1, objet);
@@ -152,7 +152,7 @@ void initobjet(PACKobjet *objet, DIVERSsysteme *systeme, DIVERScraft *craft)//		
 	for(index = 3 ; index < 10 ; index++)   {initPLAN(ARME, index, objet);}
 
 
-//******************* TORSE *************************
+/******************** TORSE **************************/
 
 	objet->PLANstuff[TORSE][0].compodifferente = 0;
 	addcompo(TORSE, 0, 0, 30, objet);
@@ -161,7 +161,7 @@ void initobjet(PACKobjet *objet, DIVERSsysteme *systeme, DIVERScraft *craft)//		
 
 	for(index = 1 ; index < 10 ; index++)   {initPLAN(TORSE, index, objet);}
 
-//******************* COU *************************
+/******************** COU *************************/
 
 	objet->PLANstuff[COU][0].compodifferente = 0;
     addcompo(COU, 0, 0, 10, objet);
@@ -170,7 +170,7 @@ void initobjet(PACKobjet *objet, DIVERSsysteme *systeme, DIVERScraft *craft)//		
 
 	for(index = 1 ; index < 10 ; index++)   {initPLAN(COU, index, objet);}
 
-//******************* DOS *************************
+/******************** DOS *************************/
 
 	objet->PLANstuff[DOS][0].compodifferente = 0;
     addcompo(DOS, 0, 0, 25, objet);
@@ -185,7 +185,7 @@ void initobjet(PACKobjet *objet, DIVERSsysteme *systeme, DIVERScraft *craft)//		
 
 	for(index = 2 ; index < 10 ; index++)   {initPLAN(DOS, index, objet);}
 
-//******************* PIED *************************
+/******************** PIED *************************/
 
 	objet->PLANstuff[PIED][0].compodifferente = 0;
     addcompo(PIED, 0, 7, 4, objet);
@@ -195,7 +195,7 @@ void initobjet(PACKobjet *objet, DIVERSsysteme *systeme, DIVERScraft *craft)//		
 
 	for(index = 1 ; index < 10 ; index++)   {initPLAN(PIED, index, objet);}
 
-//******************* TAILLE *************************
+/******************** TAILLE *************************/
 
 	objet->PLANstuff[TAILLE][0].compodifferente = 0;
     addcompo(TAILLE, 0, 0, 13, objet);
@@ -205,7 +205,7 @@ void initobjet(PACKobjet *objet, DIVERSsysteme *systeme, DIVERScraft *craft)//		
 
 	for(index = 1 ; index < 10 ; index++)   {initPLAN(TAILLE, index, objet);}
 
-//******************* TETE ***********************
+/******************** TETE ***********************/
 
 	objet->PLANstuff[TETE][0].compodifferente = 0;
     addcompo(TETE, 0, 0, 7, objet);
@@ -215,7 +215,7 @@ void initobjet(PACKobjet *objet, DIVERSsysteme *systeme, DIVERScraft *craft)//		
 
 	for(index = 1 ; index < 10 ; index++)   {initPLAN(TETE, index, objet);}
 
-    //index * nom * empilage * type * def * life * force * portee * regenlife * bodypart
+    /*index * nom * empilage * type * def * life * force * portee * regenlife * bodypart*/
     createobjet(0, "peau des rats", 99, 0, RESSOURCE, 0, 0, 0, 0, -1, objet,craft);
     createobjet(1, "sandales", 1, EQUIPEMENT, 3, 10, 0, 0, 1, PIED, objet,craft);
     createobjet(2, "silex", 5, RESSOURCE, 0, 0, 0, 0, 0, -1, objet,craft);
@@ -292,7 +292,7 @@ void initobjet(PACKobjet *objet, DIVERSsysteme *systeme, DIVERScraft *craft)//		
 	}
 }
 
-void initbouton(PACKbouton *bouton, DIVERSsysteme *systeme)//												bouton
+void initbouton(PACKbouton *bouton, DIVERSsysteme *systeme)/*												bouton*/
 {
 	bouton->bcraft[0].normal = LoadingImage	    	("rs/ui/arme.png", 0, systeme);
 	bouton->bcraft[0].survoler = LoadingImage	    	("rs/ui/arme1.png", 0, systeme);
@@ -348,16 +348,16 @@ void initbouton(PACKbouton *bouton, DIVERSsysteme *systeme)//												bouton
 	bouton->crafter.etat = 0;
 }
 
-void initmonstre(PACKmonstre *monstre, DIVERSsysteme *systeme)//											monstre
+void initmonstre(PACKmonstre *monstre, DIVERSsysteme *systeme)/*											monstre*/
 {
 	int index;
 	monstre->rat[0].ID = 0;
 	monstre->rat[1].ID = 1;
 	monstre->rat[2].ID = 2;
 
-	monstre->rat[0].prctloot[0] = 100; //peau
-	monstre->rat[0].maxloot[0] = 1; //peau
-	monstre->rat[0].idloot[0] = 0; //peau
+	monstre->rat[0].prctloot[0] = 100; /*peau*/
+	monstre->rat[0].maxloot[0] = 1; /*peau*/
+	monstre->rat[0].idloot[0] = 0; /*peau*/
 	monstre->rat[0].nombreloot = 1;
 
 	initqueue(&monstre->rat[0].queue, 0);
@@ -365,7 +365,7 @@ void initmonstre(PACKmonstre *monstre, DIVERSsysteme *systeme)//											monst
 	initqueue(&monstre->rat[2].queue, 2);
 
 
-//rat
+/*rat*/
 	for (index = 0 ; index < 3 ; index++)
 	{
 		monstre->rat[index].position.w = systeme->screenw*0.0732;
@@ -400,7 +400,7 @@ void initmonstre(PACKmonstre *monstre, DIVERSsysteme *systeme)//											monst
 	}
 }
 
-void initperso(PERSO *perso, DIVERSsysteme *systeme)//														perso
+void initperso(PERSO *perso, DIVERSsysteme *systeme)/*														perso*/
 {
 	int index;
 	char string[10];
@@ -463,7 +463,7 @@ void initperso(PERSO *perso, DIVERSsysteme *systeme)//														perso
 	perso->pstats.w = systeme->screenw*0.28;
 	perso->pstats.h = systeme->screenh*0.05;
 
-	for (index = 0 ; index < 7 ; index++)//10->16
+	for (index = 0 ; index < 7 ; index++)/*10->16*/
 	{
 		perso->stuff[index] = 0;
 	}
@@ -479,7 +479,7 @@ void initperso(PERSO *perso, DIVERSsysteme *systeme)//														perso
 	perso->BarreDeVie = AddLifeBar(100, perso->pperso.w, systeme);
 }
 
-void initdeplacement(DIVERSdeplacement *deplacement, DIVERSsysteme *systeme)//								deplacement
+void initdeplacement(DIVERSdeplacement *deplacement, DIVERSsysteme *systeme)/*								deplacement*/
 {
 	int index;
 
@@ -499,7 +499,7 @@ void initdeplacement(DIVERSdeplacement *deplacement, DIVERSsysteme *systeme)//		
 	deplacement->y = atoi(systeme->sauvegarde[3]);
 }
 
-void inittemps(DIVERStemps *temps, DIVERSsysteme *systeme)//												temps
+void inittemps(DIVERStemps *temps, DIVERSsysteme *systeme)/*												temps*/
 {
 	temps->i = 0;
 	temps->tpact = 0;
@@ -528,7 +528,7 @@ void inittemps(DIVERStemps *temps, DIVERSsysteme *systeme)//												temps
 	temps->pttemps.h = systeme->screenh*0.05;
 }
 
-void initsystem(DIVERSsysteme *systeme)//																	systeme
+void initsystem(DIVERSsysteme *systeme)/*																	systeme*/
 {
 	int index;
 
@@ -577,7 +577,7 @@ void initsystem(DIVERSsysteme *systeme)//																	systeme
 	systeme->PixelCalque[index].x = 0;		systeme->PixelCalque[index].y = 25;
 }
 
-void initui(DIVERSui *ui, DIVERSsysteme *systeme)//															ui
+void initui(DIVERSui *ui, DIVERSsysteme *systeme)/*															ui*/
 {
 	int index;
 	ui->menuactif = false;
@@ -663,7 +663,7 @@ void initui(DIVERSui *ui, DIVERSsysteme *systeme)//															ui
 	ui->pcasestuff[6].h = systeme->screenh*0.1;
 }
 
-void initchat(DIVERSchat *chat, DIVERSsysteme *systeme)//													chat
+void initchat(DIVERSchat *chat, DIVERSsysteme *systeme)/*													chat*/
 {
 	int index;
 	chat->chatactif = false;
@@ -700,7 +700,7 @@ void initchat(DIVERSchat *chat, DIVERSsysteme *systeme)//													chat
 	chat->pbufferchat.h = chat->pchatactif.h;
 }
 
-void initcraft(DIVERScraft *craft, DIVERSsysteme *systeme)//												craft
+void initcraft(DIVERScraft *craft, DIVERSsysteme *systeme)/*												craft*/
 {
 	int index;
 	craft->actif = false;
@@ -753,7 +753,7 @@ void initcraft(DIVERScraft *craft, DIVERSsysteme *systeme)//												craft
 	craft->tetabli = LoadingImage			("rs/images/etabli.png", 0, systeme);
 }
 
-void initmap (DIVERSmap *carte, DIVERSsysteme *systeme, PERSO *perso)//										map
+void initmap (DIVERSmap *carte, DIVERSsysteme *systeme, PERSO *perso)/*										map*/
 {
 	int index, rangerx = -1, i, j, i2, j2, noir = 0;
 	Uint32 pixel = {0};
@@ -786,7 +786,7 @@ void initmap (DIVERSmap *carte, DIVERSsysteme *systeme, PERSO *perso)//									
 		SDL_LockSurface(carte->calque[index]);
 	}
 
-	//creation de la grille de colision
+	/*creation de la grille de colision*/
 	for (i = 0 ; i < 200 ; i++)
 	{
 		for (j = 0 ; j < 400 ; j++)
@@ -817,14 +817,14 @@ void initmap (DIVERSmap *carte, DIVERSsysteme *systeme, PERSO *perso)//									
 
 }
 
-void initpnj (PACKpnj *pnj)//																				pnj
+void initpnj (PACKpnj *pnj)/*																				pnj*/
 {
 	pnj->toumai.w = 68;
 	pnj->toumai.h = 48;
 	pnj->toumaiParle = false;
 }
 
-void initrecompense (PACKrecompense *recompense, DIVERSsysteme *systeme)//									recompense
+void initrecompense (PACKrecompense *recompense, DIVERSsysteme *systeme)/*									recompense*/
 {
 	int index;
 	for (index = 0 ; index < LOOTMAX ; index++)
@@ -950,7 +950,7 @@ void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, struct D
 	direction->direction = 0;
 	direction->olddirection = 0;
 
-	BTLstr->NBlootsol = rand()%5;  //max déclaré 64
+	BTLstr->NBlootsol = rand()%5;  /*max déclaré 64*/
     #if BATTLE_LOG == 1
 	printf("20%%\n");
 	#endif
@@ -963,8 +963,8 @@ void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, struct D
         else
         {BTLstr->IDlootsol[index] = 2;}
 		BTLstr->lootsol[index] = BTL_OBJ_FLOOR;
-		BTLstr->plootsol[index].w = systeme->screenw*0.0439;//60
-		BTLstr->plootsol[index].h = systeme->screenh*0.130;//100
+		BTLstr->plootsol[index].w = systeme->screenw*0.0439;/*60*/
+		BTLstr->plootsol[index].h = systeme->screenh*0.130;/*100*/
 		BTLstr->plootsol[index].x = (rand()%(systeme->screenw - (BTLstr->plootsol[index].w*2)))+BTLstr->plootsol[index].w;
 		BTLstr->plootsol[index].y = (rand()%(systeme->screenh - (BTLstr->plootsol[index].h*2)))+BTLstr->plootsol[index].h;
 		BTLstr->oldplootsol[index].x = 0;
@@ -980,7 +980,7 @@ void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, struct D
 	printf("40%%\n");
 	#endif
 
-	for (index = 0 ; index < LIMITEmobARCADE ; index++)//adapté pour le mode arcade
+	for (index = 0 ; index < LIMITEmobARCADE ; index++)/*adapté pour le mode arcade*/
 	{
 
 		BTLstr->premiercoup[index] = 0;
@@ -1048,8 +1048,8 @@ void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, struct D
 
 	BTLstr->ptVie.x = 0;
 	BTLstr->ptVie.y = 0;
-	BTLstr->ptVie.w = systeme->screenw*0.073;//100
-	BTLstr->ptVie.h = systeme->screenh*0.05;//32
+	BTLstr->ptVie.w = systeme->screenw*0.073;/*100*/
+	BTLstr->ptVie.h = systeme->screenh*0.05;/*32*/
 	BTLstr->tVie = imprime ("0", systeme->screenw*0.3, NOIR, systeme, NULL, NULL);
 
 	BTLstr->fond = LoadingImage				("rs/fonds/fondcombat.png", 0, systeme);
@@ -1062,7 +1062,7 @@ void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, struct D
 	printf("90%%\n");
 	#endif
 
-	//bouton rejouer
+	/*bouton rejouer*/
 	BTLstr->rejouer.normal = LoadingImage				("rs/ui/jouer.png", 0, systeme);
 	BTLstr->rejouer.survoler = LoadingImage				("rs/ui/jouer2.png", 0, systeme);
 	BTLstr->rejouer.cliquer = LoadingImage				("rs/ui/jouer3.png", 0, systeme);
@@ -1071,7 +1071,7 @@ void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, struct D
 	BTLstr->rejouer.position.w = systeme->screenw * 0.1464;
 	BTLstr->rejouer.position.h = systeme->screenh * 0.065;
 	BTLstr->rejouer.etat = B_NORMAL;
-	//bouton quitter
+	/*bouton quitter*/
 	BTLstr->quitter.normal = LoadingImage				("rs/ui/logquitter.png", 0, systeme);
 	BTLstr->quitter.survoler = LoadingImage				("rs/ui/logquitter2.png", 0, systeme);
 	BTLstr->quitter.cliquer = LoadingImage				("rs/ui/logquitter3.png", 0, systeme);

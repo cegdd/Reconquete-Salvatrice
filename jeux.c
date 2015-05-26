@@ -30,7 +30,7 @@ float combat (float vie, PACKmonstre *monstre, struct DIVERSsysteme *systeme, PE
 	printf("battle is starting ...\n");
 	#endif
 
-	//structure contenant toutes les variables pour les combats
+	/*structure contenant toutes les variables pour les combats*/
 	typecombat BTLstr;
 	DIRECTION direction;
 
@@ -39,13 +39,13 @@ float combat (float vie, PACKmonstre *monstre, struct DIVERSsysteme *systeme, PE
 	printf("memory is allocated\n");
 	#endif
 
-	//initialisation des variables
+	/*initialisation des variables*/
 	initcombatstore(&BTLstr, systeme, &direction);
-	//finding who we are fighting
+	/*finding who we are fighting*/
 
 	BTLstr.IndexCreature = FindCreatureEngaged(monstre);
-	if (BTLstr.IndexCreature == -1 && arcademode == false)	{	return -1; printf("no creature founded\n");	} //if creature not found
-	else if ( arcademode == true) { BTLstr.IndexCreature = 1;	}	//if arcademode
+	if (BTLstr.IndexCreature == -1 && arcademode == false)	{	return -1; printf("no creature founded\n");	} /*if creature not found*/
+	else if ( arcademode == true) { BTLstr.IndexCreature = 1;	}	/*if arcademode*/
 	#if BATTLE_LOG == 1
 	printf("figthing creature : %d\n", BTLstr.IndexCreature);
 	#endif
@@ -53,7 +53,7 @@ float combat (float vie, PACKmonstre *monstre, struct DIVERSsysteme *systeme, PE
 	{
 		BTLstr.ptVie.h = systeme->screenh*0.2;
 		BTLstr.ptVie.w = systeme->screenw*0.6;
-		perso->life = 100;// should be 100
+		perso->life = 100;/* should be 100*/
 	}
 	else
 	{
@@ -69,7 +69,7 @@ float combat (float vie, PACKmonstre *monstre, struct DIVERSsysteme *systeme, PE
         #endif
 		BTLstr.temps = SDL_GetTicks();
 
-		//calcul ~120/sec
+		/*calcul ~120/sec*/
 		if (BTLstr.temps - BTLstr.tempscalcul >= 8)
 		{
 		    #if BATTLE_LOG == 1
@@ -77,42 +77,42 @@ float combat (float vie, PACKmonstre *monstre, struct DIVERSsysteme *systeme, PE
             #endif
 			BTLstr.tempscalcul = BTLstr.temps;
 
-			//gestion des événements
+			/*gestion des événements*/
 			BTLstr.continuer = boucleeventcombat (&BTLstr, systeme, &direction, ui);
-			//calcul direction joueur
+			/*calcul direction joueur*/
 			direction.direction = directionperso(&direction);
-			//deplacement
+			/*deplacement*/
 			deplacementperso(NULL, perso, &direction, systeme, &BTLstr.Pperso.x, &BTLstr.Pperso.y, 0);
-			//recording mouse position
+			/*recording mouse position*/
 			SDL_GetMouseState(&BTLstr.px, &BTLstr.py);
 
-			//actualisation des coordonées
+			/*actualisation des coordonées*/
 			SyncData(&BTLstr, perso);
 
-			//gestion des attaques
+			/*gestion des attaques*/
 			COMBATgestionCLICetCOLISION (&BTLstr, ui);
 
-			//gestion des projectiles
+			/*gestion des projectiles*/
 			if (ui->casestuff[ARME].IDobjet == 3)
             {
                 COMBATgestionprojectile(&BTLstr);
             }
 
-			//gestion des ennemis
+			/*gestion des ennemis*/
 			#if ARRET_MOB == 0
 			COMBATgestionENNEMI(&BTLstr, monstre->rat, systeme);
-			#endif // ARRET_MOB
+			#endif /* ARRET_MOB*/
 
-			//gestion des objets au sol
+			/*gestion des objets au sol*/
 			COMBATgestionOBJETsol(&BTLstr, systeme, recompense, perso);
-			//animations
+			/*animations*/
 			COMBATanimationPERSO(&BTLstr);
 			COMBATanimationMOB	(&BTLstr);
 			COMBATanimationOBJET(&BTLstr);
 		}
 
-		//affichage ~60/sec
-		if (BTLstr.temps - BTLstr.tempsaffichage >= 16)//16
+		/*affichage ~60/sec*/
+		if (BTLstr.temps - BTLstr.tempsaffichage >= 16)/*16*/
 		{
 		    #if BATTLE_LOG == 1
             printf("displaying...\n");
@@ -135,14 +135,14 @@ float combat (float vie, PACKmonstre *monstre, struct DIVERSsysteme *systeme, PE
             #endif
 		}
 
-		else if (BTLstr.temps - BTLstr.tempsseconde >= 1000)//1000
+		else if (BTLstr.temps - BTLstr.tempsseconde >= 1000)/*1000*/
 		{
 		    #if BATTLE_LOG == 1
             printf("fps...\n");
             #endif
 			if (arcademode == true)
 			{
-				sprintf(BTLstr.StringVie, "fps : %d       ennemi en vie : %d         ennemi vaincu : %d         score : %d", fps, BTLstr.alive, BTLstr.ennemivaincue, BTLstr.arcadescore);//fps
+				sprintf(BTLstr.StringVie, "fps : %d       ennemi en vie : %d         ennemi vaincu : %d         score : %d", fps, BTLstr.alive, BTLstr.ennemivaincue, BTLstr.arcadescore);/*fps*/
 			}
 			else
 			{
@@ -152,7 +152,7 @@ float combat (float vie, PACKmonstre *monstre, struct DIVERSsysteme *systeme, PE
 			fps = 0;
 			BTLstr.tempsseconde = BTLstr.temps;
 
-			//counting creature
+			/*counting creature*/
 			BTLstr.alive = 0;
 			for(index = 0 ; index < LIMITEmobARCADE ; index++)
 			{
@@ -161,7 +161,7 @@ float combat (float vie, PACKmonstre *monstre, struct DIVERSsysteme *systeme, PE
 					BTLstr.alive += 1;
 				}
 			}
-			//if player dead
+			/*if player dead*/
 			if (perso->life  <= 0 && arcademode == true)
 			{
 				#if BATTLE_LOG == 1
@@ -178,7 +178,7 @@ float combat (float vie, PACKmonstre *monstre, struct DIVERSsysteme *systeme, PE
 			}
 		}
 
-		//adding creature ~1.25/sec
+		/*adding creature ~1.25/sec*/
 		if (BTLstr.temps - BTLstr.TimeAddEnnemy >= 1250)
 		{
 		    #if BATTLE_LOG == 1
@@ -229,7 +229,7 @@ float combat (float vie, PACKmonstre *monstre, struct DIVERSsysteme *systeme, PE
 						Free_Queue_Element(&monstre->rat[BTLstr.IndexCreature].queue);
 					}
 					break;
-				case -1:  //out of queue
+				case -1:  /*out of queue*/
 					if (arcademode == true && BTLstr.IndexCreature < 3)
 					{
 						BTLstr.IndexCreature++;
@@ -307,8 +307,8 @@ void afficherCOMBAT(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso,
     BattleDraw_Projectile(BTLstr, systeme);
 
 	#if TESTGRID == 1
-	DrawTestGrid(BTLstr, systeme);//not working ! (because of the big array)
-    #endif // TESTGRID
+	DrawTestGrid(BTLstr, systeme);/*not working ! (because of the big array)*/
+    #endif /* TESTGRID*/
 
     #if BATTLE_LOG_DISPLAY == 1
     printf("affichage de l'UI\n");
@@ -355,27 +355,27 @@ void COMBATgestionDEGAT (typecombat *BTLstr, DIVERSui *ui)
 	{
 		if(BTLstr->creature[index].life > 0)
 		{
-		    BTLstr->ResultatHitbox = -1;//initialisation
+		    BTLstr->ResultatHitbox = -1;/*initialisation*/
 
-		    //décision dégat lancepierre
+		    /*décision dégat lancepierre*/
 		    if (ui->casestuff[ARME].IDobjet == 3)
             {
                     BTLstr->ResultatHitbox = HitboxBalle(BTLstr, index);
             }
-            //décision dégat mains nue
+            /*décision dégat mains nue*/
             else if (ui->casestuff[ARME].IDobjet == -1)
             {
                     BTLstr->ResultatHitbox = HitboxPoing(BTLstr, index);
             }
 
-			//si dégat infligé
+			/*si dégat infligé*/
 			if (BTLstr->ResultatHitbox != -1)
 			{
 				for (index2 = BTLstr->i[BTLstr->ResultatHitbox] ; index2 < 768 ; index2++ )
 				{
 					BTLstr->tx[BTLstr->ResultatHitbox][index2] = -100;
 				}
-				BTLstr->DepartBalle[BTLstr->ResultatHitbox] = UNUSED; // pour projectile
+				BTLstr->DepartBalle[BTLstr->ResultatHitbox] = UNUSED; /* pour projectile*/
 
 				Hit_Creature(index, BTLstr);
 			}
@@ -465,7 +465,7 @@ void COMBATgestionENNEMI(typecombat *BTLstr, struct RAT *rat, DIVERSsysteme *sys
 void ADDloot(PACKrecompense *recompense, int id, int nombre)
 {
 	int index = 0;
-	//recherche d'un objet equivalent ou d'une case vide
+	/*recherche d'un objet equivalent ou d'une case vide*/
 	while(index < NOMBREOBJETS)
 	{
 		if (recompense->recompenseID[index] == -1)	{break;}
@@ -477,7 +477,7 @@ void ADDloot(PACKrecompense *recompense, int id, int nombre)
 		}
 	}
 
-	//adding to loot
+	/*adding to loot*/
 	recompense->recompenseID[index] = id;
 	recompense->recompenseNB[index] += nombre;
 }
@@ -488,7 +488,7 @@ void COMBATgestionOBJETsol(typecombat *BTLstr, DIVERSsysteme *systeme, PACKrecom
 
 	for (index = 0 ; index < LIMITEmobARCADE ; index++)
 	{
-		//s'il est vivant
+		/*s'il est vivant*/
 		if (BTLstr->creature[index].isdead == false)
 		{
 			if (checkdistance(&BTLstr->Pperso, &BTLstr->creature[index].position, 50) == -1)
@@ -502,7 +502,7 @@ void COMBATgestionOBJETsol(typecombat *BTLstr, DIVERSsysteme *systeme, PACKrecom
 		}
 		else if (BTLstr->creature[index].ontheway == 0)
 		{
-			//si on marche dessus
+			/*si on marche dessus*/
 			if (colisionbox(&BTLstr->creature[index].position, &BTLstr->Pperso, false))
 			{
 				#if BATTLE_LOG == 1
@@ -511,17 +511,17 @@ void COMBATgestionOBJETsol(typecombat *BTLstr, DIVERSsysteme *systeme, PACKrecom
 
 				BTLstr->arcadescore += 10;
 
-				//ajout aux récompenses
+				/*ajout aux récompenses*/
 				ADDloot(recompense, 0, 1);
 
-				//objet en cour de deplacement
+				/*objet en cour de deplacement*/
 				BTLstr->creature[index].ontheway = 1;
 
-				//calcul des différences
+				/*calcul des différences*/
 				float difx = systeme->screenw - BTLstr->creature[index].position.x;
 				float dify = systeme->screenh - BTLstr->creature[index].position.y;
 
-				//enregistrement des positions initiales
+				/*enregistrement des positions initiales*/
 				BTLstr->creature[index].oldposx = BTLstr->creature[index].position.x;
 				BTLstr->creature[index].oldposy = BTLstr->creature[index].position.y;
 
@@ -558,10 +558,10 @@ void COMBATgestionOBJETsol(typecombat *BTLstr, DIVERSsysteme *systeme, PACKrecom
 		}
 	}
 
-	//parcour des objets
+	/*parcour des objets*/
 	for (index = 0 ; index < BTLstr->NBlootsol ; index++)
 	{
-		//si l'objet est déjà en mouvement
+		/*si l'objet est déjà en mouvement*/
 		if (BTLstr->lootsol[index] == BTL_OBJ_MOVE && BTLstr->plootsol[index].x < systeme->screenw)
 		{
 			BTLstr->lootsolWAYX[index] += BTLstr->lootsolDX[index];
@@ -571,21 +571,21 @@ void COMBATgestionOBJETsol(typecombat *BTLstr, DIVERSsysteme *systeme, PACKrecom
 			BTLstr->plootsol[index].y = BTLstr->oldplootsol[index].y + (int)BTLstr->lootsolWAYY[index];
 		}
 
-		//si il est a terre et que le joueur marche dessus
+		/*si il est a terre et que le joueur marche dessus*/
 		else if (BTLstr->lootsol[index] == BTL_OBJ_FLOOR &&
 				colisionbox(&BTLstr->plootsol[index], &BTLstr->Pperso, false))
 		{
-			//ajout aux récompenses
+			/*ajout aux récompenses*/
 			ADDloot(recompense, BTLstr->IDlootsol[index], 1);
 
-			//objet en cour de deplacement
+			/*objet en cour de deplacement*/
 			BTLstr->lootsol[index] = BTL_OBJ_MOVE;
 
-			//calcul des différences
+			/*calcul des différences*/
 			float difx = systeme->screenw - BTLstr->plootsol[index].x;
 			float dify = systeme->screenh - BTLstr->plootsol[index].y;
 
-			//enregistrement des positions initiales
+			/*enregistrement des positions initiales*/
 			BTLstr->oldplootsol[index].x = BTLstr->plootsol[index].x;
 			BTLstr->oldplootsol[index].y = BTLstr->plootsol[index].y;
 
@@ -650,16 +650,16 @@ void JoueurMort(typecombat *BTLstr, DIVERSsysteme *systeme, DIVERSui *ui, PERSO 
 	SDL_Rect position[64];
 	bool continuer = 0;
 
-	//setting background
+	/*setting background*/
 	texture[0] = fenetredialogue(systeme->pecran.w/3, systeme->pecran.h*0.911, &position[0], NULL, NULL, BLANC, systeme);
 	ui->dialogueactif = 1;
 
-	//setting up all texts
+	/*setting up all texts*/
 	int ret = PositionOfDeathDisplay(texture, position, score, systeme);
 	while (continuer == 0)
 	{
 		continuer = LoopEventBattleDeath (BTLstr, &event);
-		//recording mouse position
+		/*recording mouse position*/
 		SDL_GetMouseState(&BTLstr->pcurseur.x, &BTLstr->pcurseur.y);
 
 		afficherCOMBAT(BTLstr, systeme, perso, inventaire, objet, arcademode);
@@ -675,21 +675,21 @@ void DrawDeathDisplay(typecombat *BTLstr, DIVERSsysteme *systeme, SDL_Texture *t
 {
 	int index;
 
-	//rendering Background and texts
+	/*rendering Background and texts*/
 	SDL_RenderCopy(systeme->renderer, systeme->BG, NULL, &position[0]);
 	for(index = 1 ; index <= ret ; index++)
 	{
 		SDL_RenderCopy(systeme->renderer, texture[index], NULL, &position[index]);
 	}
 
-	//rendering button "play again"
+	/*rendering button "play again"*/
 	if (BTLstr->rejouer.etat == B_SURVOLER)
 	{	SDL_RenderCopy(systeme->renderer, BTLstr->rejouer.survoler, NULL, &BTLstr->rejouer.position);	}
 	else if (BTLstr->rejouer.etat == B_CLIQUER)
 	{	SDL_RenderCopy(systeme->renderer, BTLstr->rejouer.cliquer, NULL, &BTLstr->rejouer.position);	}
 	else
 	{	SDL_RenderCopy(systeme->renderer, BTLstr->rejouer.normal, NULL, &BTLstr->rejouer.position);		}
-	//rendering button "quit"
+	/*rendering button "quit"*/
 	if (BTLstr->quitter.etat == B_SURVOLER)
 	{	SDL_RenderCopy(systeme->renderer, BTLstr->quitter.survoler, NULL, &BTLstr->quitter.position);	}
 	else if (BTLstr->quitter.etat == B_CLIQUER)
@@ -707,7 +707,7 @@ int PositionOfDeathDisplay(SDL_Texture *texture[], SDL_Rect position[], char sco
 	position[PosUsed].x = position[0].x;
 	position[PosUsed].y = position[0].y;
 	position[PosUsed].w = position[0].w;
-	position[PosUsed].h = (systeme->pecran.h * 0.1) * PosUsed; //50*PosUsed
+	position[PosUsed].h = (systeme->pecran.h * 0.1) * PosUsed; /*50*PosUsed*/
 	sprintf(score[PosUsed],"1: 3000");
 	texture[PosUsed] = DrawSDLText(&position[PosUsed], score[PosUsed], BLANC, ALIGN_CENTER, systeme);
 
@@ -715,7 +715,7 @@ int PositionOfDeathDisplay(SDL_Texture *texture[], SDL_Rect position[], char sco
 	position[PosUsed].x = position[0].x;
 	position[PosUsed].y = position[0].y;
 	position[PosUsed].w = position[0].w;
-	position[PosUsed].h = (systeme->pecran.h * 0.1) * PosUsed; //50*PosUsed
+	position[PosUsed].h = (systeme->pecran.h * 0.1) * PosUsed; /*50*PosUsed*/
 	sprintf(score[PosUsed],"2: 1200");
 	texture[PosUsed] = DrawSDLText(&position[PosUsed], score[PosUsed], BLANC, ALIGN_CENTER, systeme);
 
@@ -723,7 +723,7 @@ int PositionOfDeathDisplay(SDL_Texture *texture[], SDL_Rect position[], char sco
 	position[PosUsed].x = position[0].x;
 	position[PosUsed].y = position[0].y;
 	position[PosUsed].w = position[0].w;
-	position[PosUsed].h = (systeme->pecran.h * 0.1) * PosUsed; //50*PosUsed
+	position[PosUsed].h = (systeme->pecran.h * 0.1) * PosUsed; /*50*PosUsed*/
 	sprintf(score[PosUsed],"3: 990");
 	texture[PosUsed] = DrawSDLText(&position[PosUsed], score[PosUsed], BLANC, ALIGN_CENTER, systeme);
 
@@ -731,7 +731,7 @@ int PositionOfDeathDisplay(SDL_Texture *texture[], SDL_Rect position[], char sco
 	position[PosUsed].x = position[0].x;
 	position[PosUsed].y = position[0].y;
 	position[PosUsed].w = position[0].w;
-	position[PosUsed].h = (systeme->pecran.h * 0.1) * PosUsed; //50*PosUsed
+	position[PosUsed].h = (systeme->pecran.h * 0.1) * PosUsed; /*50*PosUsed*/
 	sprintf(score[PosUsed],"4: 460");
 	texture[PosUsed] = DrawSDLText(&position[PosUsed], score[PosUsed], BLANC, ALIGN_CENTER, systeme);
 
@@ -739,7 +739,7 @@ int PositionOfDeathDisplay(SDL_Texture *texture[], SDL_Rect position[], char sco
 	position[PosUsed].x = position[0].x;
 	position[PosUsed].y = position[0].y;
 	position[PosUsed].w = position[0].w;
-	position[PosUsed].h = (systeme->pecran.h * 0.1) * PosUsed; //50*PosUsed
+	position[PosUsed].h = (systeme->pecran.h * 0.1) * PosUsed; /*50*PosUsed*/
 	sprintf(score[PosUsed],"5: 75");
 	texture[PosUsed] = DrawSDLText(&position[PosUsed], score[PosUsed], BLANC, ALIGN_CENTER, systeme);
 

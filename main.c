@@ -17,7 +17,7 @@
 
 int main (int argc, char *argv[])
 {
-	if (argc == *argv[0]){}//juste pour les warnings
+	if (argc == *argv[0]){}/*juste pour les warnings*/
 	srand(2);
 
     SDL_Init (SDL_INIT_VIDEO);
@@ -32,7 +32,7 @@ int main (int argc, char *argv[])
     struct DIVERSsysteme systeme;
     struct typeFORthreads online;
     initonline(&online, &systeme);
-    //pthread_t lethread1;
+    /*pthread_t lethread1;*/
     int ret = 0;
 
     SDL_ShowCursor(SDL_DISABLE);
@@ -49,31 +49,31 @@ int main (int argc, char *argv[])
 	Mix_VolumeMusic(64);
 
 
-	#if FASTLOG == 1//juste pour moi, pour éviter le log
+	#if FASTLOG == 1/*juste pour moi, pour éviter le log*/
 	sprintf(systeme.sauvegarde[0], "cegdd");
 	sprintf(systeme.sauvegarde[1], "mdpbidon");
-	//pthread_create(&lethread1, NULL, *thread1, &online);
+	/*pthread_create(&lethread1, NULL, *thread1, &online);*/
 	chargersauvegarde(&systeme);
 	if (chargementcarte(&systeme, &online) != 1) {return EXIT_FAILURE;}
 	return EXIT_SUCCESS;
-	#endif // FASTLOG
+	#endif /* FASTLOG*/
 
 	Mix_Music *sound = Mix_LoadMUS("game.mp3");
 	if (sound == NULL){ printf("musique non trouvée"); return EXIT_FAILURE;}
 	else if (Mix_PlayMusic(sound, -1) < 0){ printf("musique non jouable"); return EXIT_FAILURE;}
 
-	//si le login est accepté
+	/*si le login est accepté*/
 	ret = login(&systeme);
 	while (ret != 0)
 	{
 		if (ret == 2)
 		{
-			//creation thread pour socket
-			//pthread_create(&lethread1, NULL, *thread1, &online);
+			/*creation thread pour socket*/
+			/*pthread_create(&lethread1, NULL, *thread1, &online);*/
 			chargersauvegarde(&systeme);
 
 			Mix_PauseMusic ();
-			//lancement du jeu
+			/*lancement du jeu*/
 			if (chargementcarte(&systeme, &online) != 1) {return EXIT_FAILURE;}
 			return EXIT_SUCCESS;
 		}

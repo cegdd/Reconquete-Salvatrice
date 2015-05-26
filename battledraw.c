@@ -25,7 +25,7 @@ void BattleDraw_Ennemy(typecombat *BTLstr, DIVERSsysteme *systeme, int arcademod
     int index, calcul;
     for (index = 0; index < LIMITEmobARCADE ; index++)
 	{
-		//looted stuff
+		/*looted stuff*/
 		if (BTLstr->creature[index].ontheway != 0 && BTLstr->creature[index].position.x < systeme->screenw)
 		{
 			BTLstr->creature[index].position.w = BTLstr->creature[index].STATICposition.w * BTLstr->animobjet;
@@ -35,7 +35,7 @@ void BattleDraw_Ennemy(typecombat *BTLstr, DIVERSsysteme *systeme, int arcademod
 			else
 			{	SDL_RenderCopy(systeme->renderer, BTLstr->piece, NULL, &BTLstr->creature[index].position);}
 		}
-		//si elles sont mortes et pas ramasser
+		/*si elles sont mortes et pas ramasser*/
 		else if (BTLstr->creature[index].isdead == true && BTLstr->creature[index].looted == 0)
 		{
 			if (arcademode == false)
@@ -51,7 +51,7 @@ void BattleDraw_Ennemy(typecombat *BTLstr, DIVERSsysteme *systeme, int arcademod
 				SDL_RenderCopy(systeme->renderer,BTLstr->piece, NULL, &BTLstr->creature[index].position);
 			}
 		}
-		else if(BTLstr->creature[index].isdead == false)//if they're alive
+		else if(BTLstr->creature[index].isdead == false)/*if they're alive*/
 		{
 			calcul =90+(45 * BTLstr->creature[index].Direction);
 			SDL_RenderCopyEx(systeme->renderer, BTLstr->creature[index].texture[BTLstr->creature[index].indexanim], NULL, &BTLstr->creature[index].position, calcul,NULL, SDL_FLIP_NONE);
@@ -67,7 +67,7 @@ void BattleDraw_Ennemy(typecombat *BTLstr, DIVERSsysteme *systeme, int arcademod
 
 void BattleDraw_Player(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso)
 {
-    double degre = FindAngle(&BTLstr->Pperso, &BTLstr->pcurseur) + 90; // finding angle
+    double degre = FindAngle(&BTLstr->Pperso, &BTLstr->pcurseur) + 90; /* finding angle*/
 
 	if (BTLstr->poing_tendu == true)
     {
@@ -77,7 +77,7 @@ void BattleDraw_Player(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso)
     {
         SDL_RenderCopyEx(systeme->renderer, perso->tperso, &perso->spriteup[BTLstr->indexanimperso], &BTLstr->Pperso, degre,NULL, SDL_FLIP_NONE);
     }
-    //life bar
+    /*life bar*/
     SDL_RenderCopy(systeme->renderer, perso->BarreDeVie->BGtexture, NULL, &perso->BarreDeVie->BGposition);
     SDL_RenderCopy(systeme->renderer, perso->BarreDeVie->texture, NULL, &perso->BarreDeVie->position);
 }

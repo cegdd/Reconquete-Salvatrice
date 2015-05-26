@@ -66,23 +66,23 @@ void tirer (float px, float py, int canonx, int canony, int tx[][PRECISIONcaillo
 }
 
 int HitboxBalle(typecombat *BTLstr, int index)
-{//fonction appeler pour chaque monstres
+{/*fonction appeler pour chaque monstres*/
 	int i, k = 0, l = 0;
 	SDL_Rect pix = {k, l, 1, 1};
 
 	#if TESTGRID == 1
 	SDL_Point point;
-	#endif // TESTGRID
+	#endif /* TESTGRID*/
 
 	for (i = 0 ; i < NBcailloux ; i++)
-	{   //tri et degrossissage pour calcul précis
+	{   /*tri et degrossissage pour calcul précis*/
 	    if (checkdistance(&BTLstr->creature[index].position, &BTLstr->pballe[i], 120) == -1 && BTLstr->DepartBalle[i] == RUNNING )
         {
             #if TESTGRID == 1
             point.x = pballe[i].x;
             point.y = pballe[i].y;
             UnWriteCircleTestGrid(BTLstr, &point, 10);
-            #endif // TESTGRID
+            #endif /* TESTGRID*/
 
             for(k = BTLstr->pballe[i].x ; k <= BTLstr->pballe[i].x + BTLstr->pballe[i].w ; k++)
             {
@@ -99,7 +99,7 @@ int HitboxBalle(typecombat *BTLstr, int index)
                             point.x = pballe[i].x;
                             point.y = pballe[i].y;
                             UnWriteCircleTestGrid(BTLstr, &point, 10);
-                            #endif // TESTGRID
+                            #endif /* TESTGRID*/
                             return i;
                         }
                     }

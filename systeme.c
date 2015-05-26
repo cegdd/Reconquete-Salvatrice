@@ -109,8 +109,8 @@ int checkdistance(SDL_Rect *A, SDL_Rect *B, int lenght)
 
 	double resultat = sqrt((difx*difx)+(dify*dify));
 
-	if (resultat <= lenght) {return -1;} // dedans
-	return 1; // dehors
+	if (resultat <= lenght) {return -1;} /* dedans*/
+	return 1; /* dehors*/
 }
 
 int arrondi (float flottant)

@@ -47,99 +47,99 @@ int map (DIVERSsysteme *systeme, typeFORthreads *online, PACKbouton *bouton , PA
     checkandrefreshstuff(perso, objet, systeme, ui);
     checkinventaire(objet, inventaire);
 
-//#############################################################################################################################################################
-//											##################### Boucle De Jeu #####################																					#
-//######################################################################################################################################################################
+/*#############################################################################################################################################################
+											##################### Boucle De Jeu #####################																					#
+######################################################################################################################################################################*/
 
     while (systeme->continuer == 1)
     {
         temps->tpact = SDL_GetTicks();
 
-        if (temps->tpact - temps->tpapr >= 15) //15   ms
+        if (temps->tpact - temps->tpapr >= 15) /*15   ms*/
         {
             temps->tpapr = temps->tpact;
             temps->i++;
 
-			//sichronisation des données
+			/*sichronisation des données*/
 			sinchronisation(pnj, carte, monstre, craft, systeme, online, perso);
 
-            //animation personnage qui marche
+            /*animation personnage qui marche*/
             ANIMpersomarche(deplacement, temps);
             ANIMmonstre(monstre, temps);
-            //deplacement de la carte
+            /*deplacement de la carte*/
             deplacementmap(&carte->pmap[0], TILESMAP, deplacement->x, deplacement->y);
-            //calcul direction joueur client
+            /*calcul direction joueur client*/
             deplacement->direction.direction = directionperso(&deplacement->direction);
-            //deplacement
+            /*deplacement*/
             deplacementperso(&carte->calque[0], perso, &deplacement->direction, systeme, &deplacement->x, &deplacement->y, 1);
-            //recupération coordonées souris
+            /*recupération coordonées souris*/
             SDL_GetMouseState(&systeme->pp.x, &systeme->pp.y);
-            //gestion de l'ui
+            /*gestion de l'ui*/
             gestionui(systeme, ui, craft, bouton, chat, inventaire, objet, perso, pnj);
-            //detection des combats
+            /*detection des combats*/
             detectioncombat(monstre, inventaire, chat, ui, deplacement, objet, perso, systeme, recompense, false);
-            //gestion des evenement
+            /*gestion des evenement*/
             boucleevent(&online->chat.lancermessage, FORevent);
-            //gestion du chat
+            /*gestion du chat*/
             gestionchat(chat, systeme, online);
 
-//##################################################################################################################################################################################
-//												##################### AFFICHAGE #####################																	#
-//##################################################################################################################################################################################
+/*##################################################################################################################################################################################
+											##################### AFFICHAGE #####################																	#
+##################################################################################################################################################################################*/
 
-            //effacage de l'écran
+            /*effacage de l'écran*/
             SDL_RenderClear(systeme->renderer);
 
-            //affichage de la carte
+            /*affichage de la carte*/
             afficherMAP(carte, systeme, craft);
             SDL_RenderCopy(systeme->renderer, craft->tetabli, NULL, &craft->petabli);
-            //affichage des pnj
+            /*affichage des pnj*/
             afficherPNJ(perso, pnj, systeme);
-            //affichage des mobs
+            /*affichage des mobs*/
             afficherMOB(monstre, systeme);
-            //affichage des joueurs
+            /*affichage des joueurs*/
             afficherJOUEURS(perso, deplacement, systeme, online);
-            //affichage du chat
+            /*affichage du chat*/
             if (chat->chatactif == true)
             {
                 afficherCHAT(chat, ui, online->chat.lenbuffer, systeme);
             }
-            //affichage de l'inventaire
+            /*affichage de l'inventaire*/
             else if (inventaire->actif == true)
             {
                 afficherINVENTAIRE(inventaire, ui, objet, systeme);
             }
-            //affichage de l'interface utilisateur
+            /*affichage de l'interface utilisateur*/
             afficherUI(online->isonline, ui, bouton, temps, perso, chat, inventaire, systeme, recompense, objet);
-            //affichage de l'interface de crafting
+            /*affichage de l'interface de crafting*/
             if (craft->actif == true)
             {
                 afficherCRAFT(craft, ui, bouton, objet, inventaire, systeme);
             }
-            //affichage du pointeur
+            /*affichage du pointeur*/
             afficherPOINTEUR(systeme, objet);
 
-            //rendu éran
+            /*rendu éran*/
             SDL_RenderPresent(systeme->renderer);
         }
 
-//###########################################################################################################################
-//								##################### Frame Par Secondes #####################								#
-//###########################################################################################################################
+/*###########################################################################################################################
+								##################### Frame Par Secondes #####################								#
+###########################################################################################################################*/
 
         else if (temps->tpact - temps->tpap >= 1000)
         {
             temps->temptotal++;
 
-            for (index = 0 ; index < 3 ; index++)// popping time
+            for (index = 0 ; index < 3 ; index++)/* popping time*/
 			{
-				if (monstre->rat[index].etat != ALIVE)// != 0
+				if (monstre->rat[index].etat != ALIVE)/* != 0*/
 				{
 					monstre->rat[index].etat++;
 				}
 			}
 
-			//if it's the first second of this player
+			/*if it's the first second of this player*/
             if (temps->temptotal == 1)
             {
                 char texte[2548] = "           Toumai :\n\nBonjour à toi jeune ...\njeune quoi exactement?\nJe suis vieux, mes yeux sont fatigués\nmais mon esprit reste vif!\nEt à ta démarche je devine que tu n'es\npas du coin.\nJ'ignore ce que tu viens faire ici mais je dois te prévenir :\n\nles lieux ne sont pas sûrs!\nEt en tant que sage de la tribue, je dois m'assurer que tu puisses survivre au moins quelques jours.\n Tiens ! Prend ceci, c'est le lance pierre de mon fils.\nAvec une bonne pierre entre les 2 yeux je ne donne pas cher de leurs vies! \n\n   APPUIE SUR ENTRÉE POUR CONTINUER";
@@ -211,11 +211,11 @@ int map (DIVERSsysteme *systeme, typeFORthreads *online, PACKbouton *bouton , PA
 		}
     }
 
-//###########################################################################################################################
-//																															#
-//								##################### Fin de Fonction #####################									#
-//																															#
-//###########################################################################################################################
+/*###########################################################################################################################
+																															#
+								##################### Fin de Fonction #####################									#
+																														#
+###########################################################################################################################*/
 
     sauvegardetout(systeme->sauvegarde, carte->pmap[0], perso, temps->temptotal, 0, objet->sac1, TAILLESAC, ui);
 
@@ -224,8 +224,8 @@ int map (DIVERSsysteme *systeme, typeFORthreads *online, PACKbouton *bouton , PA
         SDL_UnlockSurface(carte->calque[index]);
     }
 
-    //si la condition de boucle est toujours vrai, la fonction a été terminée par erreur.
-    //                 (devrais être impossible mais j'ai eu le cas)
+    /*si la condition de boucle est toujours vrai, la fonction a été terminée par erreur.*/
+    /*                 (devrais être impossible mais j'ai eu le cas)*/
     if (systeme->continuer == 1)
     {
         return -1;
@@ -270,12 +270,12 @@ int lancementcombat(PACKmonstre *monstre, DIVERSinventaire *inventaire, DIVERSch
     int indexloot = 0, index2, RETcombat;
     char slootcombat[120];
 
-	//ecran de chargement
+	/*ecran de chargement*/
 	chargement(systeme);
 
 	if (arcademode == false)
 	{
-		//cloture des UIs et arret du personnage
+		/*cloture des UIs et arret du personnage*/
 		inventaire->actif = false;
 		chat->chatactif = false;
 		systeme->inbattle = true;
@@ -283,7 +283,7 @@ int lancementcombat(PACKmonstre *monstre, DIVERSinventaire *inventaire, DIVERSch
 		deplacement->persobouge = 0;
 
 
-		//initialisation des tableaux de récompense
+		/*initialisation des tableaux de récompense*/
 		for (index2 = 0 ; index2 < LOOTMAX ; index2++)
 		{
 			recompense->recompenseNB[index2] = 0;
@@ -300,7 +300,7 @@ int lancementcombat(PACKmonstre *monstre, DIVERSinventaire *inventaire, DIVERSch
 
 	SDL_RenderClear(systeme->renderer);
 
-	//############lancement du combat############
+	/*############lancement du combat############*/
 	RETcombat = combat(perso->life, monstre, systeme, perso, inventaire, recompense, objet, ui, arcademode);
 
 	if (arcademode == false)
@@ -312,45 +312,45 @@ int lancementcombat(PACKmonstre *monstre, DIVERSinventaire *inventaire, DIVERSch
 		checkinventaire(objet, inventaire);
 
 
-		//if player dead
+		/*if player dead*/
 		if (RETcombat == BTL_LOST)
 		{
-			//ecran de mort
+			/*ecran de mort*/
 			ANIMmort(systeme);
-			//replacement du joueur au départ avec toute sa vie
+			/*replacement du joueur au départ avec toute sa vie*/
 			deplacement->x = 0;
 			deplacement->y = -200;
 			perso->pperso.x = systeme->screenw/2;
 			perso->pperso.y = systeme->screenh/2;
 			perso->life = perso->lifemax;
 
-			return ALIVE; //the creature
+			return ALIVE; /*the creature*/
 		}
-		//si le joueur a fui
+		/*si le joueur a fui*/
 		else if (RETcombat == BTL_LEAVED)
 		{
 			ui->ttextedialogue = fenetredialogue(systeme->screenw*0.4, systeme->screenh*0.8, &ui->pdialogue, &ui->ptextedialogue, "Vous avez fui,\ntous les objets obtenu pendant le combat on été abandonné sur place.\n\n\n\n(entrée/échap pour continuer)\n",
 									  BLANC, systeme);
 			ui->dialogueactif = 1;
-			return DEAD; //the creature
+			return DEAD; /*the creature*/
 		}
-		//si joueur vivant
+		/*si joueur vivant*/
 		else if (RETcombat == BTL_WON)
 		{
-			//dialogue de récompense
+			/*dialogue de récompense*/
 			ui->dialogueactif = 2;
 
-			//si des récompenses on été obtenue
+			/*si des récompenses on été obtenue*/
 			while (recompense->recompenseNB[indexloot] > 0)
 			{
-				//ecriture de la récompense
+				/*ecriture de la récompense*/
 				sprintf(slootcombat, "-> %d %s", recompense->recompenseNB[indexloot], objet->objet[recompense->recompenseID[indexloot]].nom);
 				SDL_DestroyTexture(recompense->ttextelootcombat[indexloot]);
 				recompense->ttextelootcombat[indexloot] = imprime(slootcombat, systeme->screenw, BLANC, systeme, NULL, NULL);
 
 				for (index2 = 0 ; index2 < recompense->recompenseNB[indexloot] ; index2++)
 				{
-					//insertion des récompenses 1 par 1
+					/*insertion des récompenses 1 par 1*/
 					insertionsac(objet, recompense->recompenseID[indexloot]);
 				}
 				indexloot++;
@@ -363,7 +363,7 @@ int lancementcombat(PACKmonstre *monstre, DIVERSinventaire *inventaire, DIVERSch
 	}
 	else
 	{
-		return DEAD; //the creature
+		return DEAD; /*the creature*/
 	}
 }
 

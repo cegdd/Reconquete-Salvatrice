@@ -9,4 +9,4 @@ void UnWriteSquareTestGrid(typecombat *BTLstr, SDL_Rect *area);
 void UnWriteCircleTestGrid (typecombat *BTLstr, SDL_Point *middle, int width);
 BARREVIE* AddLifeBar(int life, int lenght, DIVERSsysteme *systeme);
 
-#endif // TOOLH
+#endif /* TOOLH*/

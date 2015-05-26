@@ -16,25 +16,25 @@ int MouvemementChauveSouris(typecombat *BTLstr, struct RAT *rat, struct DIVERSsy
 
 
 
-	//si l'idée a expiré
+	/*si l'idée a expiré*/
 	BTLstr->creature[index].mindtime--;
 	if (BTLstr->creature[index].mindtime <= 0)
 	{
-		//génération de la durée de la prochaine idée
+		/*génération de la durée de la prochaine idée*/
 		BTLstr->creature[index].mindtime = rand()%200;
 
-		//toute les idées sont probables
+		/*toute les idées sont probables*/
 		for(index2 = 0 ; index2 < 8 ; index2++)
 		{
 			BTLstr->creature[index].relevancy[index2] = 1;
 		}
 
-		//total de l'interet de toutes les idées
+		/*total de l'interet de toutes les idées*/
 		for (index2 = 0 ; index2 < 8 ; index2++)
 		{
 			total += BTLstr->creature[index].relevancy[index2];
 		}
-		//tirage de l'idée dans se total
+		/*tirage de l'idée dans se total*/
 		int lerand = rand()%total;
 
 		for (index2 = 0 ; index2 < 8 ; index2++)
