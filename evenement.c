@@ -54,7 +54,7 @@ void boucleevent (bool *lancermessage, typeFORevent *FORevent)
 	}
 }
 
-int boucleeventcombat (typecombat *BTLstr, DIVERSsysteme *systeme, DIRECTION *direction, DIVERSui *ui)
+int boucleeventcombat (typecombat *BTLstr,struct DIVERSsysteme *systeme, DIRECTION *direction, DIVERSui *ui)
 {
 	while(SDL_PollEvent(&systeme->evenement) == 1)
 	{
@@ -158,7 +158,7 @@ int boucleeventcombat (typecombat *BTLstr, DIVERSsysteme *systeme, DIRECTION *di
 	return -1;
 }
 
-int boucleeventlogin (struct typelogin *loginstore, DIVERSsysteme *systeme)
+int boucleeventlogin (struct typelogin *loginstore,struct DIVERSsysteme *systeme)
 {
 	int x = loginstore->ppointeur.x;
 	int y = loginstore->ppointeur.y;

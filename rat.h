@@ -1,10 +1,9 @@
 #ifndef TIRH
 #define TIRH
-typedef struct typecombat typecombat;
-typedef struct DIVERSsysteme DIVERSsysteme;
-typedef struct RAT RAT;
+
+#include "main.h"
 
 int TestColision_Rat(SDL_Rect *rat, int x, int y, int direction);
-void ADD_Rat(int type, int MemoryArea, typecombat *BTLstr, DIVERSsysteme *systeme, RAT *rat);
+void ADD_Rat(int type, int MemoryArea,struct typecombat *BTLstr,struct DIVERSsysteme *systeme,struct RAT *rat);
 
 #endif

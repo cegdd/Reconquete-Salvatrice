@@ -12,7 +12,7 @@
 #include "main.h"
 
 
-int login (DIVERSsysteme *systeme)
+int login (struct DIVERSsysteme *systeme)
 {
 	struct typelogin loginstore;
 	/*initialisation des variables*/
@@ -125,14 +125,15 @@ int login (DIVERSsysteme *systeme)
 
 int creerjoueur(char sauvegarde[][50])
 {
+    int i;
+    FILE *fichier2 = NULL;
+	char nomfichier[50] = {'\0'};
+
 	if (strlen(sauvegarde[0]) == 0)
 	{
 		return -1;
 	}
 
-	int i;
-	FILE *fichier2 = NULL;
-	char nomfichier[50] = {'\0'};
 	sprintf(nomfichier, "rs/sauvegarde/%s.RSCryptedSave", sauvegarde[0]);
 
 	if (fopen((const char *)nomfichier, "r") == NULL)
@@ -216,6 +217,13 @@ int auth(char login[][50])
 	FILE *fichier = NULL;
 	char nomfichier[50] = {'\0'};
 
+	int i2 = 0, iligne = 0, index;
+	int i = 0, LenMdpLogin = 0, LenMdpSauv = 0;
+	char sauvegarde[2][50] = {{'\0'},{'\0'}};
+	char caractere = '\0';
+	char buffer[4096] = {'\0'};
+	char ret[50] = {'\0'};
+
 	sprintf(nomfichier, "rs/sauvegarde/%s.RSCryptedSave", login[0]);
 
 	fichier = fopen ((const char *) nomfichier, "r");
@@ -223,13 +231,6 @@ int auth(char login[][50])
 	{
 		 return -1;
 	}
-
-	int i2 = 0, iligne = 0, index;
-	int i = 0, LenMdpLogin = 0, LenMdpSauv = 0;
-	char sauvegarde[2][50] = {{'\0'},{'\0'}};
-	char caractere = '\0';
-	char buffer[4096] = {'\0'};
-	char ret[50] = {'\0'};
 
 	while (i2 < 2)
 	{
@@ -275,7 +276,7 @@ int auth(char login[][50])
 }
 
 
-void InitLoginStore(typelogin *loginstore, DIVERSsysteme *systeme)
+void InitLoginStore(typelogin *loginstore,struct DIVERSsysteme *systeme)
 {
 	loginstore->police = TTF_OpenFont("rs/divers/police1.ttf", TAILLE_POLICE_LOGIN);
 
@@ -411,8 +412,13 @@ void InitLoginStore(typelogin *loginstore, DIVERSsysteme *systeme)
 }
 
 
-void Initbouton(typelogin *loginstore, DIVERSsysteme *systeme)
+void Initbouton(typelogin *loginstore,struct DIVERSsysteme *systeme)
 {
+     int menuw = systeme->screenw*0.7;
+    int menuh = systeme->screenh*0.15;
+    int gauche = systeme->screenw*0.15;
+    int haut = systeme->screenh*0.425;
+
 	loginstore->option.normal = LoadingImage		("rs/ui/options.png", 0, systeme);
 	loginstore->option.survoler = LoadingImage		("rs/ui/options2.png", 0, systeme);
 	loginstore->option.cliquer = LoadingImage		("rs/ui/options3.png", 0, systeme);
@@ -446,11 +452,6 @@ void Initbouton(typelogin *loginstore, DIVERSsysteme *systeme)
 	loginstore->quitter.pos.y = (systeme->screenh/6)*5;
 	loginstore->quitter.pos.w = systeme->screenw/11;
 	loginstore->quitter.pos.h = systeme->screenh/12;
-
-    int menuw = systeme->screenw*0.7;
-    int menuh = systeme->screenh*0.15;
-    int gauche = systeme->screenw*0.15;
-    int haut = systeme->screenh*0.425;
 
 	loginstore->azerty.normal = LoadingImage		("rs/ui/azerty.png", 0, systeme);
 	loginstore->azerty.survoler = LoadingImage		("rs/ui/azerty2.png", 0, systeme);
@@ -486,7 +487,7 @@ void Initbouton(typelogin *loginstore, DIVERSsysteme *systeme)
 
 }
 
-void affichageloggin(typelogin *loginstore, DIVERSsysteme *systeme)
+void affichageloggin(typelogin *loginstore,struct DIVERSsysteme *systeme)
 {
     SDL_RenderClear(systeme->renderer);
 

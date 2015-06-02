@@ -4,6 +4,8 @@
 #include <stdbool.h>
 #include <SDL.h>
 
+#include "main.h"
+
 /*####grille de test#####*/
 #define TESTGRID 0
 /*###arret des ennemis###*/
@@ -11,46 +13,35 @@
 /*#######################*/
 
 
+float combat (float vie,struct PACKmonstre *monstre,struct DIVERSsysteme *systeme,struct PERSO *perso,
+              struct DIVERSinventaire *inventaire,struct PACKrecompense *recompense,struct PACKobjet *objet,
+              struct DIVERSui *ui, bool arcademode);
+void Hitboxjoueur (struct typecombat *BTLstr,struct PERSO *perso, int id);
 
-typedef struct DIRECTION DIRECTION;
-typedef struct RAT RAT;
-typedef struct DIVERSsysteme DIVERSsysteme;
-typedef struct PERSO PERSO;
-typedef struct typecombat typecombat;
-typedef struct DIVERSinventaire DIVERSinventaire;
-typedef struct PACKrecompense PACKrecompense;
-typedef struct PACKobjet PACKobjet;
-typedef struct DIVERSui DIVERSui;
-typedef struct PACKmonstre PACKmonstre;
+void afficherCOMBAT(struct typecombat *BTLstr,struct DIVERSsysteme *systeme,struct PERSO *perso,
+                    struct DIVERSinventaire *inventaire, struct PACKobjet *objet, bool arcademode);
 
-float combat (float vie, PACKmonstre *monstre, DIVERSsysteme *systeme, PERSO *perso, DIVERSinventaire *inventaire, PACKrecompense *recompense
-				, PACKobjet *objet, DIVERSui *ui, bool arcademode);
-void Hitboxjoueur (typecombat *BTLstr, PERSO *perso, int id);
+void COMBATgestionCLICetCOLISION (struct typecombat *BTLstr,struct DIVERSui *ui);
+void COMBATgestionDEGAT (struct typecombat *BTLstr,struct DIVERSui *ui);
+void COMBATgestionENNEMI(struct typecombat *BTLstr, struct RAT *rat,struct DIVERSsysteme *systeme);
+void COMBATgestionOBJETsol(struct typecombat *BTLstr,struct DIVERSsysteme *systeme,struct PACKrecompense *recompense,struct PERSO *perso);
 
-void afficherCOMBAT(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso,
-                    DIVERSinventaire *inventaire, PACKobjet *objet, bool arcademode);
+void COMBATanimationPERSO(struct typecombat *BTLstr);
+void COMBATanimationMOB(struct typecombat *BTLstr);
+void COMBATanimationOBJET(struct typecombat *BTLstr);
 
-void COMBATgestionCLICetCOLISION (typecombat *BTLstr, DIVERSui *ui);
-void COMBATgestionDEGAT (typecombat *BTLstr, DIVERSui *ui);
-void COMBATgestionENNEMI(typecombat *BTLstr, struct RAT *rat, DIVERSsysteme *systeme);
-void COMBATgestionOBJETsol(typecombat *BTLstr, DIVERSsysteme *systeme, PACKrecompense *recompense, PERSO *perso);
-
-void COMBATanimationPERSO(typecombat *BTLstr);
-void COMBATanimationMOB(typecombat *BTLstr);
-void COMBATanimationOBJET(typecombat *BTLstr);
-
-void ADDloot(PACKrecompense *recompense, int id, int nombre);
-int FindCreatureMemoryArea(typecombat *BTLstr);
-void SyncData(typecombat *BTLstr, PERSO *perso);
+void ADDloot(struct PACKrecompense *recompense, int id, int nombre);
+int FindCreatureMemoryArea(struct typecombat *BTLstr);
+void SyncData(struct typecombat *BTLstr,struct PERSO *perso);
 int CalculerBarreDeVie(int VieDeBase, int VieActuelle, int width);
-void JoueurToucher(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso, DIVERSui *ui, int id);
-void DrawDeathDisplay(typecombat *BTLstr, DIVERSsysteme *systeme, SDL_Texture *texture[], SDL_Rect position[], int ret);
+void JoueurToucher(struct typecombat *BTLstr,struct DIVERSsysteme *systeme,struct PERSO *perso,struct DIVERSui *ui, int id);
+void DrawDeathDisplay(struct typecombat *BTLstr,struct DIVERSsysteme *systeme, SDL_Texture *texture[], SDL_Rect position[], int ret);
 int PositionOfDeathDisplay(SDL_Texture *texture[], SDL_Rect position[], char score[][20],
-                            DIVERSsysteme *systeme);
-void Hit_Creature(int index, typecombat *BTLstr);
-int FindCreatureEngaged( PACKmonstre *monstre);
-int FindCreatureID( PACKmonstre *monstre, int ID);
-void JoueurMort(typecombat *BTLstr, DIVERSsysteme *systeme, DIVERSui *ui, PERSO *perso,
-				DIVERSinventaire *inventaire, PACKobjet *objet, bool arcademode);
+                            struct DIVERSsysteme *systeme);
+void Hit_Creature(int index,struct typecombat *BTLstr);
+int FindCreatureEngaged(struct PACKmonstre *monstre);
+int FindCreatureID(struct PACKmonstre *monstre, int ID);
+void JoueurMort(struct typecombat *BTLstr,struct DIVERSsysteme *systeme,struct DIVERSui *ui,struct PERSO *perso,
+				struct DIVERSinventaire *inventaire,struct PACKobjet *objet, bool arcademode);
 
 #endif

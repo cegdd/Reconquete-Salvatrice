@@ -65,7 +65,7 @@ void BattleDraw_Ennemy(typecombat *BTLstr, DIVERSsysteme *systeme, int arcademod
 	}
 }
 
-void BattleDraw_Player(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso)
+void BattleDraw_Player(typecombat *BTLstr, DIVERSsysteme *systeme,struct PERSO *perso)
 {
     double degre = FindAngle(&BTLstr->Pperso, &BTLstr->pcurseur) + 90; /* finding angle*/
 

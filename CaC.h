@@ -1,8 +1,6 @@
 #ifndef CACH
 #define CACH
 
-typedef struct typecombat typecombat;
-
-int HitboxPoing(typecombat *BTLstr, int index);
+int HitboxPoing(struct typecombat *BTLstr, int index);
 
 #endif /* CACH*/

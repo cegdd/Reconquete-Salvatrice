@@ -9,7 +9,7 @@
 #include "deplacement.h"
 #include "main.h"
 
-void deplacementperso(SDL_Surface *mapnb[], PERSO *perso, DIRECTION *direction, DIVERSsysteme *systeme, int *x, int *y, int enmap)
+void deplacementperso(SDL_Surface *mapnb[],struct PERSO *perso,struct DIRECTION *direction,struct DIVERSsysteme *systeme, int *x, int *y, int enmap)
 {
 	int INDEX;
 	static Uint32 pixel[8] = {0};

@@ -8,9 +8,9 @@
 #include <math.h>
 
 #include "rat.h"
-#include "evenement.h"
 #include "tir.h"
 #include "jeux.h"
+#include "evenement.h"
 #include "main.h"
 #include "image.h"
 #include "tableau.h"
@@ -23,8 +23,8 @@
 #include "ui.h"
 #include "battledraw.h"
 
-float combat (float vie, PACKmonstre *monstre, struct DIVERSsysteme *systeme, PERSO *perso, DIVERSinventaire *inventaire,
-              PACKrecompense *recompense, PACKobjet *objet, DIVERSui *ui, bool arcademode)
+float combat (float vie, PACKmonstre *monstre,struct DIVERSsysteme *systeme,struct PERSO *perso,
+              DIVERSinventaire *inventaire, PACKrecompense *recompense, PACKobjet *objet, DIVERSui *ui, bool arcademode)
 {
 	#if BATTLE_LOG == 1
 	printf("battle is starting ...\n");
@@ -35,6 +35,7 @@ float combat (float vie, PACKmonstre *monstre, struct DIVERSsysteme *systeme, PE
 	DIRECTION direction;
 
 	int index, fps = 0;
+	int ret, ret2;
 	#if BATTLE_LOG == 1
 	printf("memory is allocated\n");
 	#endif
@@ -186,7 +187,7 @@ float combat (float vie, PACKmonstre *monstre, struct DIVERSsysteme *systeme, PE
 			#endif
 			BTLstr.TimeAddEnnemy = BTLstr.temps;
 
-			int ret, ret2 = Read_Creature_Queue(&monstre->rat[BTLstr.IndexCreature].queue);
+			ret2 = Read_Creature_Queue(&monstre->rat[BTLstr.IndexCreature].queue);
 			switch (ret2)
 			{
 				case RAT_BLANC:
@@ -264,7 +265,7 @@ int FindCreatureMemoryArea(typecombat *BTLstr)
 	return -1;
 }
 
-void afficherCOMBAT(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso,
+void afficherCOMBAT(typecombat *BTLstr,struct DIVERSsysteme *systeme,struct PERSO *perso,
 					DIVERSinventaire *inventaire, PACKobjet *objet, bool arcademode)
 {
     #if BATTLE_LOG_DISPLAY == 1
@@ -448,7 +449,7 @@ void COMBATanimationOBJET(typecombat *BTLstr)
 	}
 }
 
-void COMBATgestionENNEMI(typecombat *BTLstr, struct RAT *rat, DIVERSsysteme *systeme)
+void COMBATgestionENNEMI(struct typecombat *BTLstr, struct RAT *rat,struct DIVERSsysteme *systeme)
 {
 	int index;
 
@@ -482,9 +483,10 @@ void ADDloot(PACKrecompense *recompense, int id, int nombre)
 	recompense->recompenseNB[index] += nombre;
 }
 
-void COMBATgestionOBJETsol(typecombat *BTLstr, DIVERSsysteme *systeme, PACKrecompense *recompense, PERSO *perso)
+void COMBATgestionOBJETsol(struct typecombat *BTLstr,struct DIVERSsysteme *systeme,struct PACKrecompense *recompense,struct PERSO *perso)
 {
 	int index;
+	float difx = 0, dify = 0;
 
 	for (index = 0 ; index < LIMITEmobARCADE ; index++)
 	{
@@ -518,8 +520,8 @@ void COMBATgestionOBJETsol(typecombat *BTLstr, DIVERSsysteme *systeme, PACKrecom
 				BTLstr->creature[index].ontheway = 1;
 
 				/*calcul des différences*/
-				float difx = systeme->screenw - BTLstr->creature[index].position.x;
-				float dify = systeme->screenh - BTLstr->creature[index].position.y;
+				difx = systeme->screenw - BTLstr->creature[index].position.x;
+				dify = systeme->screenh - BTLstr->creature[index].position.y;
 
 				/*enregistrement des positions initiales*/
 				BTLstr->creature[index].oldposx = BTLstr->creature[index].position.x;
@@ -582,8 +584,8 @@ void COMBATgestionOBJETsol(typecombat *BTLstr, DIVERSsysteme *systeme, PACKrecom
 			BTLstr->lootsol[index] = BTL_OBJ_MOVE;
 
 			/*calcul des différences*/
-			float difx = systeme->screenw - BTLstr->plootsol[index].x;
-			float dify = systeme->screenh - BTLstr->plootsol[index].y;
+			difx = systeme->screenw - BTLstr->plootsol[index].x;
+			dify = systeme->screenh - BTLstr->plootsol[index].y;
 
 			/*enregistrement des positions initiales*/
 			BTLstr->oldplootsol[index].x = BTLstr->plootsol[index].x;
@@ -641,21 +643,22 @@ int CalculerBarreDeVie(int VieDeBase, int VieActuelle, int width)
 	return ((float)width / (float)VieDeBase) * (float)VieActuelle;
 }
 
-void JoueurMort(typecombat *BTLstr, DIVERSsysteme *systeme, DIVERSui *ui, PERSO *perso,
-				DIVERSinventaire *inventaire, PACKobjet *objet, bool arcademode)
+void JoueurMort(struct typecombat *BTLstr,struct DIVERSsysteme *systeme,struct DIVERSui *ui,struct PERSO *perso,
+				struct DIVERSinventaire *inventaire,struct PACKobjet *objet, bool arcademode)
 {
 	SDL_Event event;
 	char score[64][20];
 	SDL_Texture *texture[64];
 	SDL_Rect position[64];
 	bool continuer = 0;
+	int ret = -1;
 
 	/*setting background*/
 	texture[0] = fenetredialogue(systeme->pecran.w/3, systeme->pecran.h*0.911, &position[0], NULL, NULL, BLANC, systeme);
 	ui->dialogueactif = 1;
 
 	/*setting up all texts*/
-	int ret = PositionOfDeathDisplay(texture, position, score, systeme);
+	ret = PositionOfDeathDisplay(texture, position, score, systeme);
 	while (continuer == 0)
 	{
 		continuer = LoopEventBattleDeath (BTLstr, &event);
@@ -671,7 +674,7 @@ void JoueurMort(typecombat *BTLstr, DIVERSsysteme *systeme, DIVERSui *ui, PERSO 
 	}
 }
 
-void DrawDeathDisplay(typecombat *BTLstr, DIVERSsysteme *systeme, SDL_Texture *texture[], SDL_Rect position[], int ret)
+void DrawDeathDisplay(struct typecombat *BTLstr,struct DIVERSsysteme *systeme, SDL_Texture *texture[], SDL_Rect position[], int ret)
 {
 	int index;
 
@@ -699,7 +702,7 @@ void DrawDeathDisplay(typecombat *BTLstr, DIVERSsysteme *systeme, SDL_Texture *t
 }
 
 int PositionOfDeathDisplay(SDL_Texture *texture[], SDL_Rect position[], char score[][20],
-							DIVERSsysteme *systeme)
+                            struct DIVERSsysteme *systeme)
 {
 	int PosUsed = 0;
 
@@ -759,7 +762,7 @@ void Hit_Creature(int index, typecombat *BTLstr)
 	}
 }
 
-int FindCreatureEngaged( PACKmonstre *monstre)
+int FindCreatureEngaged(struct PACKmonstre *monstre)
 {
 	int index;
 

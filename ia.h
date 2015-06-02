@@ -1,8 +1,6 @@
 #ifndef IAH
 #define IAH
 
-typedef struct typecombat typecombat;
-
-int MouvemementChauveSouris(typecombat *BTLstr, struct RAT *ratu, DIVERSsysteme *systeme, int index);
+int MouvemementChauveSouris(struct typecombat *BTLstr, struct RAT *ratu,struct DIVERSsysteme *systeme, int index);
 
 #endif

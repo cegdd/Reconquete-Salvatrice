@@ -13,18 +13,18 @@ void tirer (float px, float py, int canonx, int canony, int tx[][PRECISIONcaillo
 {
 	register int vitesse = VITESSE;
 	register float y, x;
-	int difx = 0;
-	int dify = 0;
-	int i = 0, octant = calculoctant(px, py, canonx, canony, &difx, &dify);
-
+	int difx = 0, dify = 0, i = 0, bissectrice = 0;
+	int octant = calculoctant(px, py, canonx, canony, &difx, &dify);
+	float ecart = 0, ecartinverse = 0;
 	y = canony;
 	x = canonx;
+
 	*degre = atan2(dify, difx);
 	*degre *= 57.296;
-	register float ecart = *degre/90;
-	register float ecartinverse = 1-ecart;
+	ecart = *degre/90;
+	ecartinverse = 1-ecart;
 
-	int bissectrice = *degre -45;
+	bissectrice = *degre -45;
 
 	if (bissectrice < 0)
 	{
@@ -68,7 +68,7 @@ void tirer (float px, float py, int canonx, int canony, int tx[][PRECISIONcaillo
 int HitboxBalle(typecombat *BTLstr, int index)
 {/*fonction appeler pour chaque monstres*/
 	int i, k = 0, l = 0;
-	SDL_Rect pix = {k, l, 1, 1};
+	SDL_Rect pix = {0, 0, 1, 1};
 
 	#if TESTGRID == 1
 	SDL_Point point;
@@ -110,7 +110,7 @@ int HitboxBalle(typecombat *BTLstr, int index)
 	return -1;
 }
 
-void COMBATgestionprojectile (typecombat *BTLstr)
+void COMBATgestionprojectile (struct typecombat *BTLstr)
 {
 	int index;
 	for (index = 0 ; index < NBcailloux ; index++)

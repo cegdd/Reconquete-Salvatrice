@@ -7,7 +7,7 @@ typedef struct typecombat typecombat;
 
 int MouvemementChauveSouris(typecombat *BTLstr, struct RAT *rat, struct DIVERSsysteme *systeme, int index)
 {
-	int index2, total = 0;
+	int index2 = 0, total = 0, lerand = 0;
 
 	int x = BTLstr->creature[index].position.x;
 	int y = BTLstr->creature[index].position.y;
@@ -35,7 +35,7 @@ int MouvemementChauveSouris(typecombat *BTLstr, struct RAT *rat, struct DIVERSsy
 			total += BTLstr->creature[index].relevancy[index2];
 		}
 		/*tirage de l'idée dans se total*/
-		int lerand = rand()%total;
+		lerand = rand()%total;
 
 		for (index2 = 0 ; index2 < 8 ; index2++)
 		{

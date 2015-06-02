@@ -13,17 +13,14 @@
 #include "queue.h"
 
 typedef struct plan plan;
-typedef struct PACKobjet PACKobjet;
 typedef struct PACKbouton PACKbouton;
 typedef struct PACKmonstre PACKmonstre;
 typedef struct PACKpnj PACKpnj;
 typedef struct DIVERSinventaire DIVERSinventaire;
 typedef struct DIVERSdeplacement DIVERSdeplacement;
 typedef struct DIVERStemps DIVERStemps;
-typedef struct DIVERSsysteme DIVERSsysteme;
 typedef struct DIVERSui DIVERSui;
 typedef struct DIVERSchat DIVERSchat;
-typedef struct DIVERScraft DIVERScraft;
 typedef struct PERSO PERSO;
 typedef struct DIVERSmap DIVERSmap;
 typedef struct PACKrecompense PACKrecompense;
@@ -45,6 +42,8 @@ int TotalTableauInt(int *ptrTableau, int nbcase)
 void initinventaire(DIVERSinventaire *inventaire, DIVERSsysteme *systeme)/*									inventaire*/
 {
 	int index, rangerx = -1;
+	char nom[32];
+
 	for (index = 0 ; index < TAILLESAC ; index++)
 	{
 		rangerx++;
@@ -79,7 +78,6 @@ void initinventaire(DIVERSinventaire *inventaire, DIVERSsysteme *systeme)/*					
 	inventaire->tcasesac = LoadingImage		("rs/ui/caseinventaire.png", 0, systeme);
 	inventaire->tcasesac2 = LoadingImage		("rs/ui/caseinventaire2.png", 0, systeme);
 
-	char nom[32];
 	sprintf(nom, "clic droit : équiper");
 	inventaire->taideclicdroit = imprime (nom, systeme->screenw, GRIS, systeme, NULL, NULL);
 	SDL_QueryTexture(inventaire->taideclicdroit, NULL, NULL, &inventaire->LARGEURaideclicdroit, NULL);
@@ -294,6 +292,8 @@ void initobjet(PACKobjet *objet, DIVERSsysteme *systeme, DIVERScraft *craft)/*		
 
 void initbouton(PACKbouton *bouton, DIVERSsysteme *systeme)/*												bouton*/
 {
+    int index;
+
 	bouton->bcraft[0].normal = LoadingImage	    	("rs/ui/arme.png", 0, systeme);
 	bouton->bcraft[0].survoler = LoadingImage	    	("rs/ui/arme1.png", 0, systeme);
 	bouton->bcraft[0].cliquer = LoadingImage	    	("rs/ui/arme2.png", 0, systeme);
@@ -324,7 +324,6 @@ void initbouton(PACKbouton *bouton, DIVERSsysteme *systeme)/*												bouton*
 	bouton->crafter.survoler = LoadingImage		("rs/ui/creer2.png", 0, systeme);
 	bouton->crafter.cliquer = LoadingImage			("rs/ui/creer3.png", 0, systeme);
 
-	int index;
 	for (index = 0 ; index < 7 ; index++)
 	{
 		bouton->bcraft[index].position.x = index*(systeme->screenw*0.143);

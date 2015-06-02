@@ -4,9 +4,6 @@
 #include "main.h"
 #include "listechaine.h"
 
-
-typedef struct EMPLACEMENT EMPLACEMENT;
-typedef struct CHOSE CHOSE;
 typedef struct PACKobjet PACKobjet;
 
 
@@ -133,7 +130,7 @@ int searchcaseID(PACKobjet *packobjet, int id)
 	return -1;
 }
 
-void equipestuff(PACKobjet *objet, DIVERSui *ui, int bodypartui,int id)
+void equipestuff(PACKobjet *objet,struct DIVERSui *ui, int bodypartui,int id)
 {
 	int bodypart = objet->objet[id].bodypart;
 

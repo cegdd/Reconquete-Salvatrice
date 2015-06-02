@@ -29,7 +29,9 @@ SDL_Texture* LoadingImage(char* emplacement, int transparence, DIVERSsysteme *sy
 
 Uint32 obtenirPixel(SDL_Surface *surface[], int pixx, int pixy)
 {
-	int indexcalque = 0, x = pixx, y = pixy;
+	int indexcalque = 0, x = pixx, y = pixy, nbOctetsParPixel = 0;
+	Uint8 *p;
+
 	if(pixx >= 7500) {indexcalque = indexcalque + 3;	x = x -7500;}
 	else if(pixx >= 5000) {indexcalque = indexcalque + 2;	x = x -5000;}
 	else if(pixx >= 2500) {indexcalque = indexcalque + 1;	x = x -2500;}
@@ -38,8 +40,8 @@ Uint32 obtenirPixel(SDL_Surface *surface[], int pixx, int pixy)
 	else if(pixy >= 5000) {indexcalque = indexcalque + 8;	y = y -5000;}
 	else if(pixy >= 2500) {indexcalque = indexcalque + 4;	y = y -2500;}
 
-    int nbOctetsParPixel = surface[indexcalque]->format->BytesPerPixel;
-    Uint8 *p = (Uint8 *)surface[indexcalque]->pixels + y * surface[indexcalque]->pitch + x * nbOctetsParPixel;
+    nbOctetsParPixel = surface[indexcalque]->format->BytesPerPixel;
+    p = (Uint8 *)surface[indexcalque]->pixels + y * surface[indexcalque]->pitch + x * nbOctetsParPixel;
     switch(nbOctetsParPixel)
     {
         case 1:
@@ -91,6 +93,7 @@ Uint32 obtenirPixel2(SDL_Surface *surface, int pixx, int pixy)
 void chargement (DIVERSsysteme *systeme)
 {
 	SDL_Rect pecran, prs;
+	SDL_Texture *chargement = NULL, *rs = NULL;
 
 	pecran.x = 0;
 	pecran.y = 0;
@@ -103,8 +106,8 @@ void chargement (DIVERSsysteme *systeme)
 	prs.y = systeme->screenh*-0.2;
 
 
-	SDL_Texture *chargement = LoadingImage("rs/images/chargement.png", 0, systeme);
-	SDL_Texture *rs = LoadingImage("rs/fonds/rs.png", 0, systeme);
+	chargement = LoadingImage("rs/images/chargement.png", 0, systeme);
+	rs = LoadingImage("rs/fonds/rs.png", 0, systeme);
     SDL_RenderClear(systeme->renderer);
     SDL_RenderCopy(systeme->renderer, chargement, NULL, &pecran);
     pecran.y = 200;
@@ -115,18 +118,20 @@ void chargement (DIVERSsysteme *systeme)
 
 SDL_Texture* imprime (char s[], int len, int couleur, DIVERSsysteme *systeme, int *LenghtReturn, int *HighReturn)
 {
+    SDL_Surface *SurfTemp = NULL;
+    SDL_Texture *TextureTemp = NULL;
+    SDL_Color Noir = {0, 0, 0, 0};
+	SDL_Color Gris = {127, 127,127, 0};
+	SDL_Color Blanc = {255, 255, 255, 0};
+	SDL_Color Rouge = {255, 0, 0, 0};
+	SDL_Color Vert = {0, 255, 0, 0};
+	SDL_Color Bleu = {0, 0, 255, 0};
+
+
     if(systeme->police == NULL)
     {
         printf ("police not load\n");
     }
-
-    SDL_Surface *SurfTemp = NULL;
-	static SDL_Color Noir = {0, 0, 0, 0};
-	static SDL_Color Gris = {127, 127,127, 0};
-	static SDL_Color Blanc = {255, 255, 255, 0};
-	static SDL_Color Rouge = {255, 0, 0, 0};
-	static SDL_Color Vert = {0, 255, 0, 0};
-	static SDL_Color Bleu = {0, 0, 255, 0};
 
 	if (couleur == BLANC)
     {
@@ -152,7 +157,7 @@ SDL_Texture* imprime (char s[], int len, int couleur, DIVERSsysteme *systeme, in
     {
         SurfTemp = TTF_RenderText_Blended_Wrapped(systeme->police, (const char *)s, Bleu, len);
     }
-    SDL_Texture *TextureTemp = NULL;
+
     if (SurfTemp != NULL)
     {
         TextureTemp = SDL_CreateTextureFromSurface(systeme->renderer, SurfTemp);

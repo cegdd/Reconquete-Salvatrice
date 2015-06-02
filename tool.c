@@ -9,7 +9,7 @@ typedef struct DIVERSsysteme DIVERSsysteme;
 typedef struct typecombat typecombat;
 typedef struct BARREVIE BARREVIE;
 
-void DrawTestGrid(typecombat *BTLstr, DIVERSsysteme *systeme)
+void DrawTestGrid(struct typecombat *BTLstr,struct DIVERSsysteme *systeme)
 {/*
     int k, l;
     SDL_Rect tmp = {0, 0, 5, 5};
@@ -27,7 +27,7 @@ void DrawTestGrid(typecombat *BTLstr, DIVERSsysteme *systeme)
     }*/
 }
 
-void UnWriteSquareTestGrid(typecombat *BTLstr, SDL_Rect *area)
+void UnWriteSquareTestGrid(struct typecombat *BTLstr,struct SDL_Rect *area)
 {/*
     int k, l;
     for (k = 0 ; k < 1365 ; k++)
@@ -45,7 +45,7 @@ void UnWriteSquareTestGrid(typecombat *BTLstr, SDL_Rect *area)
     }*/
 }
 
-void UnWriteCircleTestGrid (typecombat *BTLstr, SDL_Point *middle, int width)
+void UnWriteCircleTestGrid (struct typecombat *BTLstr, SDL_Point *middle, int width)
 {/*
     int k, l;
     SDL_Rect tmp2 = {middle->x - width,
@@ -74,7 +74,7 @@ void UnWriteCircleTestGrid (typecombat *BTLstr, SDL_Point *middle, int width)
     }*/
 }
 
-BARREVIE* AddLifeBar(int life, int lenght, DIVERSsysteme *systeme)
+BARREVIE* AddLifeBar(int life, int lenght,struct DIVERSsysteme *systeme)
 {
 	BARREVIE *new = malloc(sizeof(BARREVIE));
 

@@ -12,18 +12,20 @@
 
 void* thread1(void  *data)
 {
-      struct typeFORthreads *online = data;
-
-    #if WINDOWS == 1
-    WSADATA wsa;
-    WSAStartup(MAKEWORD(2, 2), &wsa);
-    #endif
+    struct typeFORthreads *online = data;
 
     int oldpx = 0, oldpy = 0;
     int resultatconnect = -1;
     char position[15] = {'\0'};
 
     SOCKADDR_IN info;
+    pthread_t lethread2;
+
+    #if WINDOWS == 1
+        WSADATA wsa;
+        WSAStartup(MAKEWORD(2, 2), &wsa);
+    #endif
+
     info.sin_addr.s_addr = inet_addr(IPSERVEUR);
     info.sin_family = AF_INET;
     info.sin_port = htons(32);
@@ -43,7 +45,6 @@ void* thread1(void  *data)
 		SDL_Delay(100);
 	}
 	online->isonline = true;
-    pthread_t lethread2;
 
     pthread_create(&lethread2, NULL, *thread2, online);
     send(online->sock, online->systeme->sauvegarde[0], 20, 0);

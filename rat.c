@@ -9,7 +9,10 @@ typedef struct typecombat typecombat;
 
 int TestColision_Rat(SDL_Rect *rat, int x, int y, int direction)
 {
-    SDL_Rect pix = {x, y, 1, 1};
+    SDL_Rect pix = {0, 0, 1, 1};
+    pix.x = x;
+    pix.y = y;
+
     if (checkdistance(&pix, rat, 10) == -1 )
     {
         return 1;
@@ -131,7 +134,7 @@ int TestColision_Rat(SDL_Rect *rat, int x, int y, int direction)
     return 0;
 }
 
-void ADD_Rat(int type, int MemoryArea, typecombat *BTLstr, DIVERSsysteme *systeme, RAT *rat)
+void ADD_Rat(int type, int MemoryArea,struct typecombat *BTLstr,struct DIVERSsysteme *systeme,struct RAT *rat)
 {
 
 	int index;

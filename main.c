@@ -17,8 +17,17 @@
 
 int main (int argc, char *argv[])
 {
+    int ret = 0;
+
+    struct DIVERSsysteme systeme;
+    struct typeFORthreads online;
+    Mix_Music *sound = NULL;
+
+    initonline(&online, &systeme);
+    /*pthread_t lethread1;*/
+
 	if (argc == *argv[0]){}/*juste pour les warnings*/
-	srand(2);
+	srand(2); /*define a random*/
 
     SDL_Init (SDL_INIT_VIDEO);
     atexit(SDL_Quit);
@@ -28,12 +37,6 @@ int main (int argc, char *argv[])
     atexit(IMG_Quit);
 	Mix_Init(MIX_INIT_MP3);
     atexit(Mix_Quit);
-
-    struct DIVERSsysteme systeme;
-    struct typeFORthreads online;
-    initonline(&online, &systeme);
-    /*pthread_t lethread1;*/
-    int ret = 0;
 
     SDL_ShowCursor(SDL_DISABLE);
     systeme.screen = SDL_CreateWindow("Reconquete salvatrice", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 0, 0, SDL_WINDOW_FULLSCREEN_DESKTOP);
@@ -58,7 +61,7 @@ int main (int argc, char *argv[])
 	return EXIT_SUCCESS;
 	#endif /* FASTLOG*/
 
-	Mix_Music *sound = Mix_LoadMUS("game.mp3");
+	sound = Mix_LoadMUS("game.mp3");
 	if (sound == NULL){ printf("musique non trouvée"); return EXIT_FAILURE;}
 	else if (Mix_PlayMusic(sound, -1) < 0){ printf("musique non jouable"); return EXIT_FAILURE;}
 
@@ -98,20 +101,20 @@ int main (int argc, char *argv[])
 
 int chargementcarte(struct DIVERSsysteme *systeme, struct typeFORthreads *online)
 {
-	PACKbouton bouton;
-    PACKobjet objet;
-    PACKmonstre monstre;
-    PERSO perso;
-    DIVERSinventaire inventaire;
-    DIVERSdeplacement deplacement;
-    DIVERStemps temps;
-    DIVERSui ui;
-    DIVERSchat chat;
-    DIVERSmap carte;
-    PACKpnj pnj;
-    PACKrecompense recompense;
-    typeFORevent FORevent;
-    DIVERScraft craft;
+	struct PACKbouton bouton;
+    struct PACKobjet objet;
+    struct PACKmonstre monstre;
+    struct PERSO perso;
+    struct DIVERSinventaire inventaire;
+    struct DIVERSdeplacement deplacement;
+    struct DIVERStemps temps;
+    struct DIVERSui ui;
+    struct DIVERSchat chat;
+    struct DIVERSmap carte;
+    struct PACKpnj pnj;
+    struct PACKrecompense recompense;
+    struct typeFORevent FORevent;
+    struct DIVERScraft craft;
 
     inittemps(&temps, systeme);
     if (temps.temptotal != 0)
@@ -145,15 +148,15 @@ int chargementarcade (struct DIVERSsysteme *systeme)
 
 	while (ret == 2)
 	{
-		PACKmonstre monstre;
-		DIVERSinventaire inventaire;
-		DIVERSchat chat;
-		DIVERSui ui;
-		DIVERSdeplacement deplacement;
-		DIVERScraft craft;
-		PACKobjet objet;
-		PERSO perso;
-		PACKrecompense recompense;
+		struct PACKmonstre monstre;
+		struct DIVERSinventaire inventaire;
+		struct DIVERSchat chat;
+		struct DIVERSui ui;
+		struct DIVERSdeplacement deplacement;
+		struct DIVERScraft craft;
+		struct PACKobjet objet;
+		struct PERSO perso;
+		struct PACKrecompense recompense;
 
 		initmonstre(&monstre, systeme);
 		initinventaire(&inventaire, systeme);

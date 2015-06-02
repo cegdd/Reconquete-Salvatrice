@@ -6,12 +6,10 @@
 #include "jeux.h"
 #include "rat.h"
 
-typedef struct typecombat typecombat;
-
-int HitboxPoing(typecombat *BTLstr, int index)
+int HitboxPoing(struct typecombat *BTLstr, int index)
 {
     int k = 0, l = 0;
-    SDL_Rect pix = {k, l, 1, 1};
+    SDL_Rect pix = {0, 0, 1, 1};
 
 
     if (checkdistance(&BTLstr->creature[index].position, &BTLstr->Pperso, 120) == -1 )/*degrossissage pour calcul précis*/

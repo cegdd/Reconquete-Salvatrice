@@ -4,14 +4,12 @@
 #include "jeux.h"
 #include "main.h"
 
-typedef struct Element Element;
-typedef struct File File;
 typedef struct PACKmonstre PACKmonstre;
 
 void Add_Creature_Queue(File *file, int nvNombre, int quantity)
 {
 	int index;
-	
+
 	for(index = 0 ; index < quantity ; index++)
 	{
 		Element *nouveau = malloc(sizeof(*nouveau));
@@ -45,20 +43,20 @@ void Free_Queue_Element(File *file)
 	if (file->premier != NULL)
     {
 		Element *elementDefile = file->premier;
-		
+
 		file->premier = file->premier->suivant;
         free(elementDefile);
-    }	
+    }
 }
 
 int Read_Creature_Queue(File *file)
 {
+    int nombreDefile = -1;
+
     if (file == NULL)
     {
         return -1;
     }
-
-    int nombreDefile = -1;
 
     /* On vérifie s'il y a quelque chose à défiler */
     if (file->premier != NULL)
@@ -77,13 +75,13 @@ int Read_Creature_Queue(File *file)
 void initqueue(File *file, int ID)
 {
 	int ret = 0;
-	
+
 	while(ret != -1)
 	{
 		ret = Read_Creature_Queue(file);
 		Free_Queue_Element(file);
 	}
-	
+
 	switch(ID)
 	{
 		case 0:
@@ -104,5 +102,5 @@ void initqueue(File *file, int ID)
 			Add_Creature_Queue(file, RAT_ROUGE , 1);
 			break;
 	}
-	
+
 }

@@ -19,13 +19,15 @@
 #include "systeme.h"
 #include "listechaine.h"
 
-int map (DIVERSsysteme *systeme, typeFORthreads *online, PACKbouton *bouton , PACKobjet *objet, PACKmonstre *monstre, PERSO *perso, DIVERSinventaire *inventaire, DIVERSdeplacement *deplacement,
-		DIVERStemps *temps, DIVERSui *ui, DIVERSchat *chat, DIVERScraft *craft, DIVERSmap *carte, PACKpnj *pnj, PACKrecompense *recompense, typeFORevent *FORevent)
+int map (struct DIVERSsysteme *systeme,struct typeFORthreads *online,struct PACKbouton *bouton ,struct PACKobjet *objet,
+        struct PACKmonstre *monstre,struct PERSO *perso,struct DIVERSinventaire *inventaire,struct DIVERSdeplacement *deplacement,
+		struct DIVERStemps *temps,struct DIVERSui *ui,struct DIVERSchat *chat,struct DIVERScraft *craft,struct DIVERSmap *carte,
+		struct PACKpnj *pnj,struct PACKrecompense *recompense,struct typeFORevent *FORevent)
 {
+    int index;
     chargement(systeme);
     #if CHEAT == 1
-    int indextmp;
-    for (indextmp = 0 ; indextmp < 10 ; indextmp++)
+    for (index = 0 ; index < 10 ; index++)
     {
 		insertionsac(objet, 0);
 		insertionsac(objet, 2);
@@ -36,7 +38,6 @@ int map (DIVERSsysteme *systeme, typeFORthreads *online, PACKbouton *bouton , PA
 
     online->jeuxACTIF = 1;
 
-    int index;
     for(index = 0 ; index < MAX_JOUEURS ; index++)
     {
         online->joueurs[index].ppseudo.x = 20000;
@@ -235,9 +236,9 @@ int map (DIVERSsysteme *systeme, typeFORthreads *online, PACKbouton *bouton , PA
 
 
 
-void detectioncombat(PACKmonstre *monstre, DIVERSinventaire *inventaire, DIVERSchat *chat, DIVERSui *ui,
-                     DIVERSdeplacement *deplacement, PACKobjet *objet, PERSO *perso,DIVERSsysteme *systeme,
-                     PACKrecompense *recompense, bool arcademode)
+void detectioncombat(struct PACKmonstre *monstre,struct DIVERSinventaire *inventaire,struct DIVERSchat *chat,struct DIVERSui *ui,
+                     struct DIVERSdeplacement *deplacement,struct PACKobjet *objet,struct PERSO *perso,struct DIVERSsysteme *systeme,
+                     struct PACKrecompense *recompense, bool arcademode)
 {
 	int index;
 
@@ -263,9 +264,9 @@ void detectioncombat(PACKmonstre *monstre, DIVERSinventaire *inventaire, DIVERSc
 
 
 
-int lancementcombat(PACKmonstre *monstre, DIVERSinventaire *inventaire, DIVERSchat *chat, DIVERSui *ui,
-                     DIVERSdeplacement *deplacement, PACKobjet *objet, PERSO *perso,DIVERSsysteme *systeme,
-                     PACKrecompense *recompense, bool arcademode)
+int lancementcombat(struct PACKmonstre *monstre,struct DIVERSinventaire *inventaire,struct DIVERSchat *chat,struct DIVERSui *ui,
+                    struct DIVERSdeplacement *deplacement,struct PACKobjet *objet,struct PERSO *perso,struct DIVERSsysteme *systeme,
+                    struct PACKrecompense *recompense, bool arcademode)
 {
     int indexloot = 0, index2, RETcombat;
     char slootcombat[120];
@@ -406,7 +407,7 @@ void ANIMmonstre(PACKmonstre *monstre, DIVERStemps *temps)
 	}
 }
 
-void gestionchat(DIVERSchat *chat, DIVERSsysteme *systeme, typeFORthreads *online)
+void gestionchat(struct DIVERSchat *chat,struct DIVERSsysteme *systeme,struct typeFORthreads *online)
 {
     if (chat->lettre != '\0' && online->chat.lenbuffer <128)
     {
@@ -427,8 +428,8 @@ void gestionchat(DIVERSchat *chat, DIVERSsysteme *systeme, typeFORthreads *onlin
     }
 }
 
-void sinchronisation(PACKpnj *pnj, DIVERSmap *carte, PACKmonstre *monstre, DIVERScraft *craft, DIVERSsysteme *systeme
-							, typeFORthreads *online, PERSO *perso)
+void sinchronisation(struct PACKpnj *pnj,struct DIVERSmap *carte,struct PACKmonstre *monstre,struct DIVERScraft *craft,
+                     struct DIVERSsysteme *systeme,struct typeFORthreads *online,struct PERSO *perso)
 {
 	int index;
 

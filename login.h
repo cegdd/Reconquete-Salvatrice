@@ -1,7 +1,6 @@
 #ifndef LOGINH
 #define LOGINH
 
-typedef struct TEXTE TEXTE;
 #include "main.h"
 
 struct bouton
@@ -31,10 +30,10 @@ struct typelogin
 	SDL_Color couleurBleu;
 	FILE *fichier;
 
-	TEXTE pseudo;
-	TEXTE mdp;
-	TEXTE LEpseudo;
-	TEXTE LEmdp;
+	struct TEXTE pseudo;
+	struct TEXTE mdp;
+	struct TEXTE LEpseudo;
+	struct TEXTE LEmdp;
 
 	SDL_Rect pecran;
 	SDL_Rect ppointeur;
@@ -89,15 +88,14 @@ struct typelogin
 	SDL_Texture *ttextedialogue;
 };
 
-typedef struct typelogin typelogin;
 typedef struct bouton bouton;
 
 int auth (char sauvegarde[][50]);
-int login (DIVERSsysteme *systeme);
+int login (struct DIVERSsysteme *systeme);
 int creerjoueur(char sauvegarde[][50]);
 
-void InitLoginStore (typelogin *loginstore, DIVERSsysteme *systeme);
-void Initbouton     (typelogin *loginstore, DIVERSsysteme *systeme);
-void affichageloggin(typelogin *loginstore, DIVERSsysteme *systeme);
+void InitLoginStore (struct typelogin *loginstore,struct DIVERSsysteme *systeme);
+void Initbouton     (struct typelogin *loginstore,struct DIVERSsysteme *systeme);
+void affichageloggin(struct typelogin *loginstore,struct DIVERSsysteme *systeme);
 
 #endif

@@ -49,7 +49,7 @@ int calculdirectionjoueurs(SDL_Rect posjoueurs,SDL_Rect oldposjoueurs)
 }
 
 
-void haut (PERSO *perso, int* y, DIVERSsysteme *systeme, int enmap)
+void haut (struct PERSO *perso, int* y, struct DIVERSsysteme *systeme, int enmap)
 {
     if (enmap == 1)
     {
@@ -71,7 +71,7 @@ void haut (PERSO *perso, int* y, DIVERSsysteme *systeme, int enmap)
 		*y = *y - 3;
 	}
 }
-void hautdroite (PERSO *perso, int* x, int* y, DIVERSsysteme *systeme, int enmap)
+void hautdroite (struct PERSO *perso, int* x, int* y, struct DIVERSsysteme *systeme, int enmap)
 {
     if (enmap == 1)
     {
@@ -107,7 +107,7 @@ void hautdroite (PERSO *perso, int* x, int* y, DIVERSsysteme *systeme, int enmap
 		*y = *y - 2;
 	}
 }
-void droite (PERSO *perso, int* x, DIVERSsysteme *systeme, int enmap)
+void droite (struct PERSO *perso, int* x, struct DIVERSsysteme *systeme, int enmap)
 {
     if (enmap == 1)
     {
@@ -129,7 +129,7 @@ void droite (PERSO *perso, int* x, DIVERSsysteme *systeme, int enmap)
 		*x = *x + 3;
 	}
 }
-void basdroite (PERSO *perso, int* x, int* y, DIVERSsysteme *systeme, int enmap)
+void basdroite (struct PERSO *perso, int* x, int* y, struct DIVERSsysteme *systeme, int enmap)
 {
     if (enmap == 1)
     {
@@ -165,7 +165,7 @@ void basdroite (PERSO *perso, int* x, int* y, DIVERSsysteme *systeme, int enmap)
 		*x = *x + 2;
 	}
 }
-void bas (PERSO *perso, int* y, DIVERSsysteme *systeme, int enmap)
+void bas (struct PERSO *perso, int* y, struct DIVERSsysteme *systeme, int enmap)
 {
     if (enmap == 1)
     {
@@ -187,7 +187,7 @@ void bas (PERSO *perso, int* y, DIVERSsysteme *systeme, int enmap)
 		*y = *y + 3;
 	}
 }
-void basgauche (PERSO *perso, int* x, int* y, DIVERSsysteme *systeme, int enmap)
+void basgauche (struct PERSO *perso, int* x, int* y, struct DIVERSsysteme *systeme, int enmap)
 {
     if (enmap == 1)
     {
@@ -223,7 +223,7 @@ void basgauche (PERSO *perso, int* x, int* y, DIVERSsysteme *systeme, int enmap)
 		*x = *x - 2;
 	}
 }
-void gauche (PERSO *perso, int* x, DIVERSsysteme *systeme, int enmap)
+void gauche (struct PERSO *perso, int* x, struct DIVERSsysteme *systeme, int enmap)
 {
     if (enmap == 1)
     {
@@ -245,7 +245,7 @@ void gauche (PERSO *perso, int* x, DIVERSsysteme *systeme, int enmap)
 		*x = *x - 3;
 	}
 }
-void gauchehaut (PERSO *perso, int* x, int* y, DIVERSsysteme *systeme, int enmap)
+void gauchehaut (struct PERSO *perso, int* x, int* y, struct DIVERSsysteme *systeme, int enmap)
 {
     if (enmap == 1)
     {

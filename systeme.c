@@ -10,7 +10,6 @@
 typedef struct RAT RAT;
 typedef struct PACKobjet PACKobjet;
 typedef struct PERSO PERSO;
-typedef struct DIVERSsysteme DIVERSsysteme;
 typedef struct DIVERSinventaire DIVERSinventaire;
 
 void recompensecombat(struct RAT *rat, int *recompense)
@@ -31,9 +30,10 @@ void recompensecombat(struct RAT *rat, int *recompense)
     }
 }
 
-void checkandrefreshstuff(PERSO *perso, PACKobjet *objet, DIVERSsysteme *systeme, DIVERSui *ui)
+void checkandrefreshstuff(PERSO *perso, PACKobjet *objet,struct DIVERSsysteme *systeme,struct DIVERSui *ui)
 {
 	int index;
+	char string[64];
 
     perso->defense = 0;
     perso->lifemax = 100;
@@ -57,7 +57,7 @@ void checkandrefreshstuff(PERSO *perso, PACKobjet *objet, DIVERSsysteme *systeme
 	{
 		perso->life = perso->lifemax;
 	}
-    char string[64];
+
     sprintf(string, "defense : %d", (int)perso->defense);
     SDL_DestroyTexture(perso->tdefense);
     perso->tdefense = imprime (string, systeme->screenw, BLANC, systeme, NULL, NULL);
@@ -100,14 +100,14 @@ void checkinventaire(PACKobjet *objet, DIVERSinventaire *inventaire)
 
 int checkdistance(SDL_Rect *A, SDL_Rect *B, int lenght)
 {
-
+    double resultat;
 	double difx = (A->x+(A->w/2)) - (B->x+(B->w/2));
 	double dify = (A->y+(A->h/2)) - (B->y+(B->h/2));
 
 	if (difx < 0) {difx *= -1;}
 	if (dify < 0) {dify *= -1;}
 
-	double resultat = sqrt((difx*difx)+(dify*dify));
+	resultat = sqrt((difx*difx)+(dify*dify));
 
 	if (resultat <= lenght) {return -1;} /* dedans*/
 	return 1; /* dehors*/

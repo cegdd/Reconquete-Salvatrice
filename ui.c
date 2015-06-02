@@ -9,9 +9,8 @@
 #include "deplacement.h"
 #include "systeme.h"
 
-typedef struct PACKbouton PACKbouton;
 
-void gestionui (DIVERSsysteme *systeme, DIVERSui *ui, DIVERScraft *craft, PACKbouton *bouton, DIVERSchat *chat,
+void gestionui (struct DIVERSsysteme *systeme, DIVERSui *ui, DIVERScraft *craft, PACKbouton *bouton, DIVERSchat *chat,
 				DIVERSinventaire *inventaire, PACKobjet *objet, PERSO *perso, PACKpnj *pnj)
 {
     int index = 0;
@@ -161,7 +160,7 @@ void gestionui (DIVERSsysteme *systeme, DIVERSui *ui, DIVERScraft *craft, PACKbo
 }
 
 SDL_Texture *fenetredialogue(int x, int y, SDL_Rect* pdialogue, SDL_Rect* ptextedialogue, char texte[],
-							int couleur, DIVERSsysteme *systeme)
+							int couleur,struct DIVERSsysteme *systeme)
 {/*pdialogue is the background and ptextedialogue is the text inside.*/
 /*just set "x" and "y" and everything will be automaticaly set up.*/
 
@@ -189,7 +188,7 @@ SDL_Texture *fenetredialogue(int x, int y, SDL_Rect* pdialogue, SDL_Rect* ptexte
 	return texture;
 }
 
-SDL_Texture *DrawSDLText(SDL_Rect* ptextedialogue, char texte[], int color, int ALIGN, DIVERSsysteme *systeme)
+SDL_Texture *DrawSDLText(SDL_Rect* ptextedialogue, char texte[], int color, int ALIGN,struct DIVERSsysteme *systeme)
 {
 	SDL_Texture *texture;
 	int lenght, high;
@@ -217,7 +216,7 @@ SDL_Texture *DrawSDLText(SDL_Rect* ptextedialogue, char texte[], int color, int 
 	return texture;
 }
 
-void testcoin(DIVERSsysteme *systeme, DIVERSui *ui, DIVERSchat *chat, DIVERSinventaire *inventaire)
+void testcoin(struct DIVERSsysteme *systeme, DIVERSui *ui, DIVERSchat *chat, DIVERSinventaire *inventaire)
 {
 	static int statcoinhaut = 0, statcoinbas = 0;
 
@@ -307,7 +306,7 @@ void testcoin(DIVERSsysteme *systeme, DIVERSui *ui, DIVERSchat *chat, DIVERSinve
 	}
 }
 
-int calculclicinventaire(int *ptrpy, int *ptrpx, DIVERSsysteme *systeme)
+int calculclicinventaire(int *ptrpy, int *ptrpx,struct DIVERSsysteme *systeme)
 {
 	int ligne = (*ptrpy - (systeme->screenh*0.526))/(systeme->screenw*0.0417);
 	int colonne = *ptrpx/(systeme->screenw*0.0417);
@@ -315,7 +314,7 @@ int calculclicinventaire(int *ptrpy, int *ptrpx, DIVERSsysteme *systeme)
 }
 
 void afficherCRAFT(DIVERScraft *craft, DIVERSui *ui, PACKbouton *bouton, PACKobjet *objet,
-				DIVERSinventaire *inventaire, DIVERSsysteme *systeme)
+				struct DIVERSinventaire *inventaire,struct DIVERSsysteme *systeme)
 {
 	int index;
 	/*affichage du fond*/
@@ -444,7 +443,7 @@ void afficherCRAFT(DIVERScraft *craft, DIVERSui *ui, PACKbouton *bouton, PACKobj
 	}
 }
 
-void afficherINVENTAIRE(DIVERSinventaire *inventaire, DIVERSui *ui, PACKobjet *objet, DIVERSsysteme *systeme)
+void afficherINVENTAIRE(DIVERSinventaire *inventaire, DIVERSui *ui, PACKobjet *objet,struct DIVERSsysteme *systeme)
 {
 	int index;
 	char snbobjet[4];
@@ -488,9 +487,9 @@ void afficherINVENTAIRE(DIVERSinventaire *inventaire, DIVERSui *ui, PACKobjet *o
 }
 
 void afficherUI(bool enligne, DIVERSui *ui, PACKbouton *bouton, DIVERStemps *temps, PERSO *perso, DIVERSchat *chat, DIVERSinventaire *inventaire,
-                DIVERSsysteme *systeme, PACKrecompense *recompense, PACKobjet *objet)
+                struct DIVERSsysteme *systeme, PACKrecompense *recompense, PACKobjet *objet)
 {
-	int index;
+	int index, calculposy;
 	/*coins*/
 	SDL_RenderCopy	(systeme->renderer, chat->Uichat, NULL, &chat->puichat);
 	SDL_RenderCopy	(systeme->renderer, inventaire->Uiinventaire, NULL, &inventaire->puiinventaire);
@@ -569,7 +568,7 @@ void afficherUI(bool enligne, DIVERSui *ui, PACKbouton *bouton, DIVERStemps *tem
 		SDL_RenderCopy	(systeme->renderer, systeme->BG, NULL, &recompense->pBGrecompense);
 		SDL_RenderCopy	(systeme->renderer, recompense->tvictoire, NULL, &recompense->ptvictoire);
 		SDL_RenderCopy	(systeme->renderer, recompense->ttexterecompensecombat, NULL, &recompense->ptrecompesecombat);
-		int calculposy = 0;
+		calculposy = 0;
 		for(index = 0 ; index < LOOTMAX ; index++)
 		{
 			if (recompense->recompenseNB[index] != 0)
@@ -582,7 +581,7 @@ void afficherUI(bool enligne, DIVERSui *ui, PACKbouton *bouton, DIVERStemps *tem
 	}
 }
 
-void afficherMAP(DIVERSmap *carte, DIVERSsysteme *systeme, DIVERScraft *craft)
+void afficherMAP(DIVERSmap *carte,struct DIVERSsysteme *systeme, DIVERScraft *craft)
 {
 	int index;
 
@@ -615,13 +614,13 @@ void afficherMAP(DIVERSmap *carte, DIVERSsysteme *systeme, DIVERScraft *craft)
 
 }
 
-void afficherPNJ(PERSO *perso, PACKpnj *pnj, DIVERSsysteme *systeme)
+void afficherPNJ(PERSO *perso, PACKpnj *pnj,struct DIVERSsysteme *systeme)
 {
 	SDL_RenderCopyEx(systeme->renderer, perso->tperso, &perso->spriteup[0], &pnj->toumai, -90,NULL, SDL_FLIP_NONE);
 	/*SDL_RenderCopyEx(systeme->renderer, perso->cheveuxblanc, NULL, &pnj->toumai, -90,NULL, SDL_FLIP_NONE);*/
 }
 
-void afficherMOB(PACKmonstre *monstre, DIVERSsysteme *systeme)
+void afficherMOB(PACKmonstre *monstre,struct DIVERSsysteme *systeme)
 {
 	int index;
 	for (index = 0 ; index < 3 ; index++)
@@ -633,7 +632,7 @@ void afficherMOB(PACKmonstre *monstre, DIVERSsysteme *systeme)
 	}
 }
 
-void afficherJOUEURS(PERSO *perso, DIVERSdeplacement *deplacement, DIVERSsysteme *systeme, typeFORthreads *online)
+void afficherJOUEURS(PERSO *perso, DIVERSdeplacement *deplacement,struct DIVERSsysteme *systeme, typeFORthreads *online)
 {
     int index, calcul;
 	/*joueur client*/
@@ -670,7 +669,7 @@ void afficherJOUEURS(PERSO *perso, DIVERSdeplacement *deplacement, DIVERSsysteme
 			   online->joueurs[index].oldposjoueurs.y = online->joueurs[index].position.y;
 
 			}
-			int calcul = 45 * deplacement->directionjoueurs[index];
+			calcul = 45 * deplacement->directionjoueurs[index];
 
 			online->joueurs[index].ppseudo.x = online->joueurs[index].posjoueurscalculer.x;
 			online->joueurs[index].ppseudo.y = online->joueurs[index].posjoueurscalculer.y - 33;
@@ -683,7 +682,7 @@ void afficherJOUEURS(PERSO *perso, DIVERSdeplacement *deplacement, DIVERSsysteme
 	}
 }
 
-void afficherCHAT(DIVERSchat *chat, DIVERSui *ui, int lenbuffer, DIVERSsysteme *systeme)
+void afficherCHAT(DIVERSchat *chat, DIVERSui *ui, int lenbuffer,struct DIVERSsysteme *systeme)
 {
 	int index;
 	SDL_RenderCopy	(systeme->renderer, chat->BGchat, NULL, &ui->pUIbas);
@@ -703,7 +702,7 @@ void afficherCHAT(DIVERSchat *chat, DIVERSui *ui, int lenbuffer, DIVERSsysteme *
 	}
 }
 
-void afficherPOINTEUR(DIVERSsysteme *systeme, PACKobjet *objet)
+void afficherPOINTEUR(struct DIVERSsysteme *systeme, PACKobjet *objet)
 {
 	SDL_RenderCopy	(systeme->renderer, systeme->pointeur, NULL, &systeme->pp);
 	if (objet->objetenmain.IDobjet != -1)
@@ -715,13 +714,15 @@ void afficherPOINTEUR(DIVERSsysteme *systeme, PACKobjet *objet)
 
 }
 
-void afficherDETAIL(DIVERSinventaire *inventaire, PACKobjet *objet, DIVERSsysteme *systeme, int id)
+void afficherDETAIL(struct DIVERSinventaire *inventaire, PACKobjet *objet,struct DIVERSsysteme *systeme, int id)
 {
+    int largeurmax = 0;
+
 	inventaire->pdetail.x = systeme->pp.x + 15;
 	inventaire->pdetail.y = systeme->pp.y + 10;
 	inventaire->pdetail.h = 60;
 
-	int largeurmax = objet->objet[id].LARGEURnom;
+	largeurmax = objet->objet[id].LARGEURnom;
 
 	if(largeurmax < inventaire->LARGEURaideclicdroit)/*clic droit*/
 	{

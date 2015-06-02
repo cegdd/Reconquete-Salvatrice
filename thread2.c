@@ -19,7 +19,7 @@ void* thread2(void  *data)
     char arg2[20] = {'\0'};
     char id[4] = {'\0'};
     char chattemp[10][512];
-    int index = 0, indexID = 0, index1 = 0, index2 = 0, intid = 0;
+    int index = 0, indexID = 0, index1 = 0, index2 = 0, intid = 0, len = 0, choix = 0;
 
     while (1)
     {
@@ -83,8 +83,8 @@ void* thread2(void  *data)
         {
             id[0] = '0';
             intid = atoi(id);
-            int len = atoi(arg1);
-            int choix = choixstringchat(online->chat.poschat);
+            len = atoi(arg1);
+            choix = choixstringchat(online->chat.poschat);
             memset(online->chat.schat[choix], '\0', 512);
             memset(chattemp[choix], '\0', 512);
             recv(online->sock, chattemp[choix], len, 0);

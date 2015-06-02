@@ -5,9 +5,8 @@
 
 #include "fichier.h"
 #include "sauvegarde.h"
-#include "main.h"
 
-void chargersauvegarde(DIVERSsysteme *systeme)
+void chargersauvegarde(struct DIVERSsysteme *systeme)
 {
 	FILE *fichiersauvegarde = NULL, *crypted = NULL;
 	char nomfichier[50] = {'\0'};
@@ -17,10 +16,11 @@ void chargersauvegarde(DIVERSsysteme *systeme)
 	char buffer[4096] = {'\0'};
 	char ret[50] = {'\0'};
 
+	int iligne = 0, i, index;
+
 	sprintf(nomfichier, "rs/sauvegarde/%s.RSCryptedSave", systeme->sauvegarde[0]);
 	crypted = fopen ((const char *) nomfichier, "r");
 
-	int i, iligne = 0, index;
 	for (i = 0 ; i < NBargSAVE ; i++)
 	{
 		caractere = fgetc(crypted);
@@ -71,8 +71,8 @@ void chargersauvegarde(DIVERSsysteme *systeme)
 	fclose(fichiersauvegarde);
 }
 
-void sauvegardetout(char sauvegarde[][50],SDL_Rect pmap, PERSO *perso, int temptotal, int unuse,
-					 struct EMPLACEMENT *sac, int tailledusac, DIVERSui *ui)
+void sauvegardetout(char sauvegarde[][50],SDL_Rect pmap,struct PERSO *perso, int temptotal, int unuse,
+					 struct EMPLACEMENT *sac, int tailledusac,struct DIVERSui *ui)
 {
 	FILE *fichier2 = NULL;
 	char nomfichier[50] = {'\0'};

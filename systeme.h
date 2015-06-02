@@ -1,16 +1,13 @@
 #ifndef SYSTEMEH
 #define SYSTEMEH
 
+#include "main.h"
+
 typedef struct RAT RAT;
-typedef struct DIVERSui DIVERSui;
-typedef struct DIVERSsysteme DIVERSsysteme;
-typedef struct PACKobjet PACKobjet;
-typedef struct PERSO PERSO;
-typedef struct DIVERSinventaire DIVERSinventaire;
 
 void recompensecombat(RAT *rat, int *recompense);
-void checkandrefreshstuff( PERSO *perso, PACKobjet *objet, DIVERSsysteme *systeme, DIVERSui *ui);
-void checkinventaire( PACKobjet *objet, DIVERSinventaire *inventaire);
+void checkandrefreshstuff(struct PERSO *perso,struct PACKobjet *objet,struct DIVERSsysteme *systeme,struct DIVERSui *ui);
+void checkinventaire(struct PACKobjet *objet,struct DIVERSinventaire *inventaire);
 int checkdistance(SDL_Rect *A, SDL_Rect *B, int lenght);
 int calculoctant(int px, int py, int canonx, int canony, int* difx, int* dify);
 int arrondi (float flottant);

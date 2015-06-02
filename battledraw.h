@@ -1,9 +1,9 @@
 #ifndef BATTLEDRAWH
 #define BATTLEDRAWH
 
-void BattleDraw_FloorItems(typecombat *BTLstr, DIVERSsysteme *systeme, PACKobjet *objet);
-void BattleDraw_Ennemy(typecombat *BTLstr, DIVERSsysteme *systeme, int arcademode);
-void BattleDraw_Player(typecombat *BTLstr, DIVERSsysteme *systeme, PERSO *perso);
-void BattleDraw_Projectile(typecombat *BTLstr, DIVERSsysteme *systeme);
+void BattleDraw_FloorItems(struct typecombat *BTLstr,struct DIVERSsysteme *systeme,struct PACKobjet *objet);
+void BattleDraw_Ennemy(struct typecombat *BTLstr,struct DIVERSsysteme *systeme, int arcademode);
+void BattleDraw_Player(struct typecombat *BTLstr,struct DIVERSsysteme *systeme,struct PERSO *perso);
+void BattleDraw_Projectile(struct typecombat *BTLstr,struct DIVERSsysteme *systeme);
 
 #endif

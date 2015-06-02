@@ -1,12 +1,10 @@
 #ifndef COLISIONH
 #define COLISIONH
-#include<stdbool.h>
 
-typedef struct PERSO PERSO;
-typedef struct DIVERSsysteme DIVERSsysteme;
-typedef struct DIRECTION DIRECTION;
+#include <stdbool.h>
+#include "main.h"
 
-void deplacementperso(SDL_Surface *mapnb[], PERSO *perso, DIRECTION *direction, DIVERSsysteme *systeme, int *x, int *y, int enmap);
+void deplacementperso(SDL_Surface *mapnb[],struct PERSO *perso,struct DIRECTION *direction,struct DIVERSsysteme *systeme, int *x, int *y, int enmap);
 
 int colisionbox(SDL_Rect *A, SDL_Rect *B, bool pointeur);
 bool colisionfromage(SDL_Rect *lanceur, SDL_Rect *recepteur, SDL_Rect *curseur, double marge);
