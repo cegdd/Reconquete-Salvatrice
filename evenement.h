@@ -3,24 +3,20 @@
 
 #include <stdbool.h>
 #include "main.h"
+#include "login.h"
 
-typedef struct typeFORevent typeFORevent;
-typedef struct typelogin typelogin;
-typedef struct typecombat typecombat;
-typedef struct DIRECTION DIRECTION;
+void boucleevent (bool *lancermessage,struct typeFORevent *FORevent);
+int boucleeventcombat (struct typecombat *BTLstr,struct DIVERSsysteme *systeme,struct DIRECTION *direction,struct DIVERSui *ui);
+int boucleeventlogin (struct typelogin *loginstore,struct DIVERSsysteme *systeme);
+int LoopEventBattleDeath (struct typecombat *BTLstr, SDL_Event *event);
 
-void boucleevent (bool *lancermessage, typeFORevent *FORevent);
-int boucleeventcombat (typecombat *BTLstr,struct DIVERSsysteme *systeme, DIRECTION *direction,struct DIVERSui *ui);
-int boucleeventlogin (typelogin *loginstore,struct DIVERSsysteme *systeme);
-int LoopEventBattleDeath (typecombat *BTLstr, SDL_Event *event);
+void eventmapclavierdown(struct typeFORevent *FORevent);
+void eventmapclavierup(bool *lancermessage,struct typeFORevent *FORevent);
+void eventmapsourisgaucheup(struct typeFORevent *FORevent);
+void eventmapsourisdroiteup(struct typeFORevent *FORevent);
+void eventmapsourisgauchedown(struct typeFORevent *FORevent);
+void eventmapsourisdroitedown(struct typeFORevent *FORevent);
 
-void eventmapclavierdown(typeFORevent *FORevent);
-void eventmapclavierup(bool *lancermessage, typeFORevent *FORevent);
-void eventmapsourisgaucheup(typeFORevent *FORevent);
-void eventmapsourisdroiteup(typeFORevent *FORevent);
-void eventmapsourisgauchedown(typeFORevent *FORevent);
-void eventmapsourisdroitedown(typeFORevent *FORevent);
-
-void sourisactionzone(typeFORevent *FORevent);
+void sourisactionzone(struct typeFORevent *FORevent);
 
 #endif

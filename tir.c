@@ -7,8 +7,6 @@
 #include "rat.h"
 #include "systeme.h"
 
-typedef struct typecombat typecombat;
-
 void tirer (float px, float py, int canonx, int canony, int tx[][PRECISIONcailloux], int ty[][PRECISIONcailloux], int tableauutile, double *degre)
 {
 	register int vitesse = VITESSE;
@@ -65,7 +63,7 @@ void tirer (float px, float py, int canonx, int canony, int tx[][PRECISIONcaillo
 	}
 }
 
-int HitboxBalle(typecombat *BTLstr, int index)
+int HitboxBalle(struct typecombat *BTLstr, int index)
 {/*fonction appeler pour chaque monstres*/
 	int i, k = 0, l = 0;
 	SDL_Rect pix = {0, 0, 1, 1};
@@ -133,7 +131,7 @@ void COMBATgestionprojectile (struct typecombat *BTLstr)
 	}
 }
 
-void gestiontir(typecombat *BTLstr)
+void gestiontir(struct typecombat *BTLstr)
 {
     tirer (BTLstr->px, BTLstr->py, BTLstr->canonx, BTLstr->canony, BTLstr->tx, BTLstr->ty, BTLstr->tableauutile, &BTLstr->degre);
 

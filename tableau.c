@@ -12,23 +12,6 @@
 #include "tool.h"
 #include "queue.h"
 
-typedef struct plan plan;
-typedef struct PACKbouton PACKbouton;
-typedef struct PACKmonstre PACKmonstre;
-typedef struct PACKpnj PACKpnj;
-typedef struct DIVERSinventaire DIVERSinventaire;
-typedef struct DIVERSdeplacement DIVERSdeplacement;
-typedef struct DIVERStemps DIVERStemps;
-typedef struct DIVERSui DIVERSui;
-typedef struct DIVERSchat DIVERSchat;
-typedef struct PERSO PERSO;
-typedef struct DIVERSmap DIVERSmap;
-typedef struct PACKrecompense PACKrecompense;
-typedef struct typeFORevent typeFORevent;
-typedef struct typeFORthreads typeFORthreads;
-typedef struct BARREVIE BARREVIE;
-
-
 int TotalTableauInt(int *ptrTableau, int nbcase)
 {
 	int total = 0, i = 0;
@@ -39,7 +22,7 @@ int TotalTableauInt(int *ptrTableau, int nbcase)
 	return total;
 }
 
-void initinventaire(DIVERSinventaire *inventaire, DIVERSsysteme *systeme)/*									inventaire*/
+void initinventaire(struct DIVERSinventaire *inventaire,struct DIVERSsysteme *systeme)/*									inventaire*/
 {
 	int index, rangerx = -1;
 	char nom[32];
@@ -72,7 +55,6 @@ void initinventaire(DIVERSinventaire *inventaire, DIVERSsysteme *systeme)/*					
 	inventaire->caseupgauche = -1;
 	inventaire->idsurvoler = -1;
 	inventaire->tnbobjet = NULL;
-	inventaire->Uiinventaire = LoadingImage	("rs/ui/uiinventaire.png", 0, systeme);
 	inventaire->tsacinventaire = LoadingImage	("rs/ui/sac1.png", 0, systeme);
 	inventaire->BGinventaire = LoadingImage	("rs/ui/BGinventaire.png", 0, systeme);
 	inventaire->tcasesac = LoadingImage		("rs/ui/caseinventaire.png", 0, systeme);
@@ -81,11 +63,6 @@ void initinventaire(DIVERSinventaire *inventaire, DIVERSsysteme *systeme)/*					
 	sprintf(nom, "clic droit : équiper");
 	inventaire->taideclicdroit = imprime (nom, systeme->screenw, GRIS, systeme, NULL, NULL);
 	SDL_QueryTexture(inventaire->taideclicdroit, NULL, NULL, &inventaire->LARGEURaideclicdroit, NULL);
-
-	inventaire->puiinventaire.x = systeme->screenw-50;
-	inventaire->puiinventaire.y = systeme->screenh-50;
-	inventaire->puiinventaire.w = 50;
-	inventaire->puiinventaire.h = 50;
 
 	inventaire->psac.x = 0;
 	inventaire->psac.y = systeme->screenh/2;
@@ -114,14 +91,14 @@ void deplacementmap(SDL_Rect *pmap,int nombretiles, int x, int y)
 	}
 }
 
-void initPLAN(int type, int index, PACKobjet *objet)
+void initPLAN(int type, int index,struct PACKobjet *objet)
 {
     objet->PLANstuff[type][index].compodifferente = 0;
 	objet->PLANstuff[type][index].resultatID = -1;
 	objet->PLANstuff[type][index].resultatNB = 0;
 }
 
-void initobjet(PACKobjet *objet, DIVERSsysteme *systeme, DIVERScraft *craft)/*													objet*/
+void initobjet(struct PACKobjet *objet,struct DIVERSsysteme *systeme,struct DIVERScraft *craft)/*													objet*/
 {
 	char nom[128];
 	int index;
@@ -290,7 +267,7 @@ void initobjet(PACKobjet *objet, DIVERSsysteme *systeme, DIVERScraft *craft)/*		
 	}
 }
 
-void initbouton(PACKbouton *bouton, DIVERSsysteme *systeme)/*												bouton*/
+void initbouton(struct PACKbouton *bouton,struct DIVERSsysteme *systeme)/*												bouton*/
 {
     int index;
 
@@ -347,7 +324,7 @@ void initbouton(PACKbouton *bouton, DIVERSsysteme *systeme)/*												bouton*
 	bouton->crafter.etat = 0;
 }
 
-void initmonstre(PACKmonstre *monstre, DIVERSsysteme *systeme)/*											monstre*/
+void initmonstre(struct PACKmonstre *monstre,struct DIVERSsysteme *systeme)/*											monstre*/
 {
 	int index;
 	monstre->rat[0].ID = 0;
@@ -399,7 +376,7 @@ void initmonstre(PACKmonstre *monstre, DIVERSsysteme *systeme)/*											monst
 	}
 }
 
-void initperso(PERSO *perso, DIVERSsysteme *systeme)/*														perso*/
+void initperso(struct PERSO *perso,struct DIVERSsysteme *systeme)/*														perso*/
 {
 	int index;
 	char string[10];
@@ -478,7 +455,7 @@ void initperso(PERSO *perso, DIVERSsysteme *systeme)/*														perso*/
 	perso->BarreDeVie = AddLifeBar(100, perso->pperso.w, systeme);
 }
 
-void initdeplacement(DIVERSdeplacement *deplacement, DIVERSsysteme *systeme)/*								deplacement*/
+void initdeplacement(struct DIVERSdeplacement *deplacement,struct DIVERSsysteme *systeme)/*								deplacement*/
 {
 	int index;
 
@@ -498,7 +475,7 @@ void initdeplacement(DIVERSdeplacement *deplacement, DIVERSsysteme *systeme)/*		
 	deplacement->y = atoi(systeme->sauvegarde[3]);
 }
 
-void inittemps(DIVERStemps *temps, DIVERSsysteme *systeme)/*												temps*/
+void inittemps(struct DIVERStemps *temps,struct DIVERSsysteme *systeme)/*												temps*/
 {
 	temps->i = 0;
 	temps->tpact = 0;
@@ -527,7 +504,7 @@ void inittemps(DIVERStemps *temps, DIVERSsysteme *systeme)/*												temps*/
 	temps->pttemps.h = systeme->screenh*0.05;
 }
 
-void initsystem(DIVERSsysteme *systeme)/*																	systeme*/
+void initsystem(struct DIVERSsysteme *systeme)/*																	systeme*/
 {
 	int index;
 
@@ -576,16 +553,23 @@ void initsystem(DIVERSsysteme *systeme)/*																	systeme*/
 	systeme->PixelCalque[index].x = 0;		systeme->PixelCalque[index].y = 25;
 }
 
-void initui(DIVERSui *ui, DIVERSsysteme *systeme)/*															ui*/
+void initui(struct DIVERSui *ui,struct DIVERSsysteme *systeme)/*															ui*/
 {
 	int index;
-	ui->menuactif = false;
-	ui->distanceprevenu = false;
+	ui->menuactif =         false;
+	ui->distanceprevenu =   false;
+	ui->OnLeftUp =          false;
+	ui->OnRightUp =         false;
+	ui->OnRightDown =       false;
+	ui->OnLeftDown =        false;
 
-	ui->coinhaut = 0;
-	ui->coinbas = 0;
+	ui->coinhaut =      0;
+	ui->coinbas =       0;
 	ui->lancedialogue = 0;
 	ui->dialogueactif = 0;
+	ui->PointedCorner = 0;
+	ui->CornerTime =    0;
+	ui->OldCornerTime = 0;
 
 	sprintf(ui->designationstuff[0], "arme");
 	sprintf(ui->designationstuff[1], "torse");
@@ -606,9 +590,10 @@ void initui(DIVERSui *ui, DIVERSsysteme *systeme)/*															ui*/
 	ui->lumiereon = LoadingImage		("rs/images/enligne.png", 0, systeme);
 	ui->lumiereoff = LoadingImage		("rs/images/horsligne.png", 0, systeme);
 	ui->tdialogue = LoadingImage		("rs/ui/dialogue.png", 0, systeme);
-	ui->uimenu = LoadingImage		("rs/ui/uimenu.png", 0, systeme);
+	ui->uimenu = LoadingImage		("rs/ui/uimenu.png", 150, systeme);
+	ui->Uiinventaire = LoadingImage	("rs/ui/uiinventaire.png", 150, systeme);
+	ui->Uichat = LoadingImage			("rs/ui/uichat.png", 150, systeme);
 	ui->BGmenu = LoadingImage		("rs/ui/BGmenu.png", 0, systeme);
-
 
 	ui->pUIbas.x = 0;
 	ui->pUIbas.y = systeme->screenh/2;
@@ -629,6 +614,16 @@ void initui(DIVERSui *ui, DIVERSsysteme *systeme)/*															ui*/
 	ui->puimenu.y = 0;
 	ui->puimenu.w = 50;
 	ui->puimenu.h = 50;
+
+	ui->puiinventaire.x = systeme->screenw-50;
+	ui->puiinventaire.y = systeme->screenh-50;
+	ui->puiinventaire.w = 50;
+	ui->puiinventaire.h = 50;
+
+	ui->puichat.x = 0;
+	ui->puichat.y = systeme->screenh-50;
+	ui->puichat.w = 50;
+	ui->puichat.h = 50;
 
 	ui->pcasestuff[0].x = systeme->screenw*0.225;
 	ui->pcasestuff[0].y = systeme->screenh*0.35;
@@ -662,7 +657,7 @@ void initui(DIVERSui *ui, DIVERSsysteme *systeme)/*															ui*/
 	ui->pcasestuff[6].h = systeme->screenh*0.1;
 }
 
-void initchat(DIVERSchat *chat, DIVERSsysteme *systeme)/*													chat*/
+void initchat(struct DIVERSchat *chat,struct DIVERSsysteme *systeme)/*													chat*/
 {
 	int index;
 	chat->chatactif = false;
@@ -679,14 +674,8 @@ void initchat(DIVERSchat *chat, DIVERSsysteme *systeme)/*													chat*/
 		chat->pstringchat[index].w = 0;
 		chat->pstringchat[index].h = TAILLE_POLICE;
 	}
-	chat->Uichat = LoadingImage			("rs/ui/uichat.png", 0, systeme);
 	chat->BGchat = LoadingImage			("rs/ui/BGchat.png", 0, systeme);
 	chat->BGchatactif = LoadingImage	("rs/ui/BGzonetextechat.png", 0, systeme);
-
-	chat->puichat.x = 0;
-	chat->puichat.y = systeme->screenh-50;
-	chat->puichat.w = 50;
-	chat->puichat.h = 50;
 
 	chat->pchatactif.w = systeme->screenw;
 	chat->pchatactif.h = systeme->screenh*0.03072;
@@ -699,7 +688,7 @@ void initchat(DIVERSchat *chat, DIVERSsysteme *systeme)/*													chat*/
 	chat->pbufferchat.h = chat->pchatactif.h;
 }
 
-void initcraft(DIVERScraft *craft, DIVERSsysteme *systeme)/*												craft*/
+void initcraft(struct DIVERScraft *craft,struct DIVERSsysteme *systeme)/*												craft*/
 {
 	int index;
 	craft->actif = false;
@@ -752,7 +741,7 @@ void initcraft(DIVERScraft *craft, DIVERSsysteme *systeme)/*												craft*/
 	craft->tetabli = LoadingImage			("rs/images/etabli.png", 0, systeme);
 }
 
-void initmap (DIVERSmap *carte, DIVERSsysteme *systeme, PERSO *perso)/*										map*/
+void initmap (struct DIVERSmap *carte,struct DIVERSsysteme *systeme,struct PERSO *perso)/*										map*/
 {
 	int index, rangerx = -1, i, j, i2, j2, noir = 0;
 	Uint32 pixel = {0};
@@ -816,14 +805,14 @@ void initmap (DIVERSmap *carte, DIVERSsysteme *systeme, PERSO *perso)/*									
 
 }
 
-void initpnj (PACKpnj *pnj)/*																				pnj*/
+void initpnj (struct PACKpnj *pnj)/*																				pnj*/
 {
 	pnj->toumai.w = 68;
 	pnj->toumai.h = 48;
 	pnj->toumaiParle = false;
 }
 
-void initrecompense (PACKrecompense *recompense, DIVERSsysteme *systeme)/*									recompense*/
+void initrecompense (struct PACKrecompense *recompense,struct DIVERSsysteme *systeme)/*									recompense*/
 {
 	int index;
 	for (index = 0 ; index < LOOTMAX ; index++)
@@ -860,9 +849,9 @@ void initrecompense (PACKrecompense *recompense, DIVERSsysteme *systeme)/*						
 	recompense->ptrecompesecombat.h = systeme->screenh*0.065;
 }
 
-void initFORevent(typeFORevent *FORevent, PACKobjet *objet, PACKbouton *bouton, DIVERSinventaire *inventaire, DIVERSsysteme *systeme,
-				DIVERSdeplacement *deplacement, DIVERSchat *chat, DIVERSui *ui, DIVERScraft *craft, PACKmonstre *monstre,
-				PERSO *perso,PACKpnj *pnj)
+void initFORevent(struct typeFORevent *FORevent,struct PACKobjet *objet,struct PACKbouton *bouton,struct DIVERSinventaire *inventaire,
+                  struct DIVERSsysteme *systeme,struct DIVERSdeplacement *deplacement,struct DIVERSchat *chat,struct DIVERSui *ui,
+                  struct DIVERScraft *craft,struct PACKmonstre *monstre,struct PERSO *perso,struct PACKpnj *pnj)
 {
 	FORevent->bouton = bouton;
 	FORevent->chat = chat;
@@ -878,7 +867,7 @@ void initFORevent(typeFORevent *FORevent, PACKobjet *objet, PACKbouton *bouton, 
 
 }
 
-void initonline(typeFORthreads *online, DIVERSsysteme *systeme)
+void initonline(struct typeFORthreads *online,struct DIVERSsysteme *systeme)
 {
 	int index;
 	online->sock = -1;
@@ -908,7 +897,7 @@ void initonline(typeFORthreads *online, DIVERSsysteme *systeme)
 
 }
 
-void initcombatstore(struct typecombat *BTLstr, DIVERSsysteme *systeme, struct DIRECTION *direction)
+void initcombatstore(struct typecombat *BTLstr,struct DIVERSsysteme *systeme, struct DIRECTION *direction)
 {
     #if BATTLE_LOG == 1
 	printf("initialising memory for battle :\n");

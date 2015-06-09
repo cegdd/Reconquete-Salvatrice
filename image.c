@@ -5,11 +5,7 @@
 
 #include "main.h"
 
-typedef struct DIVERSsysteme DIVERSsysteme;
-typedef struct TEXTE TEXTE;
-
-
-SDL_Texture* LoadingImage(char* emplacement, int transparence, DIVERSsysteme *systeme)
+SDL_Texture* LoadingImage(char* emplacement, int transparence,struct DIVERSsysteme *systeme)
 {
 	SDL_Texture *texture = NULL;
 	texture = IMG_LoadTexture(systeme->renderer, emplacement);
@@ -90,7 +86,7 @@ Uint32 obtenirPixel2(SDL_Surface *surface, int pixx, int pixy)
     }
 }
 
-void chargement (DIVERSsysteme *systeme)
+void chargement (struct DIVERSsysteme *systeme)
 {
 	SDL_Rect pecran, prs;
 	SDL_Texture *chargement = NULL, *rs = NULL;
@@ -116,7 +112,7 @@ void chargement (DIVERSsysteme *systeme)
     SDL_RenderPresent(systeme->renderer);
 }
 
-SDL_Texture* imprime (char s[], int len, int couleur, DIVERSsysteme *systeme, int *LenghtReturn, int *HighReturn)
+SDL_Texture* imprime (char s[], int len, int couleur,struct DIVERSsysteme *systeme, int *LenghtReturn, int *HighReturn)
 {
     SDL_Surface *SurfTemp = NULL;
     SDL_Texture *TextureTemp = NULL;
@@ -185,7 +181,7 @@ SDL_Texture* imprime (char s[], int len, int couleur, DIVERSsysteme *systeme, in
 	return TextureTemp;
 }
 
-void ANIMmort (DIVERSsysteme *systeme)
+void ANIMmort (struct DIVERSsysteme *systeme)
 {
 	SDL_Rect pecran;
 
@@ -199,4 +195,14 @@ void ANIMmort (DIVERSsysteme *systeme)
     #if FASTLOG == 0 /*pour moi, pour ne pas attendre*/
     SDL_Delay(1500);
     #endif
+}
+
+void InitPicture(struct Picture *picture, char* emplacement, int x, int y, int w, int h, int transparance, struct DIVERSsysteme *systeme)
+{
+    picture->texture = LoadingImage(emplacement, transparance, systeme);
+
+    picture->pos.x = x;
+    picture->pos.y = y;
+    picture->pos.w = w;
+    picture->pos.h = h;
 }

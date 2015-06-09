@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <SDL.h>
 
+#include "struct.h"
+
 #include "colision.h"
 #include "ui.h"
 #include "listechaine.h"
@@ -14,7 +16,7 @@
 #include "jeux.h"
 #include "clavier.h"
 
-void boucleevent (bool *lancermessage, typeFORevent *FORevent)
+void boucleevent (bool *lancermessage,struct typeFORevent *FORevent)
 {
 	while(SDL_PollEvent(&FORevent->systeme->evenement) == 1)
 	{
@@ -54,7 +56,7 @@ void boucleevent (bool *lancermessage, typeFORevent *FORevent)
 	}
 }
 
-int boucleeventcombat (typecombat *BTLstr,struct DIVERSsysteme *systeme, DIRECTION *direction, DIVERSui *ui)
+int boucleeventcombat (struct typecombat *BTLstr,struct DIVERSsysteme *systeme,struct DIRECTION *direction,struct DIVERSui *ui)
 {
 	while(SDL_PollEvent(&systeme->evenement) == 1)
 	{
@@ -160,10 +162,10 @@ int boucleeventcombat (typecombat *BTLstr,struct DIVERSsysteme *systeme, DIRECTI
 
 int boucleeventlogin (struct typelogin *loginstore,struct DIVERSsysteme *systeme)
 {
-	int x = loginstore->ppointeur.x;
-	int y = loginstore->ppointeur.y;
+	int x = loginstore->pointeur.pos.x;
+	int y = loginstore->pointeur.pos.y;
 
-	if (colisionbox(&loginstore->ppointeur, &loginstore->option.pos, true) &&
+	if (colisionbox(&loginstore->pointeur.pos, &loginstore->option.pos, true) &&
 		loginstore->etatoption != B_CLIQUER && loginstore->optionactif == 0)								/*option*/
 	{
 		loginstore->etatoption = B_SURVOLER;
@@ -172,7 +174,7 @@ int boucleeventlogin (struct typelogin *loginstore,struct DIVERSsysteme *systeme
 		loginstore->etatquitter = B_NORMAL;
 		loginstore->etatarcade = B_NORMAL;
 	}
-	else if (colisionbox(&loginstore->ppointeur, &loginstore->jouer.pos, true) &&
+	else if (colisionbox(&loginstore->pointeur.pos, &loginstore->jouer.pos, true) &&
 			loginstore->etatjouer != B_CLIQUER && loginstore->optionactif == 0)							/*play*/
 	{
 		loginstore->etatoption = B_NORMAL;
@@ -181,7 +183,7 @@ int boucleeventlogin (struct typelogin *loginstore,struct DIVERSsysteme *systeme
 		loginstore->etatquitter = B_NORMAL;
 		loginstore->etatarcade = B_NORMAL;
 	}
-	else if (colisionbox(&loginstore->ppointeur, &loginstore->creer.pos, true) &&
+	else if (colisionbox(&loginstore->pointeur.pos, &loginstore->creer.pos, true) &&
 			loginstore->etatcreer != B_CLIQUER && loginstore->optionactif == 0)							/*create*/
 	{
 		loginstore->etatoption = B_NORMAL;
@@ -190,7 +192,7 @@ int boucleeventlogin (struct typelogin *loginstore,struct DIVERSsysteme *systeme
 		loginstore->etatquitter = B_NORMAL;
 		loginstore->etatarcade = B_NORMAL;
 	}
-	else if (colisionbox(&loginstore->ppointeur, &loginstore->quitter.pos, true) &&
+	else if (colisionbox(&loginstore->pointeur.pos, &loginstore->quitter.pos, true) &&
 			loginstore->etatquitter != B_CLIQUER && loginstore->optionactif == 0)                           /*quit*/
 	{
 		loginstore->etatoption = B_NORMAL;
@@ -199,7 +201,7 @@ int boucleeventlogin (struct typelogin *loginstore,struct DIVERSsysteme *systeme
 		loginstore->etatquitter = B_SURVOLER;
 		loginstore->etatarcade = B_NORMAL;
 	}
-	else if (colisionbox(&loginstore->ppointeur, &loginstore->arcade.pos, true) &&
+	else if (colisionbox(&loginstore->pointeur.pos, &loginstore->arcade.pos, true) &&
 			loginstore->etatarcade != B_CLIQUER && loginstore->optionactif == 0)							/*arcade*/
 	{
 		loginstore->etatoption = B_NORMAL;
@@ -217,21 +219,21 @@ int boucleeventlogin (struct typelogin *loginstore,struct DIVERSsysteme *systeme
 		loginstore->etatquitter = B_NORMAL;
 		loginstore->etatarcade = B_NORMAL;
 	}
-	else if ( loginstore->optionactif == 1 && colisionbox(&loginstore->ppointeur, &loginstore->azerty.pos, true) &&
+	else if ( loginstore->optionactif == 1 && colisionbox(&loginstore->pointeur.pos, &loginstore->azerty.pos, true) &&
 			loginstore->etatazerty != B_CLIQUER)
 	{
 		loginstore->etatazerty = B_SURVOLER;
 		if (loginstore->etatqwerty != B_CLIQUER) {loginstore->etatqwerty = B_NORMAL;}
 		if (loginstore->etatqwerty != B_CLIQUER) {loginstore->etatqwertz = B_NORMAL;}
 	}
-	else if ( loginstore->optionactif == 1 && colisionbox(&loginstore->ppointeur, &loginstore->qwerty.pos, true) &&
+	else if ( loginstore->optionactif == 1 && colisionbox(&loginstore->pointeur.pos, &loginstore->qwerty.pos, true) &&
 			loginstore->etatqwerty != B_CLIQUER)
 	{
 		loginstore->etatqwerty = B_SURVOLER;
 		if (loginstore->etatazerty != B_CLIQUER) {loginstore->etatazerty = B_NORMAL;}
 		if (loginstore->etatqwertz != B_CLIQUER) {loginstore->etatqwertz = B_NORMAL;}
 	}
-	else if ( loginstore->optionactif == 1 && colisionbox(&loginstore->ppointeur, &loginstore->qwertz.pos, true) &&
+	else if ( loginstore->optionactif == 1 && colisionbox(&loginstore->pointeur.pos, &loginstore->qwertz.pos, true) &&
 			loginstore->etatqwertz != B_CLIQUER)
 	{
 		loginstore->etatqwertz = B_SURVOLER;
@@ -371,11 +373,11 @@ int boucleeventlogin (struct typelogin *loginstore,struct DIVERSsysteme *systeme
 				}
 				break;
 			case SDL_MOUSEBUTTONDOWN:
-				if (colisionbox(&loginstore->ppointeur, &loginstore->option.pos, true))					/*option*/
+				if (colisionbox(&loginstore->pointeur.pos, &loginstore->option.pos, true))					/*option*/
 				{
 					loginstore->etatoption = B_CLIQUER;
 				}
-				else if (colisionbox(&loginstore->ppointeur, &loginstore->jouer.pos, true))						/*play*/
+				else if (colisionbox(&loginstore->pointeur.pos, &loginstore->jouer.pos, true))						/*play*/
 				{
 					/*blocking impossible button*/
 					if(loginstore->longpseudo > 0 && loginstore->longmdp > 0)
@@ -383,7 +385,7 @@ int boucleeventlogin (struct typelogin *loginstore,struct DIVERSsysteme *systeme
 						loginstore->etatjouer = B_CLIQUER;
 					}
 				}
-				else if (colisionbox(&loginstore->ppointeur, &loginstore->creer.pos, true))						/*create*/
+				else if (colisionbox(&loginstore->pointeur.pos, &loginstore->creer.pos, true))						/*create*/
 				{
 					/*blocking impossible button*/
 					if(loginstore->longpseudo > 0 && loginstore->longmdp > 0)
@@ -391,16 +393,16 @@ int boucleeventlogin (struct typelogin *loginstore,struct DIVERSsysteme *systeme
 						loginstore->etatcreer = B_CLIQUER;
 					}
 				}
-				else if (colisionbox(&loginstore->ppointeur, &loginstore->quitter.pos, true))						/*quit*/
+				else if (colisionbox(&loginstore->pointeur.pos, &loginstore->quitter.pos, true))						/*quit*/
 				{
 					loginstore->etatquitter = B_CLIQUER;
 				}
-				else if (colisionbox(&loginstore->ppointeur, &loginstore->arcade.pos, true))						/*arcade*/
+				else if (colisionbox(&loginstore->pointeur.pos, &loginstore->arcade.pos, true))						/*arcade*/
 				{
 					loginstore->etatarcade = B_CLIQUER;
 				}
 
-				if ( loginstore->optionactif == 1 && colisionbox(&loginstore->ppointeur, &loginstore->azerty.pos, true))
+				if ( loginstore->optionactif == 1 && colisionbox(&loginstore->pointeur.pos, &loginstore->azerty.pos, true))
 				{
 					/*azerty*/
 					loginstore->etatazerty = B_CLIQUER;
@@ -408,7 +410,7 @@ int boucleeventlogin (struct typelogin *loginstore,struct DIVERSsysteme *systeme
 					loginstore->etatqwertz = B_NORMAL;
 					systeme->typeclavier = '1';
 				}
-				else if ( loginstore->optionactif == 1 && colisionbox(&loginstore->ppointeur, &loginstore->qwerty.pos, true))
+				else if ( loginstore->optionactif == 1 && colisionbox(&loginstore->pointeur.pos, &loginstore->qwerty.pos, true))
 				{
 					/*qwerty*/
 					loginstore->etatqwertz = B_NORMAL;
@@ -416,7 +418,7 @@ int boucleeventlogin (struct typelogin *loginstore,struct DIVERSsysteme *systeme
 					loginstore->etatqwerty = B_CLIQUER;
 					systeme->typeclavier = '3';
 				}
-				else if ( loginstore->optionactif == 1 && colisionbox(&loginstore->ppointeur, &loginstore->qwertz.pos, true))
+				else if ( loginstore->optionactif == 1 && colisionbox(&loginstore->pointeur.pos, &loginstore->qwertz.pos, true))
 				{
 					/*qwertz*/
 					loginstore->etatqwerty = B_NORMAL;
@@ -463,17 +465,17 @@ int boucleeventlogin (struct typelogin *loginstore,struct DIVERSsysteme *systeme
 					}
 
 					/*CAUTION DON'T USE "1"*/
-					if (colisionbox(&loginstore->ppointeur, &loginstore->option.pos, true)) 			/*option*/
+					if (colisionbox(&loginstore->pointeur.pos, &loginstore->option.pos, true)) 			/*option*/
 					{return 4;}
-					else if (colisionbox(&loginstore->ppointeur, &loginstore->jouer.pos, true) &&
+					else if (colisionbox(&loginstore->pointeur.pos, &loginstore->jouer.pos, true) &&
                         loginstore->longpseudo > 0 && loginstore->longmdp > 0)				            /*play*/
 					{return 2;}
-					else if (colisionbox(&loginstore->ppointeur, &loginstore->creer.pos, true) &&
+					else if (colisionbox(&loginstore->pointeur.pos, &loginstore->creer.pos, true) &&
                         loginstore->longpseudo > 0 && loginstore->longmdp > 0)					        /*create*/
 					{return 3;}
-					else if (colisionbox(&loginstore->ppointeur, &loginstore->quitter.pos, true))		/*quit*/
+					else if (colisionbox(&loginstore->pointeur.pos, &loginstore->quitter.pos, true))		/*quit*/
 					{return 0;}
-					else if (colisionbox(&loginstore->ppointeur, &loginstore->arcade.pos, true))		/*arcade*/
+					else if (colisionbox(&loginstore->pointeur.pos, &loginstore->arcade.pos, true))		/*arcade*/
 					{return 5;}
 					}
 				break;
@@ -484,7 +486,7 @@ int boucleeventlogin (struct typelogin *loginstore,struct DIVERSsysteme *systeme
 	return 1;
 }
 
-void eventmapclavierdown(typeFORevent *FORevent)
+void eventmapclavierdown(struct typeFORevent *FORevent)
 {
 	switch (FORevent->systeme->evenement.key.keysym.scancode)
 	{
@@ -512,7 +514,7 @@ void eventmapclavierdown(typeFORevent *FORevent)
 	}
 }
 
-void eventmapclavierup(bool *lancermessage, typeFORevent *FORevent)
+void eventmapclavierup(bool *lancermessage,struct typeFORevent *FORevent)
 {
 	switch (FORevent->systeme->evenement.key.keysym.scancode)
 	{
@@ -582,7 +584,7 @@ void eventmapclavierup(bool *lancermessage, typeFORevent *FORevent)
 	}
 }
 
-void eventmapsourisgaucheup(typeFORevent *FORevent)
+void eventmapsourisgaucheup(struct typeFORevent *FORevent)
 {
 	int index, index2;
 	bool outside = true;
@@ -727,7 +729,7 @@ void eventmapsourisgaucheup(typeFORevent *FORevent)
 	checkandrefreshstuff(FORevent->perso, FORevent->objet, FORevent->systeme, FORevent->ui);
 }
 
-void eventmapsourisgauchedown(typeFORevent *FORevent)
+void eventmapsourisgauchedown(struct typeFORevent *FORevent)
 {
 	int index;
 
@@ -777,7 +779,7 @@ void eventmapsourisgauchedown(typeFORevent *FORevent)
 	}
 }
 
-void eventmapsourisdroiteup(typeFORevent *FORevent)
+void eventmapsourisdroiteup(struct typeFORevent *FORevent)
 {
 	int index;
 
@@ -820,7 +822,7 @@ void eventmapsourisdroiteup(typeFORevent *FORevent)
 	}
 }
 
-void eventmapsourisdroitedown(typeFORevent *FORevent)
+void eventmapsourisdroitedown(struct typeFORevent *FORevent)
 {
 	if (FORevent->ui->coinbas == 2)
 	{
@@ -831,7 +833,7 @@ void eventmapsourisdroitedown(typeFORevent *FORevent)
 	}
 }
 
-void sourisactionzone(typeFORevent *FORevent)
+void sourisactionzone(struct typeFORevent *FORevent)
 {
 	/*si on ne clique pas sur une UI*/
 	if ((FORevent->ui->coinbas == 0 && FORevent->systeme->pp.y > FORevent->systeme->screenh/2) ||
@@ -854,7 +856,7 @@ void sourisactionzone(typeFORevent *FORevent)
 	}
 }
 
-int LoopEventBattleDeath (typecombat *BTLstr, SDL_Event *event)
+int LoopEventBattleDeath (struct typecombat *BTLstr, SDL_Event *event)
 {
 	SDL_Rect curseurtmp;
 

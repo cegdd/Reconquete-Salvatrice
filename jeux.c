@@ -22,17 +22,19 @@
 #include "CaC.h"
 #include "ui.h"
 #include "battledraw.h"
+#include "queue.h"
 
-float combat (float vie, PACKmonstre *monstre,struct DIVERSsysteme *systeme,struct PERSO *perso,
-              DIVERSinventaire *inventaire, PACKrecompense *recompense, PACKobjet *objet, DIVERSui *ui, bool arcademode)
+float combat (float vie,struct PACKmonstre *monstre,struct DIVERSsysteme *systeme,struct PERSO *perso,
+              struct PACKrecompense *recompense,struct PACKobjet *objet,
+              struct DIVERSui *ui, bool arcademode)
 {
 	#if BATTLE_LOG == 1
 	printf("battle is starting ...\n");
 	#endif
 
 	/*structure contenant toutes les variables pour les combats*/
-	typecombat BTLstr;
-	DIRECTION direction;
+	struct typecombat BTLstr;
+	struct DIRECTION direction;
 
 	int index, fps = 0;
 	int ret, ret2;
@@ -121,7 +123,7 @@ float combat (float vie, PACKmonstre *monstre,struct DIVERSsysteme *systeme,stru
 			fps++;
 			BTLstr.tempsaffichage = BTLstr.temps;
 			SDL_RenderClear(systeme->renderer);
-			afficherCOMBAT(&BTLstr, systeme, perso, inventaire, objet, arcademode);
+			afficherCOMBAT(&BTLstr, systeme, perso, ui, objet, arcademode);
             #if BATTLE_LOG_DISPLAY == 1
             printf("rendering...");
              printf("SDL_Init failed: %s\n", SDL_GetError());
@@ -168,7 +170,7 @@ float combat (float vie, PACKmonstre *monstre,struct DIVERSsysteme *systeme,stru
 				#if BATTLE_LOG == 1
 				printf("player is dead\n");
 				#endif
-				JoueurMort(&BTLstr, systeme, ui, perso, inventaire, objet, arcademode);
+				JoueurMort(&BTLstr, systeme, ui, perso, objet, arcademode);
 			}
 			else if (perso->life <= 0)
 			{
@@ -244,7 +246,7 @@ float combat (float vie, PACKmonstre *monstre,struct DIVERSsysteme *systeme,stru
 	return BTLstr.continuer;
 }
 
-int FindCreatureMemoryArea(typecombat *BTLstr)
+int FindCreatureMemoryArea(struct typecombat *BTLstr)
 {
     #if BATTLE_LOG == 1
     printf("searching free space for creature\n");
@@ -265,8 +267,8 @@ int FindCreatureMemoryArea(typecombat *BTLstr)
 	return -1;
 }
 
-void afficherCOMBAT(typecombat *BTLstr,struct DIVERSsysteme *systeme,struct PERSO *perso,
-					DIVERSinventaire *inventaire, PACKobjet *objet, bool arcademode)
+void afficherCOMBAT(struct typecombat *BTLstr,struct DIVERSsysteme *systeme,struct PERSO *perso,
+					struct DIVERSui *ui,struct PACKobjet *objet, bool arcademode)
 {
     #if BATTLE_LOG_DISPLAY == 1
     printf("affichage du fond\n");
@@ -315,11 +317,11 @@ void afficherCOMBAT(typecombat *BTLstr,struct DIVERSsysteme *systeme,struct PERS
     printf("affichage de l'UI\n");
     #endif
 
-	SDL_RenderCopy	(systeme->renderer, inventaire->Uiinventaire, NULL, &inventaire->puiinventaire);
+	SDL_RenderCopy	(systeme->renderer, ui->Uiinventaire, NULL, &ui->puiinventaire);
 	SDL_RenderCopy(systeme->renderer, BTLstr->curseur, NULL, &BTLstr->pcurseur);
 }
 
-void Hitboxjoueur (typecombat *BTLstr, PERSO *perso, int id)
+void Hitboxjoueur (struct typecombat *BTLstr,struct PERSO *perso, int id)
 {
 	if (BTLstr->premiercoup[id] == 0)
 	{
@@ -338,7 +340,7 @@ void Hitboxjoueur (typecombat *BTLstr, PERSO *perso, int id)
 	BTLstr->premiercoup[id] = 1;
 }
 
-void COMBATgestionCLICetCOLISION (typecombat *BTLstr, DIVERSui *ui)
+void COMBATgestionCLICetCOLISION (struct typecombat *BTLstr,struct DIVERSui *ui)
 {
     if (BTLstr->letirdemander == true && ui->casestuff[ARME].IDobjet == 3)
     {
@@ -348,7 +350,7 @@ void COMBATgestionCLICetCOLISION (typecombat *BTLstr, DIVERSui *ui)
     COMBATgestionDEGAT(BTLstr, ui);
 }
 
-void COMBATgestionDEGAT (typecombat *BTLstr, DIVERSui *ui)
+void COMBATgestionDEGAT (struct typecombat *BTLstr,struct DIVERSui *ui)
 {
 	int index, index2;
 
@@ -385,7 +387,7 @@ void COMBATgestionDEGAT (typecombat *BTLstr, DIVERSui *ui)
 	BTLstr->letirdemander = false;
 }
 
-void COMBATanimationPERSO(typecombat *BTLstr)
+void COMBATanimationPERSO(struct typecombat *BTLstr)
 {
 	if (BTLstr->temps - BTLstr->tempsanimationjoueur >= 128)
 	{
@@ -405,7 +407,7 @@ void COMBATanimationPERSO(typecombat *BTLstr)
 	}
 }
 
-void COMBATanimationMOB(typecombat *BTLstr)
+void COMBATanimationMOB(struct typecombat *BTLstr)
 {
 	int index;
 
@@ -423,7 +425,7 @@ void COMBATanimationMOB(typecombat *BTLstr)
 	}
 }
 
-void COMBATanimationOBJET(typecombat *BTLstr)
+void COMBATanimationOBJET(struct typecombat *BTLstr)
 {
 	if (BTLstr->temps - BTLstr->tempsanimationobjet >= 20)
 	{
@@ -463,7 +465,7 @@ void COMBATgestionENNEMI(struct typecombat *BTLstr, struct RAT *rat,struct DIVER
 	}
 }
 
-void ADDloot(PACKrecompense *recompense, int id, int nombre)
+void ADDloot(struct PACKrecompense *recompense, int id, int nombre)
 {
 	int index = 0;
 	/*recherche d'un objet equivalent ou d'une case vide*/
@@ -610,7 +612,7 @@ void COMBATgestionOBJETsol(struct typecombat *BTLstr,struct DIVERSsysteme *syste
 	}
 }
 
-void SyncData(typecombat *BTLstr, PERSO *perso)
+void SyncData(struct typecombat *BTLstr,struct PERSO *perso)
 {
 	int index;
 	BTLstr->pcurseur.x = BTLstr->px;
@@ -644,7 +646,7 @@ int CalculerBarreDeVie(int VieDeBase, int VieActuelle, int width)
 }
 
 void JoueurMort(struct typecombat *BTLstr,struct DIVERSsysteme *systeme,struct DIVERSui *ui,struct PERSO *perso,
-				struct DIVERSinventaire *inventaire,struct PACKobjet *objet, bool arcademode)
+				struct PACKobjet *objet, bool arcademode)
 {
 	SDL_Event event;
 	char score[64][20];
@@ -665,7 +667,7 @@ void JoueurMort(struct typecombat *BTLstr,struct DIVERSsysteme *systeme,struct D
 		/*recording mouse position*/
 		SDL_GetMouseState(&BTLstr->pcurseur.x, &BTLstr->pcurseur.y);
 
-		afficherCOMBAT(BTLstr, systeme, perso, inventaire, objet, arcademode);
+		afficherCOMBAT(BTLstr, systeme, perso, ui, objet, arcademode);
 		DrawDeathDisplay(BTLstr, systeme, texture, position, ret);
 		SDL_RenderCopy(systeme->renderer, BTLstr->curseur, NULL, &BTLstr->pcurseur);
 		SDL_RenderPresent(systeme->renderer);
@@ -749,7 +751,7 @@ int PositionOfDeathDisplay(SDL_Texture *texture[], SDL_Rect position[], char sco
 	return PosUsed;
 }
 
-void Hit_Creature(int index, typecombat *BTLstr)
+void Hit_Creature(int index,struct typecombat *BTLstr)
 {
 	BTLstr->creature[index].life -= 10;
 	if (BTLstr->creature[index].life <= 0)
@@ -776,7 +778,7 @@ int FindCreatureEngaged(struct PACKmonstre *monstre)
 	return -1;
 }
 
-int FindCreatureID( PACKmonstre *monstre, int ID)
+int FindCreatureID(struct PACKmonstre *monstre, int ID)
 {
 	int index;
 

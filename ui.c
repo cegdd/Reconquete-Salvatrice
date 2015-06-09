@@ -10,8 +10,9 @@
 #include "systeme.h"
 
 
-void gestionui (struct DIVERSsysteme *systeme, DIVERSui *ui, DIVERScraft *craft, PACKbouton *bouton, DIVERSchat *chat,
-				DIVERSinventaire *inventaire, PACKobjet *objet, PERSO *perso, PACKpnj *pnj)
+void gestionui (struct DIVERSsysteme *systeme,struct DIVERSui *ui,struct DIVERScraft *craft,struct PACKbouton *bouton,
+                struct DIVERSchat *chat,struct DIVERSinventaire *inventaire,struct PACKobjet *objet,struct PERSO *perso,
+                struct PACKpnj *pnj)
 {
     int index = 0;
 	/*si un dialogue a été lancer*/
@@ -22,13 +23,15 @@ void gestionui (struct DIVERSsysteme *systeme, DIVERSui *ui, DIVERScraft *craft,
 		ui->dialogueactif = 1;
 		ui->lancedialogue = 0;
 	}
-	/*si la souris a bouger*/
-	if (systeme->pp.x != systeme->oldpp.x || systeme->pp.y != systeme->oldpp.y)
+	/*if the mouse moved*/
+	if (systeme->pp.x != systeme->oldpp.x ||
+        systeme->pp.y != systeme->oldpp.y)
 	{
 		inventaire->idsurvoler = -1;
 
 		/*test des coins*/
-		testcoin(systeme, ui, chat, inventaire);
+		TestCursorOnCorner(ui, systeme);
+		testcoin(ui, chat, inventaire);
 
 		/*si l'interface de craft est actif*/
 		if (craft->actif == true)
@@ -132,6 +135,13 @@ void gestionui (struct DIVERSsysteme *systeme, DIVERSui *ui, DIVERScraft *craft,
 			}
 		}
 	}
+	/* if cursor didn't move but is in a corner */
+	else if (ui->PointedCorner != 0)
+    {
+        /*corners tests*/
+		TestCursorOnCorner(ui, systeme);
+		testcoin(ui, chat, inventaire);
+    }
 
 	if (craft->actif == true &&
 		checkdistance(&perso->pperso, &craft->petabli, 250) == 1) /*assez proche de l'etabli pour l'activer*/
@@ -216,12 +226,14 @@ SDL_Texture *DrawSDLText(SDL_Rect* ptextedialogue, char texte[], int color, int 
 	return texture;
 }
 
-void testcoin(struct DIVERSsysteme *systeme, DIVERSui *ui, DIVERSchat *chat, DIVERSinventaire *inventaire)
+void testcoin(struct DIVERSui *ui,struct DIVERSchat *chat,struct DIVERSinventaire *inventaire)
 {
-	static int statcoinhaut = 0, statcoinbas = 0;
+	int statcoinhaut = 0, statcoinbas = 0, time = 0;
+	time = TimeOnCorner(ui);
 
-	if (systeme->pp.x <= 5 && systeme->pp.y >= systeme->screenh-5)/*							coin bas gauche*/
+	if (ui->OnLeftDown && time > 1000)/*							coin bas gauche*/
 	{
+	    ui->PointedCorner = 0;
 		if (statcoinbas != 1)
 		{
 			statcoinbas = 1;
@@ -247,8 +259,9 @@ void testcoin(struct DIVERSsysteme *systeme, DIVERSui *ui, DIVERSchat *chat, DIV
 			}
 		}
 	}
-	else if (systeme->pp.x >= systeme->screenw-5 && systeme->pp.y >= systeme->screenh-5)/*		coin bas droit*/
+	else if (ui->OnRightDown && time > 1000)/*		coin bas droit*/
 	{
+	    ui->PointedCorner = 0;
 		if (statcoinbas != 2)
 		{
 			statcoinbas = 2;
@@ -275,8 +288,9 @@ void testcoin(struct DIVERSsysteme *systeme, DIVERSui *ui, DIVERSchat *chat, DIV
 		}
 
 	}
-	else if (systeme->pp.x <= 5 && systeme->pp.y <= 5)/*						coin haut gauche*/
+	else if (ui->OnLeftUp && time > 1000)/*						coin haut gauche*/
 	{
+	    ui->PointedCorner = 0;
 		if (statcoinhaut != 1)
 		{
 			statcoinhaut = 1;
@@ -292,17 +306,11 @@ void testcoin(struct DIVERSsysteme *systeme, DIVERSui *ui, DIVERSchat *chat, DIV
 			}
 		}
 	}
-	if (systeme->pp.x > 5 && systeme->pp.x < systeme->screenw-5)/*								aucun coin*/
+	if (!ui->OnLeftDown && !ui->OnLeftUp && !ui->OnRightDown && !ui->OnRightUp)/*								aucun coin*/
 	{
-
 		statcoinbas = 0;
 		statcoinhaut = 0;
-	}
-	else if (systeme->pp.y < systeme->screenh-5 && systeme->pp.y > 5)/*							aucun coin*/
-	{
-
-		statcoinbas = 0;
-		statcoinhaut = 0;
+		ui->PointedCorner = 0;
 	}
 }
 
@@ -313,7 +321,7 @@ int calculclicinventaire(int *ptrpy, int *ptrpx,struct DIVERSsysteme *systeme)
 	return (ligne*24)+colonne;
 }
 
-void afficherCRAFT(DIVERScraft *craft, DIVERSui *ui, PACKbouton *bouton, PACKobjet *objet,
+void afficherCRAFT(struct DIVERScraft *craft,struct DIVERSui *ui,struct PACKbouton *bouton,struct PACKobjet *objet,
 				struct DIVERSinventaire *inventaire,struct DIVERSsysteme *systeme)
 {
 	int index;
@@ -443,7 +451,7 @@ void afficherCRAFT(DIVERScraft *craft, DIVERSui *ui, PACKbouton *bouton, PACKobj
 	}
 }
 
-void afficherINVENTAIRE(DIVERSinventaire *inventaire, DIVERSui *ui, PACKobjet *objet,struct DIVERSsysteme *systeme)
+void afficherINVENTAIRE(struct DIVERSinventaire *inventaire,struct DIVERSui *ui,struct PACKobjet *objet,struct DIVERSsysteme *systeme)
 {
 	int index;
 	char snbobjet[4];
@@ -486,13 +494,14 @@ void afficherINVENTAIRE(DIVERSinventaire *inventaire, DIVERSui *ui, PACKobjet *o
 	}
 }
 
-void afficherUI(bool enligne, DIVERSui *ui, PACKbouton *bouton, DIVERStemps *temps, PERSO *perso, DIVERSchat *chat, DIVERSinventaire *inventaire,
-                struct DIVERSsysteme *systeme, PACKrecompense *recompense, PACKobjet *objet)
+void afficherUI(bool enligne,struct DIVERSui *ui,struct PACKbouton *bouton,struct DIVERStemps *temps,struct PERSO *perso,
+                struct DIVERSinventaire *inventaire, struct DIVERSsysteme *systeme,
+                struct PACKrecompense *recompense,struct PACKobjet *objet)
 {
 	int index, calculposy;
 	/*coins*/
-	SDL_RenderCopy	(systeme->renderer, chat->Uichat, NULL, &chat->puichat);
-	SDL_RenderCopy	(systeme->renderer, inventaire->Uiinventaire, NULL, &inventaire->puiinventaire);
+	SDL_RenderCopy	(systeme->renderer, ui->Uichat, NULL, &ui->puichat);
+	SDL_RenderCopy	(systeme->renderer, ui->Uiinventaire, NULL, &ui->puiinventaire);
 	SDL_RenderCopy	(systeme->renderer, ui->uimenu, NULL, &ui->puimenu);
 
 	if (ui->menuactif == true)
@@ -581,7 +590,7 @@ void afficherUI(bool enligne, DIVERSui *ui, PACKbouton *bouton, DIVERStemps *tem
 	}
 }
 
-void afficherMAP(DIVERSmap *carte,struct DIVERSsysteme *systeme, DIVERScraft *craft)
+void afficherMAP(struct DIVERSmap *carte,struct DIVERSsysteme *systeme,struct DIVERScraft *craft)
 {
 	int index;
 
@@ -614,13 +623,13 @@ void afficherMAP(DIVERSmap *carte,struct DIVERSsysteme *systeme, DIVERScraft *cr
 
 }
 
-void afficherPNJ(PERSO *perso, PACKpnj *pnj,struct DIVERSsysteme *systeme)
+void afficherPNJ(struct PERSO *perso,struct PACKpnj *pnj,struct DIVERSsysteme *systeme)
 {
 	SDL_RenderCopyEx(systeme->renderer, perso->tperso, &perso->spriteup[0], &pnj->toumai, -90,NULL, SDL_FLIP_NONE);
 	/*SDL_RenderCopyEx(systeme->renderer, perso->cheveuxblanc, NULL, &pnj->toumai, -90,NULL, SDL_FLIP_NONE);*/
 }
 
-void afficherMOB(PACKmonstre *monstre,struct DIVERSsysteme *systeme)
+void afficherMOB(struct PACKmonstre *monstre,struct DIVERSsysteme *systeme)
 {
 	int index;
 	for (index = 0 ; index < 3 ; index++)
@@ -632,7 +641,8 @@ void afficherMOB(PACKmonstre *monstre,struct DIVERSsysteme *systeme)
 	}
 }
 
-void afficherJOUEURS(PERSO *perso, DIVERSdeplacement *deplacement,struct DIVERSsysteme *systeme, typeFORthreads *online)
+void afficherJOUEURS(struct PERSO *perso,struct DIVERSdeplacement *deplacement,struct DIVERSsysteme *systeme,
+                     struct typeFORthreads *online)
 {
     int index, calcul;
 	/*joueur client*/
@@ -682,7 +692,7 @@ void afficherJOUEURS(PERSO *perso, DIVERSdeplacement *deplacement,struct DIVERSs
 	}
 }
 
-void afficherCHAT(DIVERSchat *chat, DIVERSui *ui, int lenbuffer,struct DIVERSsysteme *systeme)
+void afficherCHAT(struct DIVERSchat *chat,struct DIVERSui *ui, int lenbuffer,struct DIVERSsysteme *systeme)
 {
 	int index;
 	SDL_RenderCopy	(systeme->renderer, chat->BGchat, NULL, &ui->pUIbas);
@@ -702,7 +712,7 @@ void afficherCHAT(DIVERSchat *chat, DIVERSui *ui, int lenbuffer,struct DIVERSsys
 	}
 }
 
-void afficherPOINTEUR(struct DIVERSsysteme *systeme, PACKobjet *objet)
+void afficherPOINTEUR(struct DIVERSsysteme *systeme,struct PACKobjet *objet)
 {
 	SDL_RenderCopy	(systeme->renderer, systeme->pointeur, NULL, &systeme->pp);
 	if (objet->objetenmain.IDobjet != -1)
@@ -714,7 +724,7 @@ void afficherPOINTEUR(struct DIVERSsysteme *systeme, PACKobjet *objet)
 
 }
 
-void afficherDETAIL(struct DIVERSinventaire *inventaire, PACKobjet *objet,struct DIVERSsysteme *systeme, int id)
+void afficherDETAIL(struct DIVERSinventaire *inventaire,struct PACKobjet *objet,struct DIVERSsysteme *systeme, int id)
 {
     int largeurmax = 0;
 
@@ -844,3 +854,110 @@ void afficherDETAIL(struct DIVERSinventaire *inventaire, PACKobjet *objet,struct
 	}
 }
 
+void TestCursorOnCorner(struct DIVERSui *ui, struct DIVERSsysteme *systeme)
+{
+    if (systeme->pp.x <= 5 && systeme->pp.y >= systeme->screenh-5)/*							down left corner*/
+    {
+        ui->OnLeftDown = true;
+        ui->OnRightDown = false;
+        ui->OnRightUp = false;
+        ui->OnLeftUp = false;
+
+        SDL_SetTextureAlphaMod(ui->Uichat,255);
+        SDL_SetTextureAlphaMod(ui->uimenu,100);
+        SDL_SetTextureAlphaMod(ui->Uiinventaire,100);
+    }
+    else if (systeme->pp.x >= systeme->screenw-5 && systeme->pp.y >= systeme->screenh-5)/*		down right corner*/
+	{
+	    ui->OnRightDown = true;
+	    ui->OnLeftDown = false;
+	    ui->OnRightUp = false;
+	    ui->OnLeftUp = false;
+
+	    SDL_SetTextureAlphaMod(ui->Uiinventaire,255);
+	    SDL_SetTextureAlphaMod(ui->Uichat,100);
+	    SDL_SetTextureAlphaMod(ui->uimenu,100);
+	}
+	else if (systeme->pp.x >= systeme->screenw-5 && systeme->pp.y <= 5)/*		             up right corner*/
+	{
+	    ui->OnRightUp = true;
+	    ui->OnLeftDown = false;
+	    ui->OnRightDown = false;
+	    ui->OnLeftUp = false;
+	}
+	else if (systeme->pp.x <= 5 && systeme->pp.y <= 5)/*						                up left corner*/
+	{
+	    ui->OnLeftUp = true;
+	    ui->OnRightUp = false;
+	    ui->OnLeftDown = false;
+	    ui->OnRightDown = false;
+
+	    SDL_SetTextureAlphaMod(ui->uimenu,255);
+	    SDL_SetTextureAlphaMod(ui->Uichat,100);
+	    SDL_SetTextureAlphaMod(ui->Uiinventaire,100);
+	}
+	if (systeme->pp.x > 5 && systeme->pp.x < systeme->screenw-5 &&
+        systeme->pp.y < systeme->screenh-5 && systeme->pp.y > 5)/*								no corner*/
+	{
+	    ui->OnRightUp = false;
+	    ui->OnLeftDown = false;
+	    ui->OnRightDown = false;
+	    ui->OnLeftUp = false;
+
+	    SDL_SetTextureAlphaMod(ui->uimenu,100);
+	    SDL_SetTextureAlphaMod(ui->Uichat,100);
+	    SDL_SetTextureAlphaMod(ui->Uiinventaire,100);
+	}
+}
+
+int TimeOnCorner(struct DIVERSui *ui)
+{
+    int result = 0;
+    ui->CornerTime = SDL_GetTicks();
+
+    if(ui->OnLeftDown)
+    {
+        if (ui->PointedCorner == 3)
+        {
+            result = ui->CornerTime - ui->OldCornerTime;
+            return result;
+        }
+        else
+        {
+            ui->PointedCorner = 3;
+            ui->OldCornerTime = ui->CornerTime;
+        }
+    }
+    else if (ui->OnLeftUp)
+    {
+        if (ui->PointedCorner == 1)
+        {
+            result = ui->CornerTime - ui->OldCornerTime;
+            return result;
+        }
+        else
+        {
+            ui->PointedCorner = 1;
+            ui->OldCornerTime = ui->CornerTime;
+        }
+    }
+    else if (ui->OnRightDown)
+    {
+        if (ui->PointedCorner == 4)
+        {
+            result = ui->CornerTime - ui->OldCornerTime;
+            return result;
+        }
+        else
+        {
+            ui->PointedCorner = 4;
+            ui->OldCornerTime = ui->CornerTime;
+        }
+    }
+    else if (ui->OnRightUp)
+    {
+
+    }
+
+    return 0;
+}

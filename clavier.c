@@ -1,8 +1,6 @@
 #include "main.h"
 
-typedef struct typeFORevent typeFORevent;
-
-void intputtexte(typeFORevent *FORevent)
+void intputtexte(struct typeFORevent *FORevent)
 {
 
 	int typeclavier = FORevent->systeme->typeclavier;

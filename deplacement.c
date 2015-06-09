@@ -3,10 +3,7 @@
 #include "colision.h"
 #include "main.h"
 
-typedef struct DIVERSdeplacement DIVERSdeplacement;
-typedef struct DIRECTION DIRECTION;
-
-int directionperso(DIRECTION *direction)
+int directionperso(struct DIRECTION *direction)
 {
 	if (direction->haut == 1 && direction->droite == 0 && direction->gauche == 0 && direction->bas == 0) {return UP;}
 	else if (direction->haut == 1 && direction->droite == 1 && direction->gauche == 0 && direction->bas == 0) {return UPRIGHT;}

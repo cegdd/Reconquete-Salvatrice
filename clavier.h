@@ -1,6 +1,6 @@
 #ifndef CLAVIERH
 #define CLAVIERH
 
-void intputtexte(typeFORevent *FORevent);
+void intputtexte(struct typeFORevent *FORevent);
 
 #endif

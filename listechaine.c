@@ -4,10 +4,7 @@
 #include "main.h"
 #include "listechaine.h"
 
-typedef struct PACKobjet PACKobjet;
-
-
-void insertionsac(PACKobjet *packobjet, int id)
+void insertionsac(struct PACKobjet *packobjet, int id)
 {
 	int retoursearch = searchcaseID(packobjet, id);
 	if (retoursearch != -1)
@@ -30,7 +27,7 @@ void insertionsac(PACKobjet *packobjet, int id)
 	}
 }
 
-void insertionnumero(int oldcase, EMPLACEMENT *sac, int lacase, EMPLACEMENT *objetenmain, CHOSE *objet)
+void insertionnumero(int oldcase,struct EMPLACEMENT *sac, int lacase,struct EMPLACEMENT *objetenmain,struct CHOSE *objet)
 {
 	/*si le même objet est déjà présent a cet emplacement*/
 	if (sac[lacase].NBobjet > 0 && sac[lacase].IDobjet == objetenmain->IDobjet && sac[lacase].NBobjet < objet[objetenmain->IDobjet].empilage)
@@ -66,7 +63,7 @@ void insertionnumero(int oldcase, EMPLACEMENT *sac, int lacase, EMPLACEMENT *obj
 	}
 }
 
-void prendreenmain(EMPLACEMENT lacase, EMPLACEMENT *objetenmain)
+void prendreenmain(struct EMPLACEMENT lacase,struct EMPLACEMENT *objetenmain)
 {
 	if (objetenmain->NBobjet == 0)
 	{
@@ -79,13 +76,13 @@ void prendreenmain(EMPLACEMENT lacase, EMPLACEMENT *objetenmain)
 	}
 }
 
-void videemplacement(EMPLACEMENT *emplacement)
+void videemplacement(struct EMPLACEMENT *emplacement)
 {
 	emplacement->IDobjet = -1;
 	emplacement->NBobjet = 0;
 }
 
-int searchIDsac(EMPLACEMENT *sac, int id)
+int searchIDsac(struct EMPLACEMENT *sac, int id)
 {
 	register int index, resultat = 0;
 	for (index = 0 ; index < TAILLESAC ; index++)
@@ -98,7 +95,7 @@ int searchIDsac(EMPLACEMENT *sac, int id)
 	return resultat;
 }
 
-void effacerID(PACKobjet *packobjet, int id)
+void effacerID(struct PACKobjet *packobjet, int id)
 {
 	int index;
 	for (index = 0 ; index < TAILLESAC ; index++)
@@ -117,7 +114,7 @@ void effacerID(PACKobjet *packobjet, int id)
 	}
 }
 
-int searchcaseID(PACKobjet *packobjet, int id)
+int searchcaseID(struct PACKobjet *packobjet, int id)
 {
 	int index;
 	for (index = 0 ; index < TAILLESAC ; index++)
@@ -130,7 +127,7 @@ int searchcaseID(PACKobjet *packobjet, int id)
 	return -1;
 }
 
-void equipestuff(PACKobjet *objet,struct DIVERSui *ui, int bodypartui,int id)
+void equipestuff(struct PACKobjet *objet,struct DIVERSui *ui, int bodypartui,int id)
 {
 	int bodypart = objet->objet[id].bodypart;
 

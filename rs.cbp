@@ -274,6 +274,7 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="sauvegarde.h" />
+		<Unit filename="struct.h" />
 		<Unit filename="systeme.c">
 			<Option compilerVar="CC" />
 		</Unit>

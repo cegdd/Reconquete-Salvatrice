@@ -2,7 +2,7 @@
 #define COLISIONH
 
 #include <stdbool.h>
-#include "main.h"
+#include "struct.h"
 
 void deplacementperso(SDL_Surface *mapnb[],struct PERSO *perso,struct DIRECTION *direction,struct DIVERSsysteme *systeme, int *x, int *y, int enmap);
 

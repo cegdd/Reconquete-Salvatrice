@@ -3,9 +3,7 @@
 
 #include "main.h"
 
-typedef struct typecombat typecombat;
-
-int MouvemementChauveSouris(typecombat *BTLstr, struct RAT *rat, struct DIVERSsysteme *systeme, int index)
+int MouvemementChauveSouris(struct typecombat *BTLstr, struct RAT *rat, struct DIVERSsysteme *systeme, int index)
 {
 	int index2 = 0, total = 0, lerand = 0;
 

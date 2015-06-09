@@ -5,9 +5,6 @@
 
 #include "main.h"
 
-typedef struct BARREVIE BARREVIE;
-typedef struct plan plan;
-
 int TotalTableauInt(int *ptrTableau, int nbcase);
 void initPLAN(int type, int index,struct PACKobjet *objet);
 void initinventaire(struct DIVERSinventaire *inventaire,struct DIVERSsysteme *systeme);

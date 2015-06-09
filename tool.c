@@ -5,12 +5,11 @@
 #include "main.h"
 #include "systeme.h"
 
-typedef struct DIVERSsysteme DIVERSsysteme;
-typedef struct typecombat typecombat;
 typedef struct BARREVIE BARREVIE;
 
+#if TESTGRID == 1
 void DrawTestGrid(struct typecombat *BTLstr,struct DIVERSsysteme *systeme)
-{/*
+{
     int k, l;
     SDL_Rect tmp = {0, 0, 5, 5};
     for (k = 0 ; k < 1365 ; k=k+6)
@@ -24,11 +23,11 @@ void DrawTestGrid(struct typecombat *BTLstr,struct DIVERSsysteme *systeme)
                 SDL_RenderCopy(systeme->renderer, systeme->noir, NULL, &tmp);
             }
         }
-    }*/
+    }
 }
 
 void UnWriteSquareTestGrid(struct typecombat *BTLstr,struct SDL_Rect *area)
-{/*
+{
     int k, l;
     for (k = 0 ; k < 1365 ; k++)
     {
@@ -42,11 +41,11 @@ void UnWriteSquareTestGrid(struct typecombat *BTLstr,struct SDL_Rect *area)
                 }
             }
         }
-    }*/
+    }
 }
 
 void UnWriteCircleTestGrid (struct typecombat *BTLstr, SDL_Point *middle, int width)
-{/*
+{
     int k, l;
     SDL_Rect tmp2 = {middle->x - width,
                      middle->y - width,
@@ -71,8 +70,9 @@ void UnWriteCircleTestGrid (struct typecombat *BTLstr, SDL_Point *middle, int wi
                 }
             }
         }
-    }*/
+    }
 }
+#endif
 
 BARREVIE* AddLifeBar(int life, int lenght,struct DIVERSsysteme *systeme)
 {

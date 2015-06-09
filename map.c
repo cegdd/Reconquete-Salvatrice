@@ -18,6 +18,7 @@
 #include "tableau.h"
 #include "systeme.h"
 #include "listechaine.h"
+#include "queue.h"
 
 int map (struct DIVERSsysteme *systeme,struct typeFORthreads *online,struct PACKbouton *bouton ,struct PACKobjet *objet,
         struct PACKmonstre *monstre,struct PERSO *perso,struct DIVERSinventaire *inventaire,struct DIVERSdeplacement *deplacement,
@@ -111,7 +112,7 @@ int map (struct DIVERSsysteme *systeme,struct typeFORthreads *online,struct PACK
                 afficherINVENTAIRE(inventaire, ui, objet, systeme);
             }
             /*affichage de l'interface utilisateur*/
-            afficherUI(online->isonline, ui, bouton, temps, perso, chat, inventaire, systeme, recompense, objet);
+            afficherUI(online->isonline, ui, bouton, temps, perso, inventaire, systeme, recompense, objet);
             /*affichage de l'interface de crafting*/
             if (craft->actif == true)
             {
@@ -302,7 +303,7 @@ int lancementcombat(struct PACKmonstre *monstre,struct DIVERSinventaire *inventa
 	SDL_RenderClear(systeme->renderer);
 
 	/*############lancement du combat############*/
-	RETcombat = combat(perso->life, monstre, systeme, perso, inventaire, recompense, objet, ui, arcademode);
+	RETcombat = combat(perso->life, monstre, systeme, perso, recompense, objet, ui, arcademode);
 
 	if (arcademode == false)
 	{
@@ -368,7 +369,7 @@ int lancementcombat(struct PACKmonstre *monstre,struct DIVERSinventaire *inventa
 	}
 }
 
-void ANIMpersomarche(DIVERSdeplacement *deplacement, DIVERStemps *temps)
+void ANIMpersomarche(struct DIVERSdeplacement *deplacement,struct DIVERStemps *temps)
 {
     if (temps->tpact - temps->tempsanimationjoueur >= 128)
     {
@@ -388,7 +389,7 @@ void ANIMpersomarche(DIVERSdeplacement *deplacement, DIVERStemps *temps)
     }
 }
 
-void ANIMmonstre(PACKmonstre *monstre, DIVERStemps *temps)
+void ANIMmonstre(struct PACKmonstre *monstre,struct DIVERStemps *temps)
 {
 	int index;
 

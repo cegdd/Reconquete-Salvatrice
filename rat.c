@@ -5,8 +5,6 @@
 #include "tool.h"
 #include "image.h"
 
-typedef struct typecombat typecombat;
-
 int TestColision_Rat(SDL_Rect *rat, int x, int y, int direction)
 {
     SDL_Rect pix = {0, 0, 1, 1};

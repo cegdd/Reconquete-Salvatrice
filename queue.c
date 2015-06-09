@@ -1,18 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "queue.h"
+
 #include "jeux.h"
 #include "main.h"
 
-typedef struct PACKmonstre PACKmonstre;
-
-void Add_Creature_Queue(File *file, int nvNombre, int quantity)
+void Add_Creature_Queue(struct File *file, int nvNombre, int quantity)
 {
 	int index;
 
 	for(index = 0 ; index < quantity ; index++)
 	{
-		Element *nouveau = malloc(sizeof(*nouveau));
+		struct Element *nouveau = malloc(sizeof(*nouveau));
 		if (file == NULL || nouveau == NULL)
 		{
 			exit(EXIT_FAILURE);
@@ -24,7 +22,7 @@ void Add_Creature_Queue(File *file, int nvNombre, int quantity)
 		if (file->premier != NULL) /* La file n'est pas vide */
 		{
 			/* On se positionne à la fin de la file */
-			Element *elementActuel = file->premier;
+			struct Element *elementActuel = file->premier;
 			while (elementActuel->suivant != NULL)
 			{
 				elementActuel = elementActuel->suivant;
@@ -38,18 +36,18 @@ void Add_Creature_Queue(File *file, int nvNombre, int quantity)
 	}
 }
 
-void Free_Queue_Element(File *file)
+void Free_Queue_Element(struct File *file)
 {
 	if (file->premier != NULL)
     {
-		Element *elementDefile = file->premier;
+		struct Element *elementDefile = file->premier;
 
 		file->premier = file->premier->suivant;
         free(elementDefile);
     }
 }
 
-int Read_Creature_Queue(File *file)
+int Read_Creature_Queue(struct File *file)
 {
     int nombreDefile = -1;
 
@@ -72,7 +70,7 @@ int Read_Creature_Queue(File *file)
     return nombreDefile;
 }
 
-void initqueue(File *file, int ID)
+void initqueue(struct File *file, int ID)
 {
 	int ret = 0;
 

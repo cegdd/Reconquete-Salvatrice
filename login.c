@@ -3,14 +3,14 @@
 #include <SDL_ttf.h>
 #include <string.h>
 
+#include "main.h"
+
+#include "login.h"
 #include "image.h"
 #include "evenement.h"
-#include "login.h"
 #include "fichier.h"
 #include "sauvegarde.h"
 #include "ui.h"
-#include "main.h"
-
 
 int login (struct DIVERSsysteme *systeme)
 {
@@ -30,7 +30,7 @@ int login (struct DIVERSsysteme *systeme)
 
 			loginstore.lettre =  '\0';
 
-			SDL_GetMouseState(&loginstore.ppointeur.x, &loginstore.ppointeur.y);
+			SDL_GetMouseState(&loginstore.pointeur.pos.x, &loginstore.pointeur.pos.y);
 			loginstore.continuer = boucleeventlogin(&loginstore, systeme);
 
 			if (loginstore.continuer == 3) /* creer perso*/
@@ -115,7 +115,7 @@ int login (struct DIVERSsysteme *systeme)
 		}
 	}
 	loginstore.fichier = fopen ("rs/options.RSsave", "w+");
-	if (loginstore.etatazerty == 2) {fputc('1', loginstore.fichier);}
+	if (loginstore.etatazerty == 2) {fputc('1',loginstore.fichier);}
 	else if (loginstore.etatqwerty == 2) {fputc('2', loginstore.fichier);}
 	else if (loginstore.etatqwertz == 2) {fputc('3', loginstore.fichier);}
 	fclose(loginstore.fichier);
@@ -276,12 +276,22 @@ int auth(char login[][50])
 }
 
 
-void InitLoginStore(typelogin *loginstore,struct DIVERSsysteme *systeme)
+void InitLoginStore(struct typelogin *loginstore,struct DIVERSsysteme *systeme)
 {
 	loginstore->police = TTF_OpenFont("rs/divers/police1.ttf", TAILLE_POLICE_LOGIN);
 
 	loginstore->pseudo.texture = imprime ("pseudo :", systeme->screenw, BLEU, systeme, &loginstore->pseudo.lenght, NULL);
 	loginstore->mdp.texture = imprime ("mot de passe :", systeme->screenw, BLEU, systeme, &loginstore->mdp.lenght, NULL);
+
+	InitPicture(&loginstore->pointeur, "rs/images/p.png", 0, 0, 40, 60, 0, systeme);
+	InitPicture(&loginstore->login, "rs/fonds/login.png", 0, 0, 40, 60, 0, systeme);
+	InitPicture(&loginstore->blueBox, "rs/images/blueBox.png", 0, 0, 40, 60, 0, systeme);
+	InitPicture(&loginstore->whiteBox, "rs/images/whiteBox.png", 0, 0, 40, 60, 0, systeme);
+	InitPicture(&loginstore->tdialogue, "rs/ui/fenetreinfo.png", 0, 0, 40, 60, 0, systeme);
+	InitPicture(&loginstore->cachermdp, "rs/images/cachermdp.png", 0, 0, 40, 60, 0, systeme);
+	InitPicture(&loginstore->coche, "rs/images/coche.png", 0, 0, 40, 60, 0, systeme);
+
+	loginstore->curseur = systeme->noir;
 
 	loginstore->couleurNoir.r = 0;
 	loginstore->couleurNoir.g = 0;
@@ -297,11 +307,6 @@ void InitLoginStore(typelogin *loginstore,struct DIVERSsysteme *systeme)
 	loginstore->pecran.y = 0;
 	loginstore->pecran.w = systeme->screenw;
 	loginstore->pecran.h = systeme->screenh;
-
-	loginstore->ppointeur.x = 0;
-	loginstore->ppointeur.y = 0;
-	loginstore->ppointeur.w = 40;
-	loginstore->ppointeur.h = 60;
 
 	loginstore->pcurseurMDP.x = 0;
 	loginstore->pcurseurMDP.y = 0;
@@ -399,20 +404,11 @@ void InitLoginStore(typelogin *loginstore,struct DIVERSsysteme *systeme)
 	sprintf(loginstore->info3, "Identifiants incorrects\n\nVotre personnage n'existe pas, creez en un sans attendre !");
 	sprintf(loginstore->info4, "Identifiants incorrects\n\nVotre mot de passe et votre pseudo ne correspondent pas.\n\nessayer un autre mot de passe.");
 
-	loginstore->login = LoadingImage        ("rs/fonds/login.png", 0, systeme);
-	loginstore->pointeur = LoadingImage	    ("rs/images/p.png", 0, systeme);
-	loginstore->blueBox = LoadingImage		("rs/images/blueBox.png", 0, systeme);
-	loginstore->whiteBox = LoadingImage		("rs/images/whiteBox.png", 0, systeme);
-	loginstore->tdialogue = LoadingImage	("rs/ui/fenetreinfo.png", 0, systeme);
-	loginstore->cachermdp = LoadingImage	("rs/images/cachermdp.png", 0, systeme);
-	loginstore->coche = LoadingImage		("rs/images/coche.png", 0, systeme);
-	loginstore->curseur = systeme->noir;
-
 	loginstore->ttextedialogue = NULL;
 }
 
 
-void Initbouton(typelogin *loginstore,struct DIVERSsysteme *systeme)
+void Initbouton(struct typelogin *loginstore,struct DIVERSsysteme *systeme)
 {
      int menuw = systeme->screenw*0.7;
     int menuh = systeme->screenh*0.15;
@@ -487,11 +483,11 @@ void Initbouton(typelogin *loginstore,struct DIVERSsysteme *systeme)
 
 }
 
-void affichageloggin(typelogin *loginstore,struct DIVERSsysteme *systeme)
+void affichageloggin(struct typelogin *loginstore,struct DIVERSsysteme *systeme)
 {
     SDL_RenderClear(systeme->renderer);
 
-    SDL_RenderCopy(systeme->renderer, loginstore->login, NULL, &loginstore->pecran);/*background*/
+    SDL_RenderCopy(systeme->renderer, loginstore->login.texture, NULL, &loginstore->pecran);/*background*/
 
     if (loginstore->etatoption == B_NORMAL)
     {   SDL_RenderCopy(systeme->renderer, loginstore->option.normal, NULL, &loginstore->option.pos);}
@@ -536,14 +532,14 @@ void affichageloggin(typelogin *loginstore,struct DIVERSsysteme *systeme)
 
 
     if (loginstore->saisiepseudo == true)
-    {   SDL_RenderCopy(systeme->renderer, loginstore->blueBox, NULL, &loginstore->pcase);     }
+    {   SDL_RenderCopy(systeme->renderer, loginstore->blueBox.texture, NULL, &loginstore->pcase);     }
     else
-    {   SDL_RenderCopy(systeme->renderer, loginstore->whiteBox, NULL, &loginstore->pcase);    }
+    {   SDL_RenderCopy(systeme->renderer, loginstore->whiteBox.texture, NULL, &loginstore->pcase);    }
 
     if (loginstore->saisiemdp == true)
-    {   SDL_RenderCopy(systeme->renderer, loginstore->blueBox, NULL, &loginstore->pcase2);     }
+    {   SDL_RenderCopy(systeme->renderer, loginstore->blueBox.texture, NULL, &loginstore->pcase2);     }
     else
-    {   SDL_RenderCopy(systeme->renderer, loginstore->whiteBox, NULL, &loginstore->pcase2);   }
+    {   SDL_RenderCopy(systeme->renderer, loginstore->whiteBox.texture, NULL, &loginstore->pcase2);   }
 
     if(loginstore->longmdp > 0)
     {
@@ -601,14 +597,14 @@ void affichageloggin(typelogin *loginstore,struct DIVERSsysteme *systeme)
     SDL_RenderCopy(systeme->renderer, loginstore->mdp.texture, NULL, &loginstore->mdp.position);/* ask password*/
 
 
-    SDL_RenderCopy(systeme->renderer, loginstore->cachermdp, NULL, &loginstore->pcachermdp);/*tick box*/
+    SDL_RenderCopy(systeme->renderer, loginstore->cachermdp.texture, NULL, &loginstore->pcachermdp);/*tick box*/
     if (loginstore->mdpcacher == 1)
-    {   SDL_RenderCopy(systeme->renderer, loginstore->coche, NULL, &loginstore->pcoche);}/*tick*/
+    {   SDL_RenderCopy(systeme->renderer, loginstore->coche.texture, NULL, &loginstore->pcoche);}/*tick*/
 
 
      if (loginstore->menu == true)
     {
-        SDL_RenderCopy	(systeme->renderer, loginstore->tdialogue, NULL, &loginstore->pdialogue);
+        SDL_RenderCopy	(systeme->renderer, loginstore->tdialogue.texture, NULL, &loginstore->pdialogue);
         SDL_RenderCopy	(systeme->renderer, loginstore->ttextedialogue, NULL, &loginstore->ptextedialogue);
     }
 
@@ -636,7 +632,7 @@ void affichageloggin(typelogin *loginstore,struct DIVERSsysteme *systeme)
         {   SDL_RenderCopy(systeme->renderer, loginstore->qwerty.cliquer, NULL, &loginstore->qwertz.pos);}
     }
 
-    SDL_RenderCopy(systeme->renderer, loginstore->pointeur, NULL, &loginstore->ppointeur); /*souris*/
+    SDL_RenderCopy(systeme->renderer, loginstore->pointeur.texture, NULL, &loginstore->pointeur.pos); /*souris*/
 
     SDL_RenderPresent(systeme->renderer);
 

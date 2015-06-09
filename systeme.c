@@ -7,11 +7,6 @@
 #include "image.h"
 #include "listechaine.h"
 
-typedef struct RAT RAT;
-typedef struct PACKobjet PACKobjet;
-typedef struct PERSO PERSO;
-typedef struct DIVERSinventaire DIVERSinventaire;
-
 void recompensecombat(struct RAT *rat, int *recompense)
 {
     int lerand, index, index2;
@@ -30,7 +25,7 @@ void recompensecombat(struct RAT *rat, int *recompense)
     }
 }
 
-void checkandrefreshstuff(PERSO *perso, PACKobjet *objet,struct DIVERSsysteme *systeme,struct DIVERSui *ui)
+void checkandrefreshstuff(struct PERSO *perso,struct PACKobjet *objet,struct DIVERSsysteme *systeme,struct DIVERSui *ui)
 {
 	int index;
 	char string[64];
@@ -75,7 +70,7 @@ void checkandrefreshstuff(PERSO *perso, PACKobjet *objet,struct DIVERSsysteme *s
     perso->tforce = imprime (string, systeme->screenw, BLANC, systeme, NULL, NULL);
 }
 
-void checkinventaire(PACKobjet *objet, DIVERSinventaire *inventaire)
+void checkinventaire(struct PACKobjet *objet,struct DIVERSinventaire *inventaire)
 {
 	int index;
 	for (index = 0 ; index < 128 ; index++)

@@ -14,12 +14,12 @@
 
 
 float combat (float vie,struct PACKmonstre *monstre,struct DIVERSsysteme *systeme,struct PERSO *perso,
-              struct DIVERSinventaire *inventaire,struct PACKrecompense *recompense,struct PACKobjet *objet,
+              struct PACKrecompense *recompense,struct PACKobjet *objet,
               struct DIVERSui *ui, bool arcademode);
 void Hitboxjoueur (struct typecombat *BTLstr,struct PERSO *perso, int id);
 
 void afficherCOMBAT(struct typecombat *BTLstr,struct DIVERSsysteme *systeme,struct PERSO *perso,
-                    struct DIVERSinventaire *inventaire, struct PACKobjet *objet, bool arcademode);
+                    struct DIVERSui *ui, struct PACKobjet *objet, bool arcademode);
 
 void COMBATgestionCLICetCOLISION (struct typecombat *BTLstr,struct DIVERSui *ui);
 void COMBATgestionDEGAT (struct typecombat *BTLstr,struct DIVERSui *ui);
@@ -42,6 +42,6 @@ void Hit_Creature(int index,struct typecombat *BTLstr);
 int FindCreatureEngaged(struct PACKmonstre *monstre);
 int FindCreatureID(struct PACKmonstre *monstre, int ID);
 void JoueurMort(struct typecombat *BTLstr,struct DIVERSsysteme *systeme,struct DIVERSui *ui,struct PERSO *perso,
-				struct DIVERSinventaire *inventaire,struct PACKobjet *objet, bool arcademode);
+				struct PACKobjet *objet, bool arcademode);
 
 #endif

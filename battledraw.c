@@ -1,12 +1,7 @@
-
-typedef struct typecombat typecombat;
-typedef struct DIVERSsysteme DIVERSsysteme;
-typedef struct PACKobjet PACKobjet;
-
 #include "main.h"
 #include "colision.h"
 
-void BattleDraw_FloorItems(typecombat *BTLstr, DIVERSsysteme *systeme, PACKobjet *objet)
+void BattleDraw_FloorItems(struct typecombat *BTLstr,struct DIVERSsysteme *systeme,struct PACKobjet *objet)
 {
     int index;
     for (index = 0; index < BTLstr->NBlootsol ; index++)
@@ -20,7 +15,7 @@ void BattleDraw_FloorItems(typecombat *BTLstr, DIVERSsysteme *systeme, PACKobjet
     }
 }
 
-void BattleDraw_Ennemy(typecombat *BTLstr, DIVERSsysteme *systeme, int arcademode)
+void BattleDraw_Ennemy(struct typecombat *BTLstr,struct DIVERSsysteme *systeme, int arcademode)
 {
     int index, calcul;
     for (index = 0; index < LIMITEmobARCADE ; index++)
@@ -65,7 +60,7 @@ void BattleDraw_Ennemy(typecombat *BTLstr, DIVERSsysteme *systeme, int arcademod
 	}
 }
 
-void BattleDraw_Player(typecombat *BTLstr, DIVERSsysteme *systeme,struct PERSO *perso)
+void BattleDraw_Player(struct typecombat *BTLstr,struct DIVERSsysteme *systeme,struct PERSO *perso)
 {
     double degre = FindAngle(&BTLstr->Pperso, &BTLstr->pcurseur) + 90; /* finding angle*/
 
@@ -82,7 +77,7 @@ void BattleDraw_Player(typecombat *BTLstr, DIVERSsysteme *systeme,struct PERSO *
     SDL_RenderCopy(systeme->renderer, perso->BarreDeVie->texture, NULL, &perso->BarreDeVie->position);
 }
 
-void BattleDraw_Projectile(typecombat *BTLstr, DIVERSsysteme *systeme)
+void BattleDraw_Projectile(struct typecombat *BTLstr,struct DIVERSsysteme *systeme)
 {
     int index;
     for(index = 0 ; index < NBcailloux ; index++)
