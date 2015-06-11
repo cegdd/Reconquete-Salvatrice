@@ -49,7 +49,6 @@ void initinventaire(struct DIVERSinventaire *inventaire,struct DIVERSsysteme *sy
 		inventaire->totalID[index] = 0;
 	}
 
-	inventaire->actif = false;
 	inventaire->casedowndroit = -1;
 	inventaire->casedowngauche = -1;
 	inventaire->caseupgauche = -1;
@@ -103,7 +102,7 @@ void initobjet(struct PACKobjet *objet,struct DIVERSsysteme *systeme,struct DIVE
 	char nom[128];
 	int index;
 
-	for(index = 0 ; index <= 10 ; index++) { craft->planparonglets[index] = 0;}
+	for(index = 10 ; index >= 0 ; index--) { craft->planparonglets[index] = 0;}
 
 /******************** ARME **************************/
 	objet->PLANstuff[ARME][0].compodifferente = 0;
@@ -556,7 +555,11 @@ void initsystem(struct DIVERSsysteme *systeme)/*																	systeme*/
 void initui(struct DIVERSui *ui,struct DIVERSsysteme *systeme)/*															ui*/
 {
 	int index;
-	ui->menuactif =         false;
+	ui->menu_open =         false;
+	ui->inventaire_open =   false;
+	ui->chat_open =         false;
+	ui->craft_open =        false;
+
 	ui->distanceprevenu =   false;
 	ui->OnLeftUp =          false;
 	ui->OnRightUp =         false;
@@ -660,7 +663,6 @@ void initui(struct DIVERSui *ui,struct DIVERSsysteme *systeme)/*															u
 void initchat(struct DIVERSchat *chat,struct DIVERSsysteme *systeme)/*													chat*/
 {
 	int index;
-	chat->chatactif = false;
 	chat->saisiechat = 0;
 
 	chat->tbufferchat = NULL;
@@ -691,7 +693,6 @@ void initchat(struct DIVERSchat *chat,struct DIVERSsysteme *systeme)/*										
 void initcraft(struct DIVERScraft *craft,struct DIVERSsysteme *systeme)/*												craft*/
 {
 	int index;
-	craft->actif = false;
 	craft->bcraftactif = -1;
 	craft->bcraftpointer = -1;
 	craft->planactif = -1;

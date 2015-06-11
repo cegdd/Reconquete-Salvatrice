@@ -11,7 +11,7 @@ SDL_Texture *fenetredialogue(int x, int y, SDL_Rect* pdialogue, SDL_Rect* ptexte
 							int couleur,struct DIVERSsysteme *systeme);
 SDL_Texture *DrawSDLText(SDL_Rect* ptextedialogue, char texte[], int color, int ALIGN,struct DIVERSsysteme *systeme);
 
-void testcoin(struct DIVERSui *ui,struct DIVERSchat *chat,struct DIVERSinventaire *inventaire);
+void testcoin(struct DIVERSui *ui,struct DIVERSchat *chat);
 int calculclicinventaire(int *ptrpy, int *ptrpx,struct DIVERSsysteme *systeme);
 void afficherCRAFT(struct DIVERScraft *craft,struct DIVERSui *ui,struct PACKbouton *bouton,struct PACKobjet *objet,
                    struct DIVERSinventaire *inventaire,struct DIVERSsysteme *systeme);

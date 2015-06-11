@@ -295,7 +295,6 @@ struct DIVERSinventaire
 	int caseupdroit;
 	int casedowndroit;
 	int casedowngauche;
-	bool actif;
 	int idsurvoler;
 	int LARGEURaideclicdroit;
 	int totalID[128];
@@ -384,7 +383,11 @@ struct DIVERSsysteme
 
 struct DIVERSui
 {
-	bool menuactif;
+	bool menu_open;
+	bool inventaire_open;
+	bool chat_open;
+	bool craft_open;
+
 	bool distanceprevenu;
 	bool OnLeftUp;
 	bool OnRightUp;
@@ -426,7 +429,6 @@ struct DIVERSui
 
 struct DIVERSchat
 {
-    bool chatactif;
     int saisiechat;
 
 	SDL_Texture *tbufferchat;
@@ -443,7 +445,6 @@ struct DIVERSchat
 
 struct DIVERScraft
 {
-    bool actif;
     int bcraftactif;
     int bcraftpointer;
     int planactif;

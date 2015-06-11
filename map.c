@@ -79,7 +79,7 @@ int map (struct DIVERSsysteme *systeme,struct typeFORthreads *online,struct PACK
             /*gestion de l'ui*/
             gestionui(systeme, ui, craft, bouton, chat, inventaire, objet, perso, pnj);
             /*detection des combats*/
-            detectioncombat(monstre, inventaire, chat, ui, deplacement, objet, perso, systeme, recompense, false);
+            detectioncombat(monstre, inventaire, ui, deplacement, objet, perso, systeme, recompense, false);
             /*gestion des evenement*/
             boucleevent(&online->chat.lancermessage, FORevent);
             /*gestion du chat*/
@@ -102,19 +102,19 @@ int map (struct DIVERSsysteme *systeme,struct typeFORthreads *online,struct PACK
             /*affichage des joueurs*/
             afficherJOUEURS(perso, deplacement, systeme, online);
             /*affichage du chat*/
-            if (chat->chatactif == true)
+            if (ui->chat_open == true)
             {
                 afficherCHAT(chat, ui, online->chat.lenbuffer, systeme);
             }
             /*affichage de l'inventaire*/
-            else if (inventaire->actif == true)
+            else if (ui->inventaire_open == true)
             {
                 afficherINVENTAIRE(inventaire, ui, objet, systeme);
             }
             /*affichage de l'interface utilisateur*/
             afficherUI(online->isonline, ui, bouton, temps, perso, inventaire, systeme, recompense, objet);
             /*affichage de l'interface de crafting*/
-            if (craft->actif == true)
+            if (ui->craft_open == true)
             {
                 afficherCRAFT(craft, ui, bouton, objet, inventaire, systeme);
             }
@@ -144,7 +144,7 @@ int map (struct DIVERSsysteme *systeme,struct typeFORthreads *online,struct PACK
 			/*if it's the first second of this player*/
             if (temps->temptotal == 1)
             {
-                char texte[2548] = "           Toumai :\n\nBonjour à toi jeune ...\njeune quoi exactement?\nJe suis vieux, mes yeux sont fatigués\nmais mon esprit reste vif!\nEt à ta démarche je devine que tu n'es\npas du coin.\nJ'ignore ce que tu viens faire ici mais je dois te prévenir :\n\nles lieux ne sont pas sûrs!\nEt en tant que sage de la tribue, je dois m'assurer que tu puisses survivre au moins quelques jours.\n Tiens ! Prend ceci, c'est le lance pierre de mon fils.\nAvec une bonne pierre entre les 2 yeux je ne donne pas cher de leurs vies! \n\n   APPUIE SUR ENTRÉE POUR CONTINUER";
+                char texte[2548] = "           Toumai :\n\nBonjour à toi petit jeune ... \nà ta démarche je devine que tu n'es\npas du coin.\nJ'ignore ce que tu viens faire ici mais je dois te prévenir :\n\nles lieux ne sont pas sûrs!\nEt en tant que sage de la tribue, je dois m'assurer que tu puisses survivre au moins quelques jours.\n Tiens ! Prend ceci, c'est le lance pierre de mon fils.\nAvec une bonne pierre entre les 2 yeux je ne donne pas cher de leurs vies! \n\n   APPUIE SUR ENTRÉE POUR CONTINUER";
                 ui->ttextedialogue = fenetredialogue(systeme->screenw*0.4, systeme->screenh*0.8, &ui->pdialogue, &ui->ptextedialogue, texte, BLANC, systeme);
                 ui->dialogueactif = 1;
                 insertionsac(objet, 3);
@@ -237,7 +237,7 @@ int map (struct DIVERSsysteme *systeme,struct typeFORthreads *online,struct PACK
 
 
 
-void detectioncombat(struct PACKmonstre *monstre,struct DIVERSinventaire *inventaire,struct DIVERSchat *chat,struct DIVERSui *ui,
+void detectioncombat(struct PACKmonstre *monstre,struct DIVERSinventaire *inventaire,struct DIVERSui *ui,
                      struct DIVERSdeplacement *deplacement,struct PACKobjet *objet,struct PERSO *perso,struct DIVERSsysteme *systeme,
                      struct PACKrecompense *recompense, bool arcademode)
 {
@@ -252,7 +252,7 @@ void detectioncombat(struct PACKmonstre *monstre,struct DIVERSinventaire *invent
                 monstre->rat[index].etat == ALIVE)
         {
 			monstre->rat[index].Engaged = true;
-			monstre->rat[index].etat = lancementcombat(monstre, inventaire, chat, ui, deplacement, objet, perso, systeme, recompense, arcademode);
+			monstre->rat[index].etat = lancementcombat(monstre, inventaire, ui, deplacement, objet, perso, systeme, recompense, arcademode);
 			initqueue(&monstre->rat[index].queue, monstre->rat[index].ID);
 			monstre->rat[index].Engaged = false;
 		}
@@ -265,7 +265,7 @@ void detectioncombat(struct PACKmonstre *monstre,struct DIVERSinventaire *invent
 
 
 
-int lancementcombat(struct PACKmonstre *monstre,struct DIVERSinventaire *inventaire,struct DIVERSchat *chat,struct DIVERSui *ui,
+int lancementcombat(struct PACKmonstre *monstre,struct DIVERSinventaire *inventaire,struct DIVERSui *ui,
                     struct DIVERSdeplacement *deplacement,struct PACKobjet *objet,struct PERSO *perso,struct DIVERSsysteme *systeme,
                     struct PACKrecompense *recompense, bool arcademode)
 {
@@ -278,8 +278,8 @@ int lancementcombat(struct PACKmonstre *monstre,struct DIVERSinventaire *inventa
 	if (arcademode == false)
 	{
 		/*cloture des UIs et arret du personnage*/
-		inventaire->actif = false;
-		chat->chatactif = false;
+		ui->inventaire_open = false;
+		ui->chat_open = false;
 		systeme->inbattle = true;
 		ui->dialogueactif = 0;
 		deplacement->persobouge = 0;

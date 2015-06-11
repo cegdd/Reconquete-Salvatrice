@@ -31,10 +31,10 @@ void gestionui (struct DIVERSsysteme *systeme,struct DIVERSui *ui,struct DIVERSc
 
 		/*test des coins*/
 		TestCursorOnCorner(ui, systeme);
-		testcoin(ui, chat, inventaire);
+		testcoin(ui, chat);
 
 		/*si l'interface de craft est actif*/
-		if (craft->actif == true)
+		if (ui->craft_open == true)
 		{
 			if (systeme->pp.y >= systeme->screenh*0.467 && systeme->pp.y <= (systeme->screenh*0.467)+(systeme->screenh*0.03))
 			{
@@ -140,13 +140,13 @@ void gestionui (struct DIVERSsysteme *systeme,struct DIVERSui *ui,struct DIVERSc
     {
         /*corners tests*/
 		TestCursorOnCorner(ui, systeme);
-		testcoin(ui, chat, inventaire);
+		testcoin(ui, chat);
     }
 
-	if (craft->actif == true &&
+	if (ui->craft_open == true &&
 		checkdistance(&perso->pperso, &craft->petabli, 250) == 1) /*assez proche de l'etabli pour l'activer*/
     {
-        craft->actif = false;
+        ui->craft_open = false;
     }
     if (ui->dialogueactif == 1&&
 		checkdistance(&perso->pperso, &pnj->toumai, 250) == 1 && /*assez distant de toumai pour qu'il se taise*/
@@ -226,7 +226,7 @@ SDL_Texture *DrawSDLText(SDL_Rect* ptextedialogue, char texte[], int color, int 
 	return texture;
 }
 
-void testcoin(struct DIVERSui *ui,struct DIVERSchat *chat,struct DIVERSinventaire *inventaire)
+void testcoin(struct DIVERSui *ui,struct DIVERSchat *chat)
 {
 	int statcoinhaut = 0, statcoinbas = 0, time = 0;
 	time = TimeOnCorner(ui);
@@ -244,8 +244,8 @@ void testcoin(struct DIVERSui *ui,struct DIVERSchat *chat,struct DIVERSinventair
 				{
 					chat->saisiechat = 2;
 				}
-				inventaire->actif = false;
-				chat->chatactif = false;
+				ui->inventaire_open = false;
+				ui->chat_open = false;
 			}
 			else/*chat actif*/
 			{
@@ -254,8 +254,8 @@ void testcoin(struct DIVERSui *ui,struct DIVERSchat *chat,struct DIVERSinventair
 					{
 						chat->saisiechat = 1;
 					}
-				inventaire->actif = false;
-				chat->chatactif = true;
+				ui->inventaire_open = false;
+				ui->chat_open = true;
 			}
 		}
 	}
@@ -272,8 +272,8 @@ void testcoin(struct DIVERSui *ui,struct DIVERSchat *chat,struct DIVERSinventair
 				{
 					chat->saisiechat = 2;
 				}
-				inventaire->actif = false;
-				chat->chatactif = false;
+				ui->inventaire_open = false;
+				ui->chat_open = false;
 			}
 			else/*inventaire actif*/
 			{
@@ -282,8 +282,8 @@ void testcoin(struct DIVERSui *ui,struct DIVERSchat *chat,struct DIVERSinventair
 				{
 					chat->saisiechat = 2;
 				}
-				inventaire->actif = true;
-				chat->chatactif = false;
+				ui->inventaire_open = true;
+				ui->chat_open = false;
 			}
 		}
 
@@ -291,18 +291,23 @@ void testcoin(struct DIVERSui *ui,struct DIVERSchat *chat,struct DIVERSinventair
 	else if (ui->OnLeftUp && time > 1000)/*						coin haut gauche*/
 	{
 	    ui->PointedCorner = 0;
-		if (statcoinhaut != 1)
+		if (statcoinhaut != 1)/*menu not open yet*/
 		{
 			statcoinhaut = 1;
 			if (ui->coinhaut == 1)
 			{
 				ui->coinhaut = 0;
-				ui->menuactif = false;
+				ui->menu_open = false;
 			}
 			else
 			{
 				ui->coinhaut = 1;
-				ui->menuactif = true;
+				ui->menu_open = true;
+
+				if (ui->craft_open)
+                {
+                    ui->craft_open = false;
+                }
 			}
 		}
 	}
@@ -504,7 +509,7 @@ void afficherUI(bool enligne,struct DIVERSui *ui,struct PACKbouton *bouton,struc
 	SDL_RenderCopy	(systeme->renderer, ui->Uiinventaire, NULL, &ui->puiinventaire);
 	SDL_RenderCopy	(systeme->renderer, ui->uimenu, NULL, &ui->puimenu);
 
-	if (ui->menuactif == true)
+	if (ui->menu_open == true)
 	{
 		/*BackGround*/
 		SDL_RenderCopy	(systeme->renderer, ui->BGmenu, NULL, &ui->pUIhaut);

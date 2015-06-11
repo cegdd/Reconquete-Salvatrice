@@ -523,9 +523,9 @@ void eventmapclavierup(bool *lancermessage,struct typeFORevent *FORevent)
 		{
 			FORevent->ui->dialogueactif = 0;
 		}
-		else if (FORevent->craft->actif == true)
+		else if (FORevent->ui->craft_open == true)
 		{
-			FORevent->craft->actif = false;
+			FORevent->ui->craft_open = false;
 		}
 		break;
 
@@ -647,7 +647,7 @@ void eventmapsourisgaucheup(struct typeFORevent *FORevent)
 		}
 	}
 	/*if craft menu open*/
-	else if (FORevent->craft->actif == true)
+	else if (FORevent->ui->craft_open == true)
 	{
 		checkinventaire(FORevent->objet, FORevent->inventaire);
 
@@ -851,7 +851,11 @@ void sourisactionzone(struct typeFORevent *FORevent)
 		else if (colisionbox(&FORevent->systeme->pp, &FORevent->craft->petabli, true) &&
 				checkdistance(&FORevent->perso->pperso, &FORevent->craft->petabli, 250) == -1)
 		{
-			FORevent->craft->actif = true;
+			FORevent->ui->craft_open = true;
+			FORevent->ui->menu_open = false;
+			FORevent->ui->PointedCorner = 0;
+			FORevent->ui->OnLeftUp = false;
+			FORevent->ui->coinhaut = 0;
 		}
 	}
 }
