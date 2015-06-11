@@ -367,7 +367,7 @@
 	<SDL_ttf.h>
 	"main.h"
 
-1433280201 c:\users\cegdd\programmation\rs\tableau.h
+1434056333 c:\users\cegdd\programmation\rs\tableau.h
 	<SDL_ttf.h>
 	"main.h"
 
@@ -431,7 +431,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1433714716 source:c:\users\cegdd\programmation\rs\jeux.c
+1434055075 source:c:\users\cegdd\programmation\rs\jeux.c
 	<stdlib.h>
 	<stdio.h>
 	<stdbool.h>
@@ -542,9 +542,10 @@
 	"listechaine.h"
 	"queue.h"
 
-1433280793 source:c:\users\cegdd\programmation\rs\objet.c
-	"main.h"
+1434060050 source:c:\users\cegdd\programmation\rs\objet.c
 	<stdio.h>
+	<stdarg.h>
+	"main.h"
 
 1433282153 source:c:\users\cegdd\programmation\rs\queue.c
 	<stdio.h>
@@ -576,7 +577,7 @@
 	"image.h"
 	"listechaine.h"
 
-1434052746 source:c:\users\cegdd\programmation\rs\tableau.c
+1434060817 source:c:\users\cegdd\programmation\rs\tableau.c
 	<SDL.h>
 	<stdlib.h>
 	<stdio.h>
@@ -590,7 +591,7 @@
 	"tool.h"
 	"queue.h"
 
-1433279893 c:\users\cegdd\programmation\rs\objet.h
+1434055690 c:\users\cegdd\programmation\rs\objet.h
 
 1433278831 source:c:\users\cegdd\programmation\rs\thread1.c
 	<stdlib.h>
@@ -633,7 +634,7 @@
 	"main.h"
 	"systeme.h"
 
-1434051887 source:c:\users\cegdd\programmation\rs\ui.c
+1434053448 source:c:\users\cegdd\programmation\rs\ui.c
 	<stdio.h>
 	<SDL.h>
 	<math.h>
@@ -650,7 +651,7 @@
 
 1433278652 c:\users\cegdd\programmation\rs\battledraw.h
 
-1434051887 c:\users\cegdd\programmation\rs\struct.h
+1434057115 c:\users\cegdd\programmation\rs\struct.h
 	<stdio.h>
 	<stdbool.h>
 	<SDL_ttf.h>

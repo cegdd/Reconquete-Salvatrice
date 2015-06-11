@@ -1,5 +1,7 @@
-#include "main.h"
 #include <stdio.h>
+#include <stdarg.h>
+
+#include "main.h"
 
 void createobjet(int index, char *nom, int empilage, int type, int def, int life, int force, int portee, int regenlife,
                  int bodypart,struct PACKobjet *objet,struct DIVERScraft *craft)
@@ -18,8 +20,30 @@ void createobjet(int index, char *nom, int empilage, int type, int def, int life
 
 void addcompo(int type, int index, int compoID, int compoNB,struct PACKobjet *objet)
 {
-    objet->PLANstuff[type][index].compodifferente++;
-    objet->PLANstuff[type][index].compoID       [objet->PLANstuff[type][index].compodifferente - 1] = compoID;
-	objet->PLANstuff[type][index].compoNB       [objet->PLANstuff[type][index].compodifferente - 1] = compoNB;
-	objet->PLANstuff[type][index].compodispo    [objet->PLANstuff[type][index].compodifferente - 1] = false;
+    objet->PLANstuff[type][index].compoID       [objet->PLANstuff[type][index].compodifferente] = compoID;
+	objet->PLANstuff[type][index].compoNB       [objet->PLANstuff[type][index].compodifferente] = compoNB;
+	objet->PLANstuff[type][index].compodispo    [objet->PLANstuff[type][index].compodifferente] = false;
+
+	objet->PLANstuff[type][index].compodifferente++;
+}
+
+void CreateCraft(int index, int exemplaire, struct PACKobjet *objet, int compo, ...)
+{
+    int type = objet->objet[index].bodypart;
+    int i;
+
+    va_list ap;
+    va_start(ap, compo);
+
+    objet->PLANstuff[type][objet->craftnumber[type]].resultatID = index;
+	objet->PLANstuff[type][objet->craftnumber[type]].resultatNB = exemplaire;
+    for(i = 0 ; i < compo ; i++)
+    {
+        int id =  va_arg(ap, int);
+        int nb =  va_arg(ap, int);
+
+        addcompo(type, objet->craftnumber[type], id, nb, objet);
+    }
+
+    objet->craftnumber[type]++;
 }

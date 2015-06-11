@@ -90,11 +90,20 @@ void deplacementmap(SDL_Rect *pmap,int nombretiles, int x, int y)
 	}
 }
 
-void initPLAN(int type, int index,struct PACKobjet *objet)
+void initPLAN(struct PACKobjet *objet)
 {
-    objet->PLANstuff[type][index].compodifferente = 0;
-	objet->PLANstuff[type][index].resultatID = -1;
-	objet->PLANstuff[type][index].resultatNB = 0;
+    int i, j;
+
+    for(i = 0 ; i <= 7 ; i++)
+    {
+        objet->craftnumber[i] = 0;
+        for(j = 0 ; j <= 10 ; j++)
+        {
+            objet->PLANstuff[i][j].compodifferente = 0;
+            objet->PLANstuff[i][j].resultatID = -1;
+            objet->PLANstuff[i][j].resultatNB = 0;
+        }
+    }
 }
 
 void initobjet(struct PACKobjet *objet,struct DIVERSsysteme *systeme,struct DIVERScraft *craft)/*													objet*/
@@ -103,111 +112,62 @@ void initobjet(struct PACKobjet *objet,struct DIVERSsysteme *systeme,struct DIVE
 	int index;
 
 	for(index = 10 ; index >= 0 ; index--) { craft->planparonglets[index] = 0;}
+	initPLAN(objet);
+
+/****************** ressources **********************/
+
+	    /*index * nom * empilage * type * def * life * force * portee * regenlife * bodypart*/
+    createobjet(0, "peau des rats",         99, RESSOURCE,  0,  0,  0, 0,   0, -1,      objet,craft);
+    createobjet(2, "silex",                 5,  RESSOURCE,  0,  0,  0, 0,   0, -1,      objet,craft);
+    createobjet(7, "branche",               5,  RESSOURCE,  0,  0,  0, 0,   0, -1,      objet,craft);
 
 /******************** ARME **************************/
-	objet->PLANstuff[ARME][0].compodifferente = 0;
-	addcompo(ARME, 0, 7, 3, objet);
-	addcompo(ARME, 0, 0, 1, objet);
-	objet->PLANstuff[ARME][0].resultatID = 3;
-	objet->PLANstuff[ARME][0].resultatNB = 1;
 
-	objet->PLANstuff[ARME][1].compodifferente = 0;
-	addcompo(ARME, 1, 7, 3, objet);
-	addcompo(ARME, 1, 0, 1, objet);
-	objet->PLANstuff[ARME][1].resultatID = 10;
-	objet->PLANstuff[ARME][1].resultatNB = 1;
-
-	objet->PLANstuff[ARME][2].compodifferente = 0;
-	addcompo(ARME, 2, 7, 2, objet);
-	addcompo(ARME, 2, 2, 2, objet);
-	objet->PLANstuff[ARME][2].resultatID = 12;
-	objet->PLANstuff[ARME][2].resultatNB = 1;
-
-	for(index = 3 ; index < 10 ; index++)   {initPLAN(ARME, index, objet);}
-
+    createobjet(3, "lance pierre",          1,  EQUIPEMENT, 1,  0,  3, 100, 0, ARME,    objet,craft);
+    CreateCraft(3 , 1, objet, 2 /**/, 7, 3,/**/ 0, 1);
+    createobjet(10, "hachette",             1,  EQUIPEMENT, 0,  0,  5, 3,   0, ARME,    objet,craft);
+    CreateCraft(10, 1, objet, 2 /**/, 7, 3,/**/ 0, 1);
+    createobjet(12, "baton de chamane",     1,  EQUIPEMENT, 0,  20, 0, 4,   4, ARME,    objet,craft);
+    CreateCraft(12, 1, objet, 2 /**/, 7, 2,/**/ 2, 2);
+    createobjet(13, "gros lance pierre",    1,  EQUIPEMENT, 2,  0,  5, 150, 0, ARME,    objet,craft);
+	CreateCraft(13, 1, objet, 2 /**/, 7, 5,/**/ 2, 6);
 
 /******************** TORSE **************************/
 
-	objet->PLANstuff[TORSE][0].compodifferente = 0;
-	addcompo(TORSE, 0, 0, 30, objet);
-	objet->PLANstuff[TORSE][0].resultatID = 4;
-	objet->PLANstuff[TORSE][0].resultatNB = 1;
-
-	for(index = 1 ; index < 10 ; index++)   {initPLAN(TORSE, index, objet);}
+    createobjet(4, "toge en peau de rat",   1,  EQUIPEMENT, 5,  10, 0, 0,   2, TORSE,   objet,craft);
+    CreateCraft(4 , 1, objet, 1 /**/, 0, 30);
 
 /******************** COU *************************/
 
-	objet->PLANstuff[COU][0].compodifferente = 0;
-    addcompo(COU, 0, 0, 10, objet);
-	objet->PLANstuff[COU][0].resultatID = 5;
-	objet->PLANstuff[COU][0].resultatNB = 1;
-
-	for(index = 1 ; index < 10 ; index++)   {initPLAN(COU, index, objet);}
+    createobjet(5, "echarpe en peau de rat",1,  EQUIPEMENT, 2,  0,  0, 0,   1, COU,     objet,craft);
+    CreateCraft(5 , 1, objet, 1 /**/, 0, 25);
 
 /******************** DOS *************************/
 
-	objet->PLANstuff[DOS][0].compodifferente = 0;
-    addcompo(DOS, 0, 0, 25, objet);
-	objet->PLANstuff[DOS][0].resultatID = 6;
-	objet->PLANstuff[DOS][0].resultatNB = 1;
-
-	objet->PLANstuff[DOS][1].compodifferente = 0;
-    addcompo(DOS, 1, 0, 30, objet);
-    addcompo(DOS, 1, 2, 3, objet);
-	objet->PLANstuff[DOS][1].resultatID = 11;
-	objet->PLANstuff[DOS][1].resultatNB = 1;
-
-	for(index = 2 ; index < 10 ; index++)   {initPLAN(DOS, index, objet);}
+    createobjet(6, "cape en peau de rat",   1,  EQUIPEMENT, 5,  5,  1, 0,   0, DOS,     objet,craft);
+    CreateCraft(6 , 1, objet, 1 /**/, 0, 25);
+    createobjet(11, "cape lesté de silex",  1,  EQUIPEMENT, 10, 15, 2, 0,   0, DOS,     objet,craft);
+    CreateCraft(11 , 1, objet, 2 /**/, 0, 30,/**/ 2, 3);
 
 /******************** PIED *************************/
 
-	objet->PLANstuff[PIED][0].compodifferente = 0;
-    addcompo(PIED, 0, 7, 4, objet);
-    addcompo(PIED, 0, 0, 5, objet);
-	objet->PLANstuff[PIED][0].resultatID = 1;
-	objet->PLANstuff[PIED][0].resultatNB = 1;
-
-	for(index = 1 ; index < 10 ; index++)   {initPLAN(PIED, index, objet);}
+    createobjet(1, "sandales", 1, EQUIPEMENT, 3, 10, 0, 0, 1,PIED, objet,craft);
+    CreateCraft(1 , 1, objet, 2 /**/, 7, 4,/**/ 0, 5);
 
 /******************** TAILLE *************************/
 
-	objet->PLANstuff[TAILLE][0].compodifferente = 0;
-    addcompo(TAILLE, 0, 0, 13, objet);
-    addcompo(TAILLE, 0, 2, 3, objet);
-	objet->PLANstuff[TAILLE][0].resultatID = 8;
-	objet->PLANstuff[TAILLE][0].resultatNB = 1;
-
-	for(index = 1 ; index < 10 ; index++)   {initPLAN(TAILLE, index, objet);}
+    createobjet(8, "ceinture",              1,  EQUIPEMENT, 5,  0,  5, 0,   1, TAILLE,  objet,craft);
+    CreateCraft(8 , 1, objet, 2 /**/, 0, 13,/**/ 2, 3);
 
 /******************** TETE ***********************/
 
-	objet->PLANstuff[TETE][0].compodifferente = 0;
-    addcompo(TETE, 0, 0, 7, objet);
-    addcompo(TETE, 0, 7, 3, objet);
-	objet->PLANstuff[TETE][0].resultatID = 9;
-	objet->PLANstuff[TETE][0].resultatNB = 1;
+    createobjet(9, "coiffe",                1,  EQUIPEMENT, 10, 20, 0, 0,   1, TETE,    objet,craft);
+    CreateCraft(9 , 1, objet, 2 /**/, 0, 17,/**/ 7, 3);
 
-	for(index = 1 ; index < 10 ; index++)   {initPLAN(TETE, index, objet);}
 
-    /*index * nom * empilage * type * def * life * force * portee * regenlife * bodypart*/
-    createobjet(0, "peau des rats", 99, 0, RESSOURCE, 0, 0, 0, 0, -1, objet,craft);
-    createobjet(1, "sandales", 1, EQUIPEMENT, 3, 10, 0, 0, 1, PIED, objet,craft);
-    createobjet(2, "silex", 5, RESSOURCE, 0, 0, 0, 0, 0, -1, objet,craft);
-    createobjet(3, "lance pierre", 1, EQUIPEMENT, 1, 0, 3, 100, 0, ARME, objet,craft);
-    createobjet(4, "toge en peau de rat", 1, EQUIPEMENT, 5, 10, 0, 0, 2, TORSE, objet,craft);
-    createobjet(5, "echarpe en peau de rat", 1, EQUIPEMENT, 2, 0, 0, 0, 1, COU, objet,craft);
-    createobjet(6, "cape en peau de rat", 1, EQUIPEMENT, 5, 5, 1, 0, 0, DOS, objet,craft);
-    createobjet(7, "branche", 5, RESSOURCE, 0, 0, 0, 0, 0, -1, objet,craft);
-    createobjet(8, "ceinture", 1, EQUIPEMENT, 5, 0, 5, 0, 1, TAILLE, objet,craft);
-    createobjet(9, "coiffe", 1, EQUIPEMENT, 10, 20, 0, 0, 1, TETE, objet,craft);
-    createobjet(11, "cape lesté de silex", 1, EQUIPEMENT, 10, 15, 2, 0, 0, DOS, objet,craft);
-    createobjet(10, "hachette", 1, EQUIPEMENT, 0, 0, 5, 3, 0, ARME, objet,craft);
-    createobjet(12, "baton de chamane", 1, EQUIPEMENT, 0, 20, 0, 4, 4, ARME, objet,craft);
 
 	objet->objetenmain.IDobjet = -1;
 	objet->objetenmain.NBobjet = 0;
-
-
 
 	for (index = 0 ; index < NOMBREOBJETS ; index++)
 	{

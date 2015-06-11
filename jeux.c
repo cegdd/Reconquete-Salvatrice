@@ -361,7 +361,8 @@ void COMBATgestionDEGAT (struct typecombat *BTLstr,struct DIVERSui *ui)
 		    BTLstr->ResultatHitbox = -1;/*initialisation*/
 
 		    /*décision dégat lancepierre*/
-		    if (ui->casestuff[ARME].IDobjet == 3)
+		    if (ui->casestuff[ARME].IDobjet == 3 ||
+                ui->casestuff[ARME].IDobjet == 13)
             {
                     BTLstr->ResultatHitbox = HitboxBalle(BTLstr, index);
             }

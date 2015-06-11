@@ -32,7 +32,7 @@
 #endif
 
 #define LOOTMAX 50
-#define NOMBREOBJETS 13
+#define NOMBREOBJETS 14
 #define MAX_JOUEURS 50
 #define TILESMAP 10
 #define MAX_JOUEURS 50
@@ -142,6 +142,7 @@ struct PLAN
 	int compodifferente;
 	int compoID[NOMBREOBJETS];
 	int compoNB[10];
+	int craftnumber;
 	bool compodispo[NOMBREOBJETS];
 	int resultatID;
 	int resultatNB;
@@ -278,6 +279,7 @@ struct PACKbouton
 struct PACKobjet
 {
 	struct PLAN PLANstuff[7][10];
+	int craftnumber[7];
 	struct EMPLACEMENT sac1[TAILLESAC];
 	struct EMPLACEMENT objetenmain;
 	struct CHOSE objet[NOMBREOBJETS];

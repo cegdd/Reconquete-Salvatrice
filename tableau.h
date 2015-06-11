@@ -6,7 +6,7 @@
 #include "main.h"
 
 int TotalTableauInt(int *ptrTableau, int nbcase);
-void initPLAN(int type, int index,struct PACKobjet *objet);
+void initPLAN(struct PACKobjet *objet);
 void initinventaire(struct DIVERSinventaire *inventaire,struct DIVERSsysteme *systeme);
 void deplacementmap(SDL_Rect *pmap,int nombretiles, int x, int y);
 void initobjet(struct PACKobjet *objet,struct DIVERSsysteme *systeme,struct DIVERScraft *craft);
