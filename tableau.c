@@ -58,6 +58,7 @@ void initinventaire(struct DIVERSinventaire *inventaire,struct DIVERSsysteme *sy
 	inventaire->BGinventaire = LoadingImage	("rs/ui/BGinventaire.png", 0, systeme);
 	inventaire->tcasesac = LoadingImage		("rs/ui/caseinventaire.png", 0, systeme);
 	inventaire->tcasesac2 = LoadingImage		("rs/ui/caseinventaire2.png", 0, systeme);
+	inventaire->rubbish = LoadingImage		("rs/images/rubbish.png", 0, systeme);
 
 	sprintf(nom, "clic droit : équiper");
 	inventaire->taideclicdroit = imprime (nom, systeme->screenw, GRIS, systeme, NULL, NULL);
@@ -67,6 +68,11 @@ void initinventaire(struct DIVERSinventaire *inventaire,struct DIVERSsysteme *sy
 	inventaire->psac.y = systeme->screenh/2;
 	inventaire->psac.w = systeme->screenw*0.1;
 	inventaire->psac.h = systeme->screenh*0.026;
+
+	inventaire->prubbish.x = systeme->screenw*0.9;
+	inventaire->prubbish.y = systeme->screenh*0.9;
+	inventaire->prubbish.w = systeme->screenw*0.073;
+	inventaire->prubbish.h = systeme->screenh*0.13;
 
 }
 
@@ -852,6 +858,8 @@ void initonline(struct typeFORthreads *online,struct DIVERSsysteme *systeme)
     {
         online->chat.poschat[index] = index;
         memset(online->chat.schat[index], '\0', 512);
+
+        sprintf(online->chat.schat[index]," The chat is not working, no server founded.");
     }
 	online->chat.lancermessage = false;
 	memset(online->chat.bufferchat, '\0', 512);
@@ -899,7 +907,7 @@ void initcombatstore(struct typecombat *BTLstr,struct DIVERSsysteme *systeme, st
 	direction->direction = 0;
 	direction->olddirection = 0;
 
-	BTLstr->NBlootsol = rand()%5;  /*max déclaré 64*/
+	BTLstr->NBlootsol = rand()%5;  /*max declared 64*/
     #if BATTLE_LOG == 1
 	printf("20%%\n");
 	#endif

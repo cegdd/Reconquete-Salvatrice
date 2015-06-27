@@ -64,7 +64,6 @@ int map (struct DIVERSsysteme *systeme,struct typeFORthreads *online,struct PACK
 
 			/*sichronisation des données*/
 			sinchronisation(pnj, carte, monstre, craft, systeme, online, perso);
-
             /*animation personnage qui marche*/
             ANIMpersomarche(deplacement, temps);
             ANIMmonstre(monstre, temps);

@@ -302,7 +302,7 @@ struct DIVERSinventaire
 	int totalID[128];
 
 	SDL_Rect pcaseinventaire[TAILLESAC];
-	SDL_Rect  pnbobjet[TAILLESAC];
+	SDL_Rect pnbobjet[TAILLESAC];
 	SDL_Texture *tnbobjet;
 
 	SDL_Texture *tsacinventaire;
@@ -310,9 +310,11 @@ struct DIVERSinventaire
 	SDL_Texture *tcasesac;
 	SDL_Texture *tcasesac2;
 	SDL_Texture *taideclicdroit;
+	SDL_Texture *rubbish;
 
 	SDL_Rect psac;
 	SDL_Rect pdetail;
+	SDL_Rect prubbish;
 };
 
 struct DIVERSdeplacement

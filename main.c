@@ -39,7 +39,7 @@ int main (int argc, char *argv[])
     atexit(Mix_Quit);
 
     SDL_ShowCursor(SDL_DISABLE);
-    systeme.screen = SDL_CreateWindow("Reconquete salvatrice", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 0, 0, SDL_WINDOW_FULLSCREEN_DESKTOP);
+    systeme.screen = SDL_CreateWindow("Reconquete salvatrice", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 0, 0, SDL_WINDOW_BORDERLESS);
     systeme.renderer = SDL_CreateRenderer(systeme.screen, -1, SDL_RENDERER_ACCELERATED);
     SDL_MaximizeWindow(systeme.screen);
 	SDL_GetWindowSize(systeme.screen , &systeme.screenw , &systeme.screenh);

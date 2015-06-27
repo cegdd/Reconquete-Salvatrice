@@ -587,7 +587,6 @@ void eventmapclavierup(bool *lancermessage,struct typeFORevent *FORevent)
 void eventmapsourisgaucheup(struct typeFORevent *FORevent)
 {
 	int index, index2;
-	bool outside = true;
 	FORevent->bouton->crafter.etat = 0;
 
 
@@ -613,7 +612,6 @@ void eventmapsourisgaucheup(struct typeFORevent *FORevent)
 		if (FORevent->inventaire->caseupgauche  >=0 && FORevent->inventaire->caseupgauche< TAILLESAC)
 		{
 			insertionnumero(FORevent->inventaire->casedowngauche, FORevent->objet->sac1, FORevent->inventaire->caseupgauche, &FORevent->objet->objetenmain, FORevent->objet->objet);
-			outside = false;
 		}
 		FORevent->inventaire->casedowngauche = -1;
 	}
@@ -623,14 +621,14 @@ void eventmapsourisgaucheup(struct typeFORevent *FORevent)
 		for (index = 0 ; index < 7 ; index++)
 		{
 			/*if inside a box of the stuff*/
-			if (FORevent->systeme->pp.x >= FORevent->ui->pcasestuff[index].x
-				&& FORevent->systeme->pp.x <= FORevent->ui->pcasestuff[index].x + FORevent->ui->pcasestuff[index].w
-				&& FORevent->systeme->pp.y >= FORevent->ui->pcasestuff[index].y
-				&& FORevent->systeme->pp.y <= FORevent->ui->pcasestuff[index].y + FORevent->ui->pcasestuff[index].h)
+			/*and is an equipment*/
+			/*and is in the right box*/
+			if (colisionbox(&FORevent->systeme->pp, &FORevent->ui->pcasestuff[index], 1) &&
+				FORevent->objet->objet[FORevent->objet->objetenmain.IDobjet].type == EQUIPEMENT &&
+				FORevent->objet->objet[FORevent->objet->objetenmain.IDobjet].bodypart == index)
 			{
 				equipestuff(FORevent->objet, FORevent->ui, index, FORevent->objet->objetenmain.IDobjet);
 				videemplacement(&FORevent->objet->objetenmain);
-				outside = false;
 				break;
 			}
 		}
@@ -722,10 +720,15 @@ void eventmapsourisgaucheup(struct typeFORevent *FORevent)
 			}
 		}
 	}
-	if(outside == true)
+	if(colisionbox(&FORevent->systeme->pp, &FORevent->inventaire->prubbish, 1))
 	{
 		videemplacement(&FORevent->objet->objetenmain);
 	}
+	else
+    {
+        insertionsac(FORevent->objet, FORevent->objet->objetenmain.IDobjet);
+        videemplacement(&FORevent->objet->objetenmain);
+    }
 	checkandrefreshstuff(FORevent->perso, FORevent->objet, FORevent->systeme, FORevent->ui);
 }
 

@@ -462,12 +462,17 @@ void afficherINVENTAIRE(struct DIVERSinventaire *inventaire,struct DIVERSui *ui,
 	char snbobjet[4];
 	/*background*/
 	SDL_RenderCopy	(systeme->renderer, inventaire->BGinventaire, NULL, &ui->pUIbas);
-	/*sacs*/
+	/*bags*/
 	SDL_RenderCopy	(systeme->renderer, inventaire->tsacinventaire, NULL, &inventaire->psac);
-	/*pour chaques cases*/
+	/*rubbish*/
+	if (objet->objetenmain.IDobjet != -1)
+    {
+        SDL_RenderCopy	(systeme->renderer, inventaire->rubbish, NULL, &inventaire->prubbish);
+    }
+	/*for each cases*/
 	for (index = 0 ; index < TAILLESAC ; index++)
 	{
-		/*la case*/
+		/*the case*/
 		SDL_RenderCopy	(systeme->renderer, inventaire->tcasesac, NULL, &inventaire->pcaseinventaire[index]);
 		/*si la case contient un objet*/
 		if(objet->sac1[index].NBobjet > 0 && objet->sac1[index].IDobjet > -1)
