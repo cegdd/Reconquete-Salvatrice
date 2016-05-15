@@ -5,7 +5,7 @@
 
 int directionperso(struct DIRECTION *direction)
 {
-	if (direction->haut == 1 && direction->droite == 0 && direction->gauche == 0 && direction->bas == 0) {return UP;}
+    if      (direction->haut == 1 && direction->droite == 0 && direction->gauche == 0 && direction->bas == 0) {return UP;}
 	else if (direction->haut == 1 && direction->droite == 1 && direction->gauche == 0 && direction->bas == 0) {return UPRIGHT;}
 	else if (direction->haut == 1 && direction->droite == 0 && direction->gauche == 1 && direction->bas == 0) {return LEFTUP;}
 	else if (direction->haut == 0 && direction->droite == 1 && direction->gauche == 0 && direction->bas == 0) {return RIGHT;}
@@ -46,235 +46,39 @@ int calculdirectionjoueurs(SDL_Rect posjoueurs,SDL_Rect oldposjoueurs)
 }
 
 
-void haut (struct PERSO *perso, int* y, struct DIVERSsysteme *systeme, int enmap)
+void haut (int* y)
 {
-    if (enmap == 1)
-    {
-        if (perso->pperso.y >= (systeme->screenh-perso->pperso.h)/2)
-        {
-            perso->pperso.y = perso->pperso.y - 6;
-        }
-        else if (*y >= 0 && perso->pperso.y >= 10)
-        {
-            perso->pperso.y = perso->pperso.y - 6;
-        }
-        else if (*y <= 0)
-        {
-            *y = *y + 6;
-        }
-    }
-    else
-	{
-		*y = *y - 3;
-	}
+        *y = *y - 6;
 }
-void hautdroite (struct PERSO *perso, int* x, int* y, struct DIVERSsysteme *systeme, int enmap)
+void hautdroite (int* x, int* y)
 {
-    if (enmap == 1)
-    {
-        if (perso->pperso.y >= (systeme->screenh-perso->pperso.h)/2)
-        {
-            perso->pperso.y = perso->pperso.y - 5;
-        }
-        else if (*y >= 0 && perso->pperso.y >= 10)
-        {
-            perso->pperso.y = perso->pperso.y - 5;
-        }
-        else if (*y <= 0)
-        {
+        *y = *y - 5;
+        *x = *x - 5;
+}
+void droite (int* x)
+{
+        *x = *x - 6;
+}
+void basdroite (int* x, int* y)
+{
             *y = *y + 5;
-        }
-
-        if (perso->pperso.x <= (systeme->screenw-perso->pperso.w)/2)
-        {
-            perso->pperso.x = perso->pperso.x + 5;
-        }
-        else if (*x <= -8640 && perso->pperso.x <= systeme->screenw-perso->pperso.w)
-        {
-            perso->pperso.x = perso->pperso.x + 5;
-        }
-        else if (*x >= -8640)
-        {
             *x = *x - 5;
-        }
-    }
-    else
-	{
-		*x = *x + 2;
-		*y = *y - 2;
-	}
 }
-void droite (struct PERSO *perso, int* x, struct DIVERSsysteme *systeme, int enmap)
+void bas (int* y)
 {
-    if (enmap == 1)
-    {
-        if (perso->pperso.x <= (systeme->screenw-perso->pperso.w)/2)
-        {
-            perso->pperso.x = perso->pperso.x + 6;
-        }
-        else if (*x <= -8640 && perso->pperso.x <= systeme->screenw-perso->pperso.w)
-        {
-            perso->pperso.x = perso->pperso.x + 6;
-        }
-        else if (*x >= -8640)
-        {
-            *x = *x - 6;
-        }
-    }
-    else
-	{
-		*x = *x + 3;
-	}
+        *y = *y + 6;
 }
-void basdroite (struct PERSO *perso, int* x, int* y, struct DIVERSsysteme *systeme, int enmap)
+void basgauche (int* x, int* y)
 {
-    if (enmap == 1)
-    {
-        if (perso->pperso.y <= (systeme->screenh-perso->pperso.h)/2)
-        {
-            perso->pperso.y = perso->pperso.y + 5;
-        }
-        else if (*y <= -9222 && perso->pperso.y <= systeme->screenh-perso->pperso.h)
-        {
-            perso->pperso.y = perso->pperso.y + 5;
-        }
-        else if (*y >= -9222)
-        {
-            *y = *y - 5;
-        }
-
-        if (perso->pperso.x <= (systeme->screenw-perso->pperso.w)/2)
-        {
-            perso->pperso.x = perso->pperso.x + 5;
-        }
-        else if (*x <= -8640 && perso->pperso.x <= systeme->screenw-perso->pperso.w)
-        {
-            perso->pperso.x = perso->pperso.x + 5;
-        }
-        else if (*x >= -8640)
-        {
-            *x = *x - 5;
-        }
-    }
-    else
-	{
-		*y = *y + 2;
-		*x = *x + 2;
-	}
+        *y = *y + 5;
+        *x = *x + 5;
 }
-void bas (struct PERSO *perso, int* y, struct DIVERSsysteme *systeme, int enmap)
+void gauche (int* x)
 {
-    if (enmap == 1)
-    {
-        if (perso->pperso.y <= (systeme->screenh-perso->pperso.h)/2)
-        {
-            perso->pperso.y = perso->pperso.y + 6;
-        }
-        else if (*y <= -9222 && perso->pperso.y <= systeme->screenh-perso->pperso.h)
-        {
-            perso->pperso.y = perso->pperso.y + 6;
-        }
-        else if (*y >= -9222)
-        {
-            *y = *y - 6;
-        }
-    }
-    else
-	{
-		*y = *y + 3;
-	}
-}
-void basgauche (struct PERSO *perso, int* x, int* y, struct DIVERSsysteme *systeme, int enmap)
-{
-    if (enmap == 1)
-    {
-        if (perso->pperso.y <= (systeme->screenh-perso->pperso.h)/2)
-        {
-            perso->pperso.y = perso->pperso.y + 5;   /*down*/
-        }
-        else if (*y <= -9222 && perso->pperso.y <= systeme->screenh-perso->pperso.h)
-        {
-            perso->pperso.y = perso->pperso.y + 5;
-        }
-        else if (*y >= -9222)
-        {
-            *y = *y - 5;
-        }
-
-        if (perso->pperso.x >= (systeme->screenw-perso->pperso.w)/2)
-        {
-            perso->pperso.x = perso->pperso.x - 5;   /*left*/
-        }
-        else if (*x >= 0 && perso->pperso.x >= -10)
-        {
-            perso->pperso.x = perso->pperso.x - 5;
-        }
-        else if (*x <= 0)
-        {
-            *x = *x + 5;
-        }
-    }
-    else
-	{
-		*y = *y + 2;
-		*x = *x - 2;
-	}
-}
-void gauche (struct PERSO *perso, int* x, struct DIVERSsysteme *systeme, int enmap)
-{
-    if (enmap == 1)
-    {
-        if (perso->pperso.x >= (systeme->screenw-perso->pperso.w)/2)
-        {
-            perso->pperso.x = perso->pperso.x - 6;
-        }
-        else if (*x >= 0 && perso->pperso.x >= -10)
-        {
-            perso->pperso.x = perso->pperso.x - 6;
-        }
-        else if (*x <= 0)
-        {
             *x = *x + 6;
-        }
-    }
-    else
-	{
-		*x = *x - 3;
-	}
 }
-void gauchehaut (struct PERSO *perso, int* x, int* y, struct DIVERSsysteme *systeme, int enmap)
+void gauchehaut (int* x, int* y)
 {
-    if (enmap == 1)
-    {
-        if (perso->pperso.y >= (systeme->screenh-perso->pperso.h)/2)
-        {
-            perso->pperso.y = perso->pperso.y - 5;   /*up*/
-        }
-        else if (*y >= 0 && perso->pperso.y >= 10)
-        {
-            perso->pperso.y = perso->pperso.y - 5;
-        }
-        else if (*y <= 0)
-        {
-            *y = *y + 5;
-        }
-
-        if (perso->pperso.x >= (systeme->screenw-perso->pperso.w)/2)
-        {
-            perso->pperso.x = perso->pperso.x - 5;   /*left*/
-        }
-        else if (*x >= 0 && perso->pperso.x >= -10)
-        {
-            perso->pperso.x = perso->pperso.x - 5;
-        }
-        else if (*x <= 0)
-        {
-            *x = *x + 5;
-        }
-    }
-    else
-	{
-		*y = *y - 2;
-		*x = *x - 2;
-	}
+        *y = *y - 5;
+        *x = *x + 5;
 }

@@ -86,8 +86,8 @@ void sauvegardetout(char sauvegarde[][50],SDL_Rect pmap,struct PERSO *perso, int
 	sprintf(sauvegarde[1], "%s", sauvegarde[1]);		/*mdp*/
 	sprintf(sauvegarde[2], "%d", pmap.x);				/*map en x*/
 	sprintf(sauvegarde[3], "%d", pmap.y);				/*map en y*/
-	sprintf(sauvegarde[4], "%d", perso->pperso.x);			/*perso en x*/
-	sprintf(sauvegarde[5], "%d", perso->pperso.y);			/*perso en y*/
+	sprintf(sauvegarde[4], "%d", perso->perso.pict.pos.x);			/*perso en x*/
+	sprintf(sauvegarde[5], "%d", perso->perso.pict.pos.y);			/*perso en y*/
 	sprintf(sauvegarde[6], "%d", temptotal);			/*temp total de jeu en seconde*/
 	sprintf(sauvegarde[7], "%d", (int)perso->life);				/*quantité de vie*/
 	sprintf(sauvegarde[8], "%d", unuse);		/*nombre de batmoule tuer.*/

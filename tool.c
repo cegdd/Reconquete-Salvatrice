@@ -20,7 +20,7 @@ void DrawTestGrid(struct typecombat *BTLstr,struct DIVERSsysteme *systeme)
             {
                 tmp.x = k-3;
                 tmp.y = l-3;
-                SDL_RenderCopy(systeme->renderer, systeme->noir, NULL, &tmp);
+                //SDL_RenderCopy(systeme->renderer, systeme->noir, NULL, &tmp);
             }
         }
     }
@@ -79,7 +79,6 @@ BARREVIE* AddLifeBar(int life, int lenght,struct DIVERSsysteme *systeme)
 	BARREVIE *new = malloc(sizeof(BARREVIE));
 
 	new->life = life;
-	new->texture = systeme->noir;
 	new->BGtexture = systeme->BGblanc;
 	new->position.x = -1;
 	new->position.y = -1;

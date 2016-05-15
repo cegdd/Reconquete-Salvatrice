@@ -131,7 +131,7 @@ void equipestuff(struct PACKobjet *objet,struct DIVERSui *ui, int bodypartui,int
 {
 	int bodypart = objet->objet[id].bodypart;
 
-	if (objet->objet[id].type == 1)
+	if (objet->objet[id].type == EQUIPEMENT)
 	{
 		if (bodypart == bodypartui)
 		{

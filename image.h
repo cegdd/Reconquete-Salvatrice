@@ -5,11 +5,21 @@
 #include "main.h"
 
 SDL_Texture* LoadingImage(char* emplacement, int transparence,struct DIVERSsysteme *systeme);
-Uint32 obtenirPixel(SDL_Surface *surface[], int pixx, int pixy);
-Uint32 obtenirPixel2(SDL_Surface *surface, int pixx, int pixy);
+Uint8 obtenirPixel(SDL_Surface *surface, SDL_Point *pix);
 void chargement (struct DIVERSsysteme *systeme);
-SDL_Texture* imprime (char s[], int len, int couleur,struct DIVERSsysteme *systeme, int *LenghtReturn, int *HighReturn);
+GLuint imprime (char s[], int len, int couleur,struct DIVERSsysteme *systeme, int *LenghtReturn, int *HighReturn);
 void ANIMmort (struct DIVERSsysteme *systeme);
-void InitPicture(struct Picture *picture, char* emplacement, int x, int y, int w, int h, int transparance, struct DIVERSsysteme *systeme);
+
+SDL_Surface * flipSurface(SDL_Surface * surface);
+GLuint convertTexture(SDL_Surface *surface);
+GLuint loadTexture(const char * filename);
+void draw_pict(struct pict *image);
+void draw(GLuint texture, SDL_Rect *pos);
+void draw_button(struct BOUTON *bouton);
+void draw_color_black(SDL_Rect *pos);
+void setPos(SDL_Rect *pos, int x, int y, int w, int h);
+void Turn_And_Draw (struct pict *img, float angle);
+void Sync_Moving_Pict(int time, struct moving_pict *m_pict);
+
 
 #endif

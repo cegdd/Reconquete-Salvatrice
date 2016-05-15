@@ -7,6 +7,8 @@
 #include "image.h"
 #include "listechaine.h"
 
+extern int screenh, screenw;
+
 void recompensecombat(struct RAT *rat, int *recompense)
 {
     int lerand, index, index2;
@@ -54,20 +56,16 @@ void checkandrefreshstuff(struct PERSO *perso,struct PACKobjet *objet,struct DIV
 	}
 
     sprintf(string, "defense : %d", (int)perso->defense);
-    SDL_DestroyTexture(perso->tdefense);
-    perso->tdefense = imprime (string, systeme->screenw, BLANC, systeme, NULL, NULL);
+    perso->tdefense.texture = imprime (string, screenw, BLANC, systeme, NULL, NULL);
 
     sprintf(string, "regen vie : +%d/sec", perso->regenlife);
-    SDL_DestroyTexture(perso->tregenlife);
-    perso->tregenlife = imprime (string, systeme->screenw, BLANC, systeme, NULL, NULL);
+    perso->tregenlife.texture = imprime (string, screenw, BLANC, systeme, NULL, NULL);
 
     sprintf(string, "portee : +%d%%", perso->portee);
-    SDL_DestroyTexture(perso->tportee);
-    perso->tportee = imprime (string, systeme->screenw, BLANC, systeme, NULL, NULL);
+    perso->tportee.texture = imprime (string, screenw, BLANC, systeme, NULL, NULL);
 
     sprintf(string, "force : %d", perso->force);
-    SDL_DestroyTexture(perso->tforce);
-    perso->tforce = imprime (string, systeme->screenw, BLANC, systeme, NULL, NULL);
+    perso->tforce.texture = imprime (string, screenw, BLANC, systeme, NULL, NULL);
 }
 
 void checkinventaire(struct PACKobjet *objet,struct DIVERSinventaire *inventaire)
@@ -81,7 +79,7 @@ void checkinventaire(struct PACKobjet *objet,struct DIVERSinventaire *inventaire
             {
             	if (objet->sac1[index].IDobjet != -1)
 				{
-					if (objet->objet[objet->sac1[index].IDobjet].type == 1)
+					if (objet->objet[objet->sac1[index].IDobjet].type == EQUIPEMENT)
 					{
 					}
 					else

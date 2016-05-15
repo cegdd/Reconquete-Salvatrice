@@ -11,7 +11,6 @@ void detectioncombat(struct PACKmonstre *monstre,struct DIVERSinventaire *invent
 					struct DIVERSdeplacement *deplacement,struct PACKobjet *objet,struct PERSO *perso,struct DIVERSsysteme *systeme,
 					struct PACKrecompense *recompense, bool arcademode);
 
-void ANIMpersomarche(struct DIVERSdeplacement *deplacement,struct DIVERStemps *temps);
 void ANIMmonstre(struct PACKmonstre *monstre,struct DIVERStemps *temps);
 
 void gestionchat(struct DIVERSchat *chat,struct DIVERSsysteme *systeme,struct typeFORthreads *online);

@@ -20,6 +20,8 @@
 #include "listechaine.h"
 #include "queue.h"
 
+extern int screenh, screenw;
+
 int map (struct DIVERSsysteme *systeme,struct typeFORthreads *online,struct PACKbouton *bouton ,struct PACKobjet *objet,
         struct PACKmonstre *monstre,struct PERSO *perso,struct DIVERSinventaire *inventaire,struct DIVERSdeplacement *deplacement,
 		struct DIVERStemps *temps,struct DIVERSui *ui,struct DIVERSchat *chat,struct DIVERScraft *craft,struct DIVERSmap *carte,
@@ -28,12 +30,24 @@ int map (struct DIVERSsysteme *systeme,struct typeFORthreads *online,struct PACK
     int index;
     chargement(systeme);
     #if CHEAT == 1
+
+    for (index = 0 ; index < TAILLESAC ; index++)
+    {
+        videemplacement(&FORevent->objet->sac1[index]);
+    }
     for (index = 0 ; index < 10 ; index++)
     {
 		insertionsac(objet, 0);
 		insertionsac(objet, 2);
 		insertionsac(objet, 7);
 	}
+	insertionsac(objet, 3);
+	insertionsac(objet, 1);
+	insertionsac(objet, 4);
+	insertionsac(objet, 5);
+	insertionsac(objet, 6);
+	insertionsac(objet, 8);
+	insertionsac(objet, 9);
 
     #endif
 
@@ -49,10 +63,16 @@ int map (struct DIVERSsysteme *systeme,struct typeFORthreads *online,struct PACK
     checkandrefreshstuff(perso, objet, systeme, ui);
     checkinventaire(objet, inventaire);
 
+    glMatrixMode( GL_PROJECTION );
+    glLoadIdentity();
+    gluOrtho2D(0,screenw,0,screenh);
+    glMatrixMode( GL_MODELVIEW );
+    glLoadIdentity();
+
 /*#############################################################################################################################################################
 											##################### Boucle De Jeu #####################																					#
 ######################################################################################################################################################################*/
-
+systeme->continuer = 1;
     while (systeme->continuer == 1)
     {
         temps->tpact = SDL_GetTicks();
@@ -64,17 +84,15 @@ int map (struct DIVERSsysteme *systeme,struct typeFORthreads *online,struct PACK
 
 			/*sichronisation des données*/
 			sinchronisation(pnj, carte, monstre, craft, systeme, online, perso);
-            /*animation personnage qui marche*/
-            ANIMpersomarche(deplacement, temps);
+            /*animation monstre*/
             ANIMmonstre(monstre, temps);
-            /*deplacement de la carte*/
-            deplacementmap(&carte->pmap[0], TILESMAP, deplacement->x, deplacement->y);
             /*calcul direction joueur client*/
             deplacement->direction.direction = directionperso(&deplacement->direction);
             /*deplacement*/
-            deplacementperso(&carte->calque[0], perso, &deplacement->direction, systeme, &deplacement->x, &deplacement->y, 1);
+            deplacementperso_map(carte, perso, &deplacement->direction, &carte->origin);
             /*recupération coordonées souris*/
-            SDL_GetMouseState(&systeme->pp.x, &systeme->pp.y);
+            SDL_GetMouseState(&systeme->pointeur.pos.x, &systeme->pointeur.pos.y);
+            systeme->pointeur.pos.y = (systeme->pointeur.pos.y - screenh + systeme->pointeur.pos.h) * -1;
             /*gestion de l'ui*/
             gestionui(systeme, ui, craft, bouton, chat, inventaire, objet, perso, pnj);
             /*detection des combats*/
@@ -89,17 +107,17 @@ int map (struct DIVERSsysteme *systeme,struct typeFORthreads *online,struct PACK
 ##################################################################################################################################################################################*/
 
             /*effacage de l'écran*/
-            SDL_RenderClear(systeme->renderer);
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) ;
 
             /*affichage de la carte*/
             afficherMAP(carte, systeme, craft);
-            SDL_RenderCopy(systeme->renderer, craft->tetabli, NULL, &craft->petabli);
+            //SDL_RenderCopy(systeme->renderer, craft->tetabli, NULL, &craft->petabli);
             /*affichage des pnj*/
             afficherPNJ(perso, pnj, systeme);
             /*affichage des mobs*/
-            afficherMOB(monstre, systeme);
+            afficherMOB(monstre, systeme, temps);
             /*affichage des joueurs*/
-            afficherJOUEURS(perso, deplacement, systeme, online);
+            afficherJOUEURS(perso, deplacement, systeme, online, temps);
             /*affichage du chat*/
             if (ui->chat_open == true)
             {
@@ -121,14 +139,19 @@ int map (struct DIVERSsysteme *systeme,struct typeFORthreads *online,struct PACK
             afficherPOINTEUR(systeme, objet);
 
             /*rendu éran*/
-            SDL_RenderPresent(systeme->renderer);
+            glFlush();
+            SDL_GL_SwapWindow(systeme->screen);
         }
+        else
+        {
+			SDL_Delay(5);
+		}
 
 /*###########################################################################################################################
 								##################### Frame Par Secondes #####################								#
 ###########################################################################################################################*/
 
-        else if (temps->tpact - temps->tpap >= 1000)
+        if (temps->tpact - temps->tpap >= 1000)
         {
             temps->temptotal++;
 
@@ -141,10 +164,10 @@ int map (struct DIVERSsysteme *systeme,struct typeFORthreads *online,struct PACK
 			}
 
 			/*if it's the first second of this player*/
-            if (temps->temptotal == 1)
+            if (temps->temptotal == 5)
             {
-                char texte[2548] = "           Toumai :\n\nBonjour à toi petit jeune ... \nà ta démarche je devine que tu n'es\npas du coin.\nJ'ignore ce que tu viens faire ici mais je dois te prévenir :\n\nles lieux ne sont pas sûrs!\nEt en tant que sage de la tribue, je dois m'assurer que tu puisses survivre au moins quelques jours.\n Tiens ! Prend ceci, c'est le lance pierre de mon fils.\nAvec une bonne pierre entre les 2 yeux je ne donne pas cher de leurs vies! \n\n   APPUIE SUR ENTRÉE POUR CONTINUER";
-                ui->ttextedialogue = fenetredialogue(systeme->screenw*0.4, systeme->screenh*0.8, &ui->pdialogue, &ui->ptextedialogue, texte, BLANC, systeme);
+                char texte[2548] = "\nprisonnier :  \n   salut ... \n ça tombe bien,\n j'avais besoin d'un coup de main !\n tiens ! prend ce lance pierre et vas nous chercher\nquelques rat !\n\n\n\n\n\n\n\n\n\n\n\n\n\n   APPUIE SUR ENTRÉE POUR CONTINUER";
+                ui->dialogue_text.texture = fenetredialogue(screenw*0.4, screenh*0.8, &ui->dialogue_back.pos, &ui->dialogue_text.pos, texte, BLANC, systeme);
                 ui->dialogueactif = 1;
                 insertionsac(objet, 3);
             }
@@ -176,40 +199,32 @@ int map (struct DIVERSsysteme *systeme,struct typeFORthreads *online,struct PACK
 			}
             if (temps->temptotal - temps->tpspoursave >= 30)
             {
-                sauvegardetout(systeme->sauvegarde, carte->pmap[0], perso, temps->temptotal, 0, objet->sac1, TAILLESAC, ui);
+                sauvegardetout(systeme->sauvegarde, carte->cellule.pict.pos, perso, temps->temptotal, 0, objet->sac1, TAILLESAC, ui);
                 temps->tpspoursave = temps->temptotal;
             }
 
-
+            printf("%d frame/sec\n", temps->i);
             sprintf(temps->StringI, "IPS => %d", temps->i);
-            sprintf(perso->slife, "vie : %0.1f/%d", perso->life, perso->lifemax);
+            sprintf(perso->slife, "vie : %0.0f/%d", perso->life, perso->lifemax);
             sprintf(temps->stringtempstotal, "age du personnage : %dj %dh %dmin %dsec", calcultempsjours(temps->temptotal), calcultempsheures(temps->temptotal), calcultempsminutes(temps->temptotal), calcultempssecondes(temps->temptotal));
 
-            SDL_DestroyTexture(temps->tfps);
-            SDL_DestroyTexture(perso->tlife);
-            SDL_DestroyTexture(temps->ttemps);
-
-            temps->tfps = imprime (temps->StringI, systeme->screenw, BLANC, systeme, NULL, NULL);
-            perso->tlife = imprime (perso->slife, systeme->screenw, BLANC, systeme, NULL, NULL);
-            temps->ttemps = imprime (temps->stringtempstotal, systeme->screenw, BLANC, systeme, NULL, NULL);
+            temps->fps.texture = imprime (temps->StringI, screenw, BLANC, systeme, NULL, NULL);
+            perso->tlife.texture = imprime (perso->slife, screenw, BLANC, systeme, NULL, NULL);
+            temps->temps.texture = imprime (temps->stringtempstotal, screenw, BLANC, systeme, NULL, NULL);
 
             for(index = 0; index < 10 ; index++)
             {
                 if(online->chat.schat[index][0] != '\0')
                 {
-                    chat->pstringchat[index].y = (systeme->screenh*0.5)+(online->chat.poschat[index]*(systeme->screenh*0.047));
+                    chat->pstringchat[index].y = (screenh*0.5)+(online->chat.poschat[index]*(screenh*0.047));
                     SDL_DestroyTexture(chat->tstringchat[index]);
-                    chat->tstringchat[index] = imprime(online->chat.schat[index], systeme->screenw, BLANC, systeme, NULL, NULL);
+                  //  chat->tstringchat[index] = imprime(online->chat.schat[index], screenw, BLANC, systeme, NULL, NULL);
                 }
             }
 
             temps->i = 0;
             temps->tpap = temps->tpact;
         }
-        else
-        {
-			SDL_Delay(5);
-		}
     }
 
 /*###########################################################################################################################
@@ -218,19 +233,8 @@ int map (struct DIVERSsysteme *systeme,struct typeFORthreads *online,struct PACK
 																														#
 ###########################################################################################################################*/
 
-    sauvegardetout(systeme->sauvegarde, carte->pmap[0], perso, temps->temptotal, 0, objet->sac1, TAILLESAC, ui);
+    sauvegardetout(systeme->sauvegarde, carte->cellule.pict.pos, perso, temps->temptotal, 0, objet->sac1, TAILLESAC, ui);
 
-    for (index = 0 ; index < TILESMAP ; index++)
-    {
-        SDL_UnlockSurface(carte->calque[index]);
-    }
-
-    /*si la condition de boucle est toujours vrai, la fonction a été terminée par erreur.*/
-    /*                 (devrais être impossible mais j'ai eu le cas)*/
-    if (systeme->continuer == 1)
-    {
-        return -1;
-    }
     return 1;
 }
 
@@ -244,11 +248,8 @@ void detectioncombat(struct PACKmonstre *monstre,struct DIVERSinventaire *invent
 
 	for(index = 0 ; index < 3 ; index++)
     {
-        if (perso->pperso.x+perso->pperso.w >= monstre->rat[index].position.x &&
-                perso->pperso.y+perso->pperso.h >= monstre->rat[index].position.y &&
-                perso->pperso.y <= monstre->rat[index].position.y+monstre->rat[index].position.h &&
-                perso->pperso.x <= monstre->rat[index].position.x+monstre->rat[index].position.w &&
-                monstre->rat[index].etat == ALIVE)
+        if(colisionbox(&perso->perso.pict.pos, &monstre->rat[index].m_pict.pict.pos, false) == true &&
+           monstre->rat[index].etat == ALIVE)
         {
 			monstre->rat[index].Engaged = true;
 			monstre->rat[index].etat = lancementcombat(monstre, inventaire, ui, deplacement, objet, perso, systeme, recompense, arcademode);
@@ -257,12 +258,6 @@ void detectioncombat(struct PACKmonstre *monstre,struct DIVERSinventaire *invent
 		}
 	}
 }
-
-
-
-
-
-
 
 int lancementcombat(struct PACKmonstre *monstre,struct DIVERSinventaire *inventaire,struct DIVERSui *ui,
                     struct DIVERSdeplacement *deplacement,struct PACKobjet *objet,struct PERSO *perso,struct DIVERSsysteme *systeme,
@@ -299,7 +294,7 @@ int lancementcombat(struct PACKmonstre *monstre,struct DIVERSinventaire *inventa
 		ui->casestuff[ARME].IDobjet = 3;
 	}
 
-	SDL_RenderClear(systeme->renderer);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) ;
 
 	/*############lancement du combat############*/
 	RETcombat = combat(perso->life, monstre, systeme, perso, recompense, objet, ui, arcademode);
@@ -318,11 +313,6 @@ int lancementcombat(struct PACKmonstre *monstre,struct DIVERSinventaire *inventa
 		{
 			/*ecran de mort*/
 			ANIMmort(systeme);
-			/*replacement du joueur au départ avec toute sa vie*/
-			deplacement->x = 0;
-			deplacement->y = -200;
-			perso->pperso.x = systeme->screenw/2;
-			perso->pperso.y = systeme->screenh/2;
 			perso->life = perso->lifemax;
 
 			return ALIVE; /*the creature*/
@@ -330,7 +320,7 @@ int lancementcombat(struct PACKmonstre *monstre,struct DIVERSinventaire *inventa
 		/*si le joueur a fui*/
 		else if (RETcombat == BTL_LEAVED)
 		{
-			ui->ttextedialogue = fenetredialogue(systeme->screenw*0.4, systeme->screenh*0.8, &ui->pdialogue, &ui->ptextedialogue, "Vous avez fui,\ntous les objets obtenu pendant le combat on été abandonné sur place.\n\n\n\n(entrée/échap pour continuer)\n",
+			ui->dialogue_text.texture = fenetredialogue(screenw*0.4, screenh*0.8, &ui->dialogue_back.pos, &ui->dialogue_text.pos, "Vous avez fui,\ntous les objets obtenu pendant le combat on été abandonné sur place.\n\n\n\n(entrée/échap pour continuer)\n",
 									  BLANC, systeme);
 			ui->dialogueactif = 1;
 			return DEAD; /*the creature*/
@@ -347,7 +337,7 @@ int lancementcombat(struct PACKmonstre *monstre,struct DIVERSinventaire *inventa
 				/*ecriture de la récompense*/
 				sprintf(slootcombat, "-> %d %s", recompense->recompenseNB[indexloot], objet->objet[recompense->recompenseID[indexloot]].nom);
 				SDL_DestroyTexture(recompense->ttextelootcombat[indexloot]);
-				recompense->ttextelootcombat[indexloot] = imprime(slootcombat, systeme->screenw, BLANC, systeme, NULL, NULL);
+			//	recompense->ttextelootcombat[indexloot] = imprime(slootcombat, screenw, BLANC, systeme, NULL, NULL);
 
 				for (index2 = 0 ; index2 < recompense->recompenseNB[indexloot] ; index2++)
 				{
@@ -357,6 +347,8 @@ int lancementcombat(struct PACKmonstre *monstre,struct DIVERSinventaire *inventa
 				indexloot++;
 			}
 		}
+		perso->perso.pict.pos.x = screenw/2-perso->perso.pict.pos.w;
+        perso->perso.pict.pos.y = screenh/2-perso->perso.pict.pos.h;
 	}
 	if (RETcombat == BTL_RESTART)
 	{
@@ -366,26 +358,6 @@ int lancementcombat(struct PACKmonstre *monstre,struct DIVERSinventaire *inventa
 	{
 		return DEAD; /*the creature*/
 	}
-}
-
-void ANIMpersomarche(struct DIVERSdeplacement *deplacement,struct DIVERStemps *temps)
-{
-    if (temps->tpact - temps->tempsanimationjoueur >= 128)
-    {
-        if (deplacement->persobouge == 1)
-		{
-			temps->tempsanimationjoueur = temps->tpact;
-			deplacement->indexanimperso++;
-            if(deplacement->indexanimperso >= 8)
-            {
-                deplacement->indexanimperso = 0;
-            }
-		}
-		else
-		{
-			deplacement->indexanimperso = 0;
-		}
-    }
 }
 
 void ANIMmonstre(struct PACKmonstre *monstre,struct DIVERStemps *temps)
@@ -424,7 +396,7 @@ void gestionchat(struct DIVERSchat *chat,struct DIVERSsysteme *systeme,struct ty
         }
         chat->lettre = '\0';
         SDL_DestroyTexture(chat->tbufferchat);
-        chat->tbufferchat = imprime(online->chat.bufferchat, systeme->screenw, BLANC, systeme, NULL, NULL);
+    //    chat->tbufferchat = imprime(online->chat.bufferchat, screenw, BLANC, systeme, NULL, NULL);
     }
 }
 
@@ -433,24 +405,22 @@ void sinchronisation(struct PACKpnj *pnj,struct DIVERSmap *carte,struct PACKmons
 {
 	int index;
 
-	pnj->toumai.x = carte->pmap[0].x + 160;
-	pnj->toumai.y = carte->pmap[0].y + 575;
-	carte->pmx = carte->pmap[0].x * -1;
-	carte->pmy = carte->pmap[0].y * -1;
-	monstre->rat[1].position.x = carte->pmap[0].x + 1150;
-	monstre->rat[1].position.y = carte->pmap[0].y + 1500;
-	monstre->rat[0].position.x = carte->pmap[0].x + 540;
-	monstre->rat[0].position.y = carte->pmap[0].y + 1232;
-	monstre->rat[2].position.x = carte->pmap[0].x + 347;
-	monstre->rat[2].position.y = carte->pmap[0].y + 1432;
-	craft->petabli.x = carte->pmap[0].x + 830;
-	craft->petabli.y = carte->pmap[0].y + 830;
+	carte->cellule.pict.pos.x = carte->origin.x + carte->cellule.translation.x;
+	carte->cellule.pict.pos.y = carte->origin.y + carte->cellule.translation.y;
 
-	systeme->oldpp.x = systeme->pp.x;
-	systeme->oldpp.y = systeme->pp.y;
+	pnj->toumai.pos.x =                 carte->cellule.pict.pos.x + 580;
+	pnj->toumai.pos.y =                 carte->cellule.pict.pos.y + 1020;
+	monstre->rat[0].m_pict.pict.pos.x =    carte->cellule.pict.pos.x + 1700;
+	monstre->rat[0].m_pict.pict.pos.y =    carte->cellule.pict.pos.y + 500;
+	monstre->rat[1].m_pict.pict.pos.x =    carte->cellule.pict.pos.x + 2000;
+	monstre->rat[1].m_pict.pict.pos.y =    carte->cellule.pict.pos.y + 600;
+	monstre->rat[2].m_pict.pict.pos.x =    carte->cellule.pict.pos.x + 2000;
+	monstre->rat[2].m_pict.pict.pos.y =    carte->cellule.pict.pos.y + 200;
+	craft->petabli.x =              carte->cellule.pict.pos.x + 830;
+	craft->petabli.y =              carte->cellule.pict.pos.y + 830;
 
-	online->posjoueurx = carte->pmx + perso->pperso.x;
-	online->posjoueury = carte->pmy + perso->pperso.y;
+	systeme->oldpp.x = systeme->pointeur.pos.x;
+	systeme->oldpp.y = systeme->pointeur.pos.y;
 
 	for (index = 0 ; index < 3 ; index++)
 	{

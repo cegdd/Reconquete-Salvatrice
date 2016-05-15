@@ -12,6 +12,8 @@
 #include "tool.h"
 #include "queue.h"
 
+extern int screenh, screenw;
+
 int TotalTableauInt(int *ptrTableau, int nbcase)
 {
 	int total = 0, i = 0;
@@ -22,10 +24,12 @@ int TotalTableauInt(int *ptrTableau, int nbcase)
 	return total;
 }
 
-void initinventaire(struct DIVERSinventaire *inventaire,struct DIVERSsysteme *systeme)/*									inventaire*/
+void initinventaire(struct DIVERSinventaire *inventaire,struct DIVERSsysteme *systeme)
 {
 	int index, rangerx = -1;
 	char nom[32];
+
+	inventaire->box[0].texture = loadTexture		("rs/ui/caseinventaire.png");
 
 	for (index = 0 ; index < TAILLESAC ; index++)
 	{
@@ -34,15 +38,16 @@ void initinventaire(struct DIVERSinventaire *inventaire,struct DIVERSsysteme *sy
 		{
 			rangerx = 0;
 		}
-		inventaire->pcaseinventaire[index].x = rangerx * (systeme->screenw*0.0417);
-		inventaire->pcaseinventaire[index].y = ((index / 24) * (systeme->screenw*0.0417)) +(systeme->screenh*0.526);
-		inventaire->pcaseinventaire[index].w = systeme->screenw*0.0417;
-		inventaire->pcaseinventaire[index].h = systeme->screenw*0.0417;
+		inventaire->box[index].pos.x = rangerx * (screenw*0.0417);
+		inventaire->box[index].pos.y = (screenh*0.4) -((index / 24) * screenw*0.0417);
+		inventaire->box[index].pos.w = screenw*0.0417+1;
+		inventaire->box[index].pos.h = screenw*0.0417+1;
+		inventaire->box[index].texture = inventaire->box[0].texture;
 
-		inventaire->pnbobjet[index].x = inventaire->pcaseinventaire[index].x + inventaire->pcaseinventaire[0].h*0.7;
-		inventaire->pnbobjet[index].y = inventaire->pcaseinventaire[index].y + inventaire->pcaseinventaire[0].h*0.7;
-		inventaire->pnbobjet[index].w = inventaire->pcaseinventaire[0].h*0.3;
-		inventaire->pnbobjet[index].h = inventaire->pcaseinventaire[0].h*0.3;
+		inventaire->pnbobjet[index].x = inventaire->box[index].pos.x + inventaire->box[0].pos.h*0.7;
+		inventaire->pnbobjet[index].y = inventaire->box[index].pos.y + inventaire->box[0].pos.h*0.7;
+		inventaire->pnbobjet[index].w = inventaire->box[0].pos.h*0.3;
+		inventaire->pnbobjet[index].h = inventaire->box[0].pos.h*0.3;
 	}
 	for (index = 0 ; index < 128 ; index++)
 	{
@@ -53,48 +58,18 @@ void initinventaire(struct DIVERSinventaire *inventaire,struct DIVERSsysteme *sy
 	inventaire->casedowngauche = -1;
 	inventaire->caseupgauche = -1;
 	inventaire->idsurvoler = -1;
-	inventaire->tnbobjet = NULL;
-	inventaire->tsacinventaire = LoadingImage	("rs/ui/sac1.png", 0, systeme);
-	inventaire->BGinventaire = LoadingImage	("rs/ui/BGinventaire.png", 0, systeme);
-	inventaire->tcasesac = LoadingImage		("rs/ui/caseinventaire.png", 0, systeme);
-	inventaire->tcasesac2 = LoadingImage		("rs/ui/caseinventaire2.png", 0, systeme);
-	inventaire->rubbish = LoadingImage		("rs/images/rubbish.png", 0, systeme);
+	inventaire->sac.texture = loadTexture   ("rs/ui/sac1.png");
+	inventaire->fond.texture = loadTexture	("rs/ui/BGinventaire.png");
+	inventaire->rubbish.texture = loadTexture("rs/images/rubbish.png");
 
-	sprintf(nom, "clic droit : équiper");
-	inventaire->taideclicdroit = imprime (nom, systeme->screenw, GRIS, systeme, NULL, NULL);
-	SDL_QueryTexture(inventaire->taideclicdroit, NULL, NULL, &inventaire->LARGEURaideclicdroit, NULL);
+	sprintf(nom, "clic droit : equiper");
+	inventaire->aide.img.texture = imprime (nom, screenw, GRIS, systeme, &inventaire->aide.lenght, NULL);
 
-	inventaire->psac.x = 0;
-	inventaire->psac.y = systeme->screenh/2;
-	inventaire->psac.w = systeme->screenw*0.1;
-	inventaire->psac.h = systeme->screenh*0.026;
-
-	inventaire->prubbish.x = systeme->screenw*0.9;
-	inventaire->prubbish.y = systeme->screenh*0.9;
-	inventaire->prubbish.w = systeme->screenw*0.073;
-	inventaire->prubbish.h = systeme->screenh*0.13;
-
+	setPos(&inventaire->sac.pos, 0, screenh/2 - screenh*0.026, screenw*0.1, screenh*0.026);
+	setPos(&inventaire->fond.pos, 0, 0, screenw, screenh/2);
+	setPos(&inventaire->rubbish.pos, screenw*0.9, 0, screenw*0.073, screenh*0.13);
 }
 
-void deplacementmap(SDL_Rect *pmap,int nombretiles, int x, int y)
-{
-	int index, rangerx = 0;
-	pmap[0].x = x;
-	pmap[0].y = y;
-
-
-	for (index = 1 ; index < nombretiles ; index++)
-	{
-		rangerx++;
-		if (rangerx / 4 == 1)
-		{
-			rangerx = 0;
-		}
-
-		pmap[index].x = x + (rangerx * 2500);
-		pmap[index].y = y + ((index / 4) * 2500);
-	}
-}
 
 void initPLAN(struct PACKobjet *objet)
 {
@@ -152,7 +127,7 @@ void initobjet(struct PACKobjet *objet,struct DIVERSsysteme *systeme,struct DIVE
 
     createobjet(6, "cape en peau de rat",   1,  EQUIPEMENT, 5,  5,  1, 0,   0, DOS,     objet,craft);
     CreateCraft(6 , 1, objet, 1 /**/, 0, 25);
-    createobjet(11, "cape lesté de silex",  1,  EQUIPEMENT, 10, 15, 2, 0,   0, DOS,     objet,craft);
+    createobjet(11, "cape lestee de silex",  1,  EQUIPEMENT, 10, 15, 2, 0,   0, DOS,     objet,craft);
     CreateCraft(11 , 1, objet, 2 /**/, 0, 30,/**/ 2, 3);
 
 /******************** PIED *************************/
@@ -178,51 +153,41 @@ void initobjet(struct PACKobjet *objet,struct DIVERSsysteme *systeme,struct DIVE
 	for (index = 0 ; index < NOMBREOBJETS ; index++)
 	{
 		sprintf(nom, "rs/objets/%d#0.png", index);
-		objet->objet[index].texture = LoadingImage   (nom, 0, systeme);
+        objet->objet[index].texture = loadTexture   (nom);
 		if(objet->objet[index].def != 0)
 		{
-			sprintf(nom, "défense : %d", objet->objet[index].def);
-			objet->objet[index].texturedef = imprime (nom, systeme->screenw, BLANC, systeme, NULL, NULL);
-			SDL_QueryTexture(objet->objet[index].texturedef, NULL, NULL, &objet->objet[index].LARGEURdef, NULL);
+			sprintf(nom, "defense : %d", objet->objet[index].def);
+			objet->objet[index].tdef.img.texture = imprime (nom, screenw, BLANC, systeme, &objet->objet[index].tdef.lenght, NULL);
 		}
 		if(objet->objet[index].life != 0)
 		{
-			sprintf(nom, "santé : +%d", objet->objet[index].life);
-			objet->objet[index].texturelife = imprime (nom, systeme->screenw, BLANC, systeme, NULL, NULL);
-			SDL_QueryTexture(objet->objet[index].texturelife, NULL, NULL, &objet->objet[index].LARGEURlife, NULL);
+			sprintf(nom, "sante : +%d", objet->objet[index].life);
+			objet->objet[index].tlife.img.texture = imprime (nom, screenw, BLANC, systeme, &objet->objet[index].tlife.lenght, NULL);
 		}
 		if(objet->objet[index].regenlife != 0)
 		{
-			sprintf(nom, "régénération : %d/sec", objet->objet[index].regenlife);
-			objet->objet[index].textureregenlife = imprime (nom, systeme->screenw, BLANC, systeme, NULL, NULL);
-			SDL_QueryTexture(objet->objet[index].textureregenlife, NULL, NULL, &objet->objet[index].LARGEURregenlife, NULL);
+			sprintf(nom, "regeneration : %d/sec", objet->objet[index].regenlife);
+			objet->objet[index].tregenlife.img.texture = imprime (nom, screenw, BLANC, systeme, &objet->objet[index].tregenlife.lenght, NULL);
 		}
 
 		if(objet->objet[index].force != 0)
 		{
 			sprintf(nom, "force : %d", objet->objet[index].force);
-			objet->objet[index].textureforce = imprime (nom, systeme->screenw, BLANC, systeme, NULL, NULL);
-			SDL_QueryTexture(objet->objet[index].textureforce, NULL, NULL, &objet->objet[index].LARGEURforce, NULL);
+			objet->objet[index].tforce.img.texture = imprime (nom, screenw, BLANC, systeme, &objet->objet[index].tforce.lenght, NULL);
 		}
 
 		if(objet->objet[index].portee != 0)
 		{
 			sprintf(nom, "portee : +%d%%", objet->objet[index].portee);
-			objet->objet[index].textureportee = imprime (nom, systeme->screenw, BLANC, systeme, NULL, NULL);
-			SDL_QueryTexture(objet->objet[index].textureportee, NULL, NULL, &objet->objet[index].LARGEURportee, NULL);
+			objet->objet[index].tportee.img.texture = imprime (nom, screenw, BLANC, systeme, &objet->objet[index].tportee.lenght, NULL);
 		}
 
 		sprintf(nom, "%d", objet->objet[index].empilage);
-		objet->objet[index].texturenombre = imprime (nom, systeme->screenw, ROUGE, systeme, NULL, NULL);
+		objet->objet[index].quantite = imprime (nom, screenw, ROUGE, systeme, NULL, NULL);
 
-		objet->objet[index].texturenom[0] = NULL;
-		objet->objet[index].texturenom[1] = NULL;
-		objet->objet[index].texturenom[2] = NULL;
-
-		objet->objet[index].texturenom[0] = imprime (objet->objet[index].nom, systeme->screenw, BLANC, systeme, NULL, NULL);
-		objet->objet[index].texturenom[1] = imprime (objet->objet[index].nom, systeme->screenw, GRIS, systeme, NULL, NULL);
-		objet->objet[index].texturenom[2] = imprime (objet->objet[index].nom, systeme->screenw, ROUGE, systeme, NULL, NULL);
-		SDL_QueryTexture(objet->objet[index].texturenom[0], NULL, NULL, &objet->objet[index].LARGEURnom, NULL);
+		objet->objet[index].texturenom[0] = imprime (objet->objet[index].nom, screenw, BLANC, systeme, &objet->objet[index].LARGEURnom, NULL);
+		objet->objet[index].texturenom[1] = imprime (objet->objet[index].nom, screenw, GRIS, systeme, &objet->objet[index].LARGEURnom, NULL);
+		objet->objet[index].texturenom[2] = imprime (objet->objet[index].nom, screenw, ROUGE, systeme, &objet->objet[index].LARGEURnom, NULL);
 	}
 
 	for (index = 0 ; index < TAILLESAC ; index++)
@@ -235,7 +200,7 @@ void initobjet(struct PACKobjet *objet,struct DIVERSsysteme *systeme,struct DIVE
 void initbouton(struct PACKbouton *bouton,struct DIVERSsysteme *systeme)/*												bouton*/
 {
     int index;
-
+/*
 	bouton->bcraft[0].normal = LoadingImage	    	("rs/ui/arme.png", 0, systeme);
 	bouton->bcraft[0].survoler = LoadingImage	    	("rs/ui/arme1.png", 0, systeme);
 	bouton->bcraft[0].cliquer = LoadingImage	    	("rs/ui/arme2.png", 0, systeme);
@@ -258,33 +223,23 @@ void initbouton(struct PACKbouton *bouton,struct DIVERSsysteme *systeme)/*						
 	bouton->bcraft[6].survoler = LoadingImage	    	("rs/ui/tete1.png", 0, systeme);
 	bouton->bcraft[6].cliquer = LoadingImage	    	("rs/ui/tete2.png", 0, systeme);
 
-	bouton->BoutonQuitter.normal = LoadingImage			("rs/ui/quitter.png", 0, systeme);
-	bouton->BoutonQuitter.survoler = LoadingImage		("rs/ui/quitter1.png", 0, systeme);
-	bouton->BoutonQuitter.cliquer = LoadingImage			("rs/ui/quitter2.png", 0, systeme);
-
 	bouton->crafter.normal = LoadingImage			("rs/ui/creer.png", 0, systeme);
 	bouton->crafter.survoler = LoadingImage		("rs/ui/creer2.png", 0, systeme);
-	bouton->crafter.cliquer = LoadingImage			("rs/ui/creer3.png", 0, systeme);
+	bouton->crafter.cliquer = LoadingImage			("rs/ui/creer3.png", 0, systeme);*/
 
 	for (index = 0 ; index < 7 ; index++)
 	{
-		bouton->bcraft[index].position.x = index*(systeme->screenw*0.143);
-		bouton->bcraft[index].position.y = systeme->screenh*0.467;
-		bouton->bcraft[index].position.w = systeme->screenw*0.143;
-		bouton->bcraft[index].position.h = systeme->screenh*0.03;
+		bouton->bcraft[index].pos.x = index*(screenw*0.143);
+		bouton->bcraft[index].pos.y = screenh*0.467;
+		bouton->bcraft[index].pos.w = screenw*0.143;
+		bouton->bcraft[index].pos.h = screenh*0.03;
 		bouton->bcraft[index].etat = 0;
 	}
 
-	bouton->BoutonQuitter.position.x = systeme->screenw*0.7;
-	bouton->BoutonQuitter.position.y = systeme->screenh*0.3;
-	bouton->BoutonQuitter.position.w = systeme->screenw*0.04;
-	bouton->BoutonQuitter.position.h = bouton->BoutonQuitter.position.w;
-	bouton->BoutonQuitter.etat = 0;
-
-	bouton->crafter.position.x = systeme->screenw*0.622;
-	bouton->crafter.position.y = systeme->screenh*0.39;
-	bouton->crafter.position.w = systeme->screenw*0.11;
-	bouton->crafter.position.h = systeme->screenh*0.0651;
+	bouton->crafter.pos.x = screenw*0.622;
+	bouton->crafter.pos.y = screenh*0.39;
+	bouton->crafter.pos.w = screenw*0.11;
+	bouton->crafter.pos.h = screenh*0.0651;
 
 	bouton->crafter.etat = 0;
 }
@@ -306,11 +261,16 @@ void initmonstre(struct PACKmonstre *monstre,struct DIVERSsysteme *systeme)/*			
 	initqueue(&monstre->rat[2].queue, 2);
 
 
+	monstre->rat[0].m_pict.texture[0] =     loadTexture	("rs/images/mob0.0.png");
+    monstre->rat[0].m_pict.texture[1] =     loadTexture	("rs/images/mob0.1.png");
+    monstre->rat[0].m_pict.texture[2] =     loadTexture	("rs/images/mob0.2.png");
+
+
 /*rat*/
 	for (index = 0 ; index < 3 ; index++)
 	{
-		monstre->rat[index].position.w = systeme->screenw*0.0732;
-		monstre->rat[index].position.h = systeme->screenh*0.039;
+		monstre->rat[index].m_pict.pict.pos.w = screenw*0.0732;
+		monstre->rat[index].m_pict.pict.pos.h = screenh*0.039;
 
 		monstre->rat[index].etat = ALIVE;
 		monstre->rat[index].Engaged = false;
@@ -318,74 +278,55 @@ void initmonstre(struct PACKmonstre *monstre,struct DIVERSsysteme *systeme)/*			
 		monstre->rat[index].tempsanim = 0;
 		monstre->rat[index].direction = rand()%8;
 		sprintf(monstre->rat[index].nom, "rat");
-
-		monstre->rat[index].texture[RAT_BLANC][0] = LoadingImage	("rs/images/mob0.0.png", 0, systeme);
-		monstre->rat[index].texture[RAT_BLANC][1] = LoadingImage	("rs/images/mob0.1.png", 0, systeme);
-		monstre->rat[index].texture[RAT_BLANC][2] = LoadingImage	("rs/images/mob0.2.png", 0, systeme);
-
-		monstre->rat[index].texture[RAT_VERT][0] = LoadingImage		("rs/images/mob1.0.png", 0, systeme);
-		monstre->rat[index].texture[RAT_VERT][1] = LoadingImage		("rs/images/mob1.1.png", 0, systeme);
-		monstre->rat[index].texture[RAT_VERT][2] = LoadingImage		("rs/images/mob1.2.png", 0, systeme);
-
-		monstre->rat[index].texture[RAT_JAUNE][0] = LoadingImage	("rs/images/mob2.0.png", 0, systeme);
-		monstre->rat[index].texture[RAT_JAUNE][1] = LoadingImage	("rs/images/mob2.1.png", 0, systeme);
-		monstre->rat[index].texture[RAT_JAUNE][2] = LoadingImage	("rs/images/mob2.2.png", 0, systeme);
-
-		monstre->rat[index].texture[RAT_ORANGE][0] = LoadingImage	("rs/images/mob3.0.png", 0, systeme);
-		monstre->rat[index].texture[RAT_ORANGE][1] = LoadingImage	("rs/images/mob3.1.png", 0, systeme);
-		monstre->rat[index].texture[RAT_ORANGE][2] = LoadingImage	("rs/images/mob3.2.png", 0, systeme);
-
-		monstre->rat[index].texture[RAT_ROUGE][0] = LoadingImage	("rs/images/mob4.0.png", 0, systeme);
-		monstre->rat[index].texture[RAT_ROUGE][1] = LoadingImage	("rs/images/mob4.1.png", 0, systeme);
-		monstre->rat[index].texture[RAT_ROUGE][2] = LoadingImage	("rs/images/mob4.2.png", 0, systeme);
+		monstre->rat[index].m_pict.texture[0] = monstre->rat[0].m_pict.texture[0];
+        monstre->rat[index].m_pict.texture[1] = monstre->rat[0].m_pict.texture[1];
+        monstre->rat[index].m_pict.texture[2] = monstre->rat[0].m_pict.texture[2];
+		monstre->rat[index].m_pict.pict.texture = monstre->rat[0].m_pict.texture[0];
+		monstre->rat[index].m_pict.current = 0;
+		monstre->rat[index].m_pict.delay = 200;
+		monstre->rat[index].m_pict.frame = 2;
+		monstre->rat[index].m_pict.time = 0;
 	}
 }
 
 void initperso(struct PERSO *perso,struct DIVERSsysteme *systeme)/*														perso*/
 {
 	int index;
-	char string[10];
+	char string[16];
+	perso->perso.texture[0] = loadTexture("rs/images/perso0.png");
+	perso->perso.texture[1] = loadTexture("rs/images/perso1.png");
+	perso->perso.texture[2] = loadTexture("rs/images/perso2.png");
+	perso->perso.frame = 3;
+	perso->perso.pict.texture = perso->perso.texture[0];
+	perso->perso.current = 0;
+	perso->perso.delay = 123;
+	perso->perso.time = 0;
+
+	setPos (&perso->perso.pict.pos, (screenw/2)-(perso->perso.pict.pos.w/2), (screenh/2)-(perso->perso.pict.pos.h/2), 68, 51);
+
+	for(index = 0 ; index < 8 ; index++)
+    {
+        perso->cote[index] = 0;
+    }
+    for(index = 0 ; index < 12 ; index++)
+    {
+        perso->etatpix[index] = 1;
+        perso->pixel[index] = 0;
+    }
+
+
+
 
 	perso->defense = 0;
-	perso->pperso.x = atoi(systeme->sauvegarde[4]);
-	perso->pperso.y = atoi(systeme->sauvegarde[5]);
 	perso->life = atof(systeme->sauvegarde[7]);
 	perso->lifemax = 100;
 
 	sprintf(perso->slife, "vie : - /%d", perso->lifemax);
 
-	perso->tperso = LoadingImage("rs/images/character.png", 0, systeme);
-	perso->cheveuxbrun = LoadingImage("rs/images/cheveux0.png", 0, systeme);
-	perso->cheveuxblanc = LoadingImage("rs/images/cheveux3.png", 0, systeme);
+	//perso->cheveuxbrun = loadTexture("rs/images/cheveux0.png");
+	//perso->cheveuxblanc = loadTexture("rs/images/cheveux3.png");
 
-	for (index = 0 ; index < 9 ; index++)
-	{
-		perso->spriteup[index].h = 48;
-		perso->spriteup[index].w = 48;
-	}
-
-	perso->spriteup[0].x = 0;
-	perso->spriteup[0].y = 146;
-	perso->spriteup[1].x = 48;
-	perso->spriteup[1].y = 146;
-	perso->spriteup[2].x = 96;
-	perso->spriteup[2].y = 146;
-	perso->spriteup[3].x = 146;
-	perso->spriteup[3].y = 146;
-	perso->spriteup[4].x = 0;
-	perso->spriteup[4].y = 194;
-	perso->spriteup[5].x = 48;
-	perso->spriteup[5].y = 194;
-	perso->spriteup[6].x = 96;
-	perso->spriteup[6].y = 194;
-	perso->spriteup[7].x = 146;
-	perso->spriteup[7].y = 194;
-
-	perso->tpseudo = imprime (systeme->sauvegarde[0], systeme->screenw,BLANC, systeme, NULL, NULL);
-	perso->tlife = imprime (perso->slife, systeme->screenw, BLANC, systeme, NULL, NULL);
-
-	perso->pperso.w = 68;
-	perso->pperso.h = 51;
+	//perso->tpseudo = imprime (systeme->sauvegarde[0], screenw,BLANC, systeme, NULL, NULL);
 
 	perso->pperso_poing.w = 48;
 	perso->pperso_poing.h = 48;
@@ -398,26 +339,42 @@ void initperso(struct PERSO *perso,struct DIVERSsysteme *systeme)/*													
 	perso->ptpseudo.w = 100;
 	perso->ptpseudo.h = 30;
 
-	perso->pstats.x = systeme->screenw*0.11;
-
-	perso->pstats.y = systeme->screenh*0.1;
-	perso->pstats.w = systeme->screenw*0.28;
-	perso->pstats.h = systeme->screenh*0.05;
-
 	for (index = 0 ; index < 7 ; index++)/*10->16*/
 	{
 		perso->stuff[index] = 0;
 	}
 	sprintf(string, "defense :");
-	perso->tdefense = imprime (string, systeme->screenw, BLANC, systeme, NULL, NULL);
 	sprintf(string, "regen vie :");
-	perso->tregenlife = imprime (string, systeme->screenw, BLANC, systeme, NULL, NULL);
 	sprintf(string, "force :");
-	perso->tforce = imprime (string, systeme->screenw, BLANC, systeme, NULL, NULL);
 	sprintf(string, "portee :");
-	perso->tportee = imprime (string, systeme->screenw, BLANC, systeme, NULL, NULL);
 
-	perso->BarreDeVie = AddLifeBar(100, perso->pperso.w, systeme);
+    perso->tlife.texture = imprime (perso->slife, screenw, BLANC, systeme, NULL, NULL);
+	perso->tportee.texture = imprime (string, screenw, BLANC, systeme, NULL, NULL);
+	perso->tforce.texture = imprime (string, screenw, BLANC, systeme, NULL, NULL);
+	perso->tregenlife.texture = imprime (string, screenw, BLANC, systeme, NULL, NULL);
+	perso->tdefense.texture = imprime (string, screenw, BLANC, systeme, NULL, NULL);
+
+    setPos(&perso->tlife.pos, screenw*0.11, screenh*0.8, screenw*0.28, screenh*0.05);
+	setPos(&perso->tdefense.pos, screenw*0.11, screenh*0.74, screenw*0.28, screenh*0.05);
+	setPos(&perso->tregenlife.pos, screenw*0.11, screenh*0.68, screenw*0.28, screenh*0.05);
+	setPos(&perso->tforce.pos, screenw*0.11, screenh*0.62, screenw*0.28, screenh*0.05);
+	setPos(&perso->tportee.pos, screenw*0.11, screenh*0.56, screenw*0.28, screenh*0.05);
+
+	perso->BarreDeVie = AddLifeBar(100, perso->perso.pict.pos.w, systeme);
+
+	index = 0;
+	perso->PixelCalque[index].x = 0;		perso->PixelCalque[index].y = 0;		 index++;
+	perso->PixelCalque[index].x = 22;		perso->PixelCalque[index].y = 0;		 index++;
+	perso->PixelCalque[index].x = 44;		perso->PixelCalque[index].y = 0;		 index++;
+	perso->PixelCalque[index].x = 68;		perso->PixelCalque[index].y = 0;		 index++;
+	perso->PixelCalque[index].x = 68;		perso->PixelCalque[index].y = 16;		 index++;
+	perso->PixelCalque[index].x = 68;		perso->PixelCalque[index].y = 32;		 index++;
+	perso->PixelCalque[index].x = 68;		perso->PixelCalque[index].y = 50;		 index++;
+	perso->PixelCalque[index].x = 22;		perso->PixelCalque[index].y = 50;		 index++;
+	perso->PixelCalque[index].x = 44;		perso->PixelCalque[index].y = 50;		 index++;
+	perso->PixelCalque[index].x = 0;		perso->PixelCalque[index].y = 50;		 index++;
+	perso->PixelCalque[index].x = 0;		perso->PixelCalque[index].y = 16;		 index++;
+	perso->PixelCalque[index].x = 0;		perso->PixelCalque[index].y = 32;
 }
 
 void initdeplacement(struct DIVERSdeplacement *deplacement,struct DIVERSsysteme *systeme)/*								deplacement*/
@@ -436,8 +393,8 @@ void initdeplacement(struct DIVERSdeplacement *deplacement,struct DIVERSsysteme 
 	deplacement->direction.olddirection = 0;
 	deplacement->persobouge = 0;
 	deplacement->indexanimperso = 0;
-	deplacement->x = atoi(systeme->sauvegarde[2]);
-	deplacement->y = atoi(systeme->sauvegarde[3]);
+	//deplacement->x = atoi(systeme->sauvegarde[2]);
+	//deplacement->y = atoi(systeme->sauvegarde[3]);
 }
 
 void inittemps(struct DIVERStemps *temps,struct DIVERSsysteme *systeme)/*												temps*/
@@ -455,18 +412,11 @@ void inittemps(struct DIVERStemps *temps,struct DIVERSsysteme *systeme)/*							
 	sprintf(temps->stringtempstotal, "age du personnage :\n - j - h - min - sec");
 	sprintf(temps->StringI, "IPS => 0");
 
-	temps->tfps = imprime (temps->StringI, systeme->screenw, BLANC, systeme, NULL, NULL);
-	temps->ttemps = imprime (temps->stringtempstotal, systeme->screenw, BLANC, systeme, NULL, NULL);
+	temps->fps.texture = imprime (temps->StringI, screenw, BLANC, systeme, NULL, NULL);
+	temps->temps.texture = imprime (temps->stringtempstotal, screenw, BLANC, systeme, NULL, NULL);
 
-	temps->ptFps.x = systeme->screenw*0.75;
-	temps->ptFps.y = systeme->screenh*0.2;
-	temps->ptFps.w = systeme->screenw*0.2;
-	temps->ptFps.h = systeme->screenh*0.05;
-
-	temps->pttemps.x = systeme->screenw*0.75;
-	temps->pttemps.y = systeme->screenh*0.25;
-	temps->pttemps.w = systeme->screenw*0.2;
-	temps->pttemps.h = systeme->screenh*0.05;
+	setPos (&temps->fps.pos, screenw*0.75, screenh*0.8, screenw*0.2, screenh*0.05);
+	setPos (&temps->temps.pos, screenw*0.75, screenh*0.75, screenw*0.2, screenh*0.05);
 }
 
 void initsystem(struct DIVERSsysteme *systeme)/*																	systeme*/
@@ -479,43 +429,31 @@ void initsystem(struct DIVERSsysteme *systeme)/*																	systeme*/
 	systeme->continuer = 1;
 	systeme->echap = 0;
 
-	systeme->pointeur = LoadingImage				("rs/images/p.png", 0, systeme);
-	systeme->BGmort = LoadingImage				("rs/fonds/mort.png", 0, systeme);
-	systeme->BG = LoadingImage	("rs/ui/BG.png", 0, systeme);
-	systeme->BGblanc = LoadingImage	("rs/ui/bgb.png", 0, systeme);
-	systeme->noir = LoadingImage	("rs/images/noir.png", 0, systeme);
+	systeme->pointeur.texture = loadTexture("rs/images/p.png");
+	//systeme->BGmort = LoadingImage				("rs/fonds/mort.png", 0, systeme);
+	systeme->BG =               loadTexture	("rs/ui/BG.png");
+	//systeme->BGblanc = LoadingImage	("rs/ui/bgb.png", 0, systeme);
 
-    systeme->police = NULL;
-    systeme->police1 = NULL;
 	systeme->police = TTF_OpenFont("rs/divers/dalek.ttf", TAILLE_POLICE);
 	systeme->police1 = TTF_OpenFont("rs/divers/police1.ttf", TAILLE_POLICE);
+	if (systeme->police == NULL ||
+        systeme->police1 == NULL)
+    {
+        printf("police not load2\n");
+    }
 
-	systeme->pp.x = 0;
-	systeme->pp.y = 0;
-	systeme->pp.w = 20;
-	systeme->pp.h = 30;
-
+    setPos(&systeme->pointeur.pos, 0, 0, 20, 30);
 
 	systeme->pecran.x = 0;
 	systeme->pecran.y = 0;
-	systeme->pecran.w = systeme->screenw;
-	systeme->pecran.h = systeme->screenh;
+	systeme->pecran.w = screenw;
+	systeme->pecran.h = screenh;
 
 	systeme->ppobj.w = 50;
 	systeme->ppobj.h = 50;
 
 	systeme->oldpp.x = 0;
 	systeme->oldpp.y = 0;
-
-	index = 0;
-	systeme->PixelCalque[index].x = 0;		systeme->PixelCalque[index].y = 0;		 index++;
-	systeme->PixelCalque[index].x = 34;		systeme->PixelCalque[index].y = 0;		 index++;
-	systeme->PixelCalque[index].x = 68;		systeme->PixelCalque[index].y = 0;		 index++;
-	systeme->PixelCalque[index].x = 68;		systeme->PixelCalque[index].y = 25;		 index++;
-	systeme->PixelCalque[index].x = 68;		systeme->PixelCalque[index].y = 50;		 index++;
-	systeme->PixelCalque[index].x = 34;		systeme->PixelCalque[index].y = 50;		 index++;
-	systeme->PixelCalque[index].x = 0;		systeme->PixelCalque[index].y = 50;		 index++;
-	systeme->PixelCalque[index].x = 0;		systeme->PixelCalque[index].y = 25;
 }
 
 void initui(struct DIVERSui *ui,struct DIVERSsysteme *systeme)/*															ui*/
@@ -525,20 +463,10 @@ void initui(struct DIVERSui *ui,struct DIVERSsysteme *systeme)/*															u
 	ui->inventaire_open =   false;
 	ui->chat_open =         false;
 	ui->craft_open =        false;
-
 	ui->distanceprevenu =   false;
-	ui->OnLeftUp =          false;
-	ui->OnRightUp =         false;
-	ui->OnRightDown =       false;
-	ui->OnLeftDown =        false;
 
-	ui->coinhaut =      0;
-	ui->coinbas =       0;
-	ui->lancedialogue = 0;
+	ui->lancedialogue = false;
 	ui->dialogueactif = 0;
-	ui->PointedCorner = 0;
-	ui->CornerTime =    0;
-	ui->OldCornerTime = 0;
 
 	sprintf(ui->designationstuff[0], "arme");
 	sprintf(ui->designationstuff[1], "torse");
@@ -550,80 +478,59 @@ void initui(struct DIVERSui *ui,struct DIVERSsysteme *systeme)/*															u
 
 	for(index = 0 ; index < 7 ; index++)
 	{
-		ui->tdesignationstuff[index] = imprime (ui->designationstuff[index], systeme->screenw, BLANC, systeme, NULL, NULL);
+//		ui->tdesignationstuff[index] = imprime (ui->designationstuff[index], screenw, BLANC, systeme, NULL, NULL);
 		ui->casestuff[index].IDobjet = atoi(systeme->sauvegarde[index+10]);
 		ui->casestuff[index].NBobjet = 0;
 	}
 
-	ui->ttextedialogue = NULL;
-	ui->lumiereon = LoadingImage		("rs/images/enligne.png", 0, systeme);
-	ui->lumiereoff = LoadingImage		("rs/images/horsligne.png", 0, systeme);
-	ui->tdialogue = LoadingImage		("rs/ui/dialogue.png", 0, systeme);
-	ui->uimenu = LoadingImage		("rs/ui/uimenu.png", 150, systeme);
-	ui->Uiinventaire = LoadingImage	("rs/ui/uiinventaire.png", 150, systeme);
-	ui->Uichat = LoadingImage			("rs/ui/uichat.png", 150, systeme);
-	ui->BGmenu = LoadingImage		("rs/ui/BGmenu.png", 0, systeme);
+	ui->dialogue_text.texture = 0;
+	ui->dialogue_back.texture = loadTexture		("rs/ui/dialogue.png");
+
+    //ui->lumiereon = LoadingImage		("rs/images/enligne.png", 0, systeme);
+	//ui->lumiereoff = LoadingImage		("rs/images/horsligne.png", 0, systeme);
+
+	ui->corner_menu.texture = loadTexture       ("rs/ui/uimenu.png");
+	ui->corner_inventaire.texture = loadTexture ("rs/ui/uiinventaire.png");
+	ui->corner_chat.texture = loadTexture       ("rs/ui/uichat.png");
+	ui->BGmenu.texture = loadTexture            ("rs/ui/BGmenu.png");
+	ui->BoutonQuitter.texture = loadTexture		("rs/ui/quitter.png");
 
 	ui->pUIbas.x = 0;
-	ui->pUIbas.y = systeme->screenh/2;
-	ui->pUIbas.w = systeme->screenw;
-	ui->pUIbas.h = systeme->screenh/2;
+	ui->pUIbas.y = screenh/2;
+	ui->pUIbas.w = screenw;
+	ui->pUIbas.h = screenh/2;
 
 	ui->pUIhaut.x = 0;
 	ui->pUIhaut.y = 0;
-	ui->pUIhaut.w = systeme->screenw;
-	ui->pUIhaut.h = systeme->screenh/2;
+	ui->pUIhaut.w = screenw;
+	ui->pUIhaut.h = screenh/2;
 
-	ui->plumiere.x = systeme->screenw*0.75;
-	ui->plumiere.y = systeme->screenh*0.013;
-	ui->plumiere.w = systeme->screenw*0.1;
-	ui->plumiere.h = systeme->screenh*0.0325;
+	ui->plumiere.x = screenw*0.75;
+	ui->plumiere.y = screenh*0.013;
+	ui->plumiere.w = screenw*0.1;
+	ui->plumiere.h = screenh*0.0325;
 
-	ui->puimenu.x = 0;
-	ui->puimenu.y = 0;
-	ui->puimenu.w = 50;
-	ui->puimenu.h = 50;
+	setPos (&ui->corner_menu.pos, 0, screenh-screenh*0.063, screenw*0.036, screenh*0.065);
+	setPos (&ui->corner_inventaire.pos, screenw-screenw*0.036, 0, screenw*0.036, screenh*0.065);
+	setPos (&ui->corner_chat.pos, 0, 0, screenw*0.036, screenh*0.065);
+	setPos (&ui->BGmenu.pos, 0, screenh/2, screenw, screenh/2);
+	setPos (&ui->BoutonQuitter.pos, screenw*0.96, screenh-screenw*0.04, screenw*0.04, screenw*0.04);
 
-	ui->puiinventaire.x = systeme->screenw-50;
-	ui->puiinventaire.y = systeme->screenh-50;
-	ui->puiinventaire.w = 50;
-	ui->puiinventaire.h = 50;
+	ui->BoutonQuitter.etat = B_NORMAL;
 
-	ui->puichat.x = 0;
-	ui->puichat.y = systeme->screenh-50;
-	ui->puichat.w = 50;
-	ui->puichat.h = 50;
+	ui->corner_menu.etat =          B_NORMAL;
+	ui->corner_inventaire.etat =    B_NORMAL;
+	ui->corner_chat.etat =          B_NORMAL;
 
-	ui->pcasestuff[0].x = systeme->screenw*0.225;
-	ui->pcasestuff[0].y = systeme->screenh*0.35;
-	ui->pcasestuff[0].w = systeme->screenh*0.1;
-	ui->pcasestuff[0].h = systeme->screenh*0.1;
+	setPos (&ui->casestuff[0].pos, screenw*0.225, screenh*0.85, screenh*0.1, screenh*0.1);
+	setPos (&ui->casestuff[1].pos, screenw*0.05, screenh*0.55, screenh*0.1, screenh*0.1);
+	setPos (&ui->casestuff[2].pos, screenw*0.05, screenh*0.65, screenh*0.1, screenh*0.1);
+	setPos (&ui->casestuff[3].pos, screenw*0.05, screenh*0.75, screenh*0.1, screenh*0.1);
+	setPos (&ui->casestuff[4].pos, screenw*0.4, screenh*0.55, screenh*0.1, screenh*0.1);
+	setPos (&ui->casestuff[5].pos, screenw*0.4, screenh*0.65, screenh*0.1, screenh*0.1);
+	setPos (&ui->casestuff[6].pos, screenw*0.4, screenh*0.75, screenh*0.1, screenh*0.1);
 
-	ui->pcasestuff[1].x = systeme->screenw*0.05;
-	ui->pcasestuff[1].y = systeme->screenh*0.05;
-	ui->pcasestuff[1].w = systeme->screenh*0.1;
-	ui->pcasestuff[1].h = systeme->screenh*0.1;
-	ui->pcasestuff[2].x = systeme->screenw*0.05;
-	ui->pcasestuff[2].y = systeme->screenh*0.15;
-	ui->pcasestuff[2].w = systeme->screenh*0.1;
-	ui->pcasestuff[2].h = systeme->screenh*0.1;
-	ui->pcasestuff[3].x = systeme->screenw*0.05;
-	ui->pcasestuff[3].y = systeme->screenh*0.25;
-	ui->pcasestuff[3].w = systeme->screenh*0.1;
-	ui->pcasestuff[3].h = systeme->screenh*0.1;
 
-	ui->pcasestuff[4].x = systeme->screenw*0.4;
-	ui->pcasestuff[4].y = systeme->screenh*0.05;
-	ui->pcasestuff[4].w = systeme->screenh*0.1;
-	ui->pcasestuff[4].h = systeme->screenh*0.1;
-	ui->pcasestuff[5].x = systeme->screenw*0.4;
-	ui->pcasestuff[5].y = systeme->screenh*0.15;
-	ui->pcasestuff[5].w = systeme->screenh*0.1;
-	ui->pcasestuff[5].h = systeme->screenh*0.1;
-	ui->pcasestuff[6].x = systeme->screenw*0.4;
-	ui->pcasestuff[6].y = systeme->screenh*0.25;
-	ui->pcasestuff[6].w = systeme->screenh*0.1;
-	ui->pcasestuff[6].h = systeme->screenh*0.1;
 }
 
 void initchat(struct DIVERSchat *chat,struct DIVERSsysteme *systeme)/*													chat*/
@@ -638,17 +545,17 @@ void initchat(struct DIVERSchat *chat,struct DIVERSsysteme *systeme)/*										
 		chat->tstringchat[index] = NULL;
 
 		chat->pstringchat[index].x = 0;
-		chat->pstringchat[index].y = (systeme->screenh/2)+(index*32);
+		chat->pstringchat[index].y = (screenh/2)+(index*32);
 		chat->pstringchat[index].w = 0;
 		chat->pstringchat[index].h = TAILLE_POLICE;
 	}
-	chat->BGchat = LoadingImage			("rs/ui/BGchat.png", 0, systeme);
-	chat->BGchatactif = LoadingImage	("rs/ui/BGzonetextechat.png", 0, systeme);
+/*	chat->BGchat = LoadingImage			("rs/ui/BGchat.png", 0, systeme);
+	chat->BGchatactif = LoadingImage	("rs/ui/BGzonetextechat.png", 0, systeme);*/
 
-	chat->pchatactif.w = systeme->screenw;
-	chat->pchatactif.h = systeme->screenh*0.03072;
+	chat->pchatactif.w = screenw;
+	chat->pchatactif.h = screenh*0.03072;
 	chat->pchatactif.x = 0;
-	chat->pchatactif.y = systeme->screenh - chat->pchatactif.h;
+	chat->pchatactif.y = screenh - chat->pchatactif.h;
 
 	chat->pbufferchat.x = chat->pchatactif.x;
 	chat->pbufferchat.y = chat->pchatactif.y;
@@ -664,7 +571,7 @@ void initcraft(struct DIVERScraft *craft,struct DIVERSsysteme *systeme)/*							
 	craft->planactif = -1;
 	craft->planpointer = -1;
 
-	craft->puicraft.x = systeme->screenw-50;
+	craft->puicraft.x = screenw-50;
 	craft->puicraft.y = 0;
 	craft->puicraft.w = 50;
 	craft->puicraft.h = 50;
@@ -674,108 +581,60 @@ void initcraft(struct DIVERScraft *craft,struct DIVERSsysteme *systeme)/*							
 	craft->petabli.w = 50;
 	craft->petabli.h = 50;
 
-	craft->posplan.x = systeme->screenw*0.0073;
-	craft->posplan.y = systeme->screenh*0.039;
-	craft->posplan.w = systeme->screenw*0.293;
-	craft->posplan.h = systeme->screenh*0.065;
+	craft->posplan.x = screenw*0.0073;
+	craft->posplan.y = screenh*0.039;
+	craft->posplan.w = screenw*0.293;
+	craft->posplan.h = screenh*0.065;
 
-	craft->posimageresultatcraft.x = systeme->screenw*0.4;
-	craft->posimageresultatcraft.y = systeme->screenh*0.065;
-	craft->posimageresultatcraft.w = systeme->screenw*0.067;
-	craft->posimageresultatcraft.h = systeme->screenh*0.12;
+	craft->posimageresultatcraft.x = screenw*0.4;
+	craft->posimageresultatcraft.y = screenh*0.065;
+	craft->posimageresultatcraft.w = screenw*0.067;
+	craft->posimageresultatcraft.h = screenh*0.12;
 
-	craft->pstats.x = systeme->screenw*0.4;
-	craft->pstats.y = systeme->screenh*0.160;
-	craft->pstats.w = systeme->screenw*0.146;
-	craft->pstats.h = systeme->screenh*0.04;
+	craft->pstats.x = screenw*0.4;
+	craft->pstats.y = screenh*0.160;
+	craft->pstats.w = screenw*0.146;
+	craft->pstats.h = screenh*0.04;
 
 	for (index = 0 ; index < 10 ; index++)
 	{
-		craft->poscompocraft[index].x = systeme->screenw*0.512;
-		craft->poscompocraft[index].y = (systeme->screenh*0.0456) +(index*(systeme->screenh*0.0599));
-		craft->poscompocraft[index].w = systeme->screenw*0.366;
-		craft->poscompocraft[index].h = systeme->screenh*0.0651;
-		craft->posimagecompocraft[index].x = systeme->screenw*0.893;
-		craft->posimagecompocraft[index].y = (systeme->screenh*0.0326) +(index*(systeme->screenh*0.0599));
-		craft->posimagecompocraft[index].w = systeme->screenw*0.0337;
-		craft->posimagecompocraft[index].h = systeme->screenh*0.0599;
+		craft->poscompocraft[index].x = screenw*0.512;
+		craft->poscompocraft[index].y = (screenh*0.0456) +(index*(screenh*0.0599));
+		craft->poscompocraft[index].w = screenw*0.366;
+		craft->poscompocraft[index].h = screenh*0.0651;
+		craft->posimagecompocraft[index].x = screenw*0.893;
+		craft->posimagecompocraft[index].y = (screenh*0.0326) +(index*(screenh*0.0599));
+		craft->posimagecompocraft[index].w = screenw*0.0337;
+		craft->posimagecompocraft[index].h = screenh*0.0599;
 
-		craft->tcomponame[index] = imprime("rien", systeme->screenw, ROUGE, systeme, NULL, NULL);
+//		craft->tcomponame[index] = imprime("rien", screenw, ROUGE, systeme, NULL, NULL);
 	}
-
+/*
 	craft->Uicraft = LoadingImage			("rs/ui/uicraft.png", 0, systeme);
 	craft->BGcraft = LoadingImage			("rs/ui/BGcraft.png", 0, systeme);
-	craft->tetabli = LoadingImage			("rs/images/etabli.png", 0, systeme);
+	craft->tetabli = LoadingImage			("rs/images/etabli.png", 0, systeme);*/
 }
 
-void initmap (struct DIVERSmap *carte,struct DIVERSsysteme *systeme,struct PERSO *perso)/*										map*/
+void initmap (struct DIVERSmap *carte,struct DIVERSsysteme *systeme)/*										map*/
 {
-	int index, rangerx = -1, i, j, i2, j2, noir = 0;
-	Uint32 pixel = {0};
-	SDL_Color couleurNoir = {0, 0, 0, 0};
-	SDL_Color couleurpixel;
+	carte->origin.x = screenw/2;
+	carte->origin.y = screenh/2;
 
-	carte->pmx = 0;
-	carte->pmy = 0;
+	carte->cellule.translation.x = -500;
+	carte->cellule.translation.y = -1000;
 
-	for (index = 0 ; index < TILESMAP ; index++)
-	{
-		char nom[32];
-		sprintf(nom, "rs/maps/map%d.png", index);
-		carte->tilemap[index] = LoadingImage(nom, 0, systeme);
-		sprintf(nom, "rs/maps/calque%d.png", index);
-		carte->calque[index] = IMG_Load(nom);
-	}
-
-	for (index = 0 ; index < TILESMAP ; index++)
-	{
-		rangerx++;
-		if (rangerx / 4 == 1)
-		{
-			rangerx = 0;
-		}
-		carte->pmap[index].x = (rangerx * 2500)+(perso->pperso.x-(systeme->screenw/2));
-		carte->pmap[index].y = ((index / 4) * 2500)+(perso->pperso.y-(systeme->screenh/2));
-		carte->pmap[index].w = 2500;
-		carte->pmap[index].h = 2500;
-		SDL_LockSurface(carte->calque[index]);
-	}
-
-	/*creation de la grille de colision*/
-	for (i = 0 ; i < 200 ; i++)
-	{
-		for (j = 0 ; j < 400 ; j++)
-		{
-			noir = 0;
-			for (i2 = 0 ; i2 < 25 ; i2++)
-			{
-				for (j2 = 0 ; j2 < 25 ; j2++)
-				{
-					pixel = obtenirPixel(&carte->calque[0], (j*25)+j2, (i*25)+i2);
-					SDL_GetRGB(pixel, carte->calque[2]->format, &couleurpixel.r, &couleurpixel.g, &couleurpixel.b);
-					if (couleurpixel.r == couleurNoir.r)
-					{
-						noir++;
-					}
-				}
-			}
-			if (noir < 312)
-			{
-				carte->grille[i][j].value = 0;
-			}
-			else
-			{
-				carte->grille[i][j].value = 1;
-			}
-		}
-	}
-
+    carte->cellule.pict.texture = loadTexture("rs/maps/cellule2.png");
+    setPos(&carte->cellule.pict.pos, 0, 0 ,2258, 1376);
+    carte->cellule.calque = IMG_Load("rs/maps/cellule2nb.png");
 }
 
 void initpnj (struct PACKpnj *pnj)/*																				pnj*/
 {
-	pnj->toumai.w = 68;
-	pnj->toumai.h = 48;
+    pnj->toumai.pos.x = 0;
+	pnj->toumai.pos.y = 0;
+	pnj->toumai.pos.w = 68;
+	pnj->toumai.pos.h = 48;
+	pnj->toumai.texture = loadTexture("rs/images/perso0.png");
 	pnj->toumaiParle = false;
 }
 
@@ -792,28 +651,28 @@ void initrecompense (struct PACKrecompense *recompense,struct DIVERSsysteme *sys
 		recompense->recompenseID[index] = -1;
 	}
 
-	recompense->tvictoire = imprime("VICTOIRE", systeme->screenw, ROUGE, systeme, NULL, NULL);
-	recompense->ttexterecompensecombat = imprime("vous avez gagné :", systeme->screenw, BLANC, systeme, NULL, NULL);
+//	recompense->tvictoire = imprime("VICTOIRE", screenw, ROUGE, systeme, NULL, NULL);
+//	recompense->ttexterecompensecombat = imprime("vous avez gagné :", screenw, BLANC, systeme, NULL, NULL);
 
-	recompense->pBGrecompense.x = systeme->screenw*0.333;
-	recompense->pBGrecompense.y = systeme->screenh*0.044;
-	recompense->pBGrecompense.w = systeme->screenw*0.333;
-	recompense->pBGrecompense.h = systeme->screenh*0.911;
+	recompense->pBGrecompense.x = screenw*0.333;
+	recompense->pBGrecompense.y = screenh*0.044;
+	recompense->pBGrecompense.w = screenw*0.333;
+	recompense->pBGrecompense.h = screenh*0.911;
 
-	recompense->precompensecombat.x = systeme->screenw*0.366;
-	recompense->precompensecombat.y = systeme->screenh*0.326;
-	recompense->precompensecombat.w = systeme->screenw*0.293;
-	recompense->precompensecombat.h = systeme->screenh*0.039;
+	recompense->precompensecombat.x = screenw*0.366;
+	recompense->precompensecombat.y = screenh*0.326;
+	recompense->precompensecombat.w = screenw*0.293;
+	recompense->precompensecombat.h = screenh*0.039;
 
-	recompense->ptvictoire.x = systeme->screenw*0.351;
-	recompense->ptvictoire.y = systeme->screenh*0.065;
-	recompense->ptvictoire.w = systeme->screenw*0.293;
-	recompense->ptvictoire.h = systeme->screenh*0.13;
+	recompense->ptvictoire.x = screenw*0.351;
+	recompense->ptvictoire.y = screenh*0.065;
+	recompense->ptvictoire.w = screenw*0.293;
+	recompense->ptvictoire.h = screenh*0.13;
 
-	recompense->ptrecompesecombat.x = systeme->screenw*0.351;
-	recompense->ptrecompesecombat.y = systeme->screenh*0.26;
-	recompense->ptrecompesecombat.w = systeme->screenw*0.293;
-	recompense->ptrecompesecombat.h = systeme->screenh*0.065;
+	recompense->ptrecompesecombat.x = screenw*0.351;
+	recompense->ptrecompesecombat.y = screenh*0.26;
+	recompense->ptrecompesecombat.w = screenw*0.293;
+	recompense->ptrecompesecombat.h = screenh*0.065;
 }
 
 void initFORevent(struct typeFORevent *FORevent,struct PACKobjet *objet,struct PACKbouton *bouton,struct DIVERSinventaire *inventaire,
@@ -866,7 +725,7 @@ void initonline(struct typeFORthreads *online,struct DIVERSsysteme *systeme)
 
 }
 
-void initcombatstore(struct typecombat *BTLstr,struct DIVERSsysteme *systeme, struct DIRECTION *direction)
+void initcombatstore(struct typecombat *BTLstr,struct DIVERSsysteme *systeme, struct DIRECTION *direction,struct PACKmonstre *monstre)
 {
     #if BATTLE_LOG == 1
 	printf("initialising memory for battle :\n");
@@ -885,7 +744,7 @@ void initcombatstore(struct typecombat *BTLstr,struct DIVERSsysteme *systeme, st
 	BTLstr->ResultatHitbox = 0;
 	BTLstr->tableauutile = 0;
 	BTLstr->indexanimperso = 0;
-	BTLstr->persobouge = 0;
+	BTLstr->persobouge = false;
 	BTLstr->animobjet = 1;
 	BTLstr->animobjetway = 0;
 	BTLstr->ennemivaincue = 0;
@@ -920,10 +779,10 @@ void initcombatstore(struct typecombat *BTLstr,struct DIVERSsysteme *systeme, st
         else
         {BTLstr->IDlootsol[index] = 2;}
 		BTLstr->lootsol[index] = BTL_OBJ_FLOOR;
-		BTLstr->plootsol[index].w = systeme->screenw*0.0439;/*60*/
-		BTLstr->plootsol[index].h = systeme->screenh*0.130;/*100*/
-		BTLstr->plootsol[index].x = (rand()%(systeme->screenw - (BTLstr->plootsol[index].w*2)))+BTLstr->plootsol[index].w;
-		BTLstr->plootsol[index].y = (rand()%(systeme->screenh - (BTLstr->plootsol[index].h*2)))+BTLstr->plootsol[index].h;
+		BTLstr->plootsol[index].w = screenw*0.0439;/*60*/
+		BTLstr->plootsol[index].h = screenh*0.130;/*100*/
+		BTLstr->plootsol[index].x = (rand()%(screenw - (BTLstr->plootsol[index].w*2)))+BTLstr->plootsol[index].w;
+		BTLstr->plootsol[index].y = (rand()%(screenh - (BTLstr->plootsol[index].h*2)))+BTLstr->plootsol[index].h;
 		BTLstr->oldplootsol[index].x = 0;
 		BTLstr->oldplootsol[index].y = 0;
 		BTLstr->oldplootsol[index].w = BTLstr->plootsol[index].w;
@@ -943,12 +802,10 @@ void initcombatstore(struct typecombat *BTLstr,struct DIVERSsysteme *systeme, st
 		BTLstr->premiercoup[index] = 0;
 		BTLstr->creature[index].isdead = true;
 		BTLstr->creature[index].iserasable = true;
-		BTLstr->creature[index].tempsanimation = 0;
 		BTLstr->creature[index].Direction = 0;
-		BTLstr->creature[index].indexanim = 0;
 		BTLstr->creature[index].mind = 0;
 		BTLstr->creature[index].mindtime = 0;
-		BTLstr->creature[index].looted = 0;
+		BTLstr->creature[index].looted = false;
 		BTLstr->creature[index].ontheway = 0;
 		BTLstr->creature[index].wayx = 0;
 		BTLstr->creature[index].wayy = 0;
@@ -956,10 +813,13 @@ void initcombatstore(struct typecombat *BTLstr,struct DIVERSsysteme *systeme, st
 		{
 			BTLstr->creature[index].relevancy[index2] = 0;
 		}
-		BTLstr->creature[index].position.x = 0;
-		BTLstr->creature[index].position.y = 0;
-		BTLstr->creature[index].position.w = 0;
-		BTLstr->creature[index].position.h = 0;
+		BTLstr->creature[index].m_pict.delay = 120;
+		BTLstr->creature[index].m_pict.frame = 2;
+		BTLstr->creature[index].m_pict.current = 0;
+		for (index2 = 0 ; index2 < 3 ; index2++)
+		{
+            BTLstr->creature[index].m_pict.texture[index2] = monstre->rat[0].m_pict.texture[index2];
+		}
 
 		BTLstr->creature[index].STATICposition.w = 0;
 		BTLstr->creature[index].STATICposition.h = 0;
@@ -986,56 +846,54 @@ void initcombatstore(struct typecombat *BTLstr,struct DIVERSsysteme *systeme, st
 
 		BTLstr->pballe[index].x = -50;
 		BTLstr->pballe[index].y = -50;
-		BTLstr->pballe[index].w = systeme->screenw*0.0146;
-		BTLstr->pballe[index].h = systeme->screenh*0.026;
+		BTLstr->pballe[index].w = screenw*0.0146;
+		BTLstr->pballe[index].h = screenh*0.026;
 	}
 	#if BATTLE_LOG == 1
 	printf("80%%\n");
 	#endif
 
-	BTLstr->Pperso.x = systeme->screenw/2;
-	BTLstr->Pperso.y = systeme->screenh*0.564;
-	BTLstr->Pperso.w = systeme->screenw*0.050;
-	BTLstr->Pperso.h = systeme->screenh*0.066;
+	BTLstr->Pperso.x = screenw/2;
+	BTLstr->Pperso.y = screenh*0.564;
+	BTLstr->Pperso.w = screenw*0.050;
+	BTLstr->Pperso.h = screenh*0.066;
 
-	BTLstr->pcurseur.x = 0;
-	BTLstr->pcurseur.y = 0;
-	BTLstr->pcurseur.w = 30;
-	BTLstr->pcurseur.h = 30;
+	setPos(&BTLstr->curseur.pos, 0, 0, 30, 30);
+	setPos(&BTLstr->fond.pos, 0, 0, screenw, screenh);
 
 	BTLstr->ptVie.x = 0;
 	BTLstr->ptVie.y = 0;
-	BTLstr->ptVie.w = systeme->screenw*0.073;/*100*/
-	BTLstr->ptVie.h = systeme->screenh*0.05;/*32*/
-	BTLstr->tVie = imprime ("0", systeme->screenw*0.3, NOIR, systeme, NULL, NULL);
+	BTLstr->ptVie.w = screenw*0.073;/*100*/
+	BTLstr->ptVie.h = screenh*0.05;/*32*/
+//	BTLstr->tVie = imprime ("0", screenw*0.3, NOIR, systeme, NULL, NULL);
 
-	BTLstr->fond = LoadingImage				("rs/fonds/fondcombat.png", 0, systeme);
-	BTLstr->curseur = LoadingImage			("rs/images/curseur.png", 0, systeme);
-	BTLstr->balle = LoadingImage			("rs/images/balle.png", 0, systeme);
-	BTLstr->piece = LoadingImage			("rs/images/piece.png", 0, systeme);
-	BTLstr->peau = LoadingImage			    ("rs/objets/0#0.png", 0, systeme);
+	BTLstr->fond.texture = loadTexture			("rs/fonds/fondcombat.png");
+	BTLstr->balle = loadTexture                 ("rs/images/balle.png");
+	BTLstr->curseur.texture = loadTexture		("rs/images/curseur.png");
+//	BTLstr->piece = LoadingImage			("rs/images/piece.png", 0, systeme);
+	//BTLstr->peau = LoadingImage			    ("rs/objets/0#0.png", 0, systeme);
 
 	#if BATTLE_LOG == 1
 	printf("90%%\n");
 	#endif
 
 	/*bouton rejouer*/
-	BTLstr->rejouer.normal = LoadingImage				("rs/ui/jouer.png", 0, systeme);
+/*	BTLstr->rejouer.normal = LoadingImage				("rs/ui/jouer.png", 0, systeme);
 	BTLstr->rejouer.survoler = LoadingImage				("rs/ui/jouer2.png", 0, systeme);
-	BTLstr->rejouer.cliquer = LoadingImage				("rs/ui/jouer3.png", 0, systeme);
-	BTLstr->rejouer.position.x = 460;
-	BTLstr->rejouer.position.y = 650;
-	BTLstr->rejouer.position.w = systeme->screenw * 0.1464;
-	BTLstr->rejouer.position.h = systeme->screenh * 0.065;
+	BTLstr->rejouer.cliquer = LoadingImage				("rs/ui/jouer3.png", 0, systeme);*/
+	BTLstr->rejouer.pos.x = 460;
+	BTLstr->rejouer.pos.y = 650;
+	BTLstr->rejouer.pos.w = screenw * 0.1464;
+	BTLstr->rejouer.pos.h = screenh * 0.065;
 	BTLstr->rejouer.etat = B_NORMAL;
 	/*bouton quitter*/
-	BTLstr->quitter.normal = LoadingImage				("rs/ui/logquitter.png", 0, systeme);
+/*	BTLstr->quitter.normal = LoadingImage				("rs/ui/logquitter.png", 0, systeme);
 	BTLstr->quitter.survoler = LoadingImage				("rs/ui/logquitter2.png", 0, systeme);
-	BTLstr->quitter.cliquer = LoadingImage				("rs/ui/logquitter3.png", 0, systeme);
-	BTLstr->quitter.position.x = 700;
-	BTLstr->quitter.position.y = 650;
-	BTLstr->quitter.position.w = systeme->screenw * 0.1464;
-	BTLstr->quitter.position.h = systeme->screenh * 0.065;
+	BTLstr->quitter.cliquer = LoadingImage				("rs/ui/logquitter3.png", 0, systeme);*/
+	BTLstr->quitter.pos.x = 700;
+	BTLstr->quitter.pos.y = 650;
+	BTLstr->quitter.pos.w = screenw * 0.1464;
+	BTLstr->quitter.pos.h = screenh * 0.065;
 	BTLstr->quitter.etat = B_NORMAL;
 	#if BATTLE_LOG == 1
 	printf("100%%\n");

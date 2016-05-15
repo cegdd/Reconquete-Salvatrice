@@ -6,6 +6,9 @@
 #include <SDL_mixer.h>
 #include <pthread.h>
 
+#include <GL/gl.h>
+#include <GL/glu.h>
+
 #include "main.h"
 #include "thread1.h"
 #include "map.h"
@@ -14,6 +17,9 @@
 #include "jeux.h"
 #include "tableau.h"
 #include "queue.h"
+#include "image.h"
+
+int screenh, screenw;
 
 int main (int argc, char *argv[])
 {
@@ -22,6 +28,7 @@ int main (int argc, char *argv[])
     struct DIVERSsysteme systeme;
     struct typeFORthreads online;
     Mix_Music *sound = NULL;
+    SDL_GLContext contexteOpenGL;
 
     initonline(&online, &systeme);
     /*pthread_t lethread1;*/
@@ -38,14 +45,23 @@ int main (int argc, char *argv[])
 	Mix_Init(MIX_INIT_MP3);
     atexit(Mix_Quit);
 
-    SDL_ShowCursor(SDL_DISABLE);
-    systeme.screen = SDL_CreateWindow("Reconquete salvatrice", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 0, 0, SDL_WINDOW_BORDERLESS);
-    systeme.renderer = SDL_CreateRenderer(systeme.screen, -1, SDL_RENDERER_ACCELERATED);
-    SDL_MaximizeWindow(systeme.screen);
-	SDL_GetWindowSize(systeme.screen , &systeme.screenw , &systeme.screenh);
+    systeme.screen = SDL_CreateWindow("Reconquete salvatrice", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 0, 0,SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN_DESKTOP);
+    contexteOpenGL = SDL_GL_CreateContext(systeme.screen);
+	SDL_GetWindowSize(systeme.screen , &screenw , &screenh);
+	SDL_ShowCursor(SDL_DISABLE);
+	SDL_SetRelativeMouseMode(true);
 
+	glMatrixMode( GL_PROJECTION );
+    glLoadIdentity();
+    glMatrixMode( GL_MODELVIEW );
+    glLoadIdentity();
+	gluOrtho2D(0,screenw,0,screenh);
+    glEnable(GL_TEXTURE_2D);
+    glAlphaFunc(GL_GREATER,0.5f);
+    glEnable(GL_ALPHA_TEST);
 	initsystem(&systeme);
 	initsauvegarde(systeme.sauvegarde, NBargSAVE, C);
+
 
 	Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 1, 1024);
 	Mix_AllocateChannels(0);
@@ -75,6 +91,7 @@ int main (int argc, char *argv[])
 			/*pthread_create(&lethread1, NULL, *thread1, &online);*/
 			chargersauvegarde(&systeme);
 
+
 			Mix_PauseMusic ();
 			/*lancement du jeu*/
 			if (chargementcarte(&systeme, &online) != 1) {return EXIT_FAILURE;}
@@ -96,6 +113,7 @@ int main (int argc, char *argv[])
 	Mix_FreeMusic(sound);
 	TTF_CloseFont(systeme.police1);
 	TTF_CloseFont(systeme.police);
+	SDL_GL_DeleteContext(contexteOpenGL);
     return EXIT_SUCCESS;
 }
 
@@ -122,7 +140,6 @@ int chargementcarte(struct DIVERSsysteme *systeme, struct typeFORthreads *online
 		srand(temps.temptotal);
 	}
 
-	initcraft(&craft, systeme);
     initobjet(&objet, systeme, &craft);
     initcraft(&craft, systeme);
     initbouton(&bouton, systeme);
@@ -130,13 +147,12 @@ int chargementcarte(struct DIVERSsysteme *systeme, struct typeFORthreads *online
     initinventaire(&inventaire, systeme);
     initdeplacement(&deplacement, systeme);
     initperso(&perso, systeme);
-    initmap(&carte, systeme, &perso);
+    initmap(&carte, systeme);
     initui(&ui, systeme);
     initchat(&chat, systeme);
     initpnj(&pnj);
     initrecompense(&recompense, systeme);
     initFORevent(&FORevent, &objet, &bouton, &inventaire, systeme, &deplacement, &chat, &ui, &craft, &monstre, &perso, &pnj);
-    SDL_RenderCopy(systeme->renderer, craft.tetabli, NULL, &craft.petabli);
 
     map(systeme, online, &bouton, &objet, &monstre, &perso, &inventaire, &deplacement, &temps, &ui, &chat, &craft, &carte, &pnj, &recompense, &FORevent);
 	return 1;

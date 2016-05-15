@@ -1,7 +1,10 @@
 #include "main.h"
 #include "colision.h"
+#include "image.h"
 
-void BattleDraw_FloorItems(struct typecombat *BTLstr,struct DIVERSsysteme *systeme,struct PACKobjet *objet)
+extern int screenh, screenw;
+
+void BattleDraw_FloorItems(struct typecombat *BTLstr,struct PACKobjet *objet)
 {
     int index;
     for (index = 0; index < BTLstr->NBlootsol ; index++)
@@ -11,80 +14,90 @@ void BattleDraw_FloorItems(struct typecombat *BTLstr,struct DIVERSsysteme *syste
             BTLstr->plootsol[index].w = BTLstr->oldplootsol[index].w * BTLstr->animobjet;
             BTLstr->plootsol[index].h = BTLstr->oldplootsol[index].h * BTLstr->animobjet;
         }
-        SDL_RenderCopy(systeme->renderer, objet->objet[BTLstr->IDlootsol[index]].texture, NULL, &BTLstr->plootsol[index]);
+        draw(objet->objet[BTLstr->IDlootsol[index]].texture, &BTLstr->plootsol[index]);
     }
 }
 
-void BattleDraw_Ennemy(struct typecombat *BTLstr,struct DIVERSsysteme *systeme, int arcademode)
+void BattleDraw_Ennemy(struct typecombat *BTLstr, int arcademode)
 {
     int index, calcul;
     for (index = 0; index < LIMITEmobARCADE ; index++)
 	{
 		/*looted stuff*/
-		if (BTLstr->creature[index].ontheway != 0 && BTLstr->creature[index].position.x < systeme->screenw)
+		if (BTLstr->creature[index].ontheway != 0 && BTLstr->creature[index].m_pict.pict.pos.x < screenw)
 		{
-			BTLstr->creature[index].position.w = BTLstr->creature[index].STATICposition.w * BTLstr->animobjet;
-			BTLstr->creature[index].position.h = BTLstr->creature[index].STATICposition.h * BTLstr->animobjet;
+			BTLstr->creature[index].m_pict.pict.pos.w = BTLstr->creature[index].STATICposition.w * BTLstr->animobjet;
+			BTLstr->creature[index].m_pict.pict.pos.h = BTLstr->creature[index].STATICposition.h * BTLstr->animobjet;
 			if (arcademode == false)
-			{	SDL_RenderCopy(systeme->renderer, BTLstr->peau, NULL, &BTLstr->creature[index].position);}
+			{	////SDL_RenderCopy(systeme->renderer, BTLstr->peau, NULL, &BTLstr->creature[index].position);
+			}
 			else
-			{	SDL_RenderCopy(systeme->renderer, BTLstr->piece, NULL, &BTLstr->creature[index].position);}
+			{	////SDL_RenderCopy(systeme->renderer, BTLstr->piece, NULL, &BTLstr->creature[index].position);
+			}
 		}
-		/*si elles sont mortes et pas ramasser*/
-		else if (BTLstr->creature[index].isdead == true && BTLstr->creature[index].looted == 0)
+		/*if they're dead but are not looted*/
+		else if (BTLstr->creature[index].isdead == true && BTLstr->creature[index].looted == false)
 		{
 			if (arcademode == false)
 			{
 				calcul =90+(45 * BTLstr->creature[index].Direction);
-				SDL_RenderCopyEx(systeme->renderer,BTLstr->creature[index].texture[2], NULL, &BTLstr->creature[index].position, calcul,NULL, SDL_FLIP_NONE);
+				BTLstr->creature[index].m_pict.pict.texture = BTLstr->creature[index].m_pict.texture[2];
+				Turn_And_Draw(&BTLstr->creature[index].m_pict.pict, calcul);
 
 			}
 			else
 			{
-				BTLstr->creature[index].position.w = 50;
-				BTLstr->creature[index].position.h = 50;
-				SDL_RenderCopy(systeme->renderer,BTLstr->piece, NULL, &BTLstr->creature[index].position);
+				BTLstr->creature[index].m_pict.pict.pos.w = 50;
+				BTLstr->creature[index].m_pict.pict.pos.h = 50;
+				//draw(BTLstr->piece, &BTLstr->creature[index].position);
 			}
 		}
-		else if(BTLstr->creature[index].isdead == false)/*if they're alive*/
+		/*if they're alive*/
+		else if(BTLstr->creature[index].isdead == false)
 		{
 			calcul =90+(45 * BTLstr->creature[index].Direction);
-			SDL_RenderCopyEx(systeme->renderer, BTLstr->creature[index].texture[BTLstr->creature[index].indexanim], NULL, &BTLstr->creature[index].position, calcul,NULL, SDL_FLIP_NONE);
-		}
+
+            Sync_Moving_Pict(BTLstr->temps, &BTLstr->creature[index].m_pict);
+            Turn_And_Draw(&BTLstr->creature[index].m_pict.pict, calcul);
+          }
 
 		if (BTLstr->creature[index].isdead == false && BTLstr->creature[index].life < BTLstr->creature[index].lifemax)
 		{
-			SDL_RenderCopy(systeme->renderer, BTLstr->creature[index].BarreDeVie->BGtexture, NULL, &BTLstr->creature[index].BarreDeVie->BGposition);
-			SDL_RenderCopy(systeme->renderer, BTLstr->creature[index].BarreDeVie->texture, NULL, &BTLstr->creature[index].BarreDeVie->position);
+			////SDL_RenderCopy(systeme->renderer, BTLstr->creature[index].BarreDeVie->BGtexture, NULL, &BTLstr->creature[index].BarreDeVie->BGposition);
+			////SDL_RenderCopy(systeme->renderer, BTLstr->creature[index].BarreDeVie->texture, NULL, &BTLstr->creature[index].BarreDeVie->position);
 		}
 	}
 }
 
-void BattleDraw_Player(struct typecombat *BTLstr,struct DIVERSsysteme *systeme,struct PERSO *perso)
+void BattleDraw_Player(struct typecombat *BTLstr,struct PERSO *perso, struct DIVERSsysteme *systeme)
 {
-    double degre = FindAngle(&BTLstr->Pperso, &BTLstr->pcurseur) + 90; /* finding angle*/
+    double degre = FindAngle(&perso->perso.pict.pos, &BTLstr->curseur.pos) - 90; /* finding angle*/
 
 	if (BTLstr->poing_tendu == true)
     {
-        SDL_RenderCopyEx(systeme->renderer, perso->tperso, &perso->pperso_poing, &BTLstr->Pperso, degre, &perso->centrecorp, SDL_FLIP_NONE);
+        //SDL_RenderCopyEx(systeme->renderer, perso->tperso, &perso->pperso_poing, &BTLstr->Pperso, degre, &perso->centrecorp, SDL_FLIP_NONE);
     }
     else
     {
-        SDL_RenderCopyEx(systeme->renderer, perso->tperso, &perso->spriteup[BTLstr->indexanimperso], &BTLstr->Pperso, degre,NULL, SDL_FLIP_NONE);
+        if (BTLstr->persobouge)
+        {
+            Sync_Moving_Pict(BTLstr->temps, &perso->perso);
+        }
+        Turn_And_Draw(&perso->perso.pict, degre);
     }
     /*life bar*/
-    SDL_RenderCopy(systeme->renderer, perso->BarreDeVie->BGtexture, NULL, &perso->BarreDeVie->BGposition);
-    SDL_RenderCopy(systeme->renderer, perso->BarreDeVie->texture, NULL, &perso->BarreDeVie->position);
+    //SDL_RenderCopy(systeme->renderer, perso->BarreDeVie->BGtexture, NULL, &perso->BarreDeVie->BGposition);
+    //SDL_RenderCopy(systeme->renderer, perso->BarreDeVie->texture, NULL, &perso->BarreDeVie->position);
 }
 
-void BattleDraw_Projectile(struct typecombat *BTLstr,struct DIVERSsysteme *systeme)
+void BattleDraw_Projectile(struct typecombat *BTLstr)
 {
     int index;
     for(index = 0 ; index < NBcailloux ; index++)
 	{
 		if (BTLstr->DepartBalle[index] == RUNNING)
 		{
-			SDL_RenderCopy(systeme->renderer, BTLstr->balle, NULL, &BTLstr->pballe[index]);
+			draw(BTLstr->balle, &BTLstr->pballe[index]);
 		}
 	}
 }

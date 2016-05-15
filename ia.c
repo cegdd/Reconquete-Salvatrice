@@ -2,15 +2,16 @@
 #include <SDL.h>
 
 #include "main.h"
+extern int screenh, screenw;
 
 int MouvemementChauveSouris(struct typecombat *BTLstr, struct RAT *rat, struct DIVERSsysteme *systeme, int index)
 {
 	int index2 = 0, total = 0, lerand = 0;
 
-	int x = BTLstr->creature[index].position.x;
-	int y = BTLstr->creature[index].position.y;
-	int w = BTLstr->creature[index].position.w;
-	int h = BTLstr->creature[index].position.h;
+	int x = BTLstr->creature[index].m_pict.pict.pos.x;
+	int y = BTLstr->creature[index].m_pict.pict.pos.y;
+	int w = BTLstr->creature[index].m_pict.pict.pos.w;
+	int h = BTLstr->creature[index].m_pict.pict.pos.h;
 
 
 
@@ -58,11 +59,11 @@ int MouvemementChauveSouris(struct typecombat *BTLstr, struct RAT *rat, struct D
 				y-=1;
 			}
 			if (y < 0){return MouvemementChauveSouris(BTLstr, rat, systeme, index);}
-			else if (x+w > systeme->screenw) {return MouvemementChauveSouris(BTLstr, rat, systeme, index);}
+			else if (x+w > screenw) {return MouvemementChauveSouris(BTLstr, rat, systeme, index);}
 			else
 			{
-				BTLstr->creature[index].position.x += 1;
-				BTLstr->creature[index].position.y -= 1;
+				BTLstr->creature[index].m_pict.pict.pos.x += 1;
+				BTLstr->creature[index].m_pict.pict.pos.y -= 1;
 				return UPRIGHT;
 			}
 			break;
@@ -71,10 +72,10 @@ int MouvemementChauveSouris(struct typecombat *BTLstr, struct RAT *rat, struct D
 			{
 				x+=1;
 			}
-			if (x+w > systeme->screenw) {return MouvemementChauveSouris(BTLstr, rat, systeme, index);}
+			if (x+w > screenw) {return MouvemementChauveSouris(BTLstr, rat, systeme, index);}
 			else
 			{
-				BTLstr->creature[index].position.x += 1;
+				BTLstr->creature[index].m_pict.pict.pos.x += 1;
 				return RIGHT;
 			}
 			break;
@@ -84,12 +85,12 @@ int MouvemementChauveSouris(struct typecombat *BTLstr, struct RAT *rat, struct D
 				x+=1;
 				y+=1;
 			}
-			if (y+h > systeme->screenh){return MouvemementChauveSouris(BTLstr, rat, systeme, index);}
-			else if (x+w > systeme->screenw) {return MouvemementChauveSouris(BTLstr, rat, systeme, index);}
+			if (y+h > screenh){return MouvemementChauveSouris(BTLstr, rat, systeme, index);}
+			else if (x+w > screenw) {return MouvemementChauveSouris(BTLstr, rat, systeme, index);}
 			else
 			{
-				BTLstr->creature[index].position.x += 1;
-				BTLstr->creature[index].position.y += 1;
+				BTLstr->creature[index].m_pict.pict.pos.x += 1;
+				BTLstr->creature[index].m_pict.pict.pos.y += 1;
 				return RIGHTDOWN;
 			}
 			break;
@@ -98,10 +99,10 @@ int MouvemementChauveSouris(struct typecombat *BTLstr, struct RAT *rat, struct D
 			{
 				y+=1;
 			}
-			if (y+h > systeme->screenh){return MouvemementChauveSouris(BTLstr, rat, systeme, index);}
+			if (y+h > screenh){return MouvemementChauveSouris(BTLstr, rat, systeme, index);}
 			else
 			{
-				BTLstr->creature[index].position.y += 1;
+				BTLstr->creature[index].m_pict.pict.pos.y += 1;
 				return DOWN;
 			}
 			break;
@@ -111,12 +112,12 @@ int MouvemementChauveSouris(struct typecombat *BTLstr, struct RAT *rat, struct D
 				x-=1;
 				y+=1;
 			}
-			if (y+h > systeme->screenh){return MouvemementChauveSouris(BTLstr, rat, systeme, index);}
+			if (y+h > screenh){return MouvemementChauveSouris(BTLstr, rat, systeme, index);}
 			else if (x <0) {return MouvemementChauveSouris(BTLstr, rat, systeme, index);}
 			else
 			{
-				BTLstr->creature[index].position.x -= 1;
-				BTLstr->creature[index].position.y += 1;
+				BTLstr->creature[index].m_pict.pict.pos.x -= 1;
+				BTLstr->creature[index].m_pict.pict.pos.y += 1;
 				return DOWNLEFT;
 			}
 			break;
@@ -128,7 +129,7 @@ int MouvemementChauveSouris(struct typecombat *BTLstr, struct RAT *rat, struct D
 			if (x < 0) {return MouvemementChauveSouris(BTLstr, rat, systeme, index);}
 			else
 			{
-				BTLstr->creature[index].position.x -= 1;
+				BTLstr->creature[index].m_pict.pict.pos.x -= 1;
 				return LEFT;
 			}
 			break;
@@ -142,8 +143,8 @@ int MouvemementChauveSouris(struct typecombat *BTLstr, struct RAT *rat, struct D
 			else if (x < 0) {return MouvemementChauveSouris(BTLstr, rat, systeme, index);}
 			else
 			{
-				BTLstr->creature[index].position.x -= 1;
-				BTLstr->creature[index].position.y -= 1;
+				BTLstr->creature[index].m_pict.pict.pos.x -= 1;
+				BTLstr->creature[index].m_pict.pict.pos.y -= 1;
 				return LEFTUP;
 			}
 			break;
@@ -155,7 +156,7 @@ int MouvemementChauveSouris(struct typecombat *BTLstr, struct RAT *rat, struct D
 			if (y < 0){return MouvemementChauveSouris(BTLstr, rat, systeme, index);}
 			else
 			{
-				BTLstr->creature[index].position.y -= 1;
+				BTLstr->creature[index].m_pict.pict.pos.y -= 1;
 				return UP;
 			}
 			break;

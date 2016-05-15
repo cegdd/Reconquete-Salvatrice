@@ -9,8 +9,8 @@
 
 void tirer (float px, float py, int canonx, int canony, int tx[][PRECISIONcailloux], int ty[][PRECISIONcailloux], int tableauutile, double *degre)
 {
-	register int vitesse = VITESSE;
-	register float y, x;
+	int vitesse = VITESSE;
+	float y, x;
 	int difx = 0, dify = 0, i = 0, bissectrice = 0;
 	int octant = calculoctant(px, py, canonx, canony, &difx, &dify);
 	float ecart = 0, ecartinverse = 0;
@@ -74,7 +74,7 @@ int HitboxBalle(struct typecombat *BTLstr, int index)
 
 	for (i = 0 ; i < NBcailloux ; i++)
 	{   /*tri et degrossissage pour calcul précis*/
-	    if (checkdistance(&BTLstr->creature[index].position, &BTLstr->pballe[i], 120) == -1 && BTLstr->DepartBalle[i] == RUNNING )
+	    if (checkdistance(&BTLstr->creature[index].m_pict.pict.pos, &BTLstr->pballe[i], 120) == -1 && BTLstr->DepartBalle[i] == RUNNING )
         {
             #if TESTGRID == 1
             point.x = pballe[i].x;
@@ -91,7 +91,7 @@ int HitboxBalle(struct typecombat *BTLstr, int index)
 
                     if (checkdistance(&pix, &BTLstr->pballe[i], 10) == -1 )
                     {
-                        if (TestColision_Rat(&BTLstr->creature[index].position, pix.x, pix.y, BTLstr->creature[index].Direction) == 1)
+                        if (TestColision_Rat(&BTLstr->creature[index].m_pict.pict.pos, pix.x, pix.y, BTLstr->creature[index].Direction) == 1)
                         {
                             #if TESTGRID == 1
                             point.x = pballe[i].x;
@@ -133,7 +133,7 @@ void COMBATgestionprojectile (struct typecombat *BTLstr)
 
 void gestiontir(struct typecombat *BTLstr)
 {
-    tirer (BTLstr->px, BTLstr->py, BTLstr->canonx, BTLstr->canony, BTLstr->tx, BTLstr->ty, BTLstr->tableauutile, &BTLstr->degre);
+    tirer (BTLstr->curseur.pos.x, BTLstr->curseur.pos.y, BTLstr->canonx, BTLstr->canony, BTLstr->tx, BTLstr->ty, BTLstr->tableauutile, &BTLstr->degre);
 
     BTLstr->letirdemander = false;
     BTLstr->DepartBalle[BTLstr->tableauutile] = RUNNING;

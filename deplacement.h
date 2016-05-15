@@ -4,13 +4,13 @@
 int directionperso(struct DIRECTION *direction);
 int calculdirectionjoueurs(SDL_Rect posjoueurs,SDL_Rect oldposjoueurs);
 
-void haut (struct PERSO *perso, int* y,struct DIVERSsysteme *systeme, int enmap);
-void hautdroite (struct PERSO *perso, int* x, int* y,struct DIVERSsysteme *systeme, int enmap);
-void droite (struct PERSO *perso, int* x,struct DIVERSsysteme *systeme, int enmap);
-void basdroite (struct PERSO *perso, int* x, int* y,struct DIVERSsysteme *systeme, int enmap);
-void bas (struct PERSO *perso, int* y,struct DIVERSsysteme *systeme, int enmap);
-void basgauche (struct PERSO *perso, int* x, int* y,struct DIVERSsysteme *systeme, int enmap);
-void gauche (struct PERSO *perso, int* x,struct DIVERSsysteme *systeme, int enmap);
-void gauchehaut (struct PERSO *perso, int* x, int* y,struct DIVERSsysteme *systeme, int enmap);
+void haut           (int* y);
+void hautdroite     (int* x, int* y);
+void droite         (int* x);
+void basdroite      (int* x, int* y);
+void bas            (int* y);
+void basgauche      (int* x, int* y);
+void gauche         (int* x);
+void gauchehaut     (int* x, int* y);
 
 #endif

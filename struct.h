@@ -5,16 +5,19 @@
 #include <stdbool.h>
 #include <SDL_ttf.h>
 
+#include <GL/gl.h>
+#include <GL/glu.h>
+
 /*####     OS     ######*/
 #define WINDOWS 1
 /*####logging rapide ####*/
-#define FASTLOG 0
+#define FASTLOG 1
 /*####  battle log   ####*/
 #define BATTLE_LOG 0
 /*##battle log display##*/
 #define BATTLE_LOG_DISPLAY 0
 /*####    cheat     ####*/
-#define CHEAT 0
+#define CHEAT 1
 /*#######################*/
 
 #if WINDOWS == 1
@@ -72,12 +75,35 @@ enum{B_NORMAL, B_SURVOLER, B_CLIQUER, B_IMPOSSIBLE};/*bouton*/
 enum{RAT_BLANC, RAT_VERT, RAT_JAUNE, RAT_ORANGE, RAT_ROUGE};/*creature*/
 enum{ALIVE, DEAD};
 
-struct Picture
+struct pict
 {
-    SDL_Texture *texture;
-    SDL_Surface *surface;
     SDL_Rect pos;
+    GLuint texture;
 };
+struct TEXTE
+{
+    struct pict img;
+	int lenght;
+	int high;
+};
+
+struct moving_pict
+{
+    struct pict pict;
+    GLuint texture[16];
+    int frame;
+    int current;
+    int delay;
+    int time;
+};
+
+struct floor
+{
+    struct pict pict;
+    SDL_Surface *calque;
+    SDL_Point translation;
+};
+
 struct File
 {
     struct Element *premier;
@@ -108,9 +134,9 @@ struct CHOSE
 {
 	char nom [48];
 
-	SDL_Texture *texture;
-	SDL_Texture *texturenombre;
-	SDL_Texture *texturenom[3];
+	GLuint texture;
+	GLuint quantite;
+	GLuint texturenom[3];
 
 	int empilage;
 	int type;
@@ -123,17 +149,11 @@ struct CHOSE
 	int force;
 	int portee;
 
-	int LARGEURdef;
-	int LARGEURlife;
-	int LARGEURregenlife;
-	int LARGEURforce;
-	int LARGEURportee;
-
-	SDL_Texture *texturedef;
-	SDL_Texture *texturelife;
-	SDL_Texture *textureregenlife;
-	SDL_Texture *textureforce;
-	SDL_Texture *textureportee;
+	struct TEXTE tdef;
+	struct TEXTE tlife;
+	struct TEXTE tregenlife;
+	struct TEXTE tforce;
+	struct TEXTE tportee;
 
 };
 
@@ -152,16 +172,14 @@ struct PLAN
 
 struct BOUTON
 {
-	SDL_Texture *normal;
-	SDL_Texture *survoler;
-	SDL_Texture *cliquer;
-	SDL_Rect position;
+	GLuint texture;
+	SDL_Rect pos;
 	int etat;
 };
-struct CREATURE
+/*struct CREATURE
 {
-	SDL_Texture *texture[3];
-	SDL_Rect position;
+	struct moving_pict m_pict;
+
 	SDL_Rect STATICposition;
 	struct BARREVIE *BarreDeVie;
 
@@ -172,13 +190,11 @@ struct CREATURE
 	float lifemax;
 	int ID;
 
-	int tempsanimation;
 	int Direction;
-	int indexanim;
 	int mind;
 	int mindtime;
 	int relevancy[8];
-	int looted;
+	bool looted;
 	int ontheway;
 	float wayx;
 	float wayy;
@@ -186,40 +202,43 @@ struct CREATURE
     int oldposy;
     float dx;
     float dy;
-};
-struct RAT
+};*/
+/*
+struct MOB_MAP
 {
-	/*graphic*/
-	SDL_Texture *texture[5][3];
-	SDL_Rect position;
+	//graphic
+	struct moving_pict m_pict;
 
-	/*general*/
+	//general
 	char nom [48];
 	int etat;
 	bool Engaged;
 	struct File queue;
 	int ID;
 
-	/*animation*/
+	//animation
 	int indexanim;
 	int tempsanim;
 	int direction;
 
-	/*loot*/
+	//loot
 	int prctloot[LOOTMAX];
 	int maxloot[LOOTMAX];
 	int nombreloot;
 	int idloot[LOOTMAX];
-};
+};*/
+/*
 struct PACKmonstre
 {
-	struct RAT rat[3];
-};
+	struct MOB_MAP mob[3];
+};*/
 
 struct EMPLACEMENT
 {
 	int IDobjet;
 	int NBobjet;
+
+	SDL_Rect pos;
 };
 
 struct PERSO
@@ -235,28 +254,34 @@ struct PERSO
 	float life;
 	int force;
 	int portee;
+	int cote[8];
+	int etatpix[12];
 
-	SDL_Texture *tperso;
+	struct moving_pict perso;
+
+	Uint8 pixel[12] ;
+
 	SDL_Texture *texture_poing[1];
 	SDL_Texture *tpseudo;
 	SDL_Texture *cheveuxbrun ;
 	SDL_Texture *cheveuxblanc;
 
-	SDL_Texture *tdefense;
-	SDL_Texture *tlife;
-	SDL_Texture *tregenlife;
-	SDL_Texture *tforce;
-	SDL_Texture *tportee;
+	struct pict tdefense;
+
+	struct pict tlife;
+	struct pict tregenlife;
+	struct pict tforce;
+	struct pict tportee;
 
 	SDL_Rect spriteup[8];
 	SDL_Rect spritehit;
-
-	SDL_Rect pperso;
 	SDL_Rect pperso_poing;
 	SDL_Rect ptpseudo;
-	SDL_Point centrecorp;
 
-	SDL_Rect pstats;
+	SDL_Point PixelCalque[12];
+	SDL_Point centrecorp;
+    SDL_Point pix[12];
+
 };
 
 struct DIRECTION
@@ -271,7 +296,6 @@ struct DIRECTION
 
 struct PACKbouton
 {
-	struct BOUTON BoutonQuitter;
 	struct BOUTON crafter;
 	struct BOUTON bcraft[7];
 };
@@ -287,7 +311,7 @@ struct PACKobjet
 
 struct PACKpnj
 {
-	SDL_Rect toumai;
+	struct pict toumai;
 	bool toumaiParle;
 };
 
@@ -298,33 +322,27 @@ struct DIVERSinventaire
 	int casedowndroit;
 	int casedowngauche;
 	int idsurvoler;
-	int LARGEURaideclicdroit;
 	int totalID[128];
 
-	SDL_Rect pcaseinventaire[TAILLESAC];
 	SDL_Rect pnbobjet[TAILLESAC];
-	SDL_Texture *tnbobjet;
 
-	SDL_Texture *tsacinventaire;
-	SDL_Texture *BGinventaire;
-	SDL_Texture *tcasesac;
-	SDL_Texture *tcasesac2;
-	SDL_Texture *taideclicdroit;
-	SDL_Texture *rubbish;
+	struct pict fond;
+	struct pict sac;
+	struct pict box[TAILLESAC];
+	struct pict rubbish;
 
-	SDL_Rect psac;
+	struct TEXTE aide;
+
 	SDL_Rect pdetail;
-	SDL_Rect prubbish;
 };
 
 struct DIVERSdeplacement
 {
-	int x;
-	int y;
     int directionjoueurs[MAX_JOUEURS];
     struct DIRECTION direction;
     int persobouge;
     int indexanimperso;
+    SDL_Rect temp;
 };
 
 struct DIVERStemps
@@ -342,11 +360,8 @@ struct DIVERStemps
     char StringI[12];
     char stringtempstotal[128];
 
-    SDL_Texture *tfps;
-    SDL_Texture *ttemps;
-
-	SDL_Rect pttemps;
-    SDL_Rect ptFps;
+    struct pict temps;
+    struct pict fps;
 };
 
 struct DIVERSsysteme
@@ -356,30 +371,24 @@ struct DIVERSsysteme
     bool inbattle;
     int continuer;
     int echap;
-    int screenw;
-    int screenh;
     int typeclavier;
 
-    SDL_Texture *pointeur;
+    struct pict pointeur;
+
     SDL_Texture *BGmort;
-    SDL_Texture *BG;
+    GLuint BG;
     SDL_Texture *BGblanc;
-    SDL_Texture *noir;
 
     SDL_Event evenement;
 
     SDL_Window *screen;
 
-    SDL_Renderer *renderer;
-
     TTF_Font *police;
     TTF_Font *police1;
 
-	SDL_Rect pp;
 	SDL_Rect pecran;
 	SDL_Rect oldpp;
 	SDL_Rect ppobj;
-	SDL_Rect PixelCalque[8];
 
 	char sauvegarde[NBargSAVE][C];
 	int saveinventaire[2][999];
@@ -393,42 +402,31 @@ struct DIVERSui
 	bool craft_open;
 
 	bool distanceprevenu;
-	bool OnLeftUp;
-	bool OnRightUp;
-	bool OnRightDown;
-	bool OnLeftDown;
 
-	int coinhaut;
-	int coinbas;
-	int lancedialogue;
+	bool lancedialogue;
 	int dialogueactif;
-	int PointedCorner;
-	int CornerTime;
-	int OldCornerTime;
 
 	char designationstuff[7][128];
 
 	struct EMPLACEMENT casestuff[7];
 
 	SDL_Texture *tdesignationstuff[7];
-	SDL_Texture *ttextedialogue;
+
+	struct pict dialogue_back;
+	struct pict dialogue_text;
+	struct pict BGmenu;
+
 	SDL_Texture *lumiereon;
 	SDL_Texture *lumiereoff;
-	SDL_Texture *tdialogue;
-	SDL_Texture *uimenu;
-	SDL_Texture *Uiinventaire;
-	SDL_Texture *Uichat;
-	SDL_Texture *BGmenu;
+
+	struct BOUTON corner_menu;
+	struct BOUTON corner_chat;
+	struct BOUTON corner_inventaire;
+	struct BOUTON BoutonQuitter;
 
 	SDL_Rect pUIbas;
 	SDL_Rect pUIhaut;
-	SDL_Rect puimenu;
-	SDL_Rect puiinventaire;
-	SDL_Rect puichat;
 	SDL_Rect plumiere;
-	SDL_Rect ptextedialogue;
-	SDL_Rect pdialogue;
-	SDL_Rect pcasestuff[7];
 };
 
 struct DIVERSchat
@@ -471,14 +469,8 @@ struct DIVERScraft
 
 struct DIVERSmap
 {
-	int pmx;
-	int pmy;
-	struct GRILLE grille[400][400];
-
-	SDL_Texture *tilemap[TILESMAP];
-	SDL_Surface *calque[TILESMAP];
-
-	SDL_Rect pmap[TILESMAP];
+    SDL_Point origin;
+	struct floor cellule;
 };
 
 struct PACKrecompense
@@ -548,6 +540,9 @@ struct typecombat
 	struct BOUTON quitter;
     /*char calque[1366][768];*/
 	struct CREATURE creature[LIMITEmobARCADE];
+
+	struct pict fond;
+
 	int premiercoup[LIMITEmobARCADE];
 
     char StringVie[48];
@@ -558,6 +553,7 @@ struct typecombat
     int doublesaut;
     bool letirdemander;
     bool poing_tendu;
+    bool persobouge;
     int canonx;
     int canony;
     int DepartBalle[NBcailloux];
@@ -570,7 +566,6 @@ struct typecombat
 	int px;
     int py;
     int indexanimperso;
-    int persobouge;
     int alive;
     int ennemivaincue;
     int arcadescore;
@@ -598,49 +593,32 @@ struct typecombat
     float animobjet;
 
     SDL_Texture *tVie;
-    SDL_Texture *fond;
-    SDL_Texture *curseur;
-    SDL_Texture *balle;
     SDL_Texture *peau;
     SDL_Texture *piece;
 
+    GLuint balle;
+
+    struct pict curseur;
+
     SDL_Rect Pperso;
-    SDL_Rect pcurseur;
     SDL_Rect pballe[NBcailloux];
     SDL_Rect ptVie;
     SDL_Rect plootsol[64];
     SDL_Rect oldplootsol[64];
 };
 
-struct bouton
-{
-	SDL_Texture *alpha100;
-	SDL_Texture *normal;
-	SDL_Texture *survoler;
-	SDL_Texture *cliquer;
-	SDL_Texture *impossible;
-	SDL_Rect pos;
-};
-
-struct TEXTE
-{
-	SDL_Texture *texture;
-	SDL_Rect position;
-	int lenght;
-	int high;
-};
-
 struct typelogin
 {
 
-    struct bouton option;
-    struct bouton jouer;
-    struct bouton creer;
-    struct bouton quitter;
-    struct bouton azerty;
-    struct bouton qwerty;
-    struct bouton qwertz;
-    struct bouton arcade;
+    struct BOUTON option;
+    struct BOUTON jouer;
+    struct BOUTON creer;
+    struct BOUTON quitter;
+    struct BOUTON azerty;
+    struct BOUTON qwerty;
+    struct BOUTON qwertz;
+    struct BOUTON arcade;
+
 	SDL_Event evenement;
 	TTF_Font *police;
 	SDL_Color couleurNoir;
@@ -652,13 +630,14 @@ struct typelogin
 	struct TEXTE LEpseudo;
 	struct TEXTE LEmdp;
 
-	struct Picture pointeur;
-	struct Picture login;
-	struct Picture blueBox;
-	struct Picture whiteBox;
-	struct Picture tdialogue;
-	struct Picture cachermdp;
-	struct Picture coche;
+	struct pict pointeur;
+	struct pict login;
+	struct pict blueBox;
+	struct pict whiteBox;
+	struct pict tdialogue;
+	struct pict cachermdp;
+	struct pict coche;
+	struct pict noir;
 
 	SDL_Rect pecran;
 	SDL_Rect pcase;
@@ -681,14 +660,6 @@ struct typelogin
 	int longmdp;
 	int optionactif;
 	int mdpcacher;
-	int etatoption;
-	int etatjouer;
-	int etatcreer;
-	int etatquitter;
-	int etatarcade;
-	int etatazerty;
-	int etatqwerty;
-	int etatqwertz;
 	int tpact;
 	int tpapr;
 	int tpcurseur;
@@ -701,8 +672,7 @@ struct typelogin
 	char info3[1024];
 	char info4[1024];
 
-	SDL_Texture *curseur;
-	SDL_Texture *ttextedialogue;
+	GLuint ttextedialogue;
 };
 
 #endif
