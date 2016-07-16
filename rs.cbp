@@ -75,6 +75,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="deplacement.h" />
+		<Unit filename="donjon.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="donjon.h" />
 		<Unit filename="evenement.c">
 			<Option compilerVar="CC" />
 		</Unit>

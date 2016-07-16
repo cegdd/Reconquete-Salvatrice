@@ -1004,3 +1004,297 @@
 	"begin_code.h"
 	"close_code.h"
 
+1468583636 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\battledraw.c
+	"main.h"
+	"colision.h"
+	"image.h"
+
+1433283745 c:\users\cegdd\desktop\dev\reconquete-salvatrice\main.h
+	"struct.h"
+
+1468678942 c:\users\cegdd\desktop\dev\reconquete-salvatrice\struct.h
+	<stdio.h>
+	<stdbool.h>
+	<SDL_ttf.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<winsock2.h>
+	<pthread.h>
+	<sys/types.h>
+	<sys/socket.h>
+	<netinet/in.h>
+	<arpa/inet.h>
+	<unistd.h>
+
+1442964633 c:\users\cegdd\desktop\dev\reconquete-salvatrice\colision.h
+	<stdbool.h>
+	"struct.h"
+
+1468673609 c:\users\cegdd\desktop\dev\reconquete-salvatrice\image.h
+	<SDL_ttf.h>
+	"main.h"
+
+1468583668 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\cac.c
+	<SDL.h>
+	"systeme.h"
+	"colision.h"
+	"main.h"
+	"jeux.h"
+	"rat.h"
+
+1468668223 c:\users\cegdd\desktop\dev\reconquete-salvatrice\systeme.h
+	"main.h"
+
+1468670181 c:\users\cegdd\desktop\dev\reconquete-salvatrice\jeux.h
+
+1468670210 c:\users\cegdd\desktop\dev\reconquete-salvatrice\rat.h
+
+1436994748 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\clavier.c
+	"main.h"
+
+1442965356 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\colision.c
+	<SDL.h>
+	<math.h>
+	<stdio.h>
+	<stdbool.h>
+	"image.h"
+	"tableau.h"
+	"colision.h"
+	"deplacement.h"
+	"main.h"
+
+1468670526 c:\users\cegdd\desktop\dev\reconquete-salvatrice\tableau.h
+	<SDL_ttf.h>
+	"main.h"
+
+1442963077 c:\users\cegdd\desktop\dev\reconquete-salvatrice\deplacement.h
+
+1442964770 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\deplacement.c
+	<SDL.h>
+	"colision.h"
+	"main.h"
+
+1468668469 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\evenement.c
+	<stdlib.h>
+	<stdio.h>
+	<SDL.h>
+	"struct.h"
+	"colision.h"
+	"ui.h"
+	"listechaine.h"
+	"main.h"
+	"image.h"
+	"evenement.h"
+	"tableau.h"
+	"systeme.h"
+	"login.h"
+	"clavier.h"
+
+1468672460 c:\users\cegdd\desktop\dev\reconquete-salvatrice\ui.h
+	<SDL_ttf.h>
+	<stdbool.h>
+
+1433279811 c:\users\cegdd\desktop\dev\reconquete-salvatrice\listechaine.h
+
+1468668469 c:\users\cegdd\desktop\dev\reconquete-salvatrice\evenement.h
+	<stdbool.h>
+	"main.h"
+	"login.h"
+
+1433282847 c:\users\cegdd\desktop\dev\reconquete-salvatrice\login.h
+
+1433279595 c:\users\cegdd\desktop\dev\reconquete-salvatrice\clavier.h
+
+1425859547 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\fichier.c
+	<stdio.h>
+
+1468673974 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\image.c
+	<stdio.h>
+	<SDL.h>
+	<SDL_ttf.h>
+	<SDL_image.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	"main.h"
+	"image.h"
+
+1461184386 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\listechaine.c
+	<stdlib.h>
+	<SDL.h>
+	"main.h"
+	"listechaine.h"
+
+1468671156 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\login.c
+	<stdio.h>
+	<SDL.h>
+	<SDL_ttf.h>
+	<string.h>
+	"main.h"
+	"login.h"
+	"image.h"
+	"evenement.h"
+	"fichier.h"
+	"sauvegarde.h"
+	"ui.h"
+
+1425859547 c:\users\cegdd\desktop\dev\reconquete-salvatrice\fichier.h
+
+1432853201 c:\users\cegdd\desktop\dev\reconquete-salvatrice\sauvegarde.h
+	"main.h"
+
+1468672071 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\main.c
+	<stdio.h>
+	<stdlib.h>
+	<SDL.h>
+	<SDL_ttf.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<pthread.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	"main.h"
+	"thread1.h"
+	"map.h"
+	"login.h"
+	"sauvegarde.h"
+	"tableau.h"
+	"queue.h"
+	"image.h"
+
+1425859548 c:\users\cegdd\desktop\dev\reconquete-salvatrice\thread1.h
+
+1468668138 c:\users\cegdd\desktop\dev\reconquete-salvatrice\map.h
+
+1433282512 c:\users\cegdd\desktop\dev\reconquete-salvatrice\queue.h
+
+1468679336 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\map.c
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	<string.h>
+	<SDL_ttf.h>
+	<SDL_image.h>
+	<math.h>
+	"evenement.h"
+	"image.h"
+	"ui.h"
+	"sauvegarde.h"
+	"map.h"
+	"main.h"
+	"colision.h"
+	"deplacement.h"
+	"tableau.h"
+	"systeme.h"
+	"listechaine.h"
+	"queue.h"
+	"donjon.h"
+
+1434060050 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\objet.c
+	<stdio.h>
+	<stdarg.h>
+	"main.h"
+
+1443480758 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\queue.c
+	<stdio.h>
+	<stdlib.h>
+	"jeux.h"
+	"main.h"
+
+1468670210 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\rat.c
+
+1440009700 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\sauvegarde.c
+	<stdio.h>
+	<stdlib.h>
+	<SDL.h>
+	<string.h>
+	"fichier.h"
+	"sauvegarde.h"
+
+1468584185 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\systeme.c
+	<SDL.h>
+	<stdlib.h>
+	<stdio.h>
+	<math.h>
+	"main.h"
+	"image.h"
+	"listechaine.h"
+
+1468678956 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\tableau.c
+	<SDL.h>
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	<stdbool.h>
+	<SDL_ttf.h>
+	<SDL_image.h>
+	"main.h"
+	"image.h"
+	"objet.h"
+	"tool.h"
+	"queue.h"
+
+1434055690 c:\users\cegdd\desktop\dev\reconquete-salvatrice\objet.h
+
+1468668180 c:\users\cegdd\desktop\dev\reconquete-salvatrice\tool.h
+
+1433278831 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\thread1.c
+	<stdlib.h>
+	<stdio.h>
+	<stdbool.h>
+	<SDL.h>
+	<string.h>
+	<pthread.h>
+	<SDL_ttf.h>
+	"thread2.h"
+	"main.h"
+
+1425859548 c:\users\cegdd\desktop\dev\reconquete-salvatrice\thread2.h
+
+1440535106 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\thread2.c
+	<stdlib.h>
+	<stdio.h>
+	<stdbool.h>
+	<SDL.h>
+	<string.h>
+	<pthread.h>
+	"image.h"
+	"thread2.h"
+	"main.h"
+	<SDL_ttf.h>
+
+1468584310 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\tir.c
+	<stdlib.h>
+	<stdio.h>
+	<SDL.h>
+	<math.h>
+	"main.h"
+	"rat.h"
+	"systeme.h"
+
+1468668201 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\tool.c
+	<stdlib.h>
+	<stdio.h>
+	<SDL.h>
+	"main.h"
+	"systeme.h"
+
+1468673609 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\ui.c
+	<stdio.h>
+	<SDL.h>
+	<math.h>
+	"image.h"
+	"main.h"
+	"evenement.h"
+	"ui.h"
+	"deplacement.h"
+	"systeme.h"
+	"colision.h"
+
+1468679423 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\donjon.c
+	<stdio.h>
+	<stdlib.h>
+	"struct.h"
+
+1468679377 c:\users\cegdd\desktop\dev\reconquete-salvatrice\donjon.h
+	"struct.h"
+

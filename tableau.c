@@ -681,7 +681,7 @@ void initonline(struct typeFORthreads *online,struct DIVERSsysteme *systeme)
 
 void initdonjon(struct DONJON *donjon,struct DIVERSsysteme *systeme)
 {
-    sprintf(donjon->name, "dj1");
+    sprintf(donjon->path, "dj1");
     donjon->entrance.pict.texture = loadTexture("rs/images/noir.png");
     setPos4(&donjon->entrance.pict.pos, 0, 0, 100, 100);
     setPos2(&donjon->entrance.translation, 1600, 400);

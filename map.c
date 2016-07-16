@@ -18,6 +18,7 @@
 #include "systeme.h"
 #include "listechaine.h"
 #include "queue.h"
+#include "donjon.h"
 
 extern int screenh, screenw;
 
@@ -101,6 +102,11 @@ systeme->continuer = 1;
             boucleevent(&online->chat.lancermessage, FORevent);
             /*gestion du chat*/
             gestionchat(chat, systeme, online);
+
+            if(colisionbox(&perso->perso.pict.pos, &dj0.entrance.pict.pos, false))
+            {
+                LoadDonjon(&dj0);
+            }
 
 /*##################################################################################################################################################################################
 											##################### AFFICHAGE #####################																	#

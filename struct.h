@@ -425,7 +425,7 @@ struct DIVERSmap
 
 struct DONJON
 {
-    char name[64];
+    char path[64];
     struct hookpict entrance;
     struct floor map;
 };
