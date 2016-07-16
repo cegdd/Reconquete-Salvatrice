@@ -50,6 +50,9 @@ int map (struct DIVERSsysteme *systeme,struct typeFORthreads *online,struct PACK
 
     #endif
 
+    struct DONJON dj0;
+    initdonjon(&dj0, systeme);
+
     online->jeuxACTIF = 1;
 
     for(index = 0 ; index < MAX_JOUEURS ; index++)
@@ -107,8 +110,7 @@ systeme->continuer = 1;
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) ;
 
             /*affichage de la carte*/
-            afficherMAP(carte, systeme, craft);
-            //SDL_RenderCopy(systeme->renderer, craft->tetabli, NULL, &craft->petabli);
+            afficherMAP(carte, systeme, craft, &dj0);
             /*affichage des pnj*/
             afficherPNJ(perso, pnj, systeme);
             /*affichage des joueurs*/
@@ -135,6 +137,7 @@ systeme->continuer = 1;
 
             /*rendu éran*/
             glFlush();
+            glFinish();
             SDL_GL_SwapWindow(systeme->screen);
         }
         else

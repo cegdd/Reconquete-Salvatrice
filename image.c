@@ -30,8 +30,8 @@ void chargement (struct DIVERSsysteme *systeme)
     glLoadIdentity();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) ;
 
-	setPos(&logo.pos, 0, 200, screenw, screenh);
-	setPos(&fond.pos, 0, screenh*-0.2, screenw*0.7, screenh*0.8);
+	setPos4(&logo.pos, 0, 200, screenw, screenh);
+	setPos4(&fond.pos, 0, screenh*-0.2, screenw*0.7, screenh*0.8);
     fond.pos.x = (screenw - fond.pos.w) / 2;
 
 	fond.texture = loadTexture("rs/images/chargement.png");
@@ -264,6 +264,19 @@ void draw_pict(struct pict *image)
         glTexCoord2d(1,0);          glVertex2d(image->pos.x+image->pos.w,image->pos.y);
     glEnd();
 }
+void draw_hookpict(struct hookpict *image, struct DIVERSmap *carte)
+{
+    image->pict.pos.x = carte->cellule.pict.pos.x + image->translation.x;
+    image->pict.pos.y = carte->cellule.pict.pos.y + image->translation.y;
+
+    glBindTexture(GL_TEXTURE_2D, image->pict.texture);
+    glBegin(GL_QUADS);
+        glTexCoord2d(0,0);          glVertex2d(image->pict.pos.x,image->pict.pos.y);
+        glTexCoord2d(0,1);          glVertex2d(image->pict.pos.x,image->pict.pos.y+image->pict.pos.h);
+        glTexCoord2d(1,1);          glVertex2d(image->pict.pos.x+image->pict.pos.w,image->pict.pos.y+image->pict.pos.h);
+        glTexCoord2d(1,0);          glVertex2d(image->pict.pos.x+image->pict.pos.w,image->pict.pos.y);
+    glEnd();
+}
 
 void draw(GLuint texture, SDL_Rect *pos)
 {
@@ -316,13 +329,20 @@ void draw_button(struct BOUTON *bouton)
     glColor3ub(255, 255, 255);
 }
 
-void setPos(SDL_Rect *pos, int x, int y, int w, int h)
+void setPos4(SDL_Rect *pos, int x, int y, int w, int h)
 {
     pos->x = x;
     pos->y = y;
     pos->w = w;
     pos->h = h;
 }
+
+void setPos2(SDL_Point *point, int x, int y)
+{
+    point->x = x;
+    point->y = y;
+}
+
 
 void Turn_And_Draw (struct pict *img, float angle)
 {

@@ -341,13 +341,9 @@
 
 1433282512 c:\users\cegdd\programmation\rs\queue.h
 
-1461715749 c:\users\cegdd\programmation\rs\jeux.h
-	<stdbool.h>
-	<SDL.h>
-	"main.h"
+1468670181 c:\users\cegdd\programmation\rs\jeux.h
 
-1432683015 c:\users\cegdd\programmation\rs\rat.h
-	"main.h"
+1468670210 c:\users\cegdd\programmation\rs\rat.h
 
 1436994748 source:c:\users\cegdd\programmation\rs\clavier.c
 	"main.h"
@@ -363,11 +359,11 @@
 	"deplacement.h"
 	"main.h"
 
-1462138440 c:\users\cegdd\programmation\rs\image.h
+1468673609 c:\users\cegdd\programmation\rs\image.h
 	<SDL_ttf.h>
 	"main.h"
 
-1468668394 c:\users\cegdd\programmation\rs\tableau.h
+1468670526 c:\users\cegdd\programmation\rs\tableau.h
 	<SDL_ttf.h>
 	"main.h"
 
@@ -394,7 +390,7 @@
 	"login.h"
 	"clavier.h"
 
-1441578553 c:\users\cegdd\programmation\rs\ui.h
+1468672460 c:\users\cegdd\programmation\rs\ui.h
 	<SDL_ttf.h>
 	<stdbool.h>
 
@@ -417,7 +413,7 @@
 	<SDL.h>
 	"main.h"
 
-1462138455 source:c:\users\cegdd\programmation\rs\image.c
+1468673974 source:c:\users\cegdd\programmation\rs\image.c
 	<stdio.h>
 	<SDL.h>
 	<SDL_ttf.h>
@@ -474,7 +470,7 @@
 	"main.h"
 	"listechaine.h"
 
-1461716450 source:c:\users\cegdd\programmation\rs\login.c
+1468671156 source:c:\users\cegdd\programmation\rs\login.c
 	<stdio.h>
 	<SDL.h>
 	<SDL_ttf.h>
@@ -492,7 +488,7 @@
 1432853201 c:\users\cegdd\programmation\rs\sauvegarde.h
 	"main.h"
 
-1468668366 source:c:\users\cegdd\programmation\rs\main.c
+1468672071 source:c:\users\cegdd\programmation\rs\main.c
 	<stdio.h>
 	<stdlib.h>
 	<SDL.h>
@@ -524,7 +520,7 @@
 
 1468668138 c:\users\cegdd\programmation\rs\map.h
 
-1468668366 source:c:\users\cegdd\programmation\rs\map.c
+1468673040 source:c:\users\cegdd\programmation\rs\map.c
 	<stdio.h>
 	<stdlib.h>
 	<stdbool.h>
@@ -556,12 +552,7 @@
 	"jeux.h"
 	"main.h"
 
-1468584174 source:c:\users\cegdd\programmation\rs\rat.c
-	<SDL.h>
-	"systeme.h"
-	"main.h"
-	"tool.h"
-	"image.h"
+1468670210 source:c:\users\cegdd\programmation\rs\rat.c
 
 1440009700 source:c:\users\cegdd\programmation\rs\sauvegarde.c
 	<stdio.h>
@@ -580,7 +571,7 @@
 	"image.h"
 	"listechaine.h"
 
-1468668148 source:c:\users\cegdd\programmation\rs\tableau.c
+1468673870 source:c:\users\cegdd\programmation\rs\tableau.c
 	<SDL.h>
 	<stdlib.h>
 	<stdio.h>
@@ -637,7 +628,7 @@
 	"main.h"
 	"systeme.h"
 
-1468584343 source:c:\users\cegdd\programmation\rs\ui.c
+1468673609 source:c:\users\cegdd\programmation\rs\ui.c
 	<stdio.h>
 	<SDL.h>
 	<math.h>
@@ -656,7 +647,7 @@
 
 1443041163 c:\users\cegdd\programmation\rs\battledraw.h
 
-1468667965 c:\users\cegdd\programmation\rs\struct.h
+1468670943 c:\users\cegdd\programmation\rs\struct.h
 	<stdio.h>
 	<stdbool.h>
 	<SDL_ttf.h>

@@ -482,9 +482,11 @@ void afficherUI(bool enligne,struct DIVERSui *ui,struct PACKbouton *bouton,struc
 	}
 }
 
-void afficherMAP(struct DIVERSmap *carte,struct DIVERSsysteme *systeme,struct DIVERScraft *craft)
+void afficherMAP(struct DIVERSmap *carte,struct DIVERSsysteme *systeme,struct DIVERScraft *craft,
+                 struct DONJON *dj0)
 {
     draw_pict(&carte->cellule.pict);
+    draw_hookpict(&dj0->entrance, carte);
     //SDL_RenderCopy(systeme->renderer, craft->tetabli, NULL, &craft->petabli);
 }
 

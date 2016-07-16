@@ -65,9 +65,9 @@ void initinventaire(struct DIVERSinventaire *inventaire,struct DIVERSsysteme *sy
 	sprintf(nom, "clic droit : equiper");
 	inventaire->aide.img.texture = imprime (nom, screenw, GRIS, systeme, &inventaire->aide.lenght, NULL);
 
-	setPos(&inventaire->sac.pos, 0, screenh/2 - screenh*0.026, screenw*0.1, screenh*0.026);
-	setPos(&inventaire->fond.pos, 0, 0, screenw, screenh/2);
-	setPos(&inventaire->rubbish.pos, screenw*0.9, 0, screenw*0.073, screenh*0.13);
+	setPos4(&inventaire->sac.pos, 0, screenh/2 - screenh*0.026, screenw*0.1, screenh*0.026);
+	setPos4(&inventaire->fond.pos, 0, 0, screenw, screenh/2);
+	setPos4(&inventaire->rubbish.pos, screenw*0.9, 0, screenw*0.073, screenh*0.13);
 }
 
 
@@ -257,7 +257,7 @@ void initperso(struct PERSO *perso,struct DIVERSsysteme *systeme)/*													
 	perso->perso.delay = 123;
 	perso->perso.time = 0;
 
-	setPos (&perso->perso.pict.pos, (screenw/2)-(perso->perso.pict.pos.w/2), (screenh/2)-(perso->perso.pict.pos.h/2), 68, 51);
+	setPos4(&perso->perso.pict.pos, (screenw/2)-(perso->perso.pict.pos.w/2), (screenh/2)-(perso->perso.pict.pos.h/2), 68, 51);
 
 	for(index = 0 ; index < 8 ; index++)
     {
@@ -309,11 +309,11 @@ void initperso(struct PERSO *perso,struct DIVERSsysteme *systeme)/*													
 	perso->tregenlife.texture = imprime (string, screenw, BLANC, systeme, NULL, NULL);
 	perso->tdefense.texture = imprime (string, screenw, BLANC, systeme, NULL, NULL);
 
-    setPos(&perso->tlife.pos, screenw*0.11, screenh*0.8, screenw*0.28, screenh*0.05);
-	setPos(&perso->tdefense.pos, screenw*0.11, screenh*0.74, screenw*0.28, screenh*0.05);
-	setPos(&perso->tregenlife.pos, screenw*0.11, screenh*0.68, screenw*0.28, screenh*0.05);
-	setPos(&perso->tforce.pos, screenw*0.11, screenh*0.62, screenw*0.28, screenh*0.05);
-	setPos(&perso->tportee.pos, screenw*0.11, screenh*0.56, screenw*0.28, screenh*0.05);
+    setPos4(&perso->tlife.pos, screenw*0.11, screenh*0.8, screenw*0.28, screenh*0.05);
+	setPos4(&perso->tdefense.pos, screenw*0.11, screenh*0.74, screenw*0.28, screenh*0.05);
+	setPos4(&perso->tregenlife.pos, screenw*0.11, screenh*0.68, screenw*0.28, screenh*0.05);
+	setPos4(&perso->tforce.pos, screenw*0.11, screenh*0.62, screenw*0.28, screenh*0.05);
+	setPos4(&perso->tportee.pos, screenw*0.11, screenh*0.56, screenw*0.28, screenh*0.05);
 
 	perso->BarreDeVie = AddLifeBar(100, perso->perso.pict.pos.w, systeme);
 
@@ -370,8 +370,8 @@ void inittemps(struct DIVERStemps *temps,struct DIVERSsysteme *systeme)/*							
 	temps->fps.texture = imprime (temps->StringI, screenw, BLANC, systeme, NULL, NULL);
 	temps->temps.texture = imprime (temps->stringtempstotal, screenw, BLANC, systeme, NULL, NULL);
 
-	setPos (&temps->fps.pos, screenw*0.75, screenh*0.8, screenw*0.2, screenh*0.05);
-	setPos (&temps->temps.pos, screenw*0.75, screenh*0.75, screenw*0.2, screenh*0.05);
+	setPos4(&temps->fps.pos, screenw*0.75, screenh*0.8, screenw*0.2, screenh*0.05);
+	setPos4(&temps->temps.pos, screenw*0.75, screenh*0.75, screenw*0.2, screenh*0.05);
 }
 
 void initsystem(struct DIVERSsysteme *systeme)/*																	systeme*/
@@ -397,7 +397,7 @@ void initsystem(struct DIVERSsysteme *systeme)/*																	systeme*/
         printf("police not load2\n");
     }
 
-    setPos(&systeme->pointeur.pos, 0, 0, 20, 30);
+    setPos4(&systeme->pointeur.pos, 0, 0, 20, 30);
 
 	systeme->pecran.x = 0;
 	systeme->pecran.y = 0;
@@ -465,11 +465,11 @@ void initui(struct DIVERSui *ui,struct DIVERSsysteme *systeme)/*															u
 	ui->plumiere.w = screenw*0.1;
 	ui->plumiere.h = screenh*0.0325;
 
-	setPos (&ui->corner_menu.pos, 0, screenh-screenh*0.063, screenw*0.036, screenh*0.065);
-	setPos (&ui->corner_inventaire.pos, screenw-screenw*0.036, 0, screenw*0.036, screenh*0.065);
-	setPos (&ui->corner_chat.pos, 0, 0, screenw*0.036, screenh*0.065);
-	setPos (&ui->BGmenu.pos, 0, screenh/2, screenw, screenh/2);
-	setPos (&ui->BoutonQuitter.pos, screenw*0.96, screenh-screenw*0.04, screenw*0.04, screenw*0.04);
+	setPos4 (&ui->corner_menu.pos, 0, screenh-screenh*0.063, screenw*0.036, screenh*0.065);
+	setPos4 (&ui->corner_inventaire.pos, screenw-screenw*0.036, 0, screenw*0.036, screenh*0.065);
+	setPos4 (&ui->corner_chat.pos, 0, 0, screenw*0.036, screenh*0.065);
+	setPos4 (&ui->BGmenu.pos, 0, screenh/2, screenw, screenh/2);
+	setPos4 (&ui->BoutonQuitter.pos, screenw*0.96, screenh-screenw*0.04, screenw*0.04, screenw*0.04);
 
 	ui->BoutonQuitter.etat = B_NORMAL;
 
@@ -477,13 +477,13 @@ void initui(struct DIVERSui *ui,struct DIVERSsysteme *systeme)/*															u
 	ui->corner_inventaire.etat =    B_NORMAL;
 	ui->corner_chat.etat =          B_NORMAL;
 
-	setPos (&ui->casestuff[0].pos, screenw*0.225, screenh*0.85, screenh*0.1, screenh*0.1);
-	setPos (&ui->casestuff[1].pos, screenw*0.05, screenh*0.55, screenh*0.1, screenh*0.1);
-	setPos (&ui->casestuff[2].pos, screenw*0.05, screenh*0.65, screenh*0.1, screenh*0.1);
-	setPos (&ui->casestuff[3].pos, screenw*0.05, screenh*0.75, screenh*0.1, screenh*0.1);
-	setPos (&ui->casestuff[4].pos, screenw*0.4, screenh*0.55, screenh*0.1, screenh*0.1);
-	setPos (&ui->casestuff[5].pos, screenw*0.4, screenh*0.65, screenh*0.1, screenh*0.1);
-	setPos (&ui->casestuff[6].pos, screenw*0.4, screenh*0.75, screenh*0.1, screenh*0.1);
+	setPos4 (&ui->casestuff[0].pos, screenw*0.225, screenh*0.85, screenh*0.1, screenh*0.1);
+	setPos4 (&ui->casestuff[1].pos, screenw*0.05, screenh*0.55, screenh*0.1, screenh*0.1);
+	setPos4 (&ui->casestuff[2].pos, screenw*0.05, screenh*0.65, screenh*0.1, screenh*0.1);
+	setPos4 (&ui->casestuff[3].pos, screenw*0.05, screenh*0.75, screenh*0.1, screenh*0.1);
+	setPos4 (&ui->casestuff[4].pos, screenw*0.4, screenh*0.55, screenh*0.1, screenh*0.1);
+	setPos4 (&ui->casestuff[5].pos, screenw*0.4, screenh*0.65, screenh*0.1, screenh*0.1);
+	setPos4 (&ui->casestuff[6].pos, screenw*0.4, screenh*0.75, screenh*0.1, screenh*0.1);
 
 
 }
@@ -579,7 +579,7 @@ void initmap (struct DIVERSmap *carte,struct DIVERSsysteme *systeme)/*										
 	carte->cellule.translation.y = -1000;
 
     carte->cellule.pict.texture = loadTexture("rs/maps/cellule2.png");
-    setPos(&carte->cellule.pict.pos, 0, 0 ,2258, 1376);
+    setPos4(&carte->cellule.pict.pos, 0, 0 ,2258, 1376);
     carte->cellule.calque = IMG_Load("rs/maps/cellule2nb.png");
 }
 
@@ -679,3 +679,10 @@ void initonline(struct typeFORthreads *online,struct DIVERSsysteme *systeme)
 
 }
 
+void initdonjon(struct DONJON *donjon,struct DIVERSsysteme *systeme)
+{
+    sprintf(donjon->name, "dj1");
+    donjon->entrance.pict.texture = loadTexture("rs/images/noir.png");
+    setPos4(&donjon->entrance.pict.pos, 0, 0, 100, 100);
+    setPos2(&donjon->entrance.translation, 1600, 400);
+}

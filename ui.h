@@ -18,7 +18,7 @@ void afficherINVENTAIRE(struct DIVERSinventaire *inventaire,struct DIVERSui *ui,
 void afficherUI(bool enligne,struct DIVERSui *ui,struct PACKbouton *bouton,struct DIVERStemps *temps,struct PERSO *perso,
                 struct DIVERSinventaire *inventaire,struct DIVERSsysteme *systeme,
                 struct PACKrecompense *recompense,struct PACKobjet *objet);
-void afficherMAP(struct DIVERSmap *carte,struct DIVERSsysteme *systeme,struct DIVERScraft *craft);
+void afficherMAP(struct DIVERSmap *carte,struct DIVERSsysteme *systeme,struct DIVERScraft *craft, struct DONJON *dj0);
 void afficherPNJ(struct PERSO *perso,struct PACKpnj *pnj,struct DIVERSsysteme *systeme);
 void afficherMOB(struct PACKmonstre *monstre,struct DIVERSsysteme *systeme, struct DIVERStemps *temps);
 void afficherJOUEURS(struct PERSO *perso,struct DIVERSdeplacement *deplacement,struct DIVERSsysteme *systeme,

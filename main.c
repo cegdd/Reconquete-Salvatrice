@@ -152,6 +152,7 @@ int chargementcarte(struct DIVERSsysteme *systeme, struct typeFORthreads *online
     initrecompense(&recompense, systeme);
     initFORevent(&FORevent, &objet, &bouton, &inventaire, systeme, &deplacement, &chat, &ui, &craft, &perso, &pnj);
 
+
     map(systeme, online, &bouton, &objet, &perso, &inventaire, &deplacement, &temps, &ui, &chat, &craft, &carte, &pnj, &recompense, &FORevent);
 	return 1;
 }

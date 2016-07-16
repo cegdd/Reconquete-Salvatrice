@@ -104,6 +104,12 @@ struct floor
     SDL_Point translation;
 };
 
+struct hookpict
+{
+    struct pict pict;
+    SDL_Point translation;
+};
+
 struct File
 {
     struct Element *premier;
@@ -417,6 +423,13 @@ struct DIVERSmap
 	struct floor cellule;
 };
 
+struct DONJON
+{
+    char name[64];
+    struct hookpict entrance;
+    struct floor map;
+};
+
 struct PACKrecompense
 {
 	int recompenseID[NOMBREOBJETS];
@@ -477,80 +490,7 @@ struct typeFORthreads
 
 	struct DIVERSsysteme *systeme;
 };
-/*
-struct typecombat
-{
-	struct BOUTON rejouer;
-	struct BOUTON quitter;
-    //char calque[1366][768];
-	struct CREATURE creature[LIMITEmobARCADE];
 
-	struct pict fond;
-
-	int premiercoup[LIMITEmobARCADE];
-
-    char StringVie[48];
-    char StringCailloux[128];
-
-    int continuer;
-    int echap;
-    int doublesaut;
-    bool letirdemander;
-    bool poing_tendu;
-    bool persobouge;
-    int canonx;
-    int canony;
-    int DepartBalle[NBcailloux];
-    int i[NBcailloux];
-    int irect;
-    int ResultatHitbox;
-    int tx[NBcailloux][PRECISIONcailloux];
-    int ty[NBcailloux][PRECISIONcailloux];
-    int tableauutile;
-	int px;
-    int py;
-    int indexanimperso;
-    int alive;
-    int ennemivaincue;
-    int arcadescore;
-    int IndexCreature;
-
-    int animobjetway;
-    int NBlootsol;
-    int IDlootsol[64];
-    int lootsol[64];
-    float lootsolDX[64];
-    float lootsolDY[64];
-    float lootsolWAYX[64];
-    float lootsolWAYY[64];
-
-    long temps;
-    long tempscalcul;
-    long tempsaffichage;
-    long tempsseconde;
-    long tempsanimationjoueur;
-    long tempsanimationobjet;
-    long TimeAddEnnemy;
-
-    double degre;
-
-    float animobjet;
-
-    SDL_Texture *tVie;
-    SDL_Texture *peau;
-    SDL_Texture *piece;
-
-    GLuint balle;
-
-    struct pict curseur;
-
-    SDL_Rect Pperso;
-    SDL_Rect pballe[NBcailloux];
-    SDL_Rect ptVie;
-    SDL_Rect plootsol[64];
-    SDL_Rect oldplootsol[64];
-};
-*/
 struct typelogin
 {
 
