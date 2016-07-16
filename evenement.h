@@ -2,6 +2,7 @@
 #define EVENEMENTH
 
 #include <stdbool.h>
+#include <SDL.h>
 #include "main.h"
 #include "login.h"
 

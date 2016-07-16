@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <SDL_ttf.h>
+#include <SDL.h>
 
 #include <GL/gl.h>
 #include <GL/glu.h>

@@ -246,7 +246,7 @@ int auth(char login[][50])
 			iligne++;
 			caractere = fgetc(fichier);
 		}
-		lis(buffer, ret);
+		uncrypt(buffer, ret);
 		strcpy(sauvegarde[i2], ret);
 
 		for(index = 0 ; index < 4096 ; index++)

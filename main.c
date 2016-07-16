@@ -20,7 +20,7 @@
 
 int screenh, screenw;
 
-int main (int argc, char *argv[])
+int main( int argc , char ** argv )
 {
     int ret = 0;
 
@@ -39,6 +39,7 @@ int main (int argc, char *argv[])
     atexit(SDL_Quit);
     TTF_Init();
     atexit(TTF_Quit);
+
     IMG_Init(IMG_INIT_PNG);
     atexit(IMG_Quit);
 	Mix_Init(MIX_INIT_MP3);

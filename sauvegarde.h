@@ -9,6 +9,7 @@ void sauvegardetout(char sauvegarde[][50],SDL_Rect pmap,struct PERSO *perso, int
 void initsauvegarde(char sauvegarde[][50], int ligne, int colonne);
 
 void ecris(char string[50], FILE *fichier);
-void lis(char string[4096], char *ret);
+void lis(FILE *fichier, char *buffer);
+void uncrypt(char string[4096], char *ret);
 
 #endif

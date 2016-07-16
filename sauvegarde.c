@@ -23,21 +23,14 @@ void chargersauvegarde(struct DIVERSsysteme *systeme)
 
 	for (i = 0 ; i < NBargSAVE ; i++)
 	{
-		caractere = fgetc(crypted);
-		while (caractere != '#')
-		{
-			buffer[iligne] = caractere;
-			iligne++;
-			caractere = fgetc(crypted);
-		}
-		lis(buffer, ret);
+		lis(crypted, buffer);
+		uncrypt(buffer, ret);
 
 		strcpy(systeme->sauvegarde[i], ret);
 		for(index = 0 ; index < 4096 ; index++)
 		{
 			buffer[index] = '\0';
 		}
-		iligne = 0;
 	}
 	fclose(crypted);
 
@@ -150,7 +143,7 @@ void ecris(char string[50], FILE *fichier)
 }
 
 
-void lis(char string[4096], char *ret)
+void uncrypt(char string[4096], char *ret)
 {
 	int i = 0, index = 0;
 	int compteur = 0;
@@ -168,4 +161,19 @@ void lis(char string[4096], char *ret)
 		index++;
 	}
 	ret[index] = '\0';
+}
+
+void lis(FILE *fichier, char *buffer)
+{
+    char caractere = '\0';
+    int iligne = 0;
+
+    caractere = fgetc(fichier);
+    while (caractere != '#')
+    {
+        buffer[iligne] = caractere;
+        iligne++;
+        caractere = fgetc(fichier);
+    }
+    buffer[iligne] = '\0';
 }
