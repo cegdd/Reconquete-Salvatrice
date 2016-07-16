@@ -22,10 +22,8 @@ void initmap (struct DIVERSmap *carte,struct DIVERSsysteme *systeme);
 void initpnj (struct PACKpnj *pnj);
 void initrecompense (struct PACKrecompense *recompense,struct DIVERSsysteme *systeme);
 void initFORevent(struct typeFORevent *FORevent,struct PACKobjet *objet,struct PACKbouton *bouton,struct DIVERSinventaire *inventaire,struct DIVERSsysteme *systeme,
-				struct DIVERSdeplacement *deplacement,struct DIVERSchat *chat,struct DIVERSui *ui,struct DIVERScraft *craft,struct PACKmonstre *monstre,
+				struct DIVERSdeplacement *deplacement,struct DIVERSchat *chat,struct DIVERSui *ui,struct DIVERScraft *craft,
 				struct PERSO *perso,struct PACKpnj *pnj);
 void initonline(struct typeFORthreads *online,struct DIVERSsysteme *systeme);
-
-void initcombatstore(struct typecombat *BTLstr,struct DIVERSsysteme *systeme,struct DIRECTION *direction, struct PACKmonstre *monstre);
 
 #endif

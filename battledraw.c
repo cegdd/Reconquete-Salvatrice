@@ -1,7 +1,7 @@
 #include "main.h"
 #include "colision.h"
 #include "image.h"
-
+/*
 extern int screenh, screenw;
 
 void BattleDraw_FloorItems(struct typecombat *BTLstr,struct PACKobjet *objet)
@@ -23,7 +23,7 @@ void BattleDraw_Ennemy(struct typecombat *BTLstr, int arcademode)
     int index, calcul;
     for (index = 0; index < LIMITEmobARCADE ; index++)
 	{
-		/*looted stuff*/
+		//looted stuff
 		if (BTLstr->creature[index].ontheway != 0 && BTLstr->creature[index].m_pict.pict.pos.x < screenw)
 		{
 			BTLstr->creature[index].m_pict.pict.pos.w = BTLstr->creature[index].STATICposition.w * BTLstr->animobjet;
@@ -35,7 +35,7 @@ void BattleDraw_Ennemy(struct typecombat *BTLstr, int arcademode)
 			{	////SDL_RenderCopy(systeme->renderer, BTLstr->piece, NULL, &BTLstr->creature[index].position);
 			}
 		}
-		/*if they're dead but are not looted*/
+		//if they're dead but are not looted
 		else if (BTLstr->creature[index].isdead == true && BTLstr->creature[index].looted == false)
 		{
 			if (arcademode == false)
@@ -52,7 +52,7 @@ void BattleDraw_Ennemy(struct typecombat *BTLstr, int arcademode)
 				//draw(BTLstr->piece, &BTLstr->creature[index].position);
 			}
 		}
-		/*if they're alive*/
+		//if they're alive
 		else if(BTLstr->creature[index].isdead == false)
 		{
 			calcul =90+(45 * BTLstr->creature[index].Direction);
@@ -63,15 +63,15 @@ void BattleDraw_Ennemy(struct typecombat *BTLstr, int arcademode)
 
 		if (BTLstr->creature[index].isdead == false && BTLstr->creature[index].life < BTLstr->creature[index].lifemax)
 		{
-			////SDL_RenderCopy(systeme->renderer, BTLstr->creature[index].BarreDeVie->BGtexture, NULL, &BTLstr->creature[index].BarreDeVie->BGposition);
-			////SDL_RenderCopy(systeme->renderer, BTLstr->creature[index].BarreDeVie->texture, NULL, &BTLstr->creature[index].BarreDeVie->position);
+			//SDL_RenderCopy(systeme->renderer, BTLstr->creature[index].BarreDeVie->BGtexture, NULL, &BTLstr->creature[index].BarreDeVie->BGposition);
+			//SDL_RenderCopy(systeme->renderer, BTLstr->creature[index].BarreDeVie->texture, NULL, &BTLstr->creature[index].BarreDeVie->position);
 		}
 	}
 }
 
 void BattleDraw_Player(struct typecombat *BTLstr,struct PERSO *perso, struct DIVERSsysteme *systeme)
 {
-    double degre = FindAngle(&perso->perso.pict.pos, &BTLstr->curseur.pos) - 90; /* finding angle*/
+    double degre = FindAngle(&perso->perso.pict.pos, &BTLstr->curseur.pos) - 90; // finding angle
 
 	if (BTLstr->poing_tendu == true)
     {
@@ -85,7 +85,7 @@ void BattleDraw_Player(struct typecombat *BTLstr,struct PERSO *perso, struct DIV
         }
         Turn_And_Draw(&perso->perso.pict, degre);
     }
-    /*life bar*/
+    //life bar
     //SDL_RenderCopy(systeme->renderer, perso->BarreDeVie->BGtexture, NULL, &perso->BarreDeVie->BGposition);
     //SDL_RenderCopy(systeme->renderer, perso->BarreDeVie->texture, NULL, &perso->BarreDeVie->position);
 }
@@ -101,4 +101,4 @@ void BattleDraw_Projectile(struct typecombat *BTLstr)
 		}
 	}
 }
-
+*/

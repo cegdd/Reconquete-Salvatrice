@@ -1,1 +1,0 @@
-gcc -std=c11 -Wall main.c CaC.c clavier.c colision.c deplacement.c evenement.c fichier.c ia.c image.c jeux.c listechaine.c login.c map.c objet.c rat.c sauvegarde.c systeme.c tableau.c thread1.c thread2.c tir.c tool.c ui.c -L usr/lib/x86_64-linux-gnu -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf -lpthread -lm -o rs.out

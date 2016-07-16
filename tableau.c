@@ -244,51 +244,6 @@ void initbouton(struct PACKbouton *bouton,struct DIVERSsysteme *systeme)/*						
 	bouton->crafter.etat = 0;
 }
 
-void initmonstre(struct PACKmonstre *monstre,struct DIVERSsysteme *systeme)/*											monstre*/
-{
-	int index;
-	monstre->rat[0].ID = 0;
-	monstre->rat[1].ID = 1;
-	monstre->rat[2].ID = 2;
-
-	monstre->rat[0].prctloot[0] = 100; /*peau*/
-	monstre->rat[0].maxloot[0] = 1; /*peau*/
-	monstre->rat[0].idloot[0] = 0; /*peau*/
-	monstre->rat[0].nombreloot = 1;
-
-	initqueue(&monstre->rat[0].queue, 0);
-	initqueue(&monstre->rat[1].queue, 1);
-	initqueue(&monstre->rat[2].queue, 2);
-
-
-	monstre->rat[0].m_pict.texture[0] =     loadTexture	("rs/images/mob0.0.png");
-    monstre->rat[0].m_pict.texture[1] =     loadTexture	("rs/images/mob0.1.png");
-    monstre->rat[0].m_pict.texture[2] =     loadTexture	("rs/images/mob0.2.png");
-
-
-/*rat*/
-	for (index = 0 ; index < 3 ; index++)
-	{
-		monstre->rat[index].m_pict.pict.pos.w = screenw*0.0732;
-		monstre->rat[index].m_pict.pict.pos.h = screenh*0.039;
-
-		monstre->rat[index].etat = ALIVE;
-		monstre->rat[index].Engaged = false;
-		monstre->rat[index].indexanim = 0;
-		monstre->rat[index].tempsanim = 0;
-		monstre->rat[index].direction = rand()%8;
-		sprintf(monstre->rat[index].nom, "rat");
-		monstre->rat[index].m_pict.texture[0] = monstre->rat[0].m_pict.texture[0];
-        monstre->rat[index].m_pict.texture[1] = monstre->rat[0].m_pict.texture[1];
-        monstre->rat[index].m_pict.texture[2] = monstre->rat[0].m_pict.texture[2];
-		monstre->rat[index].m_pict.pict.texture = monstre->rat[0].m_pict.texture[0];
-		monstre->rat[index].m_pict.current = 0;
-		monstre->rat[index].m_pict.delay = 200;
-		monstre->rat[index].m_pict.frame = 2;
-		monstre->rat[index].m_pict.time = 0;
-	}
-}
-
 void initperso(struct PERSO *perso,struct DIVERSsysteme *systeme)/*														perso*/
 {
 	int index;
@@ -677,14 +632,13 @@ void initrecompense (struct PACKrecompense *recompense,struct DIVERSsysteme *sys
 
 void initFORevent(struct typeFORevent *FORevent,struct PACKobjet *objet,struct PACKbouton *bouton,struct DIVERSinventaire *inventaire,
                   struct DIVERSsysteme *systeme,struct DIVERSdeplacement *deplacement,struct DIVERSchat *chat,struct DIVERSui *ui,
-                  struct DIVERScraft *craft,struct PACKmonstre *monstre,struct PERSO *perso,struct PACKpnj *pnj)
+                  struct DIVERScraft *craft,struct PERSO *perso,struct PACKpnj *pnj)
 {
 	FORevent->bouton = bouton;
 	FORevent->chat = chat;
 	FORevent->craft = craft;
 	FORevent->deplacement = deplacement;
 	FORevent->inventaire = inventaire;
-	FORevent->monstre = monstre;
 	FORevent->objet = objet;
 	FORevent->perso = perso;
 	FORevent->systeme = systeme;
@@ -723,180 +677,5 @@ void initonline(struct typeFORthreads *online,struct DIVERSsysteme *systeme)
 	online->chat.lancermessage = false;
 	memset(online->chat.bufferchat, '\0', 512);
 
-}
-
-void initcombatstore(struct typecombat *BTLstr,struct DIVERSsysteme *systeme, struct DIRECTION *direction,struct PACKmonstre *monstre)
-{
-    #if BATTLE_LOG == 1
-	printf("initialising memory for battle :\n");
-	#endif
-	int index, index2;
-	BTLstr->continuer = -1;
-	BTLstr->echap = 0;
-	BTLstr->doublesaut = 0;
-	BTLstr->py = 0;
-	BTLstr->px = 0;
-	BTLstr->letirdemander = false;
-	BTLstr->poing_tendu = false;
-	BTLstr->canonx = 0;
-	BTLstr->canony = 0;
-	BTLstr->irect = 0;
-	BTLstr->ResultatHitbox = 0;
-	BTLstr->tableauutile = 0;
-	BTLstr->indexanimperso = 0;
-	BTLstr->persobouge = false;
-	BTLstr->animobjet = 1;
-	BTLstr->animobjetway = 0;
-	BTLstr->ennemivaincue = 0;
-	BTLstr->arcadescore = 0;
-	BTLstr->IndexCreature = -1;
-
-	BTLstr->temps = 0;
-	BTLstr->tempsaffichage = 0;
-	BTLstr->tempsseconde = 0;
-	BTLstr->tempscalcul = 0;
-	BTLstr->tempsanimationjoueur = 0;
-	BTLstr->tempsanimationobjet = 0;
-	BTLstr->TimeAddEnnemy = 0;
-
-	direction->bas = 0;
-	direction->droite = 0;
-	direction->gauche = 0;
-	direction->haut = 0;
-	direction->direction = 0;
-	direction->olddirection = 0;
-
-	BTLstr->NBlootsol = rand()%5;  /*max declared 64*/
-    #if BATTLE_LOG == 1
-	printf("20%%\n");
-	#endif
-
-	for (index = 0 ; index < BTLstr->NBlootsol ; index++)
-	{
-	    int tmprand  = rand()%2;
-	    if (tmprand == 0)
-        {BTLstr->IDlootsol[index] = 7;}
-        else
-        {BTLstr->IDlootsol[index] = 2;}
-		BTLstr->lootsol[index] = BTL_OBJ_FLOOR;
-		BTLstr->plootsol[index].w = screenw*0.0439;/*60*/
-		BTLstr->plootsol[index].h = screenh*0.130;/*100*/
-		BTLstr->plootsol[index].x = (rand()%(screenw - (BTLstr->plootsol[index].w*2)))+BTLstr->plootsol[index].w;
-		BTLstr->plootsol[index].y = (rand()%(screenh - (BTLstr->plootsol[index].h*2)))+BTLstr->plootsol[index].h;
-		BTLstr->oldplootsol[index].x = 0;
-		BTLstr->oldplootsol[index].y = 0;
-		BTLstr->oldplootsol[index].w = BTLstr->plootsol[index].w;
-		BTLstr->oldplootsol[index].h = BTLstr->plootsol[index].h;
-		BTLstr->lootsolDX[index] = 0;
-		BTLstr->lootsolDY[index] = 0;
-		BTLstr->lootsolWAYX[index] = 0;
-		BTLstr->lootsolWAYY[index] = 0;
-	}
-	#if BATTLE_LOG == 1
-	printf("40%%\n");
-	#endif
-
-	for (index = 0 ; index < LIMITEmobARCADE ; index++)/*adapté pour le mode arcade*/
-	{
-
-		BTLstr->premiercoup[index] = 0;
-		BTLstr->creature[index].isdead = true;
-		BTLstr->creature[index].iserasable = true;
-		BTLstr->creature[index].Direction = 0;
-		BTLstr->creature[index].mind = 0;
-		BTLstr->creature[index].mindtime = 0;
-		BTLstr->creature[index].looted = false;
-		BTLstr->creature[index].ontheway = 0;
-		BTLstr->creature[index].wayx = 0;
-		BTLstr->creature[index].wayy = 0;
-		for (index2 = 0 ; index2 < 8 ; index2++)
-		{
-			BTLstr->creature[index].relevancy[index2] = 0;
-		}
-		BTLstr->creature[index].m_pict.delay = 120;
-		BTLstr->creature[index].m_pict.frame = 2;
-		BTLstr->creature[index].m_pict.current = 0;
-		for (index2 = 0 ; index2 < 3 ; index2++)
-		{
-            BTLstr->creature[index].m_pict.texture[index2] = monstre->rat[0].m_pict.texture[index2];
-		}
-
-		BTLstr->creature[index].STATICposition.w = 0;
-		BTLstr->creature[index].STATICposition.h = 0;
-	}
-	#if BATTLE_LOG == 1
-	printf("60%%\n");
-	#endif
-
-	for (index = 0 ; index < 48 ; index++)
-	{
-		BTLstr->StringVie[index] = '\0';
-	}
-
-	for (index = 0 ; index < 128 ; index++)
-	{
-		BTLstr->StringCailloux[index] = '\0';
-	}
-
-
-	for (index = 0 ; index < NBcailloux ; index++)
-	{
-	    BTLstr->i[index] = 0;
-		BTLstr->DepartBalle[index] = UNUSED;
-
-		BTLstr->pballe[index].x = -50;
-		BTLstr->pballe[index].y = -50;
-		BTLstr->pballe[index].w = screenw*0.0146;
-		BTLstr->pballe[index].h = screenh*0.026;
-	}
-	#if BATTLE_LOG == 1
-	printf("80%%\n");
-	#endif
-
-	BTLstr->Pperso.x = screenw/2;
-	BTLstr->Pperso.y = screenh*0.564;
-	BTLstr->Pperso.w = screenw*0.050;
-	BTLstr->Pperso.h = screenh*0.066;
-
-	setPos(&BTLstr->curseur.pos, 0, 0, 30, 30);
-	setPos(&BTLstr->fond.pos, 0, 0, screenw, screenh);
-
-	BTLstr->ptVie.x = 0;
-	BTLstr->ptVie.y = 0;
-	BTLstr->ptVie.w = screenw*0.073;/*100*/
-	BTLstr->ptVie.h = screenh*0.05;/*32*/
-//	BTLstr->tVie = imprime ("0", screenw*0.3, NOIR, systeme, NULL, NULL);
-
-	BTLstr->fond.texture = loadTexture			("rs/fonds/fondcombat.png");
-	BTLstr->balle = loadTexture                 ("rs/images/balle.png");
-	BTLstr->curseur.texture = loadTexture		("rs/images/curseur.png");
-//	BTLstr->piece = LoadingImage			("rs/images/piece.png", 0, systeme);
-	//BTLstr->peau = LoadingImage			    ("rs/objets/0#0.png", 0, systeme);
-
-	#if BATTLE_LOG == 1
-	printf("90%%\n");
-	#endif
-
-	/*bouton rejouer*/
-/*	BTLstr->rejouer.normal = LoadingImage				("rs/ui/jouer.png", 0, systeme);
-	BTLstr->rejouer.survoler = LoadingImage				("rs/ui/jouer2.png", 0, systeme);
-	BTLstr->rejouer.cliquer = LoadingImage				("rs/ui/jouer3.png", 0, systeme);*/
-	BTLstr->rejouer.pos.x = 460;
-	BTLstr->rejouer.pos.y = 650;
-	BTLstr->rejouer.pos.w = screenw * 0.1464;
-	BTLstr->rejouer.pos.h = screenh * 0.065;
-	BTLstr->rejouer.etat = B_NORMAL;
-	/*bouton quitter*/
-/*	BTLstr->quitter.normal = LoadingImage				("rs/ui/logquitter.png", 0, systeme);
-	BTLstr->quitter.survoler = LoadingImage				("rs/ui/logquitter2.png", 0, systeme);
-	BTLstr->quitter.cliquer = LoadingImage				("rs/ui/logquitter3.png", 0, systeme);*/
-	BTLstr->quitter.pos.x = 700;
-	BTLstr->quitter.pos.y = 650;
-	BTLstr->quitter.pos.w = screenw * 0.1464;
-	BTLstr->quitter.pos.h = screenh * 0.065;
-	BTLstr->quitter.etat = B_NORMAL;
-	#if BATTLE_LOG == 1
-	printf("100%%\n");
-	#endif
 }
 

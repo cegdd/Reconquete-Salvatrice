@@ -176,62 +176,6 @@ struct BOUTON
 	SDL_Rect pos;
 	int etat;
 };
-/*struct CREATURE
-{
-	struct moving_pict m_pict;
-
-	SDL_Rect STATICposition;
-	struct BARREVIE *BarreDeVie;
-
-	char name [48];
-	bool isdead;
-	bool iserasable;
-	float life;
-	float lifemax;
-	int ID;
-
-	int Direction;
-	int mind;
-	int mindtime;
-	int relevancy[8];
-	bool looted;
-	int ontheway;
-	float wayx;
-	float wayy;
-	int oldposx;
-    int oldposy;
-    float dx;
-    float dy;
-};*/
-/*
-struct MOB_MAP
-{
-	//graphic
-	struct moving_pict m_pict;
-
-	//general
-	char nom [48];
-	int etat;
-	bool Engaged;
-	struct File queue;
-	int ID;
-
-	//animation
-	int indexanim;
-	int tempsanim;
-	int direction;
-
-	//loot
-	int prctloot[LOOTMAX];
-	int maxloot[LOOTMAX];
-	int nombreloot;
-	int idloot[LOOTMAX];
-};*/
-/*
-struct PACKmonstre
-{
-	struct MOB_MAP mob[3];
-};*/
 
 struct EMPLACEMENT
 {
@@ -533,12 +477,12 @@ struct typeFORthreads
 
 	struct DIVERSsysteme *systeme;
 };
-
+/*
 struct typecombat
 {
 	struct BOUTON rejouer;
 	struct BOUTON quitter;
-    /*char calque[1366][768];*/
+    //char calque[1366][768];
 	struct CREATURE creature[LIMITEmobARCADE];
 
 	struct pict fond;
@@ -606,7 +550,7 @@ struct typecombat
     SDL_Rect plootsol[64];
     SDL_Rect oldplootsol[64];
 };
-
+*/
 struct typelogin
 {
 

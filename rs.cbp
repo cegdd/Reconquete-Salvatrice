@@ -36,19 +36,21 @@
 			<Add option="-Wall" />
 			<Add option="-pg" />
 			<Add option="-g" />
-			<Add directory="C:/Users/cegdd/Downloads/SDL2-devel-2.0.3-mingw/SDL2-2.0.3/i686-w64-mingw32/include/SDL2" />
-			<Add directory="C:/Users/cegdd/Downloads/SDL2_image-2.0.0/i686-w64-mingw32/include/SDL2" />
-			<Add directory="C:/Users/cegdd/Downloads/SDL2_mixer-2.0.0/i686-w64-mingw32/include/SDL2" />
-			<Add directory="C:/Users/cegdd/Downloads/SDL2_ttf-2.0.12/i686-w64-mingw32/include/SDL2" />
+			<Add directory="C:/Users/cegdd/programmation/lib/SDL2_image-2.0.1/i686-w64-mingw32/include/SDL2" />
+			<Add directory="C:/Users/cegdd/programmation/lib/SDL2_mixer-2.0.1/i686-w64-mingw32/include/SDL2" />
+			<Add directory="C:/Users/cegdd/programmation/lib/SDL2_ttf-2.0.14/i686-w64-mingw32/include/SDL2" />
+			<Add directory="C:/Program Files (x86)/CodeBlocks/MinGW/include/SDL2" />
 		</Compiler>
 		<Linker>
 			<Add option="-pg -lgmon" />
 			<Add library="mingw32" />
-			<Add library="C:\Users\cegdd\Downloads\SDL2-devel-2.0.3-mingw\SDL2-2.0.3\i686-w64-mingw32\lib\libSDL2main.a" />
-			<Add library="C:\Users\cegdd\Downloads\SDL2-devel-2.0.3-mingw\SDL2-2.0.3\i686-w64-mingw32\lib\libSDL2.dll.a" />
-			<Add library="C:\Users\cegdd\Downloads\SDL2_image-2.0.0\i686-w64-mingw32\lib\libSDL2_image.dll.a" />
-			<Add library="C:\Users\cegdd\Downloads\SDL2_ttf-2.0.12\i686-w64-mingw32\lib\libSDL2_ttf.dll.a" />
-			<Add library="C:\Users\cegdd\Downloads\SDL2_mixer-2.0.0\i686-w64-mingw32\lib\libSDL2_mixer.dll.a" />
+			<Add library="opengl32" />
+			<Add library="glu32" />
+			<Add library="C:\Program Files (x86)\CodeBlocks\MinGW\lib\SDL2\libSDL2main.a" />
+			<Add library="C:\Program Files (x86)\CodeBlocks\MinGW\lib\SDL2\libSDL2.dll.a" />
+			<Add library="C:\Users\cegdd\programmation\lib\SDL2_image-2.0.1\i686-w64-mingw32\lib\libSDL2_image.dll.a" />
+			<Add library="C:\Users\cegdd\programmation\lib\SDL2_ttf-2.0.14\i686-w64-mingw32\lib\libSDL2_ttf.dll.a" />
+			<Add library="C:\Users\cegdd\programmation\lib\SDL2_mixer-2.0.1\i686-w64-mingw32\lib\libSDL2_mixer.dll.a" />
 			<Add library="ws2_32" />
 		</Linker>
 		<Unit filename=".gitattributes" />
@@ -82,9 +84,6 @@
 		</Unit>
 		<Unit filename="fichier.h" />
 		<Unit filename="game.mp3" />
-		<Unit filename="ia.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="ia.h" />
 		<Unit filename="image.c">
 			<Option compilerVar="CC" />
@@ -92,6 +91,8 @@
 		<Unit filename="image.h" />
 		<Unit filename="jeux.c">
 			<Option compilerVar="CC" />
+			<Option compile="0" />
+			<Option link="0" />
 		</Unit>
 		<Unit filename="jeux.h" />
 		<Unit filename="listechaine.c">

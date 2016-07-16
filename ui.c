@@ -495,18 +495,6 @@ void afficherPNJ(struct PERSO *perso,struct PACKpnj *pnj,struct DIVERSsysteme *s
 	//SDL_RenderCopyEx(systeme->renderer, perso->cheveuxblanc, NULL, &pnj->toumai, -90,NULL, SDL_FLIP_NONE);
 }
 
-void afficherMOB(struct PACKmonstre *monstre,struct DIVERSsysteme *systeme, struct DIVERStemps *temps)
-{
-	int index;
-	for (index = 0 ; index < 3 ; index++)
-	{
-		if (monstre->rat[index].etat == ALIVE)
-		{
-		    Sync_Moving_Pict(temps->tpact, &monstre->rat[index].m_pict);
-		    Turn_And_Draw(&monstre->rat[index].m_pict.pict, monstre->rat[index].direction*45);
-        }
-	}
-}
 
 void afficherJOUEURS(struct PERSO *perso,struct DIVERSdeplacement *deplacement,struct DIVERSsysteme *systeme,
                      struct typeFORthreads *online, struct DIVERStemps *temps)

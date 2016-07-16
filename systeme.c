@@ -9,24 +9,6 @@
 
 extern int screenh, screenw;
 
-void recompensecombat(struct RAT *rat, int *recompense)
-{
-    int lerand, index, index2;
-
-    for (index = 0 ; index < rat->nombreloot ; index++)
-    {
-        for(index2 = 0 ; index2 < rat->maxloot[index] ; index2++)
-        {
-            lerand = rand()%100;
-            lerand = lerand - (20);
-            if (lerand <= rat->prctloot[index])
-            {
-                recompense[index] += 1;
-            }
-        }
-    }
-}
-
 void checkandrefreshstuff(struct PERSO *perso,struct PACKobjet *objet,struct DIVERSsysteme *systeme,struct DIVERSui *ui)
 {
 	int index;

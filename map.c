@@ -8,7 +8,6 @@
 
 #include "evenement.h"
 #include "image.h"
-#include "jeux.h"
 #include "ui.h"
 #include "sauvegarde.h"
 #include "map.h"
@@ -23,7 +22,7 @@
 extern int screenh, screenw;
 
 int map (struct DIVERSsysteme *systeme,struct typeFORthreads *online,struct PACKbouton *bouton ,struct PACKobjet *objet,
-        struct PACKmonstre *monstre,struct PERSO *perso,struct DIVERSinventaire *inventaire,struct DIVERSdeplacement *deplacement,
+        struct PERSO *perso,struct DIVERSinventaire *inventaire,struct DIVERSdeplacement *deplacement,
 		struct DIVERStemps *temps,struct DIVERSui *ui,struct DIVERSchat *chat,struct DIVERScraft *craft,struct DIVERSmap *carte,
 		struct PACKpnj *pnj,struct PACKrecompense *recompense,struct typeFORevent *FORevent)
 {
@@ -77,15 +76,13 @@ systeme->continuer = 1;
     {
         temps->tpact = SDL_GetTicks();
 
-        if (temps->tpact - temps->tpapr >= 15) /*15   ms*/
+        if (temps->tpact - temps->tpapr >= 0) /*15   ms*/
         {
             temps->tpapr = temps->tpact;
             temps->i++;
 
 			/*sichronisation des données*/
-			sinchronisation(pnj, carte, monstre, craft, systeme, online, perso);
-            /*animation monstre*/
-            ANIMmonstre(monstre, temps);
+			sinchronisation(pnj, carte, craft, systeme, online, perso);
             /*calcul direction joueur client*/
             deplacement->direction.direction = directionperso(&deplacement->direction);
             /*deplacement*/
@@ -96,7 +93,7 @@ systeme->continuer = 1;
             /*gestion de l'ui*/
             gestionui(systeme, ui, craft, bouton, chat, inventaire, objet, perso, pnj);
             /*detection des combats*/
-            detectioncombat(monstre, inventaire, ui, deplacement, objet, perso, systeme, recompense, false);
+           // detectioncombat(monstre, inventaire, ui, deplacement, objet, perso, systeme, recompense, false);
             /*gestion des evenement*/
             boucleevent(&online->chat.lancermessage, FORevent);
             /*gestion du chat*/
@@ -114,8 +111,6 @@ systeme->continuer = 1;
             //SDL_RenderCopy(systeme->renderer, craft->tetabli, NULL, &craft->petabli);
             /*affichage des pnj*/
             afficherPNJ(perso, pnj, systeme);
-            /*affichage des mobs*/
-            afficherMOB(monstre, systeme, temps);
             /*affichage des joueurs*/
             afficherJOUEURS(perso, deplacement, systeme, online, temps);
             /*affichage du chat*/
@@ -154,14 +149,6 @@ systeme->continuer = 1;
         if (temps->tpact - temps->tpap >= 1000)
         {
             temps->temptotal++;
-
-            for (index = 0 ; index < 3 ; index++)/* popping time*/
-			{
-				if (monstre->rat[index].etat != ALIVE)/* != 0*/
-				{
-					monstre->rat[index].etat++;
-				}
-			}
 
 			/*if it's the first second of this player*/
             if (temps->temptotal == 5)
@@ -239,27 +226,7 @@ systeme->continuer = 1;
 }
 
 
-
-void detectioncombat(struct PACKmonstre *monstre,struct DIVERSinventaire *inventaire,struct DIVERSui *ui,
-                     struct DIVERSdeplacement *deplacement,struct PACKobjet *objet,struct PERSO *perso,struct DIVERSsysteme *systeme,
-                     struct PACKrecompense *recompense, bool arcademode)
-{
-	int index;
-
-	for(index = 0 ; index < 3 ; index++)
-    {
-        if(colisionbox(&perso->perso.pict.pos, &monstre->rat[index].m_pict.pict.pos, false) == true &&
-           monstre->rat[index].etat == ALIVE)
-        {
-			monstre->rat[index].Engaged = true;
-			monstre->rat[index].etat = lancementcombat(monstre, inventaire, ui, deplacement, objet, perso, systeme, recompense, arcademode);
-			initqueue(&monstre->rat[index].queue, monstre->rat[index].ID);
-			monstre->rat[index].Engaged = false;
-		}
-	}
-}
-
-int lancementcombat(struct PACKmonstre *monstre,struct DIVERSinventaire *inventaire,struct DIVERSui *ui,
+int lancementcombat(struct DIVERSinventaire *inventaire,struct DIVERSui *ui,
                     struct DIVERSdeplacement *deplacement,struct PACKobjet *objet,struct PERSO *perso,struct DIVERSsysteme *systeme,
                     struct PACKrecompense *recompense, bool arcademode)
 {
@@ -295,9 +262,6 @@ int lancementcombat(struct PACKmonstre *monstre,struct DIVERSinventaire *inventa
 	}
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) ;
-
-	/*############lancement du combat############*/
-	RETcombat = combat(perso->life, monstre, systeme, perso, recompense, objet, ui, arcademode);
 
 	if (arcademode == false)
 	{
@@ -360,25 +324,6 @@ int lancementcombat(struct PACKmonstre *monstre,struct DIVERSinventaire *inventa
 	}
 }
 
-void ANIMmonstre(struct PACKmonstre *monstre,struct DIVERStemps *temps)
-{
-	int index;
-
-	for(index = 0 ; index < 3 ; index++)
-	{
-		if (temps->tpact - monstre->rat[index].tempsanim >= 128)
-		{
-			monstre->rat[index].tempsanim = temps->tpact;
-			monstre->rat[index].indexanim++;
-
-			if(monstre->rat[index].indexanim >= 2)
-			{
-				monstre->rat[index].indexanim = 0;
-			}
-		}
-	}
-}
-
 void gestionchat(struct DIVERSchat *chat,struct DIVERSsysteme *systeme,struct typeFORthreads *online)
 {
     if (chat->lettre != '\0' && online->chat.lenbuffer <128)
@@ -400,7 +345,7 @@ void gestionchat(struct DIVERSchat *chat,struct DIVERSsysteme *systeme,struct ty
     }
 }
 
-void sinchronisation(struct PACKpnj *pnj,struct DIVERSmap *carte,struct PACKmonstre *monstre,struct DIVERScraft *craft,
+void sinchronisation(struct PACKpnj *pnj,struct DIVERSmap *carte,struct DIVERScraft *craft,
                      struct DIVERSsysteme *systeme,struct typeFORthreads *online,struct PERSO *perso)
 {
 	int index;
@@ -410,25 +355,11 @@ void sinchronisation(struct PACKpnj *pnj,struct DIVERSmap *carte,struct PACKmons
 
 	pnj->toumai.pos.x =                 carte->cellule.pict.pos.x + 580;
 	pnj->toumai.pos.y =                 carte->cellule.pict.pos.y + 1020;
-	monstre->rat[0].m_pict.pict.pos.x =    carte->cellule.pict.pos.x + 1700;
-	monstre->rat[0].m_pict.pict.pos.y =    carte->cellule.pict.pos.y + 500;
-	monstre->rat[1].m_pict.pict.pos.x =    carte->cellule.pict.pos.x + 2000;
-	monstre->rat[1].m_pict.pict.pos.y =    carte->cellule.pict.pos.y + 600;
-	monstre->rat[2].m_pict.pict.pos.x =    carte->cellule.pict.pos.x + 2000;
-	monstre->rat[2].m_pict.pict.pos.y =    carte->cellule.pict.pos.y + 200;
 	craft->petabli.x =              carte->cellule.pict.pos.x + 830;
 	craft->petabli.y =              carte->cellule.pict.pos.y + 830;
 
 	systeme->oldpp.x = systeme->pointeur.pos.x;
 	systeme->oldpp.y = systeme->pointeur.pos.y;
-
-	for (index = 0 ; index < 3 ; index++)
-	{
-		if (monstre->rat[index].etat >= TEMPSREPOPBATMOUTHS)
-		{
-			monstre->rat[index].etat = ALIVE;
-		}
-	}
 }
 
 

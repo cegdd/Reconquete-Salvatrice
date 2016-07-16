@@ -62,25 +62,25 @@ void tirer (float px, float py, int canonx, int canony, int tx[][PRECISIONcaillo
 		ty[tableauutile][i] = ty[tableauutile][PRECISIONcailloux-1-bissectrice];
 	}
 }
-
+/*
 int HitboxBalle(struct typecombat *BTLstr, int index)
-{/*fonction appeler pour chaque monstres*/
+{//fonction appeler pour chaque monstres
 	int i, k = 0, l = 0;
 	SDL_Rect pix = {0, 0, 1, 1};
 
 	#if TESTGRID == 1
 	SDL_Point point;
-	#endif /* TESTGRID*/
+	#endif // TESTGRID
 
 	for (i = 0 ; i < NBcailloux ; i++)
-	{   /*tri et degrossissage pour calcul précis*/
+	{   //tri et degrossissage pour calcul précis
 	    if (checkdistance(&BTLstr->creature[index].m_pict.pict.pos, &BTLstr->pballe[i], 120) == -1 && BTLstr->DepartBalle[i] == RUNNING )
         {
             #if TESTGRID == 1
             point.x = pballe[i].x;
             point.y = pballe[i].y;
             UnWriteCircleTestGrid(BTLstr, &point, 10);
-            #endif /* TESTGRID*/
+            #endif // TESTGRID
 
             for(k = BTLstr->pballe[i].x ; k <= BTLstr->pballe[i].x + BTLstr->pballe[i].w ; k++)
             {
@@ -97,7 +97,7 @@ int HitboxBalle(struct typecombat *BTLstr, int index)
                             point.x = pballe[i].x;
                             point.y = pballe[i].y;
                             UnWriteCircleTestGrid(BTLstr, &point, 10);
-                            #endif /* TESTGRID*/
+                            #endif // TESTGRID
                             return i;
                         }
                     }
@@ -107,7 +107,8 @@ int HitboxBalle(struct typecombat *BTLstr, int index)
 	}
 	return -1;
 }
-
+*/
+/*
 void COMBATgestionprojectile (struct typecombat *BTLstr)
 {
 	int index;
@@ -129,8 +130,8 @@ void COMBATgestionprojectile (struct typecombat *BTLstr)
 		{
 		}
 	}
-}
-
+}*/
+/*
 void gestiontir(struct typecombat *BTLstr)
 {
     tirer (BTLstr->curseur.pos.x, BTLstr->curseur.pos.y, BTLstr->canonx, BTLstr->canony, BTLstr->tx, BTLstr->ty, BTLstr->tableauutile, &BTLstr->degre);
@@ -143,4 +144,4 @@ void gestiontir(struct typecombat *BTLstr)
 	{
 		BTLstr->tableauutile = 0;
 	}
-}
+}*/

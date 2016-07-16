@@ -14,7 +14,6 @@
 #include "map.h"
 #include "login.h"
 #include "sauvegarde.h"
-#include "jeux.h"
 #include "tableau.h"
 #include "queue.h"
 #include "image.h"
@@ -49,6 +48,7 @@ int main (int argc, char *argv[])
     contexteOpenGL = SDL_GL_CreateContext(systeme.screen);
 	SDL_GetWindowSize(systeme.screen , &screenw , &screenh);
 	SDL_ShowCursor(SDL_DISABLE);
+
 	SDL_SetRelativeMouseMode(true);
 
 	glMatrixMode( GL_PROJECTION );
@@ -121,7 +121,6 @@ int chargementcarte(struct DIVERSsysteme *systeme, struct typeFORthreads *online
 {
 	struct PACKbouton bouton;
     struct PACKobjet objet;
-    struct PACKmonstre monstre;
     struct PERSO perso;
     struct DIVERSinventaire inventaire;
     struct DIVERSdeplacement deplacement;
@@ -143,7 +142,6 @@ int chargementcarte(struct DIVERSsysteme *systeme, struct typeFORthreads *online
     initobjet(&objet, systeme, &craft);
     initcraft(&craft, systeme);
     initbouton(&bouton, systeme);
-    initmonstre(&monstre, systeme);
     initinventaire(&inventaire, systeme);
     initdeplacement(&deplacement, systeme);
     initperso(&perso, systeme);
@@ -152,9 +150,9 @@ int chargementcarte(struct DIVERSsysteme *systeme, struct typeFORthreads *online
     initchat(&chat, systeme);
     initpnj(&pnj);
     initrecompense(&recompense, systeme);
-    initFORevent(&FORevent, &objet, &bouton, &inventaire, systeme, &deplacement, &chat, &ui, &craft, &monstre, &perso, &pnj);
+    initFORevent(&FORevent, &objet, &bouton, &inventaire, systeme, &deplacement, &chat, &ui, &craft, &perso, &pnj);
 
-    map(systeme, online, &bouton, &objet, &monstre, &perso, &inventaire, &deplacement, &temps, &ui, &chat, &craft, &carte, &pnj, &recompense, &FORevent);
+    map(systeme, online, &bouton, &objet, &perso, &inventaire, &deplacement, &temps, &ui, &chat, &craft, &carte, &pnj, &recompense, &FORevent);
 	return 1;
 }
 
@@ -164,7 +162,6 @@ int chargementarcade (struct DIVERSsysteme *systeme)
 
 	while (ret == 2)
 	{
-		struct PACKmonstre monstre;
 		struct DIVERSinventaire inventaire;
 		struct DIVERSchat chat;
 		struct DIVERSui ui;
@@ -174,7 +171,6 @@ int chargementarcade (struct DIVERSsysteme *systeme)
 		struct PERSO perso;
 		struct PACKrecompense recompense;
 
-		initmonstre(&monstre, systeme);
 		initinventaire(&inventaire, systeme);
 		initchat(&chat, systeme);
 		initui(&ui, systeme);
@@ -184,7 +180,7 @@ int chargementarcade (struct DIVERSsysteme *systeme)
 		initperso(&perso, systeme);
 		initrecompense(&recompense, systeme);
 
-		ret = lancementcombat(&monstre, &inventaire, &ui, &deplacement, &objet, &perso, systeme, &recompense, true);
+		ret = lancementcombat(&inventaire, &ui, &deplacement, &objet, &perso, systeme, &recompense, true);
 	}
 	return 0;
 }

@@ -13,7 +13,6 @@
 #include "tableau.h"
 #include "systeme.h"
 #include "login.h"
-#include "jeux.h"
 #include "clavier.h"
 
 extern int screenh, screenw;
@@ -57,7 +56,7 @@ void boucleevent (bool *lancermessage,struct typeFORevent *FORevent)
 		}
 	}
 }
-
+/*
 int boucleeventcombat (struct typecombat *BTLstr,struct DIVERSsysteme *systeme,struct DIRECTION *direction,struct DIVERSui *ui)
 {
 	while(SDL_PollEvent(&systeme->evenement) == 1)
@@ -161,7 +160,7 @@ int boucleeventcombat (struct typecombat *BTLstr,struct DIVERSsysteme *systeme,s
 	}
 	return -1;
 }
-
+*/
 int boucleeventlogin (struct typelogin *loginstore,struct DIVERSsysteme *systeme)
 {
 	if (colisionbox(&loginstore->pointeur.pos, &loginstore->option.pos, true) &&
@@ -880,73 +879,4 @@ void sourisactionzone(struct typeFORevent *FORevent)
         FORevent->ui->craft_open = true;
         FORevent->ui->menu_open = false;
     }
-}
-
-int LoopEventBattleDeath (struct typecombat *BTLstr, SDL_Event *event)
-{
-	SDL_Rect curseurtmp;
-
-	curseurtmp.x = BTLstr->curseur.pos.x + (BTLstr->curseur.pos.w/2);
-	curseurtmp.y = BTLstr->curseur.pos.y + (BTLstr->curseur.pos.h/2);
-
-	if (colisionbox(&curseurtmp, &BTLstr->quitter.pos, true) == 1 &&
-		BTLstr->quitter.etat != B_CLIQUER &&
-		BTLstr->rejouer.etat != B_CLIQUER)
-	{
-		BTLstr->quitter.etat = B_SURVOLER;
-		BTLstr->rejouer.etat = B_NORMAL;
-	}
-	else if (colisionbox(&curseurtmp, &BTLstr->rejouer.pos, true) == 1 &&
-		BTLstr->quitter.etat != B_CLIQUER &&
-		BTLstr->rejouer.etat != B_CLIQUER)
-	{
-		BTLstr->quitter.etat = B_NORMAL;
-		BTLstr->rejouer.etat = B_SURVOLER;
-	}
-	else if (BTLstr->quitter.etat != B_CLIQUER && BTLstr->rejouer.etat != B_CLIQUER)
-	{
-		BTLstr->quitter.etat = B_NORMAL;
-		BTLstr->rejouer.etat = B_NORMAL;
-	}
-
-	while(SDL_PollEvent(event) == 1)
-	{
-		switch(event->type)
-		{
-			case SDL_MOUSEBUTTONUP:
-				if(event->button.button == SDL_BUTTON_LEFT )
-				{
-					if (BTLstr->quitter.etat == B_CLIQUER)
-					{
-						BTLstr->quitter.etat = B_NORMAL;
-						BTLstr->continuer = BTL_LOST;
-						return 1;
-					}
-					else if (BTLstr->rejouer.etat == B_CLIQUER)
-					{
-						BTLstr->rejouer.etat = B_NORMAL;
-						BTLstr->continuer = BTL_RESTART;
-						return 1;
-					}
-				}
-				break;
-            case SDL_MOUSEBUTTONDOWN:
-				if(event->button.button == SDL_BUTTON_LEFT )
-				{
-					if (BTLstr->quitter.etat == B_SURVOLER)
-					{
-						BTLstr->quitter.etat = B_CLIQUER;
-					}
-					else if (BTLstr->rejouer.etat == B_SURVOLER)
-					{
-						BTLstr->rejouer.etat = B_CLIQUER;
-					}
-				}
-				break;
-			default:
-				break;
-		}
-	}
-
-	return 0;
 }
