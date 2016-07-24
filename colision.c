@@ -11,30 +11,17 @@
 
 extern int screenh, screenw;
 
-void deplacementperso_map(struct DIVERSmap *carte,struct PERSO *perso,struct DIRECTION *direction)
+void checkPixel(struct floor *carte,struct PERSO *perso)
 {
     int INDEX;
-
     for (INDEX = 0 ; INDEX < 12 ; INDEX++)
     {
-        perso->pix[INDEX].x = ((carte->cellule.pict.pos.x - perso->perso.pict.pos.x)*-1) + perso->PixelCalque[INDEX].x;
-        perso->pix[INDEX].y = ((carte->cellule.pict.pos.y+carte->cellule.pict.pos.h)-(perso->perso.pict.pos.y+perso->perso.pict.pos.h)) + perso->PixelCalque[INDEX].y;
+        perso->pix.x = ((carte->pict.pos.x - perso->perso.pict.pos.x)*-1) + perso->PixelCalque[INDEX].x;
+        perso->pix.y = ((carte->pict.pos.y+carte->pict.pos.h)-(perso->perso.pict.pos.y+perso->perso.pict.pos.h)) + perso->PixelCalque[INDEX].y;
 
-        perso->pixel[INDEX] = obtenirPixel(carte->cellule.calque, &perso->pix[INDEX]);
-        if (perso->pixel[INDEX] == 255) {perso->etatpix[INDEX] = 0;}
+        if (obtenirPixel(carte->calque, &perso->pix) == 255) {perso->etatpix[INDEX] = 0;}
         else{perso->etatpix[INDEX] = 1;}
     }
-
-	perso->cote[UP] =          perso->etatpix[0] + perso->etatpix[1] + perso->etatpix[2] + perso->etatpix[3];
-	perso->cote[UPRIGHT] =     perso->etatpix[1] + perso->etatpix[2] + perso->etatpix[3] + perso->etatpix[4]+ perso->etatpix[5];
-	perso->cote[RIGHT] =       perso->etatpix[3] + perso->etatpix[4] + perso->etatpix[5] + perso->etatpix[6];
-	perso->cote[RIGHTDOWN] =   perso->etatpix[4] + perso->etatpix[5] + perso->etatpix[6] + perso->etatpix[7]+ perso->etatpix[8];
-	perso->cote[DOWN] =        perso->etatpix[6] + perso->etatpix[7] + perso->etatpix[8] + perso->etatpix[9];
-	perso->cote[DOWNLEFT] =    perso->etatpix[7] + perso->etatpix[8] + perso->etatpix[9] + perso->etatpix[10]+ perso->etatpix[11];
-	perso->cote[LEFT] =        perso->etatpix[9] + perso->etatpix[10]+ perso->etatpix[11]+ perso->etatpix[0];
-	perso->cote[LEFTUP] =      perso->etatpix[10]+ perso->etatpix[11]+ perso->etatpix[0] + perso->etatpix[1]+ perso->etatpix[2];
-
-	move_map(perso, direction, &carte->origin);
 }
 
 void deplacementperso_combat(struct PERSO *perso,struct DIRECTION *direction)
@@ -126,6 +113,15 @@ void move_combat(struct PERSO *perso,struct DIRECTION *direction)
 
 void move_map(struct PERSO *perso,struct DIRECTION *direction, SDL_Point *origin)
 {
+    perso->cote[UP] =          perso->etatpix[0] + perso->etatpix[1] + perso->etatpix[2] + perso->etatpix[3];
+	perso->cote[UPRIGHT] =     perso->etatpix[1] + perso->etatpix[2] + perso->etatpix[3] + perso->etatpix[4]+ perso->etatpix[5];
+	perso->cote[RIGHT] =       perso->etatpix[3] + perso->etatpix[4] + perso->etatpix[5] + perso->etatpix[6];
+	perso->cote[RIGHTDOWN] =   perso->etatpix[4] + perso->etatpix[5] + perso->etatpix[6] + perso->etatpix[7]+ perso->etatpix[8];
+	perso->cote[DOWN] =        perso->etatpix[6] + perso->etatpix[7] + perso->etatpix[8] + perso->etatpix[9];
+	perso->cote[DOWNLEFT] =    perso->etatpix[7] + perso->etatpix[8] + perso->etatpix[9] + perso->etatpix[10]+ perso->etatpix[11];
+	perso->cote[LEFT] =        perso->etatpix[9] + perso->etatpix[10]+ perso->etatpix[11]+ perso->etatpix[0];
+	perso->cote[LEFTUP] =      perso->etatpix[10]+ perso->etatpix[11]+ perso->etatpix[0] + perso->etatpix[1]+ perso->etatpix[2];
+
     switch (direction->direction)
 	{
 	case UP:

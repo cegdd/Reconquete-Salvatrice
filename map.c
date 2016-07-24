@@ -80,7 +80,7 @@ systeme->continuer = 1;
     {
         temps->tpact = SDL_GetTicks();
 
-        if (temps->tpact - temps->tpapr >= 0) /*15   ms*/
+        if (temps->tpact - temps->tpapr >= 15) /*15   ms*/
         {
             temps->tpapr = temps->tpact;
             temps->i++;
@@ -90,7 +90,16 @@ systeme->continuer = 1;
             /*calcul direction joueur client*/
             deplacement->direction.direction = directionperso(&deplacement->direction);
             /*deplacement*/
-            deplacementperso_map(carte, perso, &deplacement->direction);
+            if (!systeme->djisloaded)
+            {
+                checkPixel(&carte->cellule, perso);
+                move_map(perso, &deplacement->direction, &carte->origin);
+            }
+            else
+            {
+                checkPixel(&dj0.map, perso);
+                move_map(perso, &deplacement->direction, &dj0.origin);
+            }
             /*recupération coordonées souris*/
             SDL_GetMouseState(&systeme->pointeur.pos.x, &systeme->pointeur.pos.y);
             systeme->pointeur.pos.y = (systeme->pointeur.pos.y - screenh + systeme->pointeur.pos.h) * -1;

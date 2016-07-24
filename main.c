@@ -115,7 +115,7 @@ int main( int argc , char ** argv )
 	TTF_CloseFont(systeme.police1);
 	TTF_CloseFont(systeme.police);
 	SDL_GL_DeleteContext(contexteOpenGL);
-    return EXIT_SUCCESS;
+    return 0;
 }
 
 int chargementcarte(struct DIVERSsysteme *systeme, struct typeFORthreads *online)

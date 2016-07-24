@@ -231,7 +231,7 @@ struct PERSO
 
 	SDL_Point PixelCalque[12];
 	SDL_Point centrecorp;
-    SDL_Point pix[12];
+    SDL_Point pix;
 
 };
 
