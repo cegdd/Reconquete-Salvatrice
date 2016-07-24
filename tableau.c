@@ -381,6 +381,8 @@ void initsystem(struct DIVERSsysteme *systeme)/*																	systeme*/
 	systeme->shiftactif = false;
 	systeme->altactif = false;
 	systeme->inbattle = false;
+	systeme->djisloaded = false;
+	systeme->djID = 0;
 	systeme->continuer = 1;
 	systeme->echap = 0;
 

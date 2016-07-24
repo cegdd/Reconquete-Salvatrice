@@ -11,7 +11,7 @@
 
 extern int screenh, screenw;
 
-void deplacementperso_map(struct DIVERSmap *carte,struct PERSO *perso,struct DIRECTION *direction, SDL_Point *origin)
+void deplacementperso_map(struct DIVERSmap *carte,struct PERSO *perso,struct DIRECTION *direction)
 {
     int INDEX;
 
@@ -34,7 +34,7 @@ void deplacementperso_map(struct DIVERSmap *carte,struct PERSO *perso,struct DIR
 	perso->cote[LEFT] =        perso->etatpix[9] + perso->etatpix[10]+ perso->etatpix[11]+ perso->etatpix[0];
 	perso->cote[LEFTUP] =      perso->etatpix[10]+ perso->etatpix[11]+ perso->etatpix[0] + perso->etatpix[1]+ perso->etatpix[2];
 
-	move_map(perso, direction, origin);
+	move_map(perso, direction, &carte->origin);
 }
 
 void deplacementperso_combat(struct PERSO *perso,struct DIRECTION *direction)

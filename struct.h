@@ -324,6 +324,9 @@ struct DIVERSsysteme
     int echap;
     int typeclavier;
 
+    bool djisloaded;
+    int djID;
+
     struct pict pointeur;
 
     SDL_Texture *BGmort;
@@ -429,6 +432,7 @@ struct DONJON
     char path[64];
     struct hookpict entrance;
     struct floor map;
+    SDL_Point origin;
 };
 
 struct PACKrecompense

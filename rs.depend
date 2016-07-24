@@ -1012,7 +1012,7 @@
 1433283745 c:\users\cegdd\desktop\dev\reconquete-salvatrice\main.h
 	"struct.h"
 
-1468695600 c:\users\cegdd\desktop\dev\reconquete-salvatrice\struct.h
+1469362592 c:\users\cegdd\desktop\dev\reconquete-salvatrice\struct.h
 	<stdio.h>
 	<stdbool.h>
 	<SDL_ttf.h>
@@ -1027,7 +1027,7 @@
 	<arpa/inet.h>
 	<unistd.h>
 
-1442964633 c:\users\cegdd\desktop\dev\reconquete-salvatrice\colision.h
+1469364355 c:\users\cegdd\desktop\dev\reconquete-salvatrice\colision.h
 	<stdbool.h>
 	"struct.h"
 
@@ -1053,7 +1053,7 @@
 1436994748 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\clavier.c
 	"main.h"
 
-1442965356 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\colision.c
+1469364362 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\colision.c
 	<SDL.h>
 	<math.h>
 	<stdio.h>
@@ -1165,11 +1165,11 @@
 
 1425859548 c:\users\cegdd\desktop\dev\reconquete-salvatrice\thread1.h
 
-1468668138 c:\users\cegdd\desktop\dev\reconquete-salvatrice\map.h
+1469363072 c:\users\cegdd\desktop\dev\reconquete-salvatrice\map.h
 
 1433282512 c:\users\cegdd\desktop\dev\reconquete-salvatrice\queue.h
 
-1468679634 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\map.c
+1469363149 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\map.c
 	<stdio.h>
 	<stdlib.h>
 	<stdbool.h>
@@ -1221,7 +1221,7 @@
 	"image.h"
 	"listechaine.h"
 
-1468698147 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\tableau.c
+1469350864 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\tableau.c
 	<SDL.h>
 	<stdlib.h>
 	<stdio.h>
@@ -1280,7 +1280,7 @@
 	"main.h"
 	"systeme.h"
 
-1468673609 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\ui.c
+1469363269 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\ui.c
 	<stdio.h>
 	<SDL.h>
 	<math.h>
@@ -1292,13 +1292,15 @@
 	"systeme.h"
 	"colision.h"
 
-1468702259 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\donjon.c
+1469364227 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\donjon.c
 	<stdio.h>
 	<stdlib.h>
+	<SDL_image.h>
 	"sauvegarde.h"
 	"struct.h"
+	"image.h"
 
-1468679377 c:\users\cegdd\desktop\dev\reconquete-salvatrice\donjon.h
+1469362684 c:\users\cegdd\desktop\dev\reconquete-salvatrice\donjon.h
 	"struct.h"
 
 1451768383 c:\users\cegdd\programmation\lib\sdl2-2.0.4\x86_64-w64-mingw32\include\sdl2\sdl.h

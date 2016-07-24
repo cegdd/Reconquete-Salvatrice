@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include "struct.h"
 
-void deplacementperso_map(struct DIVERSmap *carte,struct PERSO *perso,struct DIRECTION *direction, SDL_Point *origin);
+void deplacementperso_map(struct DIVERSmap *carte,struct PERSO *perso,struct DIRECTION *direction);
 void deplacementperso_combat(struct PERSO *perso,struct DIRECTION *direction);
 void move_map(struct PERSO *perso,struct DIRECTION *direction, SDL_Point *origin);
 void move_combat(struct PERSO *perso,struct DIRECTION *direction);

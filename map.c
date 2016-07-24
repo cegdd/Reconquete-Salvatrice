@@ -86,11 +86,11 @@ systeme->continuer = 1;
             temps->i++;
 
 			/*sichronisation des données*/
-			sinchronisation(pnj, carte, craft, systeme, online, perso);
+			sinchronisation(pnj, carte, craft, systeme, online, perso, &dj0);
             /*calcul direction joueur client*/
             deplacement->direction.direction = directionperso(&deplacement->direction);
             /*deplacement*/
-            deplacementperso_map(carte, perso, &deplacement->direction, &carte->origin);
+            deplacementperso_map(carte, perso, &deplacement->direction);
             /*recupération coordonées souris*/
             SDL_GetMouseState(&systeme->pointeur.pos.x, &systeme->pointeur.pos.y);
             systeme->pointeur.pos.y = (systeme->pointeur.pos.y - screenh + systeme->pointeur.pos.h) * -1;
@@ -103,9 +103,11 @@ systeme->continuer = 1;
             /*gestion du chat*/
             gestionchat(chat, systeme, online);
 
-            if(colisionbox(&perso->perso.pict.pos, &dj0.entrance.pict.pos, false))
+            if(colisionbox(&perso->perso.pict.pos, &dj0.entrance.pict.pos, false) &&
+               systeme->djisloaded == false)
             {
                 LoadDonjon(&dj0);
+                systeme->djisloaded = true;
             }
 
 /*##################################################################################################################################################################################
@@ -355,17 +357,28 @@ void gestionchat(struct DIVERSchat *chat,struct DIVERSsysteme *systeme,struct ty
 }
 
 void sinchronisation(struct PACKpnj *pnj,struct DIVERSmap *carte,struct DIVERScraft *craft,
-                     struct DIVERSsysteme *systeme,struct typeFORthreads *online,struct PERSO *perso)
+                     struct DIVERSsysteme *systeme,struct typeFORthreads *online,struct PERSO *perso,
+                     struct DONJON *donjon)
 {
 	int index;
 
-	carte->cellule.pict.pos.x = carte->origin.x + carte->cellule.translation.x;
-	carte->cellule.pict.pos.y = carte->origin.y + carte->cellule.translation.y;
+	if (!systeme->djisloaded)
+    {
+        carte->cellule.pict.pos.x = carte->origin.x + carte->cellule.translation.x;
+        carte->cellule.pict.pos.y = carte->origin.y + carte->cellule.translation.y;
+        pnj->toumai.pos.x =                 carte->cellule.pict.pos.x + 580;
+        pnj->toumai.pos.y =                 carte->cellule.pict.pos.y + 1020;
+        craft->petabli.x =              carte->cellule.pict.pos.x + 830;
+        craft->petabli.y =              carte->cellule.pict.pos.y + 830;
+    }
+    else
+    {
+        donjon->map.pict.pos.x = donjon->origin.x + donjon->map.translation.x;
+        donjon->map.pict.pos.y = donjon->origin.y + donjon->map.translation.y;
+    }
 
-	pnj->toumai.pos.x =                 carte->cellule.pict.pos.x + 580;
-	pnj->toumai.pos.y =                 carte->cellule.pict.pos.y + 1020;
-	craft->petabli.x =              carte->cellule.pict.pos.x + 830;
-	craft->petabli.y =              carte->cellule.pict.pos.y + 830;
+
+
 
 	systeme->oldpp.x = systeme->pointeur.pos.x;
 	systeme->oldpp.y = systeme->pointeur.pos.y;

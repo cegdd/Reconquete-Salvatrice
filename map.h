@@ -15,7 +15,8 @@ void ANIMmonstre(struct PACKmonstre *monstre,struct DIVERStemps *temps);
 
 void gestionchat(struct DIVERSchat *chat,struct DIVERSsysteme *systeme,struct typeFORthreads *online);
 void sinchronisation(struct PACKpnj *pnj,struct DIVERSmap *carte,struct DIVERScraft *craft,
-                     struct DIVERSsysteme *systeme,struct typeFORthreads *online,struct PERSO *perso);
+                     struct DIVERSsysteme *systeme,struct typeFORthreads *online,struct PERSO *perso,
+                     struct DONJON *donjon);
 
 int calcultempssecondes(int temptotal);
 int calcultempsminutes(int temptotal);

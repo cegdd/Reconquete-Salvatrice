@@ -485,9 +485,15 @@ void afficherUI(bool enligne,struct DIVERSui *ui,struct PACKbouton *bouton,struc
 void afficherMAP(struct DIVERSmap *carte,struct DIVERSsysteme *systeme,struct DIVERScraft *craft,
                  struct DONJON *dj0)
 {
-    draw_pict(&carte->cellule.pict);
-    draw_hookpict(&dj0->entrance, carte);
-    //SDL_RenderCopy(systeme->renderer, craft->tetabli, NULL, &craft->petabli);
+    if(!systeme->djisloaded)
+    {
+        draw_pict(&carte->cellule.pict);
+        draw_hookpict(&dj0->entrance, carte);
+    }
+    else
+    {
+        draw_pict(&dj0->map.pict);
+    }
 }
 
 void afficherPNJ(struct PERSO *perso,struct PACKpnj *pnj,struct DIVERSsysteme *systeme)
