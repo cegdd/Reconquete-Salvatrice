@@ -264,10 +264,10 @@ void draw_pict(struct pict *image)
         glTexCoord2d(1,0);          glVertex2d(image->pos.x+image->pos.w,image->pos.y);
     glEnd();
 }
-void draw_hookpict(struct hookpict *image, struct DIVERSmap *carte)
+void draw_hookpict(struct hookpict *image, SDL_Rect *support)
 {
-    image->pict.pos.x = carte->cellule.pict.pos.x + image->translation.x;
-    image->pict.pos.y = carte->cellule.pict.pos.y + image->translation.y;
+    image->pict.pos.x = support->x + image->translation.x;
+    image->pict.pos.y = support->y + image->translation.y;
 
     glBindTexture(GL_TEXTURE_2D, image->pict.texture);
     glBegin(GL_QUADS);

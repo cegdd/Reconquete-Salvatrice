@@ -14,7 +14,7 @@ SDL_Surface * flipSurface(SDL_Surface * surface);
 GLuint convertTexture(SDL_Surface *surface);
 GLuint loadTexture(const char * filename);
 void draw_pict(struct pict *image);
-void draw_hookpict(struct hookpict *image, struct DIVERSmap *carte);
+void draw_hookpict(struct hookpict *image, SDL_Rect *support);
 void draw(GLuint texture, SDL_Rect *pos);
 void draw_button(struct BOUTON *bouton);
 void draw_color_black(SDL_Rect *pos);

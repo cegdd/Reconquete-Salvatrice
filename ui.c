@@ -488,7 +488,7 @@ void afficherMAP(struct DIVERSmap *carte,struct DIVERSsysteme *systeme,struct DI
     if(!systeme->djisloaded)
     {
         draw_pict(&carte->cellule.pict);
-        draw_hookpict(&dj0->entrance, carte);
+        draw_hookpict(&dj0->entrance, &carte->cellule.pict.pos);
     }
     else
     {
