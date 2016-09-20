@@ -102,13 +102,6 @@ GLuint imprime (char s[], int len, int couleur,struct DIVERSsysteme *systeme, in
 
 void ANIMmort (struct DIVERSsysteme *systeme)
 {
-	SDL_Rect pecran;
-
-	pecran.x = 0;
-	pecran.y = 0;
-	pecran.w = screenw;
-	pecran.h = screenh;
-
 	//SDL_RenderCopy(systeme->renderer, systeme->BGmort, NULL, &pecran);
     glFlush();
     SDL_GL_SwapWindow(systeme->screen);

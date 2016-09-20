@@ -3,7 +3,7 @@
 int map (struct DIVERSsysteme *systeme,struct typeFORthreads *online,struct PACKbouton *bouton ,struct PACKobjet *objet,
         struct PERSO *perso,struct DIVERSinventaire *inventaire,struct DIVERSdeplacement *deplacement,
 		struct DIVERStemps *temps,struct DIVERSui *ui,struct DIVERSchat *chat,struct DIVERScraft *craft,struct DIVERSmap *carte,
-		struct PACKpnj *pnj,struct PACKrecompense *recompense,struct typeFORevent *FORevent);
+		struct PACKpnj *pnj,struct PACKrecompense *recompense,struct typeFORevent *FORevent,struct TIR *TIR);
 int lancementcombat(struct DIVERSinventaire *inventaire,struct DIVERSui *ui,
                     struct DIVERSdeplacement *deplacement,struct PACKobjet *objet,struct PERSO *perso,struct DIVERSsysteme *systeme,
                     struct PACKrecompense *recompense, bool arcademode);

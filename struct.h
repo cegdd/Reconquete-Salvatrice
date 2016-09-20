@@ -433,6 +433,8 @@ struct DONJON
     struct hookpict entrance;
     struct floor map;
     SDL_Point origin;
+    struct hookpict monstre [512];
+    int nombremonstre;
 };
 
 struct PACKrecompense
@@ -562,6 +564,30 @@ struct typelogin
 	char info4[1024];
 
 	GLuint ttextedialogue;
+};
+
+struct TIR
+{
+    char StringCailloux[128];
+
+    bool letirdemander;
+    int canonx;
+    int canony;
+    int DepartBalle[NBcailloux];
+    int i[NBcailloux];
+    int ResultatHitbox;
+    int tx[NBcailloux][PRECISIONcailloux];
+    int ty[NBcailloux][PRECISIONcailloux];
+    int tableauutile;
+	int px;
+    int py;
+    int indexanimperso;
+
+    double degre;
+
+    GLuint balle;
+
+    SDL_Rect pballe[NBcailloux];
 };
 
 #endif

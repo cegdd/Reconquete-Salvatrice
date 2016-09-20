@@ -17,7 +17,7 @@
 
 extern int screenh, screenw;
 
-void boucleevent (bool *lancermessage,struct typeFORevent *FORevent)
+void boucleevent (bool *lancermessage,struct typeFORevent *FORevent, struct TIR *TIR)
 {
 	while(SDL_PollEvent(&FORevent->systeme->evenement) == 1)
 	{
@@ -31,6 +31,9 @@ void boucleevent (bool *lancermessage,struct typeFORevent *FORevent)
 			eventmapclavierup(lancermessage, FORevent);
 			break;
 		case SDL_MOUSEBUTTONUP:
+
+		    TIR->letirdemander = true;
+
 			if(FORevent->systeme->evenement.button.button == SDL_BUTTON_LEFT)
 			{
 				eventmapsourisgaucheup(FORevent);

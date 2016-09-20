@@ -14,7 +14,7 @@ void LoadDonjon(struct DONJON *donjon)
     char buffer[4096] = {'\0'};
     char ret[256] = {'\0'};
     char temp[128] = {'0'};
-    int x=0, y=0, w=0, h=0;
+    int x=0, y=0, w=0, h=0, i;
 
     fichier = fopen(donjon->path, "r");
     if (fichier == NULL)
@@ -51,8 +51,23 @@ void LoadDonjon(struct DONJON *donjon)
         lis(fichier, buffer);//lecture du joueur en y
         uncrypt(buffer, ret);
         y = atoi(ret);
-        printf("%d %d\n", x, y);
-        setPos2(&donjon->map.translation, -x*2, -y*2);
+        setPos2(&donjon->map.translation, -x, -y);
+    }
+
+    //lexture du nomre de mob dans le donjon
+    lis(fichier, buffer);//lecture du joueur en y
+    uncrypt(buffer, ret);
+    donjon->nombremonstre = atoi(ret);
+
+    for (i=0 ; i<donjon->nombremonstre ; i++)
+    {
+        //lecture de la translation des mobs
+        lis(fichier, buffer);
+        uncrypt(buffer, ret);
+        donjon->monstre[i].translation.x = atoi(ret);
+        lis(fichier, buffer);
+        uncrypt(buffer, ret);
+        donjon->monstre[i].translation.y = atoi(ret);
     }
 
     fclose(fichier);

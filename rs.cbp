@@ -24,18 +24,11 @@
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Compiler>
-					<Add option="-O2" />
-				</Compiler>
-				<Linker>
-					<Add option="-s" />
-				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-Wshadow" />
 			<Add option="-Wmain" />
-			<Add option="-pedantic" />
-			<Add option="-Wextra" />
 			<Add option="-Wall" />
 			<Add option="-std=c99" />
 			<Add option="-pg" />

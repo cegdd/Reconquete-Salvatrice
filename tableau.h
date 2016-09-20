@@ -26,5 +26,6 @@ void initFORevent(struct typeFORevent *FORevent,struct PACKobjet *objet,struct P
 				struct PERSO *perso,struct PACKpnj *pnj);
 void initonline(struct typeFORthreads *online,struct DIVERSsysteme *systeme);
 void initdonjon(struct DONJON *donjon,struct DIVERSsysteme *systeme);
+void initTIR(struct TIR *TIR);
 
 #endif

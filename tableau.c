@@ -376,8 +376,6 @@ void inittemps(struct DIVERStemps *temps,struct DIVERSsysteme *systeme)/*							
 
 void initsystem(struct DIVERSsysteme *systeme)/*																	systeme*/
 {
-	int index;
-
 	systeme->shiftactif = false;
 	systeme->altactif = false;
 	systeme->inbattle = false;
@@ -683,8 +681,45 @@ void initonline(struct typeFORthreads *online,struct DIVERSsysteme *systeme)
 
 void initdonjon(struct DONJON *donjon,struct DIVERSsysteme *systeme)
 {
+    int i = 0;
+
     sprintf(donjon->path, "rs/maps/dj0.RSCryptedMap");
+
     donjon->entrance.pict.texture = loadTexture("rs/images/noir.png");
+    donjon->monstre[i].pict.texture = loadTexture("rs/images/mob0.0.png");
+    for (i=1 ; i<512 ; i++)
+    {
+        donjon->monstre[i].pict.texture = donjon->monstre[0].pict.texture;
+    }
+    for (i=0 ; i<512 ; i++)
+    {
+        setPos4(&donjon->monstre[i].pict.pos, 0, 0, 148, 38);
+    }
+
     setPos4(&donjon->entrance.pict.pos, 0, 0, 100, 100);
     setPos2(&donjon->entrance.translation, 1600, 400);
+}
+
+void initTIR(struct TIR *TIR)
+{
+    int index = 0;
+
+    TIR->canonx = 0;
+	TIR->canony = 0;
+	TIR->tableauutile = 0;
+
+	for (index = 0 ; index < 128 ; index++)
+	{
+		TIR->StringCailloux[index] = '\0';
+	}
+
+	for (index = 0 ; index < NBcailloux ; index++)
+	{
+	    TIR->i[index] = 0;
+		TIR->DepartBalle[index] = UNUSED;
+
+		setPos4(&TIR->pballe[index], -50, -50, screenw*0.0146, screenh*0.026);
+	}
+
+	TIR->balle = loadTexture ("rs/images/balle.png");
 }

@@ -390,7 +390,7 @@ void InitLoginStore(struct typelogin *loginstore,struct DIVERSsysteme *systeme)
 	sprintf(loginstore->info3, "Identifiants incorrects\n\nVotre personnage n'existe pas, creez en un sans attendre !");
 	sprintf(loginstore->info4, "Identifiants incorrects\n\nVotre mot de passe et votre pseudo ne correspondent pas.\n\nessayer un autre mot de passe.");
 
-	loginstore->ttextedialogue = NULL;
+	loginstore->ttextedialogue = -1;
 }
 
 

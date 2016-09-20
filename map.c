@@ -19,13 +19,14 @@
 #include "listechaine.h"
 #include "queue.h"
 #include "donjon.h"
+#include "tir.h"
 
 extern int screenh, screenw;
 
 int map (struct DIVERSsysteme *systeme,struct typeFORthreads *online,struct PACKbouton *bouton ,struct PACKobjet *objet,
         struct PERSO *perso,struct DIVERSinventaire *inventaire,struct DIVERSdeplacement *deplacement,
 		struct DIVERStemps *temps,struct DIVERSui *ui,struct DIVERSchat *chat,struct DIVERScraft *craft,struct DIVERSmap *carte,
-		struct PACKpnj *pnj,struct PACKrecompense *recompense,struct typeFORevent *FORevent)
+		struct PACKpnj *pnj,struct PACKrecompense *recompense,struct typeFORevent *FORevent,struct TIR *TIR)
 {
     int index;
     chargement(systeme);
@@ -108,9 +109,15 @@ systeme->continuer = 1;
             /*detection des combats*/
            // detectioncombat(monstre, inventaire, ui, deplacement, objet, perso, systeme, recompense, false);
             /*gestion des evenement*/
-            boucleevent(&online->chat.lancermessage, FORevent);
+            boucleevent(&online->chat.lancermessage, FORevent, TIR);
             /*gestion du chat*/
             gestionchat(chat, systeme, online);
+
+            if (TIR->letirdemander == true)
+            {
+                gestiontir(TIR, systeme, perso);
+            }
+            COMBATgestionprojectile (TIR);
 
             if(colisionbox(&perso->perso.pict.pos, &dj0.entrance.pict.pos, false) &&
                systeme->djisloaded == false)
@@ -130,8 +137,17 @@ systeme->continuer = 1;
             afficherMAP(carte, systeme, craft, &dj0);
             /*affichage des pnj*/
             afficherPNJ(perso, pnj, systeme);
+            if(systeme->djisloaded)
+            {
+                for (index=0 ; index<dj0.nombremonstre ; index++)
+                {
+                    draw_hookpict(&dj0.monstre[index], &dj0.map.pict.pos);
+                }
+            }
             /*affichage des joueurs*/
             afficherJOUEURS(perso, deplacement, systeme, online, temps);
+
+            BattleDraw_Projectile(TIR);
             /*affichage du chat*/
             if (ui->chat_open == true)
             {
@@ -250,7 +266,7 @@ int lancementcombat(struct DIVERSinventaire *inventaire,struct DIVERSui *ui,
                     struct DIVERSdeplacement *deplacement,struct PACKobjet *objet,struct PERSO *perso,struct DIVERSsysteme *systeme,
                     struct PACKrecompense *recompense, bool arcademode)
 {
-    int indexloot = 0, index2, RETcombat;
+    int indexloot = 0, index2 = 0, RETcombat = 0;
     char slootcombat[120];
 
 	/*ecran de chargement*/
@@ -369,8 +385,6 @@ void sinchronisation(struct PACKpnj *pnj,struct DIVERSmap *carte,struct DIVERScr
                      struct DIVERSsysteme *systeme,struct typeFORthreads *online,struct PERSO *perso,
                      struct DONJON *donjon)
 {
-	int index;
-
 	if (!systeme->djisloaded)
     {
         carte->cellule.pict.pos.x = carte->origin.x + carte->cellule.translation.x;

@@ -6,6 +6,8 @@
 #include "main.h"
 #include "rat.h"
 #include "systeme.h"
+#include "struct.h"
+#include "image.h"
 
 void tirer (float px, float py, int canonx, int canony, int tx[][PRECISIONcailloux], int ty[][PRECISIONcailloux], int tableauutile, double *degre)
 {
@@ -108,40 +110,55 @@ int HitboxBalle(struct typecombat *BTLstr, int index)
 	return -1;
 }
 */
-/*
-void COMBATgestionprojectile (struct typecombat *BTLstr)
+
+void COMBATgestionprojectile (struct TIR *TIR)
 {
 	int index;
 	for (index = 0 ; index < NBcailloux ; index++)
 	{
-		if (BTLstr->DepartBalle[index] != UNUSED && BTLstr->i[index] < PRECISIONcailloux - 1 && BTLstr->DepartBalle[index] != STOP)
+		if (TIR->DepartBalle[index] != UNUSED && TIR->i[index] < PRECISIONcailloux - 1 && TIR->DepartBalle[index] != STOP)
 		{
-			BTLstr->i[index] = BTLstr->i[index]+1;
-			BTLstr->pballe[index].x = BTLstr->tx[index][BTLstr->i[index]];
-			BTLstr->pballe[index].y = BTLstr->ty[index][BTLstr->i[index]];
+			TIR->i[index] = TIR->i[index]+1;
+			TIR->pballe[index].x = TIR->tx[index][TIR->i[index]];
+			TIR->pballe[index].y = TIR->ty[index][TIR->i[index]];
 		}
-		else if (BTLstr->i[index] >= PRECISIONcailloux-1)
+		else if (TIR->i[index] >= PRECISIONcailloux-1)
 		{
-			BTLstr->pballe[index].x = BTLstr->tx[index][PRECISIONcailloux-1];
-			BTLstr->pballe[index].y = BTLstr->ty[index][PRECISIONcailloux-1];
-			BTLstr->DepartBalle[index] = STOP;
+			TIR->pballe[index].x = TIR->tx[index][PRECISIONcailloux-1];
+			TIR->pballe[index].y = TIR->ty[index][PRECISIONcailloux-1];
+			TIR->DepartBalle[index] = STOP;
 		}
 		else
 		{
 		}
 	}
-}*/
-/*
-void gestiontir(struct typecombat *BTLstr)
-{
-    tirer (BTLstr->curseur.pos.x, BTLstr->curseur.pos.y, BTLstr->canonx, BTLstr->canony, BTLstr->tx, BTLstr->ty, BTLstr->tableauutile, &BTLstr->degre);
+}
 
-    BTLstr->letirdemander = false;
-    BTLstr->DepartBalle[BTLstr->tableauutile] = RUNNING;
-    BTLstr->i[BTLstr->tableauutile] = 0;
-    BTLstr->tableauutile++;
-    if (BTLstr->tableauutile == NBcailloux)
+void gestiontir(struct TIR *TIR, struct DIVERSsysteme *systeme, struct PERSO *perso)
+{
+    int x = perso->perso.pict.pos.x + perso->perso.pict.pos.w/2;
+    int y = perso->perso.pict.pos.y + perso->perso.pict.pos.h/2;
+
+    tirer (systeme->pointeur.pos.x, systeme->pointeur.pos.y, x, y, TIR->tx, TIR->ty, TIR->tableauutile, &TIR->degre);
+
+    TIR->letirdemander = false;
+    TIR->DepartBalle[TIR->tableauutile] = RUNNING;
+    TIR->i[TIR->tableauutile] = 0;
+    TIR->tableauutile++;
+    if (TIR->tableauutile == NBcailloux)
 	{
-		BTLstr->tableauutile = 0;
+		TIR->tableauutile = 0;
 	}
-}*/
+}
+
+void BattleDraw_Projectile(struct TIR *TIR)
+{
+    int index;
+    for(index = 0 ; index < NBcailloux ; index++)
+	{
+		if (TIR->DepartBalle[index] == RUNNING)
+		{
+			draw(TIR->balle, &TIR->pballe[index]);
+		}
+	}
+}

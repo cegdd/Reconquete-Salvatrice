@@ -189,34 +189,6 @@ GLuint fenetredialogue(int x, int y, SDL_Rect* pdialogue, SDL_Rect* ptextedialog
 	return picture;
 }
 
-SDL_Texture *DrawSDLText(SDL_Rect* ptextedialogue, char texte[], int color, int ALIGN,struct DIVERSsysteme *systeme)
-{
-	SDL_Texture *texture;
-	int lenght, high;
-//	texture = imprime(texte, ptextedialogue->x, color, systeme, &lenght, &high);
-
-	switch(ALIGN)
-	{
-		case ALIGN_LEFT:
-			ptextedialogue->x = 0;
-			break;
-		case ALIGN_RIGHT:
-			ptextedialogue->x = (ptextedialogue->x + ptextedialogue->w) - lenght;
-			break;
-		case ALIGN_CENTER:
-			ptextedialogue->x = ptextedialogue->x + (ptextedialogue->w/2) - (lenght/2);
-			break;
-		default:
-			break;
-	}
-
-	ptextedialogue->y = ptextedialogue->y + (ptextedialogue->h/2) - (high/2);
-	ptextedialogue->w = lenght;
-	ptextedialogue->h = high;
-
-	return texture;
-}
-
 int calculclicinventaire(SDL_Rect pointeur ,struct DIVERSsysteme *systeme)
 {
 	int ligne = ((screenh*0.4+screenw*0.0417) - (pointeur.y+pointeur.h))/(screenw*0.0417);
@@ -507,7 +479,7 @@ void afficherPNJ(struct PERSO *perso,struct PACKpnj *pnj,struct DIVERSsysteme *s
 void afficherJOUEURS(struct PERSO *perso,struct DIVERSdeplacement *deplacement,struct DIVERSsysteme *systeme,
                      struct typeFORthreads *online, struct DIVERStemps *temps)
 {
-    int index, calcul;
+    int calcul;
 	/*joueur client*/
 	if (deplacement->direction.direction == -1)
 	{

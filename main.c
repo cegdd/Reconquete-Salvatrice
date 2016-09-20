@@ -133,6 +133,7 @@ int chargementcarte(struct DIVERSsysteme *systeme, struct typeFORthreads *online
     struct PACKrecompense recompense;
     struct typeFORevent FORevent;
     struct DIVERScraft craft;
+    struct TIR TIR;
 
     inittemps(&temps, systeme);
     if (temps.temptotal != 0)
@@ -152,9 +153,10 @@ int chargementcarte(struct DIVERSsysteme *systeme, struct typeFORthreads *online
     initpnj(&pnj);
     initrecompense(&recompense, systeme);
     initFORevent(&FORevent, &objet, &bouton, &inventaire, systeme, &deplacement, &chat, &ui, &craft, &perso, &pnj);
+    initTIR(&TIR);
 
 
-    map(systeme, online, &bouton, &objet, &perso, &inventaire, &deplacement, &temps, &ui, &chat, &craft, &carte, &pnj, &recompense, &FORevent);
+    map(systeme, online, &bouton, &objet, &perso, &inventaire, &deplacement, &temps, &ui, &chat, &craft, &carte, &pnj, &recompense, &FORevent, &TIR);
 	return 1;
 }
 
@@ -172,6 +174,7 @@ int chargementarcade (struct DIVERSsysteme *systeme)
 		struct PACKobjet objet;
 		struct PERSO perso;
 		struct PACKrecompense recompense;
+		struct TIR TIR;
 
 		initinventaire(&inventaire, systeme);
 		initchat(&chat, systeme);
@@ -181,6 +184,7 @@ int chargementarcade (struct DIVERSsysteme *systeme)
 		initobjet(&objet, systeme, &craft);
 		initperso(&perso, systeme);
 		initrecompense(&recompense, systeme);
+		initTIR(&TIR);
 
 		ret = lancementcombat(&inventaire, &ui, &deplacement, &objet, &perso, systeme, &recompense, true);
 	}
