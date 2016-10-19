@@ -115,7 +115,7 @@ systeme->continuer = 1;
 
             if (TIR->letirdemander == true)
             {
-                gestiontir(TIR, systeme, perso);
+                gestiontir(TIR, systeme, perso, carte);
             }
             COMBATgestionprojectile (TIR);
 
@@ -147,7 +147,7 @@ systeme->continuer = 1;
             /*affichage des joueurs*/
             afficherJOUEURS(perso, deplacement, systeme, online, temps);
 
-            BattleDraw_Projectile(TIR);
+            BattleDraw_Projectile(TIR, carte);
             /*affichage du chat*/
             if (ui->chat_open == true)
             {

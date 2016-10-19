@@ -9,7 +9,8 @@
 #include "struct.h"
 #include "image.h"
 
-void tirer (float px, float py, int canonx, int canony, int tx[][PRECISIONcailloux], int ty[][PRECISIONcailloux], int tableauutile, double *degre)
+void tirer (float px, float py, int canonx, int canony, int tx[][PRECISIONcailloux], int ty[][PRECISIONcailloux],
+            int tableauutile, double *degre, struct DIVERSmap *carte)
 {
 	int vitesse = VITESSE;
 	float y, x;
@@ -55,8 +56,8 @@ void tirer (float px, float py, int canonx, int canony, int tx[][PRECISIONcaillo
 			y -= ecart*vitesse;
 		}
 
-		tx[tableauutile][i] = arrondi(x);
-		ty[tableauutile][i] = arrondi(y);
+		tx[tableauutile][i] = arrondi(x)- carte->cellule.pict.pos.x;
+		ty[tableauutile][i] = arrondi(y)- carte->cellule.pict.pos.y;
 	}
 	for(i = PRECISIONcailloux-bissectrice; i < PRECISIONcailloux ; i++)
 	{
@@ -134,12 +135,12 @@ void COMBATgestionprojectile (struct TIR *TIR)
 	}
 }
 
-void gestiontir(struct TIR *TIR, struct DIVERSsysteme *systeme, struct PERSO *perso)
+void gestiontir(struct TIR *TIR, struct DIVERSsysteme *systeme, struct PERSO *perso, struct DIVERSmap *carte)
 {
     int x = perso->perso.pict.pos.x + perso->perso.pict.pos.w/2;
     int y = perso->perso.pict.pos.y + perso->perso.pict.pos.h/2;
 
-    tirer (systeme->pointeur.pos.x, systeme->pointeur.pos.y, x, y, TIR->tx, TIR->ty, TIR->tableauutile, &TIR->degre);
+    tirer (systeme->pointeur.pos.x, systeme->pointeur.pos.y, x, y, TIR->tx, TIR->ty, TIR->tableauutile, &TIR->degre, carte);
 
     TIR->letirdemander = false;
     TIR->DepartBalle[TIR->tableauutile] = RUNNING;
@@ -151,14 +152,14 @@ void gestiontir(struct TIR *TIR, struct DIVERSsysteme *systeme, struct PERSO *pe
 	}
 }
 
-void BattleDraw_Projectile(struct TIR *TIR)
+void BattleDraw_Projectile(struct TIR *TIR, struct DIVERSmap *carte)
 {
     int index;
     for(index = 0 ; index < NBcailloux ; index++)
 	{
 		if (TIR->DepartBalle[index] == RUNNING)
 		{
-			draw(TIR->balle, &TIR->pballe[index]);
+			draw_hook(TIR->balle, &TIR->pballe[index], &carte->cellule.pict.pos);
 		}
 	}
 }

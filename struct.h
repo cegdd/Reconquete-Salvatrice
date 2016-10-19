@@ -57,7 +57,7 @@
 #define DEGATcailloux 10
 #define DEGATsubitCHOC 10.0  /*6 a 10*/
 #define DEGATsubitDUREE 0.3  /*0.8*/
-#define VITESSE 3
+#define VITESSE 7
 #define LIMITEmobARCADE 512
 
 #define BTL_OBJ_MOVE -1

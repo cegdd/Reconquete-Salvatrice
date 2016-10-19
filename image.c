@@ -271,6 +271,20 @@ void draw_hookpict(struct hookpict *image, SDL_Rect *support)
     glEnd();
 }
 
+void draw_hook(GLuint texture, SDL_Rect *pos, SDL_Rect *support)
+{
+    pos->x += support->x;
+    pos->y += support->y;
+
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glBegin(GL_QUADS);
+        glTexCoord2d(0,0);          glVertex2d(pos->x,pos->y);
+        glTexCoord2d(0,1);          glVertex2d(pos->x,pos->y+pos->h);
+        glTexCoord2d(1,1);          glVertex2d(pos->x+pos->w,pos->y+pos->h);
+        glTexCoord2d(1,0);          glVertex2d(pos->x+pos->w,pos->y);
+    glEnd();
+}
+
 void draw(GLuint texture, SDL_Rect *pos)
 {
     glBindTexture(GL_TEXTURE_2D, texture);
