@@ -19,6 +19,13 @@ Uint8 obtenirPixel(SDL_Surface *surface, SDL_Point *pix)
     return *p;
 }
 
+Uint8 obtenirPixel_hook(SDL_Surface *surface, SDL_Point *pix)
+{
+    Uint8 *p = (Uint8 *)surface->pixels + (surface->h-pix->y) * surface->pitch + pix->x * 4;
+    /* HAVE TO BE 32 BIT PNG */
+    return *p;
+}
+
 void chargement (struct DIVERSsysteme *systeme)
 {
     struct pict logo, fond;
@@ -383,4 +390,12 @@ void Sync_Moving_Pict(int time, struct moving_pict *m_pict)
         }
         m_pict->pict.texture = m_pict->texture[m_pict->current];
     }
+}
+
+SDL_Point PointOf(SDL_Rect rect)
+{
+    SDL_Point var;
+    var.x = rect.x;
+    var.y = rect.y;
+    return var;
 }

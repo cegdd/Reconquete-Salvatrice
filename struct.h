@@ -53,7 +53,7 @@
 
 /*combat*/
 #define NBcailloux 50
-#define PRECISIONcailloux 384 /*nombre de calcul par tir*/
+#define PRECISIONcailloux 768 /*nombre de calcul par tir 384*/
 #define DEGATcailloux 10
 #define DEGATsubitCHOC 10.0  /*6 a 10*/
 #define DEGATsubitDUREE 0.3  /*0.8*/

@@ -117,7 +117,7 @@ systeme->continuer = 1;
             {
                 gestiontir(TIR, systeme, perso, carte);
             }
-            COMBATgestionprojectile (TIR);
+            COMBATgestionprojectile (TIR, carte);
 
             if(colisionbox(&perso->perso.pict.pos, &dj0.entrance.pict.pos, false) &&
                systeme->djisloaded == false)

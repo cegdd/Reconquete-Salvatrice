@@ -984,18 +984,18 @@
 	"begin_code.h"
 	"close_code.h"
 
-1454366533 c:\users\cegdd\programmation\lib\sdl2_ttf-2.0.14\i686-w64-mingw32\include\sdl2\sdl_ttf.h
+1454362933 c:\users\cegdd\programmation\lib\sdl2_ttf-2.0.14\i686-w64-mingw32\include\sdl2\sdl_ttf.h
 	"SDL.h"
 	"begin_code.h"
 	"close_code.h"
 
-1451803973 c:\users\cegdd\programmation\lib\sdl2_image-2.0.1\i686-w64-mingw32\include\sdl2\sdl_image.h
+1451800373 c:\users\cegdd\programmation\lib\sdl2_image-2.0.1\i686-w64-mingw32\include\sdl2\sdl_image.h
 	"SDL.h"
 	"SDL_version.h"
 	"begin_code.h"
 	"close_code.h"
 
-1451805391 c:\users\cegdd\programmation\lib\sdl2_mixer-2.0.1\i686-w64-mingw32\include\sdl2\sdl_mixer.h
+1451801791 c:\users\cegdd\programmation\lib\sdl2_mixer-2.0.1\i686-w64-mingw32\include\sdl2\sdl_mixer.h
 	"SDL_stdinc.h"
 	"SDL_rwops.h"
 	"SDL_audio.h"
@@ -1004,15 +1004,15 @@
 	"begin_code.h"
 	"close_code.h"
 
-1468583636 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\battledraw.c
+1468580036 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\battledraw.c
 	"main.h"
 	"colision.h"
 	"image.h"
 
-1433283745 c:\users\cegdd\desktop\dev\reconquete-salvatrice\main.h
+1433280145 c:\users\cegdd\desktop\dev\reconquete-salvatrice\main.h
 	"struct.h"
 
-1476824043 c:\users\cegdd\desktop\dev\reconquete-salvatrice\struct.h
+1478469950 c:\users\cegdd\desktop\dev\reconquete-salvatrice\struct.h
 	<stdio.h>
 	<stdbool.h>
 	<SDL_ttf.h>
@@ -1027,15 +1027,15 @@
 	<arpa/inet.h>
 	<unistd.h>
 
-1469375494 c:\users\cegdd\desktop\dev\reconquete-salvatrice\colision.h
+1469371894 c:\users\cegdd\desktop\dev\reconquete-salvatrice\colision.h
 	<stdbool.h>
 	"struct.h"
 
-1476822844 c:\users\cegdd\desktop\dev\reconquete-salvatrice\image.h
+1478470673 c:\users\cegdd\desktop\dev\reconquete-salvatrice\image.h
 	<SDL_ttf.h>
 	"main.h"
 
-1468583668 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\cac.c
+1468580068 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\cac.c
 	<SDL.h>
 	"systeme.h"
 	"colision.h"
@@ -1043,17 +1043,17 @@
 	"jeux.h"
 	"rat.h"
 
-1468668223 c:\users\cegdd\desktop\dev\reconquete-salvatrice\systeme.h
+1468664623 c:\users\cegdd\desktop\dev\reconquete-salvatrice\systeme.h
 	"main.h"
 
-1468670181 c:\users\cegdd\desktop\dev\reconquete-salvatrice\jeux.h
+1468666581 c:\users\cegdd\desktop\dev\reconquete-salvatrice\jeux.h
 
-1468670210 c:\users\cegdd\desktop\dev\reconquete-salvatrice\rat.h
+1468666610 c:\users\cegdd\desktop\dev\reconquete-salvatrice\rat.h
 
-1436994748 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\clavier.c
+1436991148 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\clavier.c
 	"main.h"
 
-1469375494 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\colision.c
+1469371894 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\colision.c
 	<SDL.h>
 	<math.h>
 	<stdio.h>
@@ -1064,18 +1064,18 @@
 	"deplacement.h"
 	"main.h"
 
-1474320349 c:\users\cegdd\desktop\dev\reconquete-salvatrice\tableau.h
+1474316749 c:\users\cegdd\desktop\dev\reconquete-salvatrice\tableau.h
 	<SDL_ttf.h>
 	"main.h"
 
-1442963077 c:\users\cegdd\desktop\dev\reconquete-salvatrice\deplacement.h
+1442959477 c:\users\cegdd\desktop\dev\reconquete-salvatrice\deplacement.h
 
-1442964770 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\deplacement.c
+1442961170 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\deplacement.c
 	<SDL.h>
 	"colision.h"
 	"main.h"
 
-1474320750 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\evenement.c
+1474317150 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\evenement.c
 	<stdlib.h>
 	<stdio.h>
 	<SDL.h>
@@ -1091,26 +1091,26 @@
 	"login.h"
 	"clavier.h"
 
-1473960261 c:\users\cegdd\desktop\dev\reconquete-salvatrice\ui.h
+1473956661 c:\users\cegdd\desktop\dev\reconquete-salvatrice\ui.h
 	<SDL_ttf.h>
 	<stdbool.h>
 
-1433279811 c:\users\cegdd\desktop\dev\reconquete-salvatrice\listechaine.h
+1433276211 c:\users\cegdd\desktop\dev\reconquete-salvatrice\listechaine.h
 
-1474320622 c:\users\cegdd\desktop\dev\reconquete-salvatrice\evenement.h
+1474317022 c:\users\cegdd\desktop\dev\reconquete-salvatrice\evenement.h
 	<stdbool.h>
 	<SDL.h>
 	"main.h"
 	"login.h"
 
-1433282847 c:\users\cegdd\desktop\dev\reconquete-salvatrice\login.h
+1433279247 c:\users\cegdd\desktop\dev\reconquete-salvatrice\login.h
 
-1433279595 c:\users\cegdd\desktop\dev\reconquete-salvatrice\clavier.h
+1433275995 c:\users\cegdd\desktop\dev\reconquete-salvatrice\clavier.h
 
-1425859547 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\fichier.c
+1425855947 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\fichier.c
 	<stdio.h>
 
-1476822974 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\image.c
+1478470631 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\image.c
 	<stdio.h>
 	<SDL.h>
 	<SDL_ttf.h>
@@ -1120,13 +1120,13 @@
 	"main.h"
 	"image.h"
 
-1461184386 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\listechaine.c
+1461180786 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\listechaine.c
 	<stdlib.h>
 	<SDL.h>
 	"main.h"
 	"listechaine.h"
 
-1473960001 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\login.c
+1473956401 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\login.c
 	<stdio.h>
 	<SDL.h>
 	<SDL_ttf.h>
@@ -1139,12 +1139,12 @@
 	"sauvegarde.h"
 	"ui.h"
 
-1425859547 c:\users\cegdd\desktop\dev\reconquete-salvatrice\fichier.h
+1425855947 c:\users\cegdd\desktop\dev\reconquete-salvatrice\fichier.h
 
-1468702277 c:\users\cegdd\desktop\dev\reconquete-salvatrice\sauvegarde.h
+1468698677 c:\users\cegdd\desktop\dev\reconquete-salvatrice\sauvegarde.h
 	"main.h"
 
-1474320581 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\main.c
+1474316981 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\main.c
 	<stdio.h>
 	<stdlib.h>
 	<SDL.h>
@@ -1163,13 +1163,13 @@
 	"queue.h"
 	"image.h"
 
-1425859548 c:\users\cegdd\desktop\dev\reconquete-salvatrice\thread1.h
+1425855948 c:\users\cegdd\desktop\dev\reconquete-salvatrice\thread1.h
 
-1474320574 c:\users\cegdd\desktop\dev\reconquete-salvatrice\map.h
+1474316974 c:\users\cegdd\desktop\dev\reconquete-salvatrice\map.h
 
-1433282512 c:\users\cegdd\desktop\dev\reconquete-salvatrice\queue.h
+1433278912 c:\users\cegdd\desktop\dev\reconquete-salvatrice\queue.h
 
-1476823559 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\map.c
+1476908005 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\map.c
 	<stdio.h>
 	<stdlib.h>
 	<stdbool.h>
@@ -1192,20 +1192,20 @@
 	"donjon.h"
 	"tir.h"
 
-1434060050 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\objet.c
+1434056450 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\objet.c
 	<stdio.h>
 	<stdarg.h>
 	"main.h"
 
-1443480758 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\queue.c
+1443477158 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\queue.c
 	<stdio.h>
 	<stdlib.h>
 	"jeux.h"
 	"main.h"
 
-1468670210 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\rat.c
+1468666610 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\rat.c
 
-1468702656 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\sauvegarde.c
+1468699056 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\sauvegarde.c
 	<stdio.h>
 	<stdlib.h>
 	<SDL.h>
@@ -1213,7 +1213,7 @@
 	"fichier.h"
 	"sauvegarde.h"
 
-1468584185 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\systeme.c
+1468580585 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\systeme.c
 	<SDL.h>
 	<stdlib.h>
 	<stdio.h>
@@ -1222,7 +1222,7 @@
 	"image.h"
 	"listechaine.h"
 
-1473974988 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\tableau.c
+1473971388 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\tableau.c
 	<SDL.h>
 	<stdlib.h>
 	<stdio.h>
@@ -1236,11 +1236,11 @@
 	"tool.h"
 	"queue.h"
 
-1434055690 c:\users\cegdd\desktop\dev\reconquete-salvatrice\objet.h
+1434052090 c:\users\cegdd\desktop\dev\reconquete-salvatrice\objet.h
 
-1468668180 c:\users\cegdd\desktop\dev\reconquete-salvatrice\tool.h
+1468664580 c:\users\cegdd\desktop\dev\reconquete-salvatrice\tool.h
 
-1433278831 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\thread1.c
+1433275231 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\thread1.c
 	<stdlib.h>
 	<stdio.h>
 	<stdbool.h>
@@ -1251,9 +1251,9 @@
 	"thread2.h"
 	"main.h"
 
-1425859548 c:\users\cegdd\desktop\dev\reconquete-salvatrice\thread2.h
+1425855948 c:\users\cegdd\desktop\dev\reconquete-salvatrice\thread2.h
 
-1440535106 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\thread2.c
+1440531506 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\thread2.c
 	<stdlib.h>
 	<stdio.h>
 	<stdbool.h>
@@ -1265,7 +1265,7 @@
 	"main.h"
 	<SDL_ttf.h>
 
-1476823937 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\tir.c
+1478469849 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\tir.c
 	<stdlib.h>
 	<stdio.h>
 	<SDL.h>
@@ -1276,14 +1276,14 @@
 	"struct.h"
 	"image.h"
 
-1468668201 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\tool.c
+1468664601 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\tool.c
 	<stdlib.h>
 	<stdio.h>
 	<SDL.h>
 	"main.h"
 	"systeme.h"
 
-1473960261 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\ui.c
+1478467189 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\ui.c
 	<stdio.h>
 	<SDL.h>
 	<math.h>
@@ -1295,7 +1295,7 @@
 	"systeme.h"
 	"colision.h"
 
-1473198777 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\donjon.c
+1473195177 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\donjon.c
 	<stdio.h>
 	<stdlib.h>
 	<SDL_image.h>
@@ -1303,7 +1303,7 @@
 	"struct.h"
 	"image.h"
 
-1469362684 c:\users\cegdd\desktop\dev\reconquete-salvatrice\donjon.h
+1469359084 c:\users\cegdd\desktop\dev\reconquete-salvatrice\donjon.h
 	"struct.h"
 
 1451768383 c:\users\cegdd\programmation\lib\sdl2-2.0.4\x86_64-w64-mingw32\include\sdl2\sdl.h
@@ -1625,7 +1625,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl.h
 	"SDL_main.h"
 	"SDL_stdinc.h"
 	"SDL_assert.h"
@@ -1656,12 +1656,12 @@
 	"begin_code.h"
 	"close_code.h"
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_main.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_main.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_stdinc.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_stdinc.h
 	"SDL_config.h"
 	<sys/types.h>
 	<stdio.h>
@@ -1690,34 +1690,34 @@
 	<stdlib.h>
 	"close_code.h"
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_config.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_config.h
 	"SDL_platform.h"
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_platform.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_platform.h
 	"AvailabilityMacros.h"
 	"TargetConditionals.h"
 	<winapifamily.h>
 	"begin_code.h"
 	"close_code.h"
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\begin_code.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\begin_code.h
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\close_code.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\close_code.h
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_assert.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_assert.h
 	"SDL_config.h"
 	"begin_code.h"
 	<signal.h>
 	"close_code.h"
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_atomic.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_atomic.h
 	"SDL_stdinc.h"
 	"SDL_platform.h"
 	"begin_code.h"
 	<mbarrier.h>
 	"close_code.h"
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_audio.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_audio.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_endian.h"
@@ -1727,24 +1727,24 @@
 	"begin_code.h"
 	"close_code.h"
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_error.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_error.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_endian.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_endian.h
 	"SDL_stdinc.h"
 	<endian.h>
 	"begin_code.h"
 	"close_code.h"
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_mutex.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_mutex.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"begin_code.h"
 	"close_code.h"
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_thread.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_thread.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_atomic.h"
@@ -1753,18 +1753,18 @@
 	<process.h>
 	"close_code.h"
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_rwops.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_rwops.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"begin_code.h"
 	"close_code.h"
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_clipboard.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_clipboard.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_cpuinfo.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_cpuinfo.h
 	"SDL_stdinc.h"
 	<intrin.h>
 	<intrin.h>
@@ -1776,7 +1776,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_events.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_events.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_video.h"
@@ -1790,7 +1790,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_video.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_video.h
 	"SDL_stdinc.h"
 	"SDL_pixels.h"
 	"SDL_rect.h"
@@ -1798,12 +1798,12 @@
 	"begin_code.h"
 	"close_code.h"
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_pixels.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_pixels.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_rect.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_rect.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_pixels.h"
@@ -1811,7 +1811,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_surface.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_surface.h
 	"SDL_stdinc.h"
 	"SDL_pixels.h"
 	"SDL_rect.h"
@@ -1820,11 +1820,11 @@
 	"begin_code.h"
 	"close_code.h"
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_blendmode.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_blendmode.h
 	"begin_code.h"
 	"close_code.h"
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_keyboard.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_keyboard.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_keycode.h"
@@ -1832,27 +1832,27 @@
 	"begin_code.h"
 	"close_code.h"
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_keycode.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_keycode.h
 	"SDL_stdinc.h"
 	"SDL_scancode.h"
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_scancode.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_scancode.h
 	"SDL_stdinc.h"
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_mouse.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_mouse.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_video.h"
 	"begin_code.h"
 	"close_code.h"
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_joystick.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_joystick.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"begin_code.h"
 	"close_code.h"
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_gamecontroller.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_gamecontroller.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_rwops.h"
@@ -1860,11 +1860,11 @@
 	"begin_code.h"
 	"close_code.h"
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_quit.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_quit.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_gesture.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_gesture.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_video.h"
@@ -1872,60 +1872,60 @@
 	"begin_code.h"
 	"close_code.h"
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_touch.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_touch.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_video.h"
 	"begin_code.h"
 	"close_code.h"
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_filesystem.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_filesystem.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_haptic.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_haptic.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_joystick.h"
 	"begin_code.h"
 	"close_code.h"
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_hints.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_hints.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_loadso.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_loadso.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"begin_code.h"
 	"close_code.h"
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_log.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_log.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_messagebox.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_messagebox.h
 	"SDL_stdinc.h"
 	"SDL_video.h"
 	"begin_code.h"
 	"close_code.h"
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_power.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_power.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_render.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_render.h
 	"SDL_stdinc.h"
 	"SDL_rect.h"
 	"SDL_video.h"
 	"begin_code.h"
 	"close_code.h"
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_system.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_system.h
 	"SDL_stdinc.h"
 	"SDL_keyboard.h"
 	"SDL_render.h"
@@ -1933,16 +1933,16 @@
 	"begin_code.h"
 	"close_code.h"
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_timer.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_timer.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"begin_code.h"
 	"close_code.h"
 
-1451768293 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_version.h
+1451764693 c:\users\cegdd\programmation\lib\sdl2-2.0.4\i686-w64-mingw32\include\sdl2\sdl_version.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
 
-1476823841 c:\users\cegdd\desktop\dev\reconquete-salvatrice\tir.h
+1476907998 c:\users\cegdd\desktop\dev\reconquete-salvatrice\tir.h
 

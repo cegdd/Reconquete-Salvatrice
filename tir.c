@@ -17,8 +17,8 @@ void tirer (float px, float py, int canonx, int canony, int tx[][PRECISIONcaillo
 	int difx = 0, dify = 0, i = 0, bissectrice = 0;
 	int octant = calculoctant(px, py, canonx, canony, &difx, &dify);
 	float ecart = 0, ecartinverse = 0;
-	y = canony;
 	x = canonx;
+	y = canony;
 
 	*degre = atan2(dify, difx);
 	*degre *= 57.296;
@@ -58,7 +58,12 @@ void tirer (float px, float py, int canonx, int canony, int tx[][PRECISIONcaillo
 
 		tx[tableauutile][i] = arrondi(x)- carte->cellule.pict.pos.x;
 		ty[tableauutile][i] = arrondi(y)- carte->cellule.pict.pos.y;
+
+
 	}
+	printf("depart de la carte en %d %d\n", carte->cellule.pict.pos.x, carte->cellule.pict.pos.y);
+    printf("perso en  %d %d\n", canonx, canony);
+    printf("depart du cailloux en %d %d\n", tx[tableauutile][1], ty[tableauutile][1]);
 	for(i = PRECISIONcailloux-bissectrice; i < PRECISIONcailloux ; i++)
 	{
 		tx[tableauutile][i] = tx[tableauutile][PRECISIONcailloux-1-bissectrice];
@@ -112,9 +117,10 @@ int HitboxBalle(struct typecombat *BTLstr, int index)
 }
 */
 
-void COMBATgestionprojectile (struct TIR *TIR)
+void COMBATgestionprojectile (struct TIR *TIR, struct DIVERSmap *carte)
 {
 	int index;
+	SDL_Point point;
 	for (index = 0 ; index < NBcailloux ; index++)
 	{
 		if (TIR->DepartBalle[index] != UNUSED && TIR->i[index] < PRECISIONcailloux - 1 && TIR->DepartBalle[index] != STOP)
@@ -122,6 +128,13 @@ void COMBATgestionprojectile (struct TIR *TIR)
 			TIR->i[index] = TIR->i[index]+1;
 			TIR->pballe[index].x = TIR->tx[index][TIR->i[index]];
 			TIR->pballe[index].y = TIR->ty[index][TIR->i[index]];
+			//point = PointOf(TIR->pballe[index]);
+			point.x = TIR->pballe[index].x;
+			point.y = TIR->pballe[index].y;
+			if (obtenirPixel_hook(carte->cellule.calque, &point) !=  255)
+            {
+                TIR->DepartBalle[index] = UNUSED;
+            }
 		}
 		else if (TIR->i[index] >= PRECISIONcailloux-1)
 		{
@@ -137,10 +150,12 @@ void COMBATgestionprojectile (struct TIR *TIR)
 
 void gestiontir(struct TIR *TIR, struct DIVERSsysteme *systeme, struct PERSO *perso, struct DIVERSmap *carte)
 {
-    int x = perso->perso.pict.pos.x + perso->perso.pict.pos.w/2;
-    int y = perso->perso.pict.pos.y + perso->perso.pict.pos.h/2;
+    //pos du perso a l'ecran
+    int x = (perso->perso.pict.pos.x + perso->perso.pict.pos.w/2);
+    int y = (perso->perso.pict.pos.y + perso->perso.pict.pos.h/2);
 
     tirer (systeme->pointeur.pos.x, systeme->pointeur.pos.y, x, y, TIR->tx, TIR->ty, TIR->tableauutile, &TIR->degre, carte);
+
 
     TIR->letirdemander = false;
     TIR->DepartBalle[TIR->tableauutile] = RUNNING;
