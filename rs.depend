@@ -1107,7 +1107,7 @@
 
 1433275995 c:\users\cegdd\desktop\dev\reconquete-salvatrice\clavier.h
 
-1425855947 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\fichier.c
+1478648436 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\fichier.c
 	<stdio.h>
 
 1478470631 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\image.c
@@ -1205,7 +1205,7 @@
 
 1468666610 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\rat.c
 
-1468699056 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\sauvegarde.c
+1482773735 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\sauvegarde.c
 	<stdio.h>
 	<stdlib.h>
 	<SDL.h>
@@ -1265,7 +1265,7 @@
 	"main.h"
 	<SDL_ttf.h>
 
-1478469849 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\tir.c
+1478470778 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\tir.c
 	<stdlib.h>
 	<stdio.h>
 	<SDL.h>

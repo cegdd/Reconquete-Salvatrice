@@ -131,6 +131,11 @@ void ecris(char string[50], FILE *fichier)
 
 	while(string[i] != '\0')
 	{
+	    if (i >= 4096)
+        {
+            printf("index overflow in func ecris");
+            break;
+        }
 		valeur = (int)string[i];
 		for(index = 0 ; index < valeur ; index++)
 		{
