@@ -14,7 +14,6 @@ void chargersauvegarde(struct DIVERSsysteme *systeme)
 	char caractere = '\0';
 
 	char buffer[4096] = {'\0'};
-	char ret[50] = {'\0'};
 
 	int iligne = 0, i, index;
 
@@ -24,9 +23,8 @@ void chargersauvegarde(struct DIVERSsysteme *systeme)
 	for (i = 0 ; i < NBargSAVE ; i++)
 	{
 		lis(crypted, buffer);
-		uncrypt(buffer, ret);
 
-		strcpy(systeme->sauvegarde[i], ret);
+		strcpy(systeme->sauvegarde[i], buffer);
 		for(index = 0 ; index < 4096 ; index++)
 		{
 			buffer[index] = '\0';
@@ -181,4 +179,5 @@ void lis(FILE *fichier, char *buffer)
         caractere = fgetc(fichier);
     }
     buffer[iligne] = '\0';
+    uncrypt(buffer, buffer);
 }

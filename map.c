@@ -122,7 +122,7 @@ systeme->continuer = 1;
             if(colisionbox(&perso->perso.pict.pos, &dj0.entrance.pict.pos, false) &&
                systeme->djisloaded == false)
             {
-                LoadDonjon(&dj0);
+                LoadDonjon(&dj0, "dj0");
                 systeme->djisloaded = true;
             }
 

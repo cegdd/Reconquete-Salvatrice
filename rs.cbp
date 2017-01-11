@@ -90,12 +90,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="image.h" />
-		<Unit filename="jeux.c">
-			<Option compilerVar="CC" />
-			<Option compile="0" />
-			<Option link="0" />
-		</Unit>
-		<Unit filename="jeux.h" />
 		<Unit filename="listechaine.c">
 			<Option compilerVar="CC" />
 		</Unit>
