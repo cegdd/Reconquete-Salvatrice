@@ -25,8 +25,8 @@ extern int screenh, screenw;
 
 int map (struct DIVERSsysteme *systeme,struct typeFORthreads *online,struct PACKbouton *bouton ,struct PACKobjet *objet,
         struct PERSO *perso,struct DIVERSinventaire *inventaire,struct DIVERSdeplacement *deplacement,
-		struct DIVERStemps *temps,struct DIVERSui *ui,struct DIVERSchat *chat,struct DIVERScraft *craft,struct DIVERSmap *carte,
-		struct PACKpnj *pnj,struct PACKrecompense *recompense,struct typeFORevent *FORevent,struct TIR *TIR)
+		struct DIVERStemps *temps,struct DIVERSui *ui,struct DIVERSchat *chat,struct DIVERScraft *craft,
+		struct PACKrecompense *recompense,struct typeFORevent *FORevent,struct TIR *TIR)
 {
     int index;
     chargement(systeme);
@@ -54,6 +54,8 @@ int map (struct DIVERSsysteme *systeme,struct typeFORthreads *online,struct PACK
 
     struct DONJON dj0;
     initdonjon(&dj0, systeme);
+    LoadDonjon(&dj0, "dj0");
+                systeme->djisloaded = true;
 
     online->jeuxACTIF = 1;
 
@@ -87,38 +89,30 @@ systeme->continuer = 1;
             temps->i++;
 
 			/*sichronisation des données*/
-			sinchronisation(pnj, carte, craft, systeme, online, perso, &dj0);
+			sinchronisation(craft, systeme, online, perso, &dj0);
             /*calcul direction joueur client*/
             deplacement->direction.direction = directionperso(&deplacement->direction);
             /*deplacement*/
-            if (!systeme->djisloaded)
-            {
-                checkPixel(&carte->cellule, perso);
-                move_map(perso, &deplacement->direction, &carte->origin);
-            }
-            else
-            {
-                checkPixel(&dj0.map, perso);
-                move_map(perso, &deplacement->direction, &dj0.origin);
-            }
+            checkPixel(&dj0.map, perso);
+            move_map(perso, &deplacement->direction, &dj0.origin);
             /*recupération coordonées souris*/
             SDL_GetMouseState(&systeme->pointeur.pos.x, &systeme->pointeur.pos.y);
             systeme->pointeur.pos.y = (systeme->pointeur.pos.y - screenh + systeme->pointeur.pos.h) * -1;
             /*gestion de l'ui*/
-            gestionui(systeme, ui, craft, bouton, chat, inventaire, objet, perso, pnj);
+            gestionui(systeme, ui, craft, bouton, chat, inventaire, objet, perso);
             /*detection des combats*/
            // detectioncombat(monstre, inventaire, ui, deplacement, objet, perso, systeme, recompense, false);
             /*gestion des evenement*/
             boucleevent(&online->chat.lancermessage, FORevent, TIR);
             /*gestion du chat*/
             gestionchat(chat, systeme, online);
-
+/*
             if (TIR->letirdemander == true)
             {
                 gestiontir(TIR, systeme, perso, carte);
             }
             COMBATgestionprojectile (TIR, carte);
-
+*/
             if(colisionbox(&perso->perso.pict.pos, &dj0.entrance.pict.pos, false) &&
                systeme->djisloaded == false)
             {
@@ -134,9 +128,7 @@ systeme->continuer = 1;
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) ;
 
             /*affichage de la carte*/
-            afficherMAP(carte, systeme, craft, &dj0);
-            /*affichage des pnj*/
-            afficherPNJ(perso, pnj, systeme);
+            draw_pict(&dj0.map.pict);
             if(systeme->djisloaded)
             {
                 for (index=0 ; index<dj0.nombremonstre ; index++)
@@ -147,7 +139,7 @@ systeme->continuer = 1;
             /*affichage des joueurs*/
             afficherJOUEURS(perso, deplacement, systeme, online, temps);
 
-            BattleDraw_Projectile(TIR, carte);
+            //BattleDraw_Projectile(TIR, carte);
             /*affichage du chat*/
             if (ui->chat_open == true)
             {
@@ -222,11 +214,10 @@ systeme->continuer = 1;
 			}
             if (temps->temptotal - temps->tpspoursave >= 30)
             {
-                sauvegardetout(systeme->sauvegarde, carte->cellule.pict.pos, perso, temps->temptotal, 0, objet->sac1, TAILLESAC, ui);
+                sauvegardetout(systeme->sauvegarde, dj0.map.pict.pos, perso, temps->temptotal, 0, objet->sac1, TAILLESAC, ui);
                 temps->tpspoursave = temps->temptotal;
             }
 
-            printf("%d frame/sec\n", temps->i);
             sprintf(temps->StringI, "IPS => %d", temps->i);
             sprintf(perso->slife, "vie : %0.0f/%d", perso->life, perso->lifemax);
             sprintf(temps->stringtempstotal, "age du personnage : %dj %dh %dmin %dsec", calcultempsjours(temps->temptotal), calcultempsheures(temps->temptotal), calcultempsminutes(temps->temptotal), calcultempssecondes(temps->temptotal));
@@ -256,7 +247,7 @@ systeme->continuer = 1;
 																														#
 ###########################################################################################################################*/
 
-    sauvegardetout(systeme->sauvegarde, carte->cellule.pict.pos, perso, temps->temptotal, 0, objet->sac1, TAILLESAC, ui);
+    sauvegardetout(systeme->sauvegarde, dj0.map.pict.pos, perso, temps->temptotal, 0, objet->sac1, TAILLESAC, ui);
 
     return 1;
 }
@@ -381,27 +372,12 @@ void gestionchat(struct DIVERSchat *chat,struct DIVERSsysteme *systeme,struct ty
     }
 }
 
-void sinchronisation(struct PACKpnj *pnj,struct DIVERSmap *carte,struct DIVERScraft *craft,
-                     struct DIVERSsysteme *systeme,struct typeFORthreads *online,struct PERSO *perso,
-                     struct DONJON *donjon)
+void sinchronisation(struct DIVERScraft *craft,struct DIVERSsysteme *systeme,struct typeFORthreads *online,
+                     struct PERSO *perso,struct DONJON *donjon)
 {
-	if (!systeme->djisloaded)
-    {
-        carte->cellule.pict.pos.x = carte->origin.x + carte->cellule.translation.x;
-        carte->cellule.pict.pos.y = carte->origin.y + carte->cellule.translation.y;
-        pnj->toumai.pos.x =                 carte->cellule.pict.pos.x + 580;
-        pnj->toumai.pos.y =                 carte->cellule.pict.pos.y + 1020;
-        craft->petabli.x =              carte->cellule.pict.pos.x + 830;
-        craft->petabli.y =              carte->cellule.pict.pos.y + 830;
-    }
-    else
-    {
-        donjon->map.pict.pos.x = donjon->origin.x + donjon->map.translation.x;
-        donjon->map.pict.pos.y = donjon->origin.y + donjon->map.translation.y;
-    }
 
-
-
+    donjon->map.pict.pos.x = donjon->origin.x + donjon->map.translation.x;
+    donjon->map.pict.pos.y = donjon->origin.y + donjon->map.translation.y;
 
 	systeme->oldpp.x = systeme->pointeur.pos.x;
 	systeme->oldpp.y = systeme->pointeur.pos.y;

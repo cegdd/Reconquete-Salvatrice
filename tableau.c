@@ -570,29 +570,6 @@ void initcraft(struct DIVERScraft *craft,struct DIVERSsysteme *systeme)/*							
 	craft->tetabli = LoadingImage			("rs/images/etabli.png", 0, systeme);*/
 }
 
-void initmap (struct DIVERSmap *carte,struct DIVERSsysteme *systeme)/*										map*/
-{
-	carte->origin.x = screenw/2;
-	carte->origin.y = screenh/2;
-
-	carte->cellule.translation.x = -500;
-	carte->cellule.translation.y = -1000;
-
-    carte->cellule.pict.texture = loadTexture("rs/maps/cellule2.png");
-    setPos4(&carte->cellule.pict.pos, 0, 0 ,2258, 1376);
-    carte->cellule.calque = IMG_Load("rs/maps/cellule2nb.png");
-}
-
-void initpnj (struct PACKpnj *pnj)/*																				pnj*/
-{
-    pnj->toumai.pos.x = 0;
-	pnj->toumai.pos.y = 0;
-	pnj->toumai.pos.w = 68;
-	pnj->toumai.pos.h = 48;
-	pnj->toumai.texture = loadTexture("rs/images/perso0.png");
-	pnj->toumaiParle = false;
-}
-
 void initrecompense (struct PACKrecompense *recompense,struct DIVERSsysteme *systeme)/*									recompense*/
 {
 	int index;
@@ -632,7 +609,7 @@ void initrecompense (struct PACKrecompense *recompense,struct DIVERSsysteme *sys
 
 void initFORevent(struct typeFORevent *FORevent,struct PACKobjet *objet,struct PACKbouton *bouton,struct DIVERSinventaire *inventaire,
                   struct DIVERSsysteme *systeme,struct DIVERSdeplacement *deplacement,struct DIVERSchat *chat,struct DIVERSui *ui,
-                  struct DIVERScraft *craft,struct PERSO *perso,struct PACKpnj *pnj)
+                  struct DIVERScraft *craft,struct PERSO *perso)
 {
 	FORevent->bouton = bouton;
 	FORevent->chat = chat;
@@ -643,7 +620,6 @@ void initFORevent(struct typeFORevent *FORevent,struct PACKobjet *objet,struct P
 	FORevent->perso = perso;
 	FORevent->systeme = systeme;
 	FORevent->ui = ui;
-	FORevent->pnj = pnj;
 
 }
 

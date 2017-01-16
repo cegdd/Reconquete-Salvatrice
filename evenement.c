@@ -868,15 +868,8 @@ void eventmapsourisdroitedown(struct typeFORevent *FORevent)
 
 void sourisactionzone(struct typeFORevent *FORevent)
 {
-    /*position toumaï*/
-    if (colisionbox(&FORevent->systeme->pointeur.pos, &FORevent->pnj->toumai.pos, true) &&
-            checkdistance(&FORevent->perso->perso.pict.pos, &FORevent->pnj->toumai.pos, 300) == -1)
-    {
-        FORevent->ui->lancedialogue = true;
-        FORevent->pnj->toumaiParle = true;
-    }
     /*position etabli*/
-    else if (colisionbox(&FORevent->systeme->pointeur.pos, &FORevent->craft->petabli, true) &&
+    if (colisionbox(&FORevent->systeme->pointeur.pos, &FORevent->craft->petabli, true) &&
             checkdistance(&FORevent->perso->perso.pict.pos, &FORevent->craft->petabli, 250) == -1)
     {
         FORevent->ui->craft_open = true;

@@ -8,7 +8,7 @@
 #include "systeme.h"
 #include "struct.h"
 #include "image.h"
-
+/*
 void tirer (float px, float py, int canonx, int canony, int tx[][PRECISIONcailloux], int ty[][PRECISIONcailloux],
             int tableauutile, double *degre, struct DIVERSmap *carte)
 {
@@ -116,7 +116,7 @@ int HitboxBalle(struct typecombat *BTLstr, int index)
 	return -1;
 }
 */
-
+/*
 void COMBATgestionprojectile (struct TIR *TIR, struct DIVERSmap *carte)
 {
 	int index;
@@ -146,7 +146,7 @@ void COMBATgestionprojectile (struct TIR *TIR, struct DIVERSmap *carte)
 		{
 		}
 	}
-}
+}*/
 
 void gestiontir(struct TIR *TIR, struct DIVERSsysteme *systeme, struct PERSO *perso, struct DIVERSmap *carte)
 {
@@ -154,7 +154,7 @@ void gestiontir(struct TIR *TIR, struct DIVERSsysteme *systeme, struct PERSO *pe
     int x = (perso->perso.pict.pos.x + perso->perso.pict.pos.w/2);
     int y = (perso->perso.pict.pos.y + perso->perso.pict.pos.h/2);
 
-    tirer (systeme->pointeur.pos.x, systeme->pointeur.pos.y, x, y, TIR->tx, TIR->ty, TIR->tableauutile, &TIR->degre, carte);
+//    tirer (systeme->pointeur.pos.x, systeme->pointeur.pos.y, x, y, TIR->tx, TIR->ty, TIR->tableauutile, &TIR->degre, carte);
 
 
     TIR->letirdemander = false;
@@ -166,7 +166,7 @@ void gestiontir(struct TIR *TIR, struct DIVERSsysteme *systeme, struct PERSO *pe
 		TIR->tableauutile = 0;
 	}
 }
-
+/*
 void BattleDraw_Projectile(struct TIR *TIR, struct DIVERSmap *carte)
 {
     int index;
@@ -177,4 +177,4 @@ void BattleDraw_Projectile(struct TIR *TIR, struct DIVERSmap *carte)
 			draw_hook(TIR->balle, &TIR->pballe[index], &carte->cellule.pict.pos);
 		}
 	}
-}
+}*/

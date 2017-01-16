@@ -18,12 +18,10 @@ void initui(struct DIVERSui *ui,struct DIVERSsysteme *systeme);
 void initchat(struct DIVERSchat *chat,struct DIVERSsysteme *systeme);
 void initcraft(struct DIVERScraft *craft,struct DIVERSsysteme *systeme);
 void initperso(struct PERSO *perso,struct DIVERSsysteme *systeme);
-void initmap (struct DIVERSmap *carte,struct DIVERSsysteme *systeme);
-void initpnj (struct PACKpnj *pnj);
 void initrecompense (struct PACKrecompense *recompense,struct DIVERSsysteme *systeme);
 void initFORevent(struct typeFORevent *FORevent,struct PACKobjet *objet,struct PACKbouton *bouton,struct DIVERSinventaire *inventaire,struct DIVERSsysteme *systeme,
 				struct DIVERSdeplacement *deplacement,struct DIVERSchat *chat,struct DIVERSui *ui,struct DIVERScraft *craft,
-				struct PERSO *perso,struct PACKpnj *pnj);
+				struct PERSO *perso);
 void initonline(struct typeFORthreads *online,struct DIVERSsysteme *systeme);
 void initdonjon(struct DONJON *donjon,struct DIVERSsysteme *systeme);
 void initTIR(struct TIR *TIR);

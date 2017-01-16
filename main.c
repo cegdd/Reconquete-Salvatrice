@@ -128,8 +128,6 @@ int chargementcarte(struct DIVERSsysteme *systeme, struct typeFORthreads *online
     struct DIVERStemps temps;
     struct DIVERSui ui;
     struct DIVERSchat chat;
-    struct DIVERSmap carte;
-    struct PACKpnj pnj;
     struct PACKrecompense recompense;
     struct typeFORevent FORevent;
     struct DIVERScraft craft;
@@ -147,16 +145,14 @@ int chargementcarte(struct DIVERSsysteme *systeme, struct typeFORthreads *online
     initinventaire(&inventaire, systeme);
     initdeplacement(&deplacement, systeme);
     initperso(&perso, systeme);
-    initmap(&carte, systeme);
     initui(&ui, systeme);
     initchat(&chat, systeme);
-    initpnj(&pnj);
     initrecompense(&recompense, systeme);
-    initFORevent(&FORevent, &objet, &bouton, &inventaire, systeme, &deplacement, &chat, &ui, &craft, &perso, &pnj);
+    initFORevent(&FORevent, &objet, &bouton, &inventaire, systeme, &deplacement, &chat, &ui, &craft, &perso);
     initTIR(&TIR);
 
 
-    map(systeme, online, &bouton, &objet, &perso, &inventaire, &deplacement, &temps, &ui, &chat, &craft, &carte, &pnj, &recompense, &FORevent, &TIR);
+    map(systeme, online, &bouton, &objet, &perso, &inventaire, &deplacement, &temps, &ui, &chat, &craft, &recompense, &FORevent, &TIR);
 	return 1;
 }
 

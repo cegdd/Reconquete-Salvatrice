@@ -5,8 +5,7 @@
 #include <stdbool.h>
 
 void gestionui (struct DIVERSsysteme *systeme,struct DIVERSui *ui,struct DIVERScraft *craft,struct PACKbouton *bouton,
-                struct DIVERSchat *chat,struct DIVERSinventaire *inventaire,struct PACKobjet *objet,struct PERSO *perso,
-                struct PACKpnj *pnj);
+                struct DIVERSchat *chat,struct DIVERSinventaire *inventaire,struct PACKobjet *objet,struct PERSO *perso);
 GLuint fenetredialogue(int x, int y, SDL_Rect* pdialogue, SDL_Rect* ptextedialogue, char texte[],
 							int couleur,struct DIVERSsysteme *systeme);
 
@@ -17,8 +16,6 @@ void afficherINVENTAIRE(struct DIVERSinventaire *inventaire,struct DIVERSui *ui,
 void afficherUI(bool enligne,struct DIVERSui *ui,struct PACKbouton *bouton,struct DIVERStemps *temps,struct PERSO *perso,
                 struct DIVERSinventaire *inventaire,struct DIVERSsysteme *systeme,
                 struct PACKrecompense *recompense,struct PACKobjet *objet);
-void afficherMAP(struct DIVERSmap *carte,struct DIVERSsysteme *systeme,struct DIVERScraft *craft, struct DONJON *dj0);
-void afficherPNJ(struct PERSO *perso,struct PACKpnj *pnj,struct DIVERSsysteme *systeme);
 void afficherMOB(struct PACKmonstre *monstre,struct DIVERSsysteme *systeme, struct DIVERStemps *temps);
 void afficherJOUEURS(struct PERSO *perso,struct DIVERSdeplacement *deplacement,struct DIVERSsysteme *systeme,
                      struct typeFORthreads *online, struct DIVERStemps *temps);

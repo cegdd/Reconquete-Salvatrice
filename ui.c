@@ -13,8 +13,7 @@
 extern int screenh, screenw;
 
 void gestionui (struct DIVERSsysteme *systeme,struct DIVERSui *ui,struct DIVERScraft *craft,struct PACKbouton *bouton,
-                struct DIVERSchat *chat,struct DIVERSinventaire *inventaire,struct PACKobjet *objet,struct PERSO *perso,
-                struct PACKpnj *pnj)
+                struct DIVERSchat *chat,struct DIVERSinventaire *inventaire,struct PACKobjet *objet,struct PERSO *perso)
 {
     int index = 0;
 	/*si un dialogue a été lancer*/
@@ -140,25 +139,6 @@ void gestionui (struct DIVERSsysteme *systeme,struct DIVERSui *ui,struct DIVERSc
     {
         ui->craft_open = false;
     }
-    if (ui->dialogueactif == 1&&
-		checkdistance(&perso->perso.pict.pos, &pnj->toumai.pos, 250) == 1 && /*assez distant de toumai pour qu'il se taise*/
-        pnj->toumaiParle == true)
-    {
-        pnj->toumaiParle = false;
-        ui->dialogueactif = 0;
-    }
-    if (checkdistance(&perso->perso.pict.pos, &pnj->toumai.pos, 3500) == 1 &&/*assez loin pour signaler de s'arreter*/
-        ui->distanceprevenu == false)
-    {
-        ui->distanceprevenu = true;
-        ui->dialogue_text.texture = fenetredialogue(screenw*0.4, screenh*0.8, &ui->dialogue_back.pos, &ui->dialogue_text.pos, "stop !\n il n'y rien a voir ici pour l'instant.\n\n\n\n\n\n\n", BLANC, systeme);
-        ui->dialogueactif = 1;
-    }
-    else if (checkdistance(&perso->perso.pict.pos, &pnj->toumai.pos, 3500) != 1)/*asser proche pour réinitilaliser le conseil*/
-    {
-        ui->distanceprevenu = false;
-    }
-
 }
 
 GLuint fenetredialogue(int x, int y, SDL_Rect* pdialogue, SDL_Rect* ptextedialogue, char texte[],
@@ -453,28 +433,6 @@ void afficherUI(bool enligne,struct DIVERSui *ui,struct PACKbouton *bouton,struc
 		}
 	}
 }
-
-void afficherMAP(struct DIVERSmap *carte,struct DIVERSsysteme *systeme,struct DIVERScraft *craft,
-                 struct DONJON *dj0)
-{
-    if(!systeme->djisloaded)
-    {
-        draw_pict(&carte->cellule.pict);
-        draw_hookpict(&dj0->entrance, &carte->cellule.pict.pos);
-    }
-    else
-    {
-        draw_pict(&dj0->map.pict);
-    }
-}
-
-void afficherPNJ(struct PERSO *perso,struct PACKpnj *pnj,struct DIVERSsysteme *systeme)
-{
-    draw_pict(&pnj->toumai);
-	//SDL_RenderCopyEx(systeme->renderer, perso->tperso, &perso->spriteup[0], &pnj->toumai, -90,NULL, SDL_FLIP_NONE);
-	//SDL_RenderCopyEx(systeme->renderer, perso->cheveuxblanc, NULL, &pnj->toumai, -90,NULL, SDL_FLIP_NONE);
-}
-
 
 void afficherJOUEURS(struct PERSO *perso,struct DIVERSdeplacement *deplacement,struct DIVERSsysteme *systeme,
                      struct typeFORthreads *online, struct DIVERStemps *temps)

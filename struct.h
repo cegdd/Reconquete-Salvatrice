@@ -260,12 +260,6 @@ struct PACKobjet
 	struct CHOSE objet[NOMBREOBJETS];
 };
 
-struct PACKpnj
-{
-	struct pict toumai;
-	bool toumaiParle;
-};
-
 struct DIVERSinventaire
 {
 	int caseupgauche;
@@ -421,12 +415,6 @@ struct DIVERScraft
 	SDL_Rect pstats;
 };
 
-struct DIVERSmap
-{
-    SDL_Point origin;
-	struct floor cellule;
-};
-
 struct DONJON
 {
     char path[64];
@@ -464,7 +452,6 @@ struct typeFORevent
 		struct DIVERScraft *craft;
         struct PACKmonstre *monstre;
         struct PERSO *perso;
-        struct PACKpnj *pnj;
     };
 
 struct typeFORthreads
