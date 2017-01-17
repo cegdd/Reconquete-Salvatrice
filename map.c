@@ -106,19 +106,13 @@ systeme->continuer = 1;
             boucleevent(&online->chat.lancermessage, FORevent, TIR);
             /*gestion du chat*/
             gestionchat(chat, systeme, online);
-/*
+
             if (TIR->letirdemander == true)
             {
-                gestiontir(TIR, systeme, perso, carte);
+                gestiontir(TIR, systeme, perso, &dj0);
             }
-            COMBATgestionprojectile (TIR, carte);
-*/
-            if(colisionbox(&perso->perso.pict.pos, &dj0.entrance.pict.pos, false) &&
-               systeme->djisloaded == false)
-            {
-                LoadDonjon(&dj0, "dj0");
-                systeme->djisloaded = true;
-            }
+            COMBATgestionprojectile (TIR, &dj0);
+
 
 /*##################################################################################################################################################################################
 											##################### AFFICHAGE #####################																	#
@@ -133,13 +127,13 @@ systeme->continuer = 1;
             {
                 for (index=0 ; index<dj0.nombremonstre ; index++)
                 {
-                    draw_hookpict(&dj0.monstre[index], &dj0.map.pict.pos);
+                    draw_hookpict(&dj0.mob[index].hookpict, &dj0.map.pict.pos);
                 }
             }
             /*affichage des joueurs*/
             afficherJOUEURS(perso, deplacement, systeme, online, temps);
 
-            //BattleDraw_Projectile(TIR, carte);
+            BattleDraw_Projectile(TIR, &dj0);
             /*affichage du chat*/
             if (ui->chat_open == true)
             {

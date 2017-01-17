@@ -13,7 +13,7 @@ void LoadDonjon(struct DONJON *donjon, char *name)
     char temp[128];
     char buffer[4096] = {'\0'};
     FILE *fichier = NULL;
-    int i, j;
+    int i;
     int x = 0, y = 0;
 
     sprintf(temp, "rs/maps/%s.RSCryptedMap", name);
@@ -39,16 +39,19 @@ void LoadDonjon(struct DONJON *donjon, char *name)
 
         lis(fichier, buffer);
 
-        j = atoi(buffer);
-        for(i = 0 ; i < j ; i++)
+        donjon->nbcreature = atoi(buffer);
+        for(i = 0 ; i < donjon->nbcreature ; i++)
         {
             lis(fichier, buffer);
             lis(fichier, buffer);
-           // sprintf(systeme->creature[i].name, buffer);
+            sprintf(donjon->creature[i].name, buffer);
             lis(fichier, buffer);
-           // sprintf(systeme->creature[i].imgpath, buffer);
+            sprintf(donjon->creature[i].imgpath, buffer);
             lis(fichier, buffer);
-           // systeme->creature[i].vie = atoi(buffer);
+            donjon->creature[i].vie = atoi(buffer);
+
+            sprintf(buffer, "rs/images/%s", donjon->creature[i].imgpath);
+            donjon->creature[i].pict.texture = loadTextureandsize(buffer, &donjon->creature[i].pict.pos);
         }
 
         //si le joueur est poser
@@ -74,16 +77,16 @@ void LoadDonjon(struct DONJON *donjon, char *name)
         {
             //ID des mobs
             lis(fichier, buffer);
-      //      data->mob[i].ID = atoi(buffer);
+            donjon->mob[i].ID = atoi(buffer);
             //translation mob en x
             lis(fichier, buffer);
-            donjon->monstre[i].translation.x = atoi(buffer);
+            donjon->mob[i].hookpict.translation.x = atoi(buffer);
             //translation mob en y
             lis(fichier, buffer);
-            donjon->monstre[i].translation.y = atoi(buffer);
-       //     data->mob[i].actif = true;
-       //     data->mob[i].monstre.pict.texture = systeme->creature[data->mob[i].ID].pict.texture;
-       //     setPos4(&data->mob[i].monstre.pict.pos, 0, 0, systeme->creature[data->mob[i].ID].pict.pos.w, systeme->creature[data->mob[i].ID].pict.pos.h);
+            donjon->mob[i].hookpict.translation.y = atoi(buffer);
+
+            donjon->mob[i].hookpict.pict.texture = donjon->creature[donjon->mob[i].ID].pict.texture;
+            setPos4(&donjon->mob[i].hookpict.pict.pos, 0, 0, donjon->creature[donjon->mob[i].ID].pict.pos.w, donjon->creature[donjon->mob[i].ID].pict.pos.h);
         }
         fclose(fichier);
     }

@@ -661,19 +661,17 @@ void initdonjon(struct DONJON *donjon,struct DIVERSsysteme *systeme)
 
     sprintf(donjon->path, "rs/maps/dj0.RSCryptedMap");
 
-    donjon->entrance.pict.texture = loadTexture("rs/images/noir.png");
-    donjon->monstre[i].pict.texture = loadTexture("rs/images/mob0.0.png");
-    for (i=1 ; i<512 ; i++)
-    {
-        donjon->monstre[i].pict.texture = donjon->monstre[0].pict.texture;
-    }
-    for (i=0 ; i<512 ; i++)
-    {
-        setPos4(&donjon->monstre[i].pict.pos, 0, 0, 148, 38);
-    }
+    donjon->nombremonstre = 0;
+    donjon->nbcreature = 0;
 
-    setPos4(&donjon->entrance.pict.pos, 0, 0, 100, 100);
-    setPos2(&donjon->entrance.translation, 1600, 400);
+	for (i = 0 ; i < 128 ; i++)
+    {
+        donjon->creature[i].vie  = 0;
+        donjon->creature[i].name[0]  = '\0';
+        donjon->creature[i].imgpath[0]  = '\0';
+        donjon->creature[i].pict.texture  = -1;
+        setPos4(&donjon->creature[i].pict.pos, 0, 0, 0, 0);
+    }
 }
 
 void initTIR(struct TIR *TIR)

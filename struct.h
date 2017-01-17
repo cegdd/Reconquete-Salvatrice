@@ -245,6 +245,24 @@ struct DIRECTION
     int olddirection;
 };
 
+struct CREATURE
+{
+    int vie;
+
+    char name[64];
+    char imgpath[128];
+
+    struct pict pict;
+};
+
+struct MOB
+{
+    struct hookpict hookpict;
+    int vie;
+    int ID;
+};
+
+
 struct PACKbouton
 {
 	struct BOUTON crafter;
@@ -322,6 +340,7 @@ struct DIVERSsysteme
     int djID;
 
     struct pict pointeur;
+
 
     SDL_Texture *BGmort;
     GLuint BG;
@@ -418,11 +437,14 @@ struct DIVERScraft
 struct DONJON
 {
     char path[64];
-    struct hookpict entrance;
     struct floor map;
     SDL_Point origin;
-    struct hookpict monstre [512];
+    struct MOB mob [512];
+
     int nombremonstre;
+
+    struct CREATURE creature[128];
+    int nbcreature;
 };
 
 struct PACKrecompense

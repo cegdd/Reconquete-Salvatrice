@@ -19,9 +19,9 @@ Uint8 obtenirPixel(SDL_Surface *surface, SDL_Point *pix)
     return *p;
 }
 
-Uint8 obtenirPixel_hook(SDL_Surface *surface, SDL_Point *pix)
+Uint8 obtenirPixel_middle(SDL_Surface *surface, SDL_Rect *pict)
 {
-    Uint8 *p = (Uint8 *)surface->pixels + (surface->h-pix->y) * surface->pitch + pix->x * 4;
+    Uint8 *p = (Uint8 *)surface->pixels + (pict->y+pict->h/2) * surface->pitch + (pict->x+pict->w/2) * 4;
     /* HAVE TO BE 32 BIT PNG */
     return *p;
 }

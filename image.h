@@ -6,7 +6,7 @@
 
 SDL_Texture* LoadingImage(char* emplacement, int transparence,struct DIVERSsysteme *systeme);
 Uint8 obtenirPixel(SDL_Surface *surface, SDL_Point *pix);
-Uint8 obtenirPixel_hook(SDL_Surface *surface, SDL_Point *pix);
+Uint8 obtenirPixel_middle(SDL_Surface *surface, SDL_Rect *pict);
 void chargement (struct DIVERSsysteme *systeme);
 GLuint imprime (char s[], int len, int couleur,struct DIVERSsysteme *systeme, int *LenghtReturn, int *HighReturn);
 void ANIMmort (struct DIVERSsysteme *systeme);

@@ -8,9 +8,9 @@
 #include "systeme.h"
 #include "struct.h"
 #include "image.h"
-/*
+
 void tirer (float px, float py, int canonx, int canony, int tx[][PRECISIONcailloux], int ty[][PRECISIONcailloux],
-            int tableauutile, double *degre, struct DIVERSmap *carte)
+            int tableauutile, double *degre, struct DONJON *donjon)
 {
 	int vitesse = VITESSE;
 	float y, x;
@@ -56,14 +56,11 @@ void tirer (float px, float py, int canonx, int canony, int tx[][PRECISIONcaillo
 			y -= ecart*vitesse;
 		}
 
-		tx[tableauutile][i] = arrondi(x)- carte->cellule.pict.pos.x;
-		ty[tableauutile][i] = arrondi(y)- carte->cellule.pict.pos.y;
+		tx[tableauutile][i] = arrondi(x)- donjon->map.pict.pos.x;
+		ty[tableauutile][i] = arrondi(y)- donjon->map.pict.pos.y;
 
 
 	}
-	printf("depart de la carte en %d %d\n", carte->cellule.pict.pos.x, carte->cellule.pict.pos.y);
-    printf("perso en  %d %d\n", canonx, canony);
-    printf("depart du cailloux en %d %d\n", tx[tableauutile][1], ty[tableauutile][1]);
 	for(i = PRECISIONcailloux-bissectrice; i < PRECISIONcailloux ; i++)
 	{
 		tx[tableauutile][i] = tx[tableauutile][PRECISIONcailloux-1-bissectrice];
@@ -71,14 +68,10 @@ void tirer (float px, float py, int canonx, int canony, int tx[][PRECISIONcaillo
 	}
 }
 /*
-int HitboxBalle(struct typecombat *BTLstr, int index)
+int HitboxBalle(int index)
 {//fonction appeler pour chaque monstres
 	int i, k = 0, l = 0;
 	SDL_Rect pix = {0, 0, 1, 1};
-
-	#if TESTGRID == 1
-	SDL_Point point;
-	#endif // TESTGRID
 
 	for (i = 0 ; i < NBcailloux ; i++)
 	{   //tri et degrossissage pour calcul précis
@@ -114,26 +107,23 @@ int HitboxBalle(struct typecombat *BTLstr, int index)
         }
 	}
 	return -1;
-}
-*/
-/*
-void COMBATgestionprojectile (struct TIR *TIR, struct DIVERSmap *carte)
+}*/
+
+
+
+void COMBATgestionprojectile (struct TIR *TIR, struct DONJON *donjon)
 {
 	int index;
-	SDL_Point point;
 	for (index = 0 ; index < NBcailloux ; index++)
 	{
 		if (TIR->DepartBalle[index] != UNUSED && TIR->i[index] < PRECISIONcailloux - 1 && TIR->DepartBalle[index] != STOP)
 		{
-			TIR->i[index] = TIR->i[index]+1;
+			TIR->i[index]++;
 			TIR->pballe[index].x = TIR->tx[index][TIR->i[index]];
 			TIR->pballe[index].y = TIR->ty[index][TIR->i[index]];
-			//point = PointOf(TIR->pballe[index]);
-			point.x = TIR->pballe[index].x;
-			point.y = TIR->pballe[index].y;
-			if (obtenirPixel_hook(carte->cellule.calque, &point) !=  255)
+			if (obtenirPixel_middle(donjon->map.calque, &TIR->pballe[index]) !=  255)
             {
-                TIR->DepartBalle[index] = UNUSED;
+                TIR->DepartBalle[index] = STOP;
             }
 		}
 		else if (TIR->i[index] >= PRECISIONcailloux-1)
@@ -142,19 +132,16 @@ void COMBATgestionprojectile (struct TIR *TIR, struct DIVERSmap *carte)
 			TIR->pballe[index].y = TIR->ty[index][PRECISIONcailloux-1];
 			TIR->DepartBalle[index] = STOP;
 		}
-		else
-		{
-		}
 	}
-}*/
+}
 
-void gestiontir(struct TIR *TIR, struct DIVERSsysteme *systeme, struct PERSO *perso, struct DIVERSmap *carte)
+void gestiontir(struct TIR *TIR, struct DIVERSsysteme *systeme, struct PERSO *perso, struct DONJON *donjon)
 {
     //pos du perso a l'ecran
     int x = (perso->perso.pict.pos.x + perso->perso.pict.pos.w/2);
     int y = (perso->perso.pict.pos.y + perso->perso.pict.pos.h/2);
 
-//    tirer (systeme->pointeur.pos.x, systeme->pointeur.pos.y, x, y, TIR->tx, TIR->ty, TIR->tableauutile, &TIR->degre, carte);
+    tirer (systeme->pointeur.pos.x, systeme->pointeur.pos.y, x, y, TIR->tx, TIR->ty, TIR->tableauutile, &TIR->degre, donjon);
 
 
     TIR->letirdemander = false;
@@ -166,15 +153,15 @@ void gestiontir(struct TIR *TIR, struct DIVERSsysteme *systeme, struct PERSO *pe
 		TIR->tableauutile = 0;
 	}
 }
-/*
-void BattleDraw_Projectile(struct TIR *TIR, struct DIVERSmap *carte)
+
+void BattleDraw_Projectile(struct TIR *TIR, struct DONJON *donjon)
 {
     int index;
     for(index = 0 ; index < NBcailloux ; index++)
 	{
 		if (TIR->DepartBalle[index] == RUNNING)
 		{
-			draw_hook(TIR->balle, &TIR->pballe[index], &carte->cellule.pict.pos);
+			draw_hook(TIR->balle, &TIR->pballe[index], &donjon->map.pict.pos);
 		}
 	}
-}*/
+}
