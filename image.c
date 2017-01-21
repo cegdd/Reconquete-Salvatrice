@@ -14,14 +14,7 @@ extern int screenh, screenw;
 
 Uint8 obtenirPixel(SDL_Surface *surface, SDL_Point *pix)
 {
-    Uint8 *p = (Uint8 *)surface->pixels + pix->y * surface->pitch + pix->x * 4;
-    /* HAVE TO BE 32 BIT PNG */
-    return *p;
-}
-
-Uint8 obtenirPixel_middle(SDL_Surface *surface, SDL_Rect *pict)
-{
-    Uint8 *p = (Uint8 *)surface->pixels + (pict->y+pict->h/2) * surface->pitch + (pict->x+pict->w/2) * 4;
+    Uint8 *p = (Uint8 *)surface->pixels + (surface->h-pix->y) * surface->pitch + pix->x * 4;
     /* HAVE TO BE 32 BIT PNG */
     return *p;
 }
@@ -356,6 +349,12 @@ void setPos2(SDL_Point *point, int x, int y)
     point->x = x;
     point->y = y;
 }
+void setPos2rect(SDL_Rect *point, int x, int y)
+{
+    point->x = x;
+    point->y = y;
+}
+
 
 
 void Turn_And_Draw (struct pict *img, float angle)

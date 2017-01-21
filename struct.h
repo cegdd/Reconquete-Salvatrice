@@ -124,11 +124,8 @@ struct Element
 
 struct BARREVIE
 {
-	SDL_Texture *texture;
-	SDL_Texture *BGtexture;
-	SDL_Rect position;
-	SDL_Rect BGposition;
-
+	SDL_Rect pBG;
+	SDL_Rect pbarre;
 	int life;
 	int baselife;
 };
@@ -257,6 +254,7 @@ struct CREATURE
 
 struct MOB
 {
+    struct BARREVIE *BarreDeVie;
     struct hookpict hookpict;
     int vie;
     int ID;
@@ -343,8 +341,8 @@ struct DIVERSsysteme
 
 
     SDL_Texture *BGmort;
-    GLuint BG;
-    SDL_Texture *BGblanc;
+    GLuint BGnoir;
+    GLuint BGblanc;
 
     SDL_Event evenement;
 

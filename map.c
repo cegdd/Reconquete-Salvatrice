@@ -20,6 +20,7 @@
 #include "queue.h"
 #include "donjon.h"
 #include "tir.h"
+#include "tool.h"
 
 extern int screenh, screenw;
 
@@ -123,11 +124,21 @@ systeme->continuer = 1;
 
             /*affichage de la carte*/
             draw_pict(&dj0.map.pict);
-            if(systeme->djisloaded)
+            for (index=0 ; index<dj0.nombremonstre ; index++)
             {
-                for (index=0 ; index<dj0.nombremonstre ; index++)
+                if(dj0.mob[index].BarreDeVie->life > 0)
                 {
                     draw_hookpict(&dj0.mob[index].hookpict, &dj0.map.pict.pos);
+
+                    CalculerBarreDeVie(dj0.mob[index].BarreDeVie->baselife , dj0.mob[index].BarreDeVie->life, 68);
+                    setPos2rect(&dj0.mob[index].BarreDeVie->pBG, dj0.mob[index].hookpict.pict.pos.x-1 + ((dj0.mob[index].hookpict.pict.pos.w-68)/2),
+                                dj0.mob[index].hookpict.pict.pos.y + dj0.mob[index].hookpict.pict.pos.h+4);
+                    setPos4(&dj0.mob[index].BarreDeVie->pbarre, dj0.mob[index].hookpict.pict.pos.x + ((dj0.mob[index].hookpict.pict.pos.w-68)/2),
+                                dj0.mob[index].hookpict.pict.pos.y + dj0.mob[index].hookpict.pict.pos.h+5,
+                                CalculerBarreDeVie(dj0.mob[index].BarreDeVie->baselife , dj0.mob[index].BarreDeVie->life, 68), 5);
+
+                    draw(systeme->BGnoir, &dj0.mob[index].BarreDeVie->pBG);
+                    draw(systeme->BGblanc, &dj0.mob[index].BarreDeVie->pbarre);
                 }
             }
             /*affichage des joueurs*/

@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <SDL.h>
 #include <math.h>
 
@@ -459,9 +460,11 @@ void afficherJOUEURS(struct PERSO *perso,struct DIVERSdeplacement *deplacement,s
 
 	Turn_And_Draw(&perso->perso.pict, calcul);
 
-	//SDL_RenderCopyEx(systeme->renderer, perso->tperso, &perso->spriteup[deplacement->indexanimperso], &perso->pperso, calcul,NULL, SDL_FLIP_NONE);
-	//SDL_RenderCopy(systeme->renderer, perso->tpseudo, NULL, &perso->ptpseudo);
+	setPos2rect(&perso->BarreDeVie->pBG, perso->perso.pict.pos.x-1, perso->perso.pict.pos.y+perso->perso.pict.pos.h+4);
+	setPos2rect(&perso->BarreDeVie->pbarre, perso->perso.pict.pos.x, perso->perso.pict.pos.y+perso->perso.pict.pos.h+5);
 
+	draw(systeme->BGnoir, &perso->BarreDeVie->pBG);
+    draw(systeme->BGblanc, &perso->BarreDeVie->pbarre);
 
 	/*joueurs en ligne
 	for(index = 0 ; index < MAX_JOUEURS ; index++)
@@ -600,7 +603,7 @@ void afficherDETAIL(struct DIVERSinventaire *inventaire,struct PACKobjet *objet,
 /*affichage*/
 	inventaire->pdetail.w += 20;
 	inventaire->pdetail.y = systeme->pointeur.pos.y - inventaire->pdetail.h;
-	draw(systeme->BG, &inventaire->pdetail);
+	draw(systeme->BGnoir, &inventaire->pdetail);
 
 	if(objet->objet[id].type == EQUIPEMENT)
 	{

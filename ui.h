@@ -16,7 +16,6 @@ void afficherINVENTAIRE(struct DIVERSinventaire *inventaire,struct DIVERSui *ui,
 void afficherUI(bool enligne,struct DIVERSui *ui,struct PACKbouton *bouton,struct DIVERStemps *temps,struct PERSO *perso,
                 struct DIVERSinventaire *inventaire,struct DIVERSsysteme *systeme,
                 struct PACKrecompense *recompense,struct PACKobjet *objet);
-void afficherMOB(struct PACKmonstre *monstre,struct DIVERSsysteme *systeme, struct DIVERStemps *temps);
 void afficherJOUEURS(struct PERSO *perso,struct DIVERSdeplacement *deplacement,struct DIVERSsysteme *systeme,
                      struct typeFORthreads *online, struct DIVERStemps *temps);
 void afficherCHAT(struct DIVERSchat *chat,struct DIVERSui *ui, int lenbuffer,struct DIVERSsysteme *systeme);

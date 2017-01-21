@@ -3,22 +3,25 @@
 #include <SDL.h>
 
 #include "main.h"
-#include "systeme.h"
+#include "image.h"
 
 typedef struct BARREVIE BARREVIE;
 
 
-BARREVIE* AddLifeBar(int life, int lenght,struct DIVERSsysteme *systeme)
+BARREVIE* AddLifeBar(int life, int lenght)
 {
-	BARREVIE *new = malloc(sizeof(BARREVIE));
+	BARREVIE *lifebar = malloc(sizeof(BARREVIE));
 
-	new->life = life;
-	new->BGtexture = systeme->BGblanc;
-	new->position.x = -1;
-	new->position.y = -1;
-	new->position.w = lenght;
-	new->position.h = 5;
-	new->BGposition.w = lenght+2;
-	new->BGposition.h = 7;
-	return new;
+	lifebar->life = life;
+	lifebar->baselife = life;
+
+	setPos4(&lifebar->pBG, 0, 0, lenght+2, 7);
+    setPos4(&lifebar->pbarre, 1, 1, lenght, 5);
+	return lifebar;
+}
+
+
+int CalculerBarreDeVie(int VieDeBase, int VieActuelle, int width)
+{
+	return ((float)width / (float)VieDeBase) * (float)VieActuelle;
 }

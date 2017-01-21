@@ -5,6 +5,7 @@
 #include "sauvegarde.h"
 #include "struct.h"
 #include "image.h"
+#include "tool.h"
 
 extern int screenh, screenw;
 
@@ -87,6 +88,8 @@ void LoadDonjon(struct DONJON *donjon, char *name)
 
             donjon->mob[i].hookpict.pict.texture = donjon->creature[donjon->mob[i].ID].pict.texture;
             setPos4(&donjon->mob[i].hookpict.pict.pos, 0, 0, donjon->creature[donjon->mob[i].ID].pict.pos.w, donjon->creature[donjon->mob[i].ID].pict.pos.h);
+
+            donjon->mob[i].BarreDeVie = AddLifeBar(donjon->creature[donjon->mob[i].ID].vie, 68);
         }
         fclose(fichier);
     }

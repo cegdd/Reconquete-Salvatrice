@@ -315,7 +315,7 @@ void initperso(struct PERSO *perso,struct DIVERSsysteme *systeme)/*													
 	setPos4(&perso->tforce.pos, screenw*0.11, screenh*0.62, screenw*0.28, screenh*0.05);
 	setPos4(&perso->tportee.pos, screenw*0.11, screenh*0.56, screenw*0.28, screenh*0.05);
 
-	perso->BarreDeVie = AddLifeBar(100, perso->perso.pict.pos.w, systeme);
+	perso->BarreDeVie = AddLifeBar(100, perso->perso.pict.pos.w);
 
 	index = 0;
 	perso->PixelCalque[index].x = 0;		perso->PixelCalque[index].y = 0;		 index++;
@@ -386,8 +386,8 @@ void initsystem(struct DIVERSsysteme *systeme)/*																	systeme*/
 
 	systeme->pointeur.texture = loadTexture("rs/images/p.png");
 	//systeme->BGmort = LoadingImage				("rs/fonds/mort.png", 0, systeme);
-	systeme->BG =               loadTexture	("rs/ui/BG.png");
-	//systeme->BGblanc = LoadingImage	("rs/ui/bgb.png", 0, systeme);
+	systeme->BGnoir =               loadTexture	("rs/ui/BG.png");
+	systeme->BGblanc =              loadTexture	("rs/ui/bgb.png");
 
 	systeme->police = TTF_OpenFont("rs/divers/dalek.ttf", TAILLE_POLICE);
 	systeme->police1 = TTF_OpenFont("rs/divers/police1.ttf", TAILLE_POLICE);

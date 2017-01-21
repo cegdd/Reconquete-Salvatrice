@@ -8,6 +8,7 @@
 #include "systeme.h"
 #include "struct.h"
 #include "image.h"
+#include "colision.h"
 
 void tirer (float px, float py, int canonx, int canony, int tx[][PRECISIONcailloux], int ty[][PRECISIONcailloux],
             int tableauutile, double *degre, struct DONJON *donjon)
@@ -67,66 +68,37 @@ void tirer (float px, float py, int canonx, int canony, int tx[][PRECISIONcaillo
 		ty[tableauutile][i] = ty[tableauutile][PRECISIONcailloux-1-bissectrice];
 	}
 }
-/*
-int HitboxBalle(int index)
-{//fonction appeler pour chaque monstres
-	int i, k = 0, l = 0;
-	SDL_Rect pix = {0, 0, 1, 1};
-
-	for (i = 0 ; i < NBcailloux ; i++)
-	{   //tri et degrossissage pour calcul précis
-	    if (checkdistance(&BTLstr->creature[index].m_pict.pict.pos, &BTLstr->pballe[i], 120) == -1 && BTLstr->DepartBalle[i] == RUNNING )
-        {
-            #if TESTGRID == 1
-            point.x = pballe[i].x;
-            point.y = pballe[i].y;
-            UnWriteCircleTestGrid(BTLstr, &point, 10);
-            #endif // TESTGRID
-
-            for(k = BTLstr->pballe[i].x ; k <= BTLstr->pballe[i].x + BTLstr->pballe[i].w ; k++)
-            {
-                for(l = BTLstr->pballe[i].y ; l <= BTLstr->pballe[i].y + BTLstr->pballe[i].h; l++)
-                {
-                    pix.x = k;
-                    pix.y = l;
-
-                    if (checkdistance(&pix, &BTLstr->pballe[i], 10) == -1 )
-                    {
-                        if (TestColision_Rat(&BTLstr->creature[index].m_pict.pict.pos, pix.x, pix.y, BTLstr->creature[index].Direction) == 1)
-                        {
-                            #if TESTGRID == 1
-                            point.x = pballe[i].x;
-                            point.y = pballe[i].y;
-                            UnWriteCircleTestGrid(BTLstr, &point, 10);
-                            #endif // TESTGRID
-                            return i;
-                        }
-                    }
-                }
-            }
-        }
-	}
-	return -1;
-}*/
-
 
 
 void COMBATgestionprojectile (struct TIR *TIR, struct DONJON *donjon)
 {
-	int index;
+	int index, i;
 	for (index = 0 ; index < NBcailloux ; index++)
 	{
 		if (TIR->DepartBalle[index] != UNUSED && TIR->i[index] < PRECISIONcailloux - 1 && TIR->DepartBalle[index] != STOP)
-		{
+		{//running
 			TIR->i[index]++;
 			TIR->pballe[index].x = TIR->tx[index][TIR->i[index]];
 			TIR->pballe[index].y = TIR->ty[index][TIR->i[index]];
-			if (obtenirPixel_middle(donjon->map.calque, &TIR->pballe[index]) !=  255)
+
+			if (obtenirPixel(donjon->map.calque, (SDL_Point*)&TIR->pballe[index]) !=  255)
             {
                 TIR->DepartBalle[index] = STOP;
             }
+            TIR->pballe[index].x += donjon->map.pict.pos.x;
+			TIR->pballe[index].y += donjon->map.pict.pos.y;
+            for( i = 0 ; i < donjon->nombremonstre ; i++)
+            {
+                if (donjon->mob[i].BarreDeVie->life > 0 && checkdistance(&TIR->pballe[index], &donjon->mob[i].hookpict.pict.pos, 45) == -1)
+                {
+                    TIR->DepartBalle[index] = UNUSED;
+                    donjon->mob[i].vie -=10;
+                    donjon->mob[i].BarreDeVie->life -=10;
+                }
+
+            }
 		}
-		else if (TIR->i[index] >= PRECISIONcailloux-1)
+		else if (TIR->i[index] >= PRECISIONcailloux-1)// fin de course
 		{
 			TIR->pballe[index].x = TIR->tx[index][PRECISIONcailloux-1];
 			TIR->pballe[index].y = TIR->ty[index][PRECISIONcailloux-1];
@@ -140,8 +112,9 @@ void gestiontir(struct TIR *TIR, struct DIVERSsysteme *systeme, struct PERSO *pe
     //pos du perso a l'ecran
     int x = (perso->perso.pict.pos.x + perso->perso.pict.pos.w/2);
     int y = (perso->perso.pict.pos.y + perso->perso.pict.pos.h/2);
+    int cursy = (systeme->pointeur.pos.y + systeme->pointeur.pos.h);
 
-    tirer (systeme->pointeur.pos.x, systeme->pointeur.pos.y, x, y, TIR->tx, TIR->ty, TIR->tableauutile, &TIR->degre, donjon);
+    tirer (systeme->pointeur.pos.x, cursy, x, y, TIR->tx, TIR->ty, TIR->tableauutile, &TIR->degre, donjon);
 
 
     TIR->letirdemander = false;
@@ -161,7 +134,7 @@ void BattleDraw_Projectile(struct TIR *TIR, struct DONJON *donjon)
 	{
 		if (TIR->DepartBalle[index] == RUNNING)
 		{
-			draw_hook(TIR->balle, &TIR->pballe[index], &donjon->map.pict.pos);
+			draw(TIR->balle, &TIR->pballe[index]);
 		}
 	}
 }
