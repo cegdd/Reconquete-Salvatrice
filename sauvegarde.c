@@ -181,3 +181,15 @@ void lis(FILE *fichier, char *buffer)
     buffer[iligne] = '\0';
     uncrypt(buffer, buffer);
 }
+
+bool saybool(char value)
+{
+    if (value == '1')
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}

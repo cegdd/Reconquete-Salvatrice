@@ -4,6 +4,7 @@
 #include <SDL_ttf.h>
 
 #include "main.h"
+#include "donjon.h"
 
 int TotalTableauInt(int *ptrTableau, int nbcase);
 void initPLAN(struct PACKobjet *objet);
@@ -23,7 +24,6 @@ void initFORevent(struct typeFORevent *FORevent,struct PACKobjet *objet,struct P
 				struct DIVERSdeplacement *deplacement,struct DIVERSchat *chat,struct DIVERSui *ui,struct DIVERScraft *craft,
 				struct PERSO *perso);
 void initonline(struct typeFORthreads *online,struct DIVERSsysteme *systeme);
-void initdonjon(struct DONJON *donjon,struct DIVERSsysteme *systeme);
 void initTIR(struct TIR *TIR);
 
 #endif

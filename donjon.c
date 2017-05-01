@@ -6,15 +6,36 @@
 #include "struct.h"
 #include "image.h"
 #include "tool.h"
+#include "donjon.h"
+#include "mob.h"
 
 extern int screenh, screenw;
+
+void initdonjon(struct DONJON *donjon,struct DIVERSsysteme *systeme)
+{
+    int i = 0;
+
+    sprintf(donjon->path, "rs/maps/dj0.RSCryptedMap");
+
+    donjon->nombremonstre = 0;
+    donjon->nbcreature = 0;
+
+	for (i = 0 ; i < 128 ; i++)
+    {
+        initcreature(&donjon->creature[i]);
+    }
+    for (i = 0 ; i < 512 ; i++)
+    {
+        initmob(&donjon->mob[i]);
+    }
+}
 
 void LoadDonjon(struct DONJON *donjon, char *name)
 {
     char temp[128];
     char buffer[4096] = {'\0'};
     FILE *fichier = NULL;
-    int i;
+    int i, i2;
     int x = 0, y = 0;
 
     sprintf(temp, "rs/maps/%s.RSCryptedMap", name);
@@ -33,23 +54,45 @@ void LoadDonjon(struct DONJON *donjon, char *name)
         sprintf(temp, "rs/maps/%snb.png", buffer);
         donjon->map.calque = IMG_Load(temp);
 
-        if (!glIsTexture(donjon->map.pict.texture))
+        if (!glIsTexture(donjon->map.pict.texture) ||
+            donjon->map.calque == NULL)
         {
             printf("donjon map : %s not founded\n", temp);
         }
-
+        //nombre de creature
         lis(fichier, buffer);
 
         donjon->nbcreature = atoi(buffer);
         for(i = 0 ; i < donjon->nbcreature ; i++)
         {
+            //ID same as i
             lis(fichier, buffer);
+            //name
             lis(fichier, buffer);
             sprintf(donjon->creature[i].name, buffer);
+            //image
             lis(fichier, buffer);
             sprintf(donjon->creature[i].imgpath, buffer);
+            //vie
             lis(fichier, buffer);
             donjon->creature[i].vie = atoi(buffer);
+            //agressif
+            lis(fichier, buffer);
+            donjon->creature[i].aggressif = saybool(buffer[0]);
+            if (donjon->creature[i].aggressif == true)
+            {
+                lis(fichier, buffer);
+                donjon->creature[i].Rvision = atoi(buffer);
+            }
+            //vitesse
+            lis(fichier, buffer);
+            donjon->creature[i].vitesse = saybool(buffer[0]);
+            //dps
+            lis(fichier, buffer);
+            donjon->creature[i].dps = saybool(buffer[0]);
+            //Ratk
+            lis(fichier, buffer);
+            donjon->creature[i].Ratk = saybool(buffer[0]);
 
             sprintf(buffer, "rs/images/%s", donjon->creature[i].imgpath);
             donjon->creature[i].pict.texture = loadTextureandsize(buffer, &donjon->creature[i].pict.pos);
@@ -69,8 +112,6 @@ void LoadDonjon(struct DONJON *donjon, char *name)
         }
 
         //nombre de mobs
-      //  listmob(systeme);
-
         lis(fichier, buffer);
         donjon->nombremonstre = atoi(buffer);
 
@@ -85,6 +126,33 @@ void LoadDonjon(struct DONJON *donjon, char *name)
             //translation mob en y
             lis(fichier, buffer);
             donjon->mob[i].hookpict.translation.y = atoi(buffer);
+            //echelle
+            lis(fichier, buffer);
+            donjon->mob[i].scale = atoi(buffer);
+            //angle
+            lis(fichier, buffer);
+            donjon->mob[i].angle = atoi(buffer);
+            //fixe
+            lis(fichier, buffer);
+            donjon->mob[i].fixe = saybool(buffer[0]);
+            if (donjon->mob[i].fixe == false)
+            {
+                lis(fichier, buffer);
+                donjon->mob[i].path.counter = atoi(buffer);
+                for (i2 = 0 ; i2 < donjon->mob[i].path.counter ; i2++)
+                {
+                    lis(fichier, buffer);
+                    donjon->mob[i].path.x[i2] = atoi(buffer);
+                    lis(fichier, buffer);
+                    donjon->mob[i].path.y[i2] = atoi(buffer);
+                    donjon->mob[i].path.used[i2] = true;
+                }
+                if (donjon->mob[i].path.counter > 0)
+                {
+                    lis(fichier, buffer);
+                    donjon->mob[i].path.loop = saybool(buffer[0]);
+                }
+            }
 
             donjon->mob[i].hookpict.pict.texture = donjon->creature[donjon->mob[i].ID].pict.texture;
             setPos4(&donjon->mob[i].hookpict.pict.pos, 0, 0, donjon->creature[donjon->mob[i].ID].pict.pos.w, donjon->creature[donjon->mob[i].ID].pict.pos.h);

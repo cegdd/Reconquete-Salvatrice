@@ -68,6 +68,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="colision.h" />
+		<Unit filename="creature.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="creature.h" />
 		<Unit filename="deplacement.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -106,10 +110,18 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="map.h" />
+		<Unit filename="mob.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="mob.h" />
 		<Unit filename="objet.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="objet.h" />
+		<Unit filename="path.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="path.h" />
 		<Unit filename="queue.c">
 			<Option compilerVar="CC" />
 		</Unit>

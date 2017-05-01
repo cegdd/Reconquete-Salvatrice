@@ -1,3 +1,7 @@
+#ifndef MAPH
+#define MAPH
+
+#include "donjon.h"
 
 
 int map (struct DIVERSsysteme *systeme,struct typeFORthreads *online,struct PACKbouton *bouton ,struct PACKobjet *objet,
@@ -22,3 +26,5 @@ int calcultempssecondes(int temptotal);
 int calcultempsminutes(int temptotal);
 int calcultempsheures(int temptotal);
 int calcultempsjours(int temptotal);
+
+#endif

@@ -9,6 +9,7 @@
 #include "struct.h"
 #include "image.h"
 #include "colision.h"
+#include "donjon.h"
 
 void tirer (float px, float py, int canonx, int canony, int tx[][PRECISIONcailloux], int ty[][PRECISIONcailloux],
             int tableauutile, double *degre, struct DONJON *donjon)

@@ -12,7 +12,7 @@
 /*####     OS     ######*/
 #define WINDOWS 1
 /*####logging rapide ####*/
-#define FASTLOG 1
+#define FASTLOG 0
 /*####  battle log   ####*/
 #define BATTLE_LOG 0
 /*##battle log display##*/
@@ -242,25 +242,6 @@ struct DIRECTION
     int olddirection;
 };
 
-struct CREATURE
-{
-    int vie;
-
-    char name[64];
-    char imgpath[128];
-
-    struct pict pict;
-};
-
-struct MOB
-{
-    struct BARREVIE *BarreDeVie;
-    struct hookpict hookpict;
-    int vie;
-    int ID;
-};
-
-
 struct PACKbouton
 {
 	struct BOUTON crafter;
@@ -430,19 +411,6 @@ struct DIVERScraft
 	SDL_Rect posimagecompocraft[10];
 	SDL_Rect posimageresultatcraft;
 	SDL_Rect pstats;
-};
-
-struct DONJON
-{
-    char path[64];
-    struct floor map;
-    SDL_Point origin;
-    struct MOB mob [512];
-
-    int nombremonstre;
-
-    struct CREATURE creature[128];
-    int nbcreature;
 };
 
 struct PACKrecompense

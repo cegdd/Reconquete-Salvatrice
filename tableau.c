@@ -655,25 +655,6 @@ void initonline(struct typeFORthreads *online,struct DIVERSsysteme *systeme)
 
 }
 
-void initdonjon(struct DONJON *donjon,struct DIVERSsysteme *systeme)
-{
-    int i = 0;
-
-    sprintf(donjon->path, "rs/maps/dj0.RSCryptedMap");
-
-    donjon->nombremonstre = 0;
-    donjon->nbcreature = 0;
-
-	for (i = 0 ; i < 128 ; i++)
-    {
-        donjon->creature[i].vie  = 0;
-        donjon->creature[i].name[0]  = '\0';
-        donjon->creature[i].imgpath[0]  = '\0';
-        donjon->creature[i].pict.texture  = -1;
-        setPos4(&donjon->creature[i].pict.pos, 0, 0, 0, 0);
-    }
-}
-
 void initTIR(struct TIR *TIR)
 {
     int index = 0;
