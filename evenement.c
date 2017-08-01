@@ -4,6 +4,7 @@
 #include <SDL.h>
 
 #include "struct.h"
+#include "perso.h"
 #include "clavier.h"
 #include "evenement.h"
 #include "colision.h"
@@ -55,111 +56,6 @@ void boucleevent (bool *lancermessage,struct typeFORevent *FORevent, struct TIR 
 		}
 	}
 }
-/*
-int boucleeventcombat (struct typecombat *BTLstr,struct DIVERSsysteme *systeme,struct DIRECTION *direction,struct DIVERSui *ui)
-{
-	while(SDL_PollEvent(&systeme->evenement) == 1)
-	{
-		switch(systeme->evenement.type)
-		{
-			case SDL_KEYUP:
-				switch (systeme->evenement.key.keysym.scancode)
-				{
-					case SDL_SCANCODE_ESCAPE:
-						if (BTLstr->echap == 1)
-						{
-							if (BTLstr->alive <= 0)
-							{
-								return BTL_WON;
-							}
-							else
-							{
-								return BTL_LEAVED;
-							}
-						}
-						else {}
-						break;
-					case SDL_SCANCODE_D:
-					case SDL_SCANCODE_RIGHT:
-                        direction->droite = 0;
-                        break;
-					case SDL_SCANCODE_A:
-					case SDL_SCANCODE_LEFT:
-						direction->gauche = 0;
-						break;
-					case SDL_SCANCODE_W:
-					case SDL_SCANCODE_UP:
-						direction->haut = 0;
-						break;
-					case SDL_SCANCODE_S:
-					case SDL_SCANCODE_DOWN:
-						direction->bas = 0;
-						break;
-					default:
-						break;
-				}
-				if (direction->droite == 0 && direction->gauche == 0 && direction->haut == 0 && direction->bas == 0)
-				{
-					BTLstr->persobouge = 0;
-				}
-				break;
-			case SDL_KEYDOWN:
-				switch (systeme->evenement.key.keysym.scancode)
-				{
-					case SDL_SCANCODE_ESCAPE:
-						BTLstr->echap = 1;
-						break;
-					case SDL_SCANCODE_A:
-					case SDL_SCANCODE_LEFT:
-						direction->gauche = 1;
-						BTLstr->persobouge = 1;
-						break;
-					case SDL_SCANCODE_D:
-					case SDL_SCANCODE_RIGHT:
-						direction->droite = 1;
-						BTLstr->persobouge = 1;
-						break;
-					case SDL_SCANCODE_W:
-					case SDL_SCANCODE_UP:
-						direction->haut = 1;
-						BTLstr->persobouge = 1;
-						break;
-					case SDL_SCANCODE_S:
-					case SDL_SCANCODE_DOWN:
-						direction->bas = 1;
-						BTLstr->persobouge = 1;
-						break;
-					default:
-						break;
-				}
-				break;
-			case SDL_MOUSEBUTTONUP:
-				if( systeme->evenement.button.button == SDL_BUTTON_LEFT )
-				{
-					BTLstr->letirdemander = false;
-					if (ui->casestuff[ARME].IDobjet == -1)
-                    {
-                        BTLstr->poing_tendu = false;
-                    }
-				}
-				break;
-            case SDL_MOUSEBUTTONDOWN:
-				if( systeme->evenement.button.button == SDL_BUTTON_LEFT )
-				{
-					BTLstr->letirdemander = true;
-					if (ui->casestuff[ARME].IDobjet == -1)
-                    {
-                        BTLstr->poing_tendu = true;
-                    }
-				}
-				break;
-			default:
-				break;
-		}
-	}
-	return -1;
-}
-*/
 int boucleeventlogin (struct typelogin *loginstore,struct DIVERSsysteme *systeme)
 {
 	if (colisionbox(&loginstore->pointeur.pos, &loginstore->option.pos, true) &&

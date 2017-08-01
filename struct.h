@@ -189,59 +189,6 @@ struct EMPLACEMENT
 	SDL_Rect pos;
 };
 
-struct PERSO
-{
-	struct BARREVIE *BarreDeVie;
-
-	int lifemax;
-	char slife[50];
-	int stuff[7];
-
-	int regenlife;
-	float defense;
-	float life;
-	int force;
-	int portee;
-	int cote[8];
-	int etatpix[12];
-
-	struct moving_pict perso;
-
-	Uint8 pixel[12] ;
-
-	SDL_Texture *texture_poing[1];
-	SDL_Texture *tpseudo;
-	SDL_Texture *cheveuxbrun ;
-	SDL_Texture *cheveuxblanc;
-
-	struct pict tdefense;
-
-	struct pict tlife;
-	struct pict tregenlife;
-	struct pict tforce;
-	struct pict tportee;
-
-	SDL_Rect spriteup[8];
-	SDL_Rect spritehit;
-	SDL_Rect pperso_poing;
-	SDL_Rect ptpseudo;
-
-	SDL_Point PixelCalque[12];
-	SDL_Point centrecorp;
-    SDL_Point pix;
-
-};
-
-struct DIRECTION
-{
-	int bas;
-    int haut;
-    int droite;
-    int gauche;
-    int direction;
-    int olddirection;
-};
-
 struct PACKbouton
 {
 	struct BOUTON crafter;
@@ -278,14 +225,7 @@ struct DIVERSinventaire
 	SDL_Rect pdetail;
 };
 
-struct DIVERSdeplacement
-{
-    int directionjoueurs[MAX_JOUEURS];
-    struct DIRECTION direction;
-    int persobouge;
-    int indexanimperso;
-    SDL_Rect temp;
-};
+
 
 struct DIVERStemps
 {

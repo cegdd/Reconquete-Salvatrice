@@ -8,6 +8,8 @@
 #include "colision.h"
 #include "systeme.h"
 #include "image.h"
+#include "perso.h"
+#include "tool.h"
 
 extern int screenh, screenw;
 
@@ -459,8 +461,11 @@ void afficherJOUEURS(struct PERSO *perso,struct DIVERSdeplacement *deplacement,s
 	Turn_And_Draw(&perso->perso.pict, calcul);
 
 	setPos2rect(&perso->BarreDeVie->pBG, perso->perso.pict.pos.x-1, perso->perso.pict.pos.y+perso->perso.pict.pos.h+4);
-	setPos2rect(&perso->BarreDeVie->pbarre, perso->perso.pict.pos.x, perso->perso.pict.pos.y+perso->perso.pict.pos.h+5);
-
+	setPos4(&perso->BarreDeVie->pbarre,
+         perso->perso.pict.pos.x,
+         perso->perso.pict.pos.y+perso->perso.pict.pos.h+5,
+         CalculerBarreDeVie(perso->lifemax ,perso->life, perso->perso.pict.pos.w),
+         5);
 	draw(systeme->BGnoir, &perso->BarreDeVie->pBG);
     draw(systeme->BGblanc, &perso->BarreDeVie->pbarre);
 

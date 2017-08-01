@@ -122,14 +122,14 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="path.h" />
+		<Unit filename="perso.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="perso.h" />
 		<Unit filename="queue.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="queue.h" />
-		<Unit filename="rat.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="rat.h" />
 		<Unit filename="rs.layout" />
 		<Unit filename="rs/divers/color_grid.png" />
 		<Unit filename="rs/divers/dalek.ttf" />

@@ -5,6 +5,7 @@
 
 #include "ui.h"
 #include "image.h"
+#include "perso.h"
 
 extern int screenh, screenw;
 

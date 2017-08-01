@@ -385,6 +385,19 @@ void Turn_And_Draw (struct pict *img, float angle)
     glLoadIdentity();
 }
 
+void turn_draw_hookpict(int angle, struct hookpict *image, SDL_Rect *support)
+{
+    glPushMatrix();
+
+    image->pict.pos.x = support->x + image->translation.x;
+    image->pict.pos.y = support->y + image->translation.y;
+
+    Turn_And_Draw(&image->pict, angle);
+
+    glPopMatrix();
+}
+
+
 void Sync_Moving_Pict(int time, struct moving_pict *m_pict)
 {
     if (time - m_pict->time >= m_pict->delay)

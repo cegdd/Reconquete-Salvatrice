@@ -84,13 +84,13 @@ void LoadDonjon(struct DONJON *donjon, char *name)
             }
             //vitesse
             lis(fichier, buffer);
-            donjon->creature[i].vitesse = saybool(buffer[0]);
+            donjon->creature[i].vitesse = atoi(buffer);
             //dps
             lis(fichier, buffer);
-            donjon->creature[i].dps = saybool(buffer[0]);
+            donjon->creature[i].dps = atoi(buffer);
             //Ratk
             lis(fichier, buffer);
-            donjon->creature[i].Ratk = saybool(buffer[0]);
+            donjon->creature[i].Ratk = atoi(buffer);
 
             sprintf(buffer, "rs/images/%s", donjon->creature[i].imgpath);
             donjon->creature[i].pict.texture = loadTextureandsize(buffer, &donjon->creature[i].pict.pos);

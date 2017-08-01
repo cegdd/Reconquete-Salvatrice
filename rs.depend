@@ -1009,7 +1009,7 @@
 1501539574 c:\users\cegdd\desktop\dev\reconquete-salvatrice\main.h
 	"struct.h"
 
-1501610563 c:\users\cegdd\desktop\dev\reconquete-salvatrice\struct.h
+1501624654 c:\users\cegdd\desktop\dev\reconquete-salvatrice\struct.h
 	<stdio.h>
 	<stdbool.h>
 	<SDL_ttf.h>
@@ -1024,11 +1024,12 @@
 	<arpa/inet.h>
 	<unistd.h>
 
-1494276491 c:\users\cegdd\desktop\dev\reconquete-salvatrice\colision.h
+1501624773 c:\users\cegdd\desktop\dev\reconquete-salvatrice\colision.h
 	<stdbool.h>
-	"struct.h"
+	"deplacement.h"
+	"donjon.h"
 
-1501535791 c:\users\cegdd\desktop\dev\reconquete-salvatrice\image.h
+1501615618 c:\users\cegdd\desktop\dev\reconquete-salvatrice\image.h
 	<SDL_ttf.h>
 	<GL/gl.h>
 	<GL/glu.h>
@@ -1043,34 +1044,40 @@
 
 1468670210 c:\users\cegdd\desktop\dev\reconquete-salvatrice\rat.h
 
-1501535418 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\clavier.c
+1501624704 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\clavier.c
 	"clavier.h"
+	"deplacement.h"
 
-1501539690 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\colision.c
+1501626320 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\colision.c
 	<SDL.h>
 	<math.h>
 	<stdio.h>
 	<stdbool.h>
 	"struct.h"
+	"perso.h"
 	"colision.h"
 	"image.h"
 	"deplacement.h"
+	"donjon.h"
 
-1501532269 c:\users\cegdd\desktop\dev\reconquete-salvatrice\tableau.h
+1501625653 c:\users\cegdd\desktop\dev\reconquete-salvatrice\tableau.h
 	<SDL_ttf.h>
 
-1442963077 c:\users\cegdd\desktop\dev\reconquete-salvatrice\deplacement.h
-
-1501535862 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\deplacement.c
-	<SDL.h>
+1501625242 c:\users\cegdd\desktop\dev\reconquete-salvatrice\deplacement.h
 	"struct.h"
 
-1501537687 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\evenement.c
+1501625262 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\deplacement.c
+	<SDL.h>
+	"struct.h"
+	"deplacement.h"
+
+1501624200 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\evenement.c
 	<stdlib.h>
 	<stdio.h>
 	<stdbool.h>
 	<SDL.h>
 	"struct.h"
+	"perso.h"
 	"clavier.h"
 	"evenement.h"
 	"colision.h"
@@ -1098,7 +1105,7 @@
 1478652036 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\fichier.c
 	<stdio.h>
 
-1501537754 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\image.c
+1501615618 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\image.c
 	<stdio.h>
 	<SDL.h>
 	<SDL_ttf.h>
@@ -1132,7 +1139,7 @@
 
 1501532269 c:\users\cegdd\desktop\dev\reconquete-salvatrice\sauvegarde.h
 
-1501540004 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\main.c
+1501624217 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\main.c
 	<stdio.h>
 	<stdlib.h>
 	<SDL.h>
@@ -1143,6 +1150,7 @@
 	<GL/gl.h>
 	<GL/glu.h>
 	"struct.h"
+	"perso.h"
 	"tableau.h"
 	"sauvegarde.h"
 	"main.h"
@@ -1156,7 +1164,7 @@
 
 1433282512 c:\users\cegdd\desktop\dev\reconquete-salvatrice\queue.h
 
-1501612189 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\map.c
+1501626220 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\map.c
 	<stdio.h>
 	<stdlib.h>
 	<stdbool.h>
@@ -1164,6 +1172,7 @@
 	<SDL_ttf.h>
 	<SDL_image.h>
 	<math.h>
+	"perso.h"
 	"donjon.h"
 	"image.h"
 	"listechaine.h"
@@ -1189,23 +1198,25 @@
 
 1468670210 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\rat.c
 
-1501539336 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\sauvegarde.c
+1501624330 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\sauvegarde.c
 	<stdio.h>
 	<stdlib.h>
 	<SDL.h>
 	<string.h>
 	"struct.h"
 	"sauvegarde.h"
+	"perso.h"
 
-1501540060 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\systeme.c
+1501624340 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\systeme.c
 	<SDL.h>
 	<stdlib.h>
 	<stdio.h>
 	<math.h>
 	"ui.h"
 	"image.h"
+	"perso.h"
 
-1501539555 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\tableau.c
+1501625242 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\tableau.c
 	<SDL.h>
 	<stdlib.h>
 	<stdio.h>
@@ -1217,6 +1228,7 @@
 	"image.h"
 	"objet.h"
 	"tool.h"
+	"perso.h"
 
 1434055690 c:\users\cegdd\desktop\dev\reconquete-salvatrice\objet.h
 
@@ -1247,7 +1259,7 @@
 	"main.h"
 	<SDL_ttf.h>
 
-1501539771 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\tir.c
+1501624366 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\tir.c
 	<stdlib.h>
 	<stdio.h>
 	<SDL.h>
@@ -1256,6 +1268,7 @@
 	"donjon.h"
 	"systeme.h"
 	"image.h"
+	"perso.h"
 
 1501539876 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\tool.c
 	<stdlib.h>
@@ -1264,7 +1277,7 @@
 	"struct.h"
 	"image.h"
 
-1501539977 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\ui.c
+1501626834 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\ui.c
 	<stdio.h>
 	<stdlib.h>
 	<SDL.h>
@@ -1274,8 +1287,10 @@
 	"colision.h"
 	"systeme.h"
 	"image.h"
+	"perso.h"
+	"tool.h"
 
-1501611815 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\donjon.c
+1501627267 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\donjon.c
 	<stdio.h>
 	<stdlib.h>
 	<SDL_image.h>
@@ -1937,13 +1952,13 @@
 	"image.h"
 	"creature.h"
 
-1501612157 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\mob.c
+1501625607 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\mob.c
 	"mob.h"
 	"image.h"
 	"tool.h"
 	"donjon.h"
 
-1501539109 c:\users\cegdd\desktop\dev\reconquete-salvatrice\mob.h
+1501625607 c:\users\cegdd\desktop\dev\reconquete-salvatrice\mob.h
 	"path.h"
 	"struct.h"
 
@@ -1953,4 +1968,16 @@
 
 1501532269 c:\users\cegdd\desktop\dev\reconquete-salvatrice\path.h
 	<stdbool.h>
+
+1501626136 c:\users\cegdd\desktop\dev\reconquete-salvatrice\perso.h
+	"deplacement.h"
+	"donjon.h"
+
+1501627134 source:c:\users\cegdd\desktop\dev\reconquete-salvatrice\perso.c
+	"deplacement.h"
+	"image.h"
+	"perso.h"
+	"tool.h"
+	"donjon.h"
+	"colision.h"
 

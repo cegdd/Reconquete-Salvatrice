@@ -25,4 +25,5 @@ void SetMob(int i, struct DONJON *donjon)
             donjon->creature[donjon->mob[i].ID].pict.pos.h * donjon->mob[i].scale);
 
     donjon->mob[i].BarreDeVie = AddLifeBar(donjon->creature[donjon->mob[i].ID].vie, 68);
+    donjon->mob[i].atkDone = false;
 }

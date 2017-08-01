@@ -29,6 +29,7 @@ void setPos4(SDL_Rect *pos, int x, int y, int w, int h);
 void setPos2rect(SDL_Rect *pos, int x, int y);
 void setPos2(SDL_Point *point, int x, int y);
 void Turn_And_Draw (struct pict *img, float angle);
+void turn_draw_hookpict(int angle, struct hookpict *image, SDL_Rect *support);
 void Sync_Moving_Pict(int time, struct moving_pict *m_pict);
 SDL_Point PointOf(SDL_Rect rect);
 

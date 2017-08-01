@@ -1,8 +1,28 @@
 #ifndef DEPLACEMENTH
 #define DEPLACEMENTH
 
-int directionperso(struct DIRECTION *direction);
-int calculdirectionjoueurs(SDL_Rect posjoueurs,SDL_Rect oldposjoueurs);
+#include "struct.h"
+
+struct DIRECTION
+{
+	int bas;
+    int haut;
+    int droite;
+    int gauche;
+    int direction;
+    int olddirection;
+};
+
+struct DIVERSdeplacement
+{
+    int directionjoueurs[MAX_JOUEURS];
+    struct DIRECTION direction;
+    int persobouge;
+    int indexanimperso;
+    SDL_Rect temp;
+};
+
+void initdeplacement(struct DIVERSdeplacement *deplacement,struct DIVERSsysteme *systeme);
 
 void haut           (int* y);
 void hautdroite     (int* x, int* y);

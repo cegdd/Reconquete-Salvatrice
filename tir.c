@@ -7,6 +7,7 @@
 #include "donjon.h"
 #include "systeme.h"
 #include "image.h"
+#include "perso.h"
 
 void tirer (float px, float py, int canonx, int canony, int tx[][PRECISIONcailloux], int ty[][PRECISIONcailloux],
             int tableauutile, double *degre, struct DONJON *donjon)
@@ -87,7 +88,7 @@ void COMBATgestionprojectile (struct TIR *TIR, struct DONJON *donjon)
 			TIR->pballe[index].y += donjon->map.pict.pos.y;
             for( i = 0 ; i < donjon->nombremonstre ; i++)
             {
-                if (donjon->mob[i].BarreDeVie->life > 0 && checkdistance(&TIR->pballe[index], &donjon->mob[i].hookpict.pict.pos, 45) == -1)
+                if (donjon->mob[i].BarreDeVie->life > 0 && checkdistance(&TIR->pballe[index], &donjon->mob[i].hookpict.pict.pos, donjon->mob[i].hookpict.pict.pos.w/2) == -1)
                 {
                     TIR->DepartBalle[index] = UNUSED;
                     donjon->mob[i].vie -=10;

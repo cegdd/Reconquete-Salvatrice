@@ -1,49 +1,28 @@
 #include <SDL.h>
 
 #include "struct.h"
+#include "deplacement.h"
 
-int directionperso(struct DIRECTION *direction)
+
+
+void initdeplacement(struct DIVERSdeplacement *deplacement,struct DIVERSsysteme *systeme)
 {
-    if      (direction->haut == 1 && direction->droite == 0 && direction->gauche == 0 && direction->bas == 0) {return UP;}
-	else if (direction->haut == 1 && direction->droite == 1 && direction->gauche == 0 && direction->bas == 0) {return UPRIGHT;}
-	else if (direction->haut == 1 && direction->droite == 0 && direction->gauche == 1 && direction->bas == 0) {return LEFTUP;}
-	else if (direction->haut == 0 && direction->droite == 1 && direction->gauche == 0 && direction->bas == 0) {return RIGHT;}
-	else if (direction->haut == 0 && direction->droite == 1 && direction->gauche == 0 && direction->bas == 1) {return RIGHTDOWN;}
-	else if (direction->haut == 0 && direction->droite == 0 && direction->gauche == 1 && direction->bas == 1) {return DOWNLEFT;}
-	else if (direction->haut == 0 && direction->droite == 0 && direction->gauche == 1 && direction->bas == 0) {return LEFT;}
-	else if (direction->haut == 0 && direction->droite == 0 && direction->gauche == 0 && direction->bas == 1) {return DOWN;}
-	else
+	int index;
+
+	for (index = 0 ; index < MAX_JOUEURS ; index++)
 	{
-		if (direction->direction != -1)
-		{
-			direction->olddirection = direction->direction;
-		}
-		return -1;
+		deplacement->directionjoueurs[index] = 0;
 	}
+	deplacement->direction.bas = 0;
+	deplacement->direction.haut = 0;
+	deplacement->direction.droite = 0;
+	deplacement->direction.gauche = 0;
+	deplacement->direction.direction = 4;
+	deplacement->direction.olddirection = 0;
+	deplacement->persobouge = 0;
+	deplacement->indexanimperso = 0;
 }
-/*
-int calculdirectionjoueurs(SDL_Rect posjoueurs,SDL_Rect oldposjoueurs)
-{
-    int bas = 0, haut = 0, gauche = 0, droite = 0;
 
-    if ( oldposjoueurs.x < posjoueurs.x ){droite = 1;}
-    else if ( oldposjoueurs.x > posjoueurs.x ){gauche = 1;}
-
-    if ( oldposjoueurs.y < posjoueurs.y ){haut = 1;}
-    else if ( oldposjoueurs.y > posjoueurs.y ){bas = 1;}
-
-    if (haut == 1 && droite == 0 && gauche == 0) {return UP;}
-    else if (haut == 1 && droite == 1 && gauche == 0) {return UPRIGHT;}
-    else if (haut == 0 && droite == 1 && bas == 0) {return RIGHT;}
-    else if (haut == 0 && droite == 1 && bas == 1) {return RIGHTDOWN;}
-    else if (gauche == 0 && droite == 0 && bas == 1) {return DOWN;}
-    else if (gauche == 1 && droite == 0 && bas == 1) {printf ("inside downlefr"); return DOWNLEFT;}
-    else if (haut == 0 && gauche == 1 && bas == 0) {return LEFT;}
-    else if (haut == 1 && gauche == 1 && bas == 0) {return LEFTUP;}
-
-    return DOWN;
-}
-*/
 
 void haut (int* y)
 {

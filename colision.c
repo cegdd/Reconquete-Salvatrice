@@ -4,9 +4,11 @@
 #include <stdbool.h>
 
 #include "struct.h"
+#include "perso.h"
 #include "colision.h"
 #include "image.h"
 #include "deplacement.h"
+#include "donjon.h"
 
 extern int screenh, screenw;
 
@@ -23,94 +25,7 @@ void checkPixel(struct floor *carte,struct PERSO *perso,struct DIVERSsysteme *sy
         else{perso->etatpix[INDEX] = 1;}
     }
 }
-/*
-void deplacementperso_combat(struct PERSO *perso,struct DIRECTION *direction)
-{
-    int index;
-    for (index = 0 ; index < 8 ; index++)
-    {
-        perso->cote[index] = 0;
-    }
 
-    if (perso->perso.pict.pos.y + perso->perso.pict.pos.h >= screenh)
-    {
-        perso->cote[UP] = 99;
-        perso->cote[LEFTUP] = 99;
-        perso->cote[UPRIGHT] = 99;
-    }
-    else if (perso->perso.pict.pos.y <= 0)
-    {
-        perso->cote[DOWN] = 99;
-        perso->cote[DOWNLEFT] = 99;
-        perso->cote[RIGHTDOWN] = 99;
-    }
-
-    if (perso->perso.pict.pos.x < 0)
-    {
-        perso->cote[LEFT] = 99;
-        perso->cote[LEFTUP] = 99;
-        perso->cote[DOWNLEFT] = 99;
-    }
-    else if (perso->perso.pict.pos.x + perso->perso.pict.pos.w >= screenw)
-    {
-        perso->cote[RIGHT] = 99;
-        perso->cote[RIGHTDOWN] = 99;
-        perso->cote[UPRIGHT] = 99;
-    }
-    move_combat(perso, direction);
-}*/
-/*
-void move_combat(struct PERSO *perso,struct DIRECTION *direction)
-{
-
-    int *x = &perso->perso.pict.pos.x;
-    int *y = &perso->perso.pict.pos.y;
-
-    switch (direction->direction)
-	{
-	case UP:
-		if      (perso->cote[UP] <=1)                  {bas(y);}
-		else if (perso->cote[LEFTUP] <= 1)             {basdroite(x, y);}
-		else if (perso->cote[UPRIGHT] <= 1)            {basgauche(x, y);}
-		break;
-	case UPRIGHT:
-		if      (perso->cote[UPRIGHT] <=1)             {basgauche(x, y);}
-		else if (perso->cote[UP] <= 1)                 {bas(y);}
-		else if (perso->cote[RIGHT] <= 1)              {gauche(x);}
-		break;
-	case RIGHT:
-		if      (perso->cote[RIGHT] <=1)               {gauche(x);}
-		else if (perso->cote[UPRIGHT] <= 1)            {basgauche(x, y);}
-		else if (perso->cote[RIGHTDOWN] <= 1)          {gauchehaut(x, y);}
-		break;
-	case RIGHTDOWN:
-		if      (perso->cote[RIGHTDOWN] <=1)           {gauchehaut(x, y);}
-		else if (perso->cote[RIGHT] <= 1)              {gauche(x);}
-		else if (perso->cote[DOWN] <= 1)               {haut(y);}
-		break;
-	case DOWN:
-		if      (perso->cote[DOWN] <=1)                {haut(y);}
-		else if (perso->cote[RIGHTDOWN] <= 1)          {gauchehaut(x, y);}
-		else if (perso->cote[DOWNLEFT] <= 1)           {hautdroite(x, y);}
-		break;
-	case DOWNLEFT:
-		if      (perso->cote[DOWNLEFT] <=1)            {hautdroite(x, y);}
-		else if (perso->cote[DOWN] <= 1)               {haut(y);}
-		else if (perso->cote[LEFT] <= 1)               {droite(x);}
-		break;
-	case LEFT:
-		if      (perso->cote[LEFT] <=1)                {droite(x);}
-		else if (perso->cote[DOWNLEFT] <= 1)           {hautdroite(x, y);}
-		else if (perso->cote[LEFTUP] <= 1)             {basdroite(x, y);}
-		break;
-	case LEFTUP:
-		if      (perso->cote[LEFTUP] <=1)              {basdroite(x, y);}
-		else if (perso->cote[LEFT] <= 1)               {droite(x);}
-		else if (perso->cote[UP] <= 1)                 {bas(y);}
-		break;
-	}
-}
-*/
 void move_map(struct PERSO *perso,struct DIRECTION *direction, SDL_Point *origin)
 {
     perso->cote[UP] =          perso->etatpix[0] + perso->etatpix[1] + perso->etatpix[2] + perso->etatpix[3];
@@ -209,5 +124,20 @@ double FindAngle(SDL_Rect *A, SDL_Rect *B)
     dify = (A->y + A->h/2) - (B->y + B->h/2);
 
     return atan2(dify, difx)* 57.296;
+}
+
+int playeristouched(struct DONJON *donjon, struct PERSO *perso)
+{
+    int i = 0;
+
+    for (i = 0 ; i < donjon->nombremonstre ; i++)
+    {
+        if (colisionbox(&perso->perso.pict.pos, &donjon->mob[i].hookpict.pict.pos, false) == true &&
+            donjon->mob[i].atkDone == false)
+        {
+            return i;
+        }
+    }
+        return -1;
 }
 

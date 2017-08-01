@@ -1,4 +1,5 @@
 #include "clavier.h"
+#include "deplacement.h"
 
 void intputtexte(struct typeFORevent *FORevent)
 {

@@ -5,6 +5,7 @@
 
 #include "struct.h"
 #include "sauvegarde.h"
+#include "perso.h"
 
 
 void chargersauvegarde(struct DIVERSsysteme *systeme)

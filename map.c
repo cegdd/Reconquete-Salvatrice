@@ -6,6 +6,7 @@
 #include <SDL_image.h>
 #include <math.h>
 
+#include "perso.h"
 #include "donjon.h"
 #include "image.h"
 #include "listechaine.h"
@@ -94,6 +95,8 @@ systeme->continuer = 1;
             /*deplacement*/
             checkPixel(&dj0.map, perso, systeme);
             move_map(perso, &deplacement->direction, &dj0.origin);
+            /*gestion des dégats*/
+            hitboxplayer (&dj0, perso);
             /*recupération coordonées souris*/
             SDL_GetMouseState(&systeme->pointeur.pos.x, &systeme->pointeur.pos.y);
             systeme->pointeur.pos.y = (systeme->pointeur.pos.y - screenh + systeme->pointeur.pos.h) * -1;
@@ -126,7 +129,7 @@ systeme->continuer = 1;
             {
                 if(dj0.mob[index].BarreDeVie->life > 0)
                 {
-                    draw_hookpict(&dj0.mob[index].hookpict, &dj0.map.pict.pos);
+                    turn_draw_hookpict(dj0.mob[index].angle, &dj0.mob[index].hookpict, &dj0.map.pict.pos);
                     CalculerBarreDeVie(dj0.mob[index].BarreDeVie->baselife , dj0.mob[index].BarreDeVie->life, 68);
                     setPos2rect(&dj0.mob[index].BarreDeVie->pBG, dj0.mob[index].hookpict.pict.pos.x-1 + ((dj0.mob[index].hookpict.pict.pos.w-68)/2),
                                 dj0.mob[index].hookpict.pict.pos.y + dj0.mob[index].hookpict.pict.pos.h+4);
@@ -253,105 +256,6 @@ systeme->continuer = 1;
     sauvegardetout(systeme->sauvegarde, dj0.map.pict.pos, perso, temps->temptotal, 0, objet->sac1, TAILLESAC, ui);
 
     return 1;
-}
-
-
-int lancementcombat(struct DIVERSinventaire *inventaire,struct DIVERSui *ui,
-                    struct DIVERSdeplacement *deplacement,struct PACKobjet *objet,struct PERSO *perso,struct DIVERSsysteme *systeme,
-                    struct PACKrecompense *recompense, bool arcademode)
-{
-    int indexloot = 0, index2 = 0, RETcombat = 0;
-    char slootcombat[120];
-
-	/*ecran de chargement*/
-	chargement(systeme);
-
-	if (arcademode == false)
-	{
-		/*cloture des UIs et arret du personnage*/
-		ui->inventaire_open = false;
-		ui->chat_open = false;
-		systeme->inbattle = true;
-		ui->dialogueactif = 0;
-		deplacement->persobouge = 0;
-
-
-		/*initialisation des tableaux de récompense*/
-		for (index2 = 0 ; index2 < LOOTMAX ; index2++)
-		{
-			recompense->recompenseNB[index2] = 0;
-		}
-		for (index2 = 0 ; index2 < NOMBREOBJETS ; index2++)
-		{
-			recompense->recompenseID[index2] = -1;
-		}
-	}
-	else if (arcademode == true)
-	{
-		ui->casestuff[ARME].IDobjet = 3;
-	}
-
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) ;
-
-	if (arcademode == false)
-	{
-		deplacement->direction.bas = 0;
-		deplacement->direction.haut = 0;
-		deplacement->direction.gauche = 0;
-		deplacement->direction.droite = 0;
-		checkinventaire(objet, inventaire);
-
-
-		/*if player dead*/
-		if (RETcombat == BTL_LOST)
-		{
-			/*ecran de mort*/
-			ANIMmort(systeme);
-			perso->life = perso->lifemax;
-
-			return ALIVE; /*the creature*/
-		}
-		/*si le joueur a fui*/
-		else if (RETcombat == BTL_LEAVED)
-		{
-			ui->dialogue_text.texture = fenetredialogue(screenw*0.4, screenh*0.8, &ui->dialogue_back.pos, &ui->dialogue_text.pos, "Vous avez fui,\ntous les objets obtenu pendant le combat on été abandonné sur place.\n\n\n\n(entrée/échap pour continuer)\n",
-									  BLANC, systeme);
-			ui->dialogueactif = 1;
-			return DEAD; /*the creature*/
-		}
-		/*si joueur vivant*/
-		else if (RETcombat == BTL_WON)
-		{
-			/*dialogue de récompense*/
-			ui->dialogueactif = 2;
-
-			/*si des récompenses on été obtenue*/
-			while (recompense->recompenseNB[indexloot] > 0)
-			{
-				/*ecriture de la récompense*/
-				sprintf(slootcombat, "-> %d %s", recompense->recompenseNB[indexloot], objet->objet[recompense->recompenseID[indexloot]].nom);
-				SDL_DestroyTexture(recompense->ttextelootcombat[indexloot]);
-			//	recompense->ttextelootcombat[indexloot] = imprime(slootcombat, screenw, BLANC, systeme, NULL, NULL);
-
-				for (index2 = 0 ; index2 < recompense->recompenseNB[indexloot] ; index2++)
-				{
-					/*insertion des récompenses 1 par 1*/
-					insertionsac(objet, recompense->recompenseID[indexloot]);
-				}
-				indexloot++;
-			}
-		}
-		perso->perso.pict.pos.x = screenw/2-perso->perso.pict.pos.w;
-        perso->perso.pict.pos.y = screenh/2-perso->perso.pict.pos.h;
-	}
-	if (RETcombat == BTL_RESTART)
-	{
-		return 2;
-	}
-	else
-	{
-		return DEAD; /*the creature*/
-	}
 }
 
 void gestionchat(struct DIVERSchat *chat,struct DIVERSsysteme *systeme,struct typeFORthreads *online)

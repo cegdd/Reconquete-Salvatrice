@@ -10,6 +10,7 @@
 #include <GL/glu.h>
 
 #include "struct.h"
+#include "perso.h"
 #include "tableau.h"
 #include "sauvegarde.h"
 #include "main.h"
@@ -152,35 +153,4 @@ int chargementcarte(struct DIVERSsysteme *systeme, struct typeFORthreads *online
 
     map(systeme, online, &bouton, &objet, &perso, &inventaire, &deplacement, &temps, &ui, &chat, &craft, &recompense, &FORevent, &TIR);
 	return 1;
-}
-
-int chargementarcade (struct DIVERSsysteme *systeme)
-{
-	int ret = 2;
-
-	while (ret == 2)
-	{
-		struct DIVERSinventaire inventaire;
-		struct DIVERSchat chat;
-		struct DIVERSui ui;
-		struct DIVERSdeplacement deplacement;
-		struct DIVERScraft craft;
-		struct PACKobjet objet;
-		struct PERSO perso;
-		struct PACKrecompense recompense;
-		struct TIR TIR;
-
-		initinventaire(&inventaire, systeme);
-		initchat(&chat, systeme);
-		initui(&ui, systeme);
-		initdeplacement(&deplacement, systeme);
-		initcraft(&craft, systeme);
-		initobjet(&objet, systeme, &craft);
-		initperso(&perso, systeme);
-		initrecompense(&recompense, systeme);
-		initTIR(&TIR);
-
-		ret = lancementcombat(&inventaire, &ui, &deplacement, &objet, &perso, systeme, &recompense, true);
-	}
-	return 0;
 }

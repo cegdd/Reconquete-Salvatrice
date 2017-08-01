@@ -9,6 +9,7 @@ struct DONJON;
 struct MOB
 {
     bool fixe;
+    bool atkDone;
 
     int vie;
     int ID;
