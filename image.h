@@ -2,10 +2,14 @@
 #define IMAGEH
 
 #include <SDL_ttf.h>
-#include "main.h"
+#include <GL/gl.h>
+#include <GL/glu.h>
+
+#include "struct.h"
 
 SDL_Texture* LoadingImage(char* emplacement, int transparence,struct DIVERSsysteme *systeme);
 Uint8 obtenirPixel(SDL_Surface *surface, SDL_Point *pix);
+Uint8 obtenirPixel_hook(SDL_Surface *surface, SDL_Point *pix);
 void chargement (struct DIVERSsysteme *systeme);
 GLuint imprime (char s[], int len, int couleur,struct DIVERSsysteme *systeme, int *LenghtReturn, int *HighReturn);
 void ANIMmort (struct DIVERSsysteme *systeme);

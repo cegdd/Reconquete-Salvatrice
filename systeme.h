@@ -1,7 +1,6 @@
 #ifndef SYSTEMEH
 #define SYSTEMEH
 
-#include "main.h"
 
 void checkandrefreshstuff(struct PERSO *perso,struct PACKobjet *objet,struct DIVERSsysteme *systeme,struct DIVERSui *ui);
 void checkinventaire(struct PACKobjet *objet,struct DIVERSinventaire *inventaire);

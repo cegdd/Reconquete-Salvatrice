@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include "struct.h"
 
-void checkPixel(struct floor *carte,struct PERSO *perso);
+void checkPixel(struct floor *carte,struct PERSO *perso,struct DIVERSsysteme *systeme);
 void deplacementperso_combat(struct PERSO *perso,struct DIRECTION *direction);
 void move_map(struct PERSO *perso,struct DIRECTION *direction, SDL_Point *origin);
 void move_combat(struct PERSO *perso,struct DIRECTION *direction);

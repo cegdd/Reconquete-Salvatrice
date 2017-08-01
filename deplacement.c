@@ -1,7 +1,6 @@
 #include <SDL.h>
 
-#include "colision.h"
-#include "main.h"
+#include "struct.h"
 
 int directionperso(struct DIRECTION *direction)
 {
@@ -22,7 +21,7 @@ int directionperso(struct DIRECTION *direction)
 		return -1;
 	}
 }
-
+/*
 int calculdirectionjoueurs(SDL_Rect posjoueurs,SDL_Rect oldposjoueurs)
 {
     int bas = 0, haut = 0, gauche = 0, droite = 0;
@@ -38,13 +37,13 @@ int calculdirectionjoueurs(SDL_Rect posjoueurs,SDL_Rect oldposjoueurs)
     else if (haut == 0 && droite == 1 && bas == 0) {return RIGHT;}
     else if (haut == 0 && droite == 1 && bas == 1) {return RIGHTDOWN;}
     else if (gauche == 0 && droite == 0 && bas == 1) {return DOWN;}
-    else if (gauche == 1 && droite == 0 && bas == 1) {return DOWNLEFT;}
+    else if (gauche == 1 && droite == 0 && bas == 1) {printf ("inside downlefr"); return DOWNLEFT;}
     else if (haut == 0 && gauche == 1 && bas == 0) {return LEFT;}
     else if (haut == 1 && gauche == 1 && bas == 0) {return LEFTUP;}
 
     return DOWN;
 }
-
+*/
 
 void haut (int* y)
 {

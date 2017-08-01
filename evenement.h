@@ -3,8 +3,6 @@
 
 #include <stdbool.h>
 #include <SDL.h>
-#include "main.h"
-#include "login.h"
 
 void boucleevent (bool *lancermessage,struct typeFORevent *FORevent, struct TIR *TIR);
 int boucleeventlogin (struct typelogin *loginstore,struct DIVERSsysteme *systeme);

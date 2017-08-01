@@ -4,7 +4,6 @@
 
 #include <stdbool.h>
 
-#include "image.h"
 
 #define PATH_dots 16
 

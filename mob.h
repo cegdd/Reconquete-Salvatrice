@@ -1,8 +1,10 @@
 #ifndef MOBH
 #define MOBH
 
-#include "image.h"
 #include "path.h"
+#include "struct.h"
+
+struct DONJON;
 
 struct MOB
 {
@@ -20,5 +22,6 @@ struct MOB
 };
 
 void initmob(struct MOB *mob);
+void SetMob(int i, struct DONJON *donjon);
 
 #endif

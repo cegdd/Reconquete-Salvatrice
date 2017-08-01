@@ -9,14 +9,12 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 
-#include "main.h"
-#include "thread1.h"
-#include "map.h"
-#include "login.h"
-#include "sauvegarde.h"
+#include "struct.h"
 #include "tableau.h"
-#include "queue.h"
-#include "image.h"
+#include "sauvegarde.h"
+#include "main.h"
+#include "login.h"
+#include "map.h"
 
 int screenh, screenw;
 

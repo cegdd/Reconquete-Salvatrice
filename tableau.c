@@ -6,11 +6,10 @@
 #include <SDL_ttf.h>
 #include <SDL_image.h>
 
-#include "main.h"
+#include "struct.h"
 #include "image.h"
 #include "objet.h"
 #include "tool.h"
-#include "queue.h"
 
 extern int screenh, screenw;
 

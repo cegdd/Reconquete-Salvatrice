@@ -3,14 +3,14 @@
 #include <SDL_ttf.h>
 #include <string.h>
 
-#include "main.h"
-
+#include "struct.h"
 #include "login.h"
-#include "image.h"
 #include "evenement.h"
-#include "fichier.h"
-#include "sauvegarde.h"
 #include "ui.h"
+#include "sauvegarde.h"
+#include "fichier.h"
+#include "image.h"
+#include "tableau.h"
 
 extern int screenh, screenw;
 

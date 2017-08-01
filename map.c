@@ -6,21 +6,18 @@
 #include <SDL_image.h>
 #include <math.h>
 
-#include "evenement.h"
-#include "image.h"
-#include "ui.h"
-#include "sauvegarde.h"
-#include "map.h"
-#include "main.h"
-#include "colision.h"
-#include "deplacement.h"
-#include "tableau.h"
-#include "systeme.h"
-#include "listechaine.h"
-#include "queue.h"
 #include "donjon.h"
+#include "image.h"
+#include "listechaine.h"
+#include "systeme.h"
+#include "map.h"
+#include "deplacement.h"
+#include "colision.h"
+#include "ui.h"
+#include "evenement.h"
 #include "tir.h"
 #include "tool.h"
+#include "sauvegarde.h"
 
 extern int screenh, screenw;
 
@@ -82,6 +79,7 @@ int map (struct DIVERSsysteme *systeme,struct typeFORthreads *online,struct PACK
 systeme->continuer = 1;
     while (systeme->continuer == 1)
     {
+
         temps->tpact = SDL_GetTicks();
 
         if (temps->tpact - temps->tpapr >= 15) /*15   ms*/
@@ -94,7 +92,7 @@ systeme->continuer = 1;
             /*calcul direction joueur client*/
             deplacement->direction.direction = directionperso(&deplacement->direction);
             /*deplacement*/
-            checkPixel(&dj0.map, perso);
+            checkPixel(&dj0.map, perso, systeme);
             move_map(perso, &deplacement->direction, &dj0.origin);
             /*recupération coordonées souris*/
             SDL_GetMouseState(&systeme->pointeur.pos.x, &systeme->pointeur.pos.y);
@@ -120,7 +118,7 @@ systeme->continuer = 1;
 ##################################################################################################################################################################################*/
 
             /*effacage de l'écran*/
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) ;
+                glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) ;
 
             /*affichage de la carte*/
             draw_pict(&dj0.map.pict);
@@ -129,7 +127,6 @@ systeme->continuer = 1;
                 if(dj0.mob[index].BarreDeVie->life > 0)
                 {
                     draw_hookpict(&dj0.mob[index].hookpict, &dj0.map.pict.pos);
-
                     CalculerBarreDeVie(dj0.mob[index].BarreDeVie->baselife , dj0.mob[index].BarreDeVie->life, 68);
                     setPos2rect(&dj0.mob[index].BarreDeVie->pBG, dj0.mob[index].hookpict.pict.pos.x-1 + ((dj0.mob[index].hookpict.pict.pos.w-68)/2),
                                 dj0.mob[index].hookpict.pict.pos.y + dj0.mob[index].hookpict.pict.pos.h+4);
@@ -141,6 +138,7 @@ systeme->continuer = 1;
                     draw(systeme->BGblanc, &dj0.mob[index].BarreDeVie->pbarre);
                 }
             }
+
             /*affichage des joueurs*/
             afficherJOUEURS(perso, deplacement, systeme, online, temps);
 

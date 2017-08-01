@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 #include "path.h"
+
 /*
 int PATH_add(struct PATH *path, int x, int y, struct DATA *data)
 {

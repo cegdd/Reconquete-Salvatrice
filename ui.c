@@ -3,13 +3,11 @@
 #include <SDL.h>
 #include <math.h>
 
-#include "image.h"
-#include "main.h"
-#include "evenement.h"
+#include "struct.h"
 #include "ui.h"
-#include "deplacement.h"
-#include "systeme.h"
 #include "colision.h"
+#include "systeme.h"
+#include "image.h"
 
 extern int screenh, screenw;
 

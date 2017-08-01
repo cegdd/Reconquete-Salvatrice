@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "jeux.h"
-#include "main.h"
+#include "struct.h"
 
 void Add_Creature_Queue(struct File *file, int nvNombre, int quantity)
 {

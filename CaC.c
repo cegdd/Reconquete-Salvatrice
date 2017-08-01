@@ -1,10 +1,5 @@
 #include <SDL.h>
 
-#include "systeme.h"
-#include "colision.h"
-#include "main.h"
-#include "jeux.h"
-#include "rat.h"
 /*
 int HitboxPoing(struct typecombat *BTLstr, int index)
 {

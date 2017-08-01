@@ -1,5 +1,8 @@
-#include "creature.h"
+#include <stdlib.h>
+#include <stdbool.h>
+
 #include "image.h"
+#include "creature.h"
 
 void initcreature(struct CREATURE *creature)
 {

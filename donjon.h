@@ -1,11 +1,9 @@
 #ifndef DONJONH
 #define DONJONH
 
-
 #include "struct.h"
 #include "creature.h"
 #include "mob.h"
-
 
 struct DONJON
 {

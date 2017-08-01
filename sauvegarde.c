@@ -3,8 +3,9 @@
 #include <SDL.h>
 #include <string.h>
 
-#include "fichier.h"
+#include "struct.h"
 #include "sauvegarde.h"
+
 
 void chargersauvegarde(struct DIVERSsysteme *systeme)
 {

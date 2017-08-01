@@ -1,5 +1,5 @@
-#ifndef LOGINH
-#define LOGINH
+#ifndef STRUCTH
+#define STRUCTH
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -12,7 +12,7 @@
 /*####     OS     ######*/
 #define WINDOWS 1
 /*####logging rapide ####*/
-#define FASTLOG 0
+#define FASTLOG 1
 /*####  battle log   ####*/
 #define BATTLE_LOG 0
 /*##battle log display##*/

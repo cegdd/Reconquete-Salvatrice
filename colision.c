@@ -3,15 +3,14 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-#include "image.h"
-#include "tableau.h"
+#include "struct.h"
 #include "colision.h"
+#include "image.h"
 #include "deplacement.h"
-#include "main.h"
 
 extern int screenh, screenw;
 
-void checkPixel(struct floor *carte,struct PERSO *perso)
+void checkPixel(struct floor *carte,struct PERSO *perso,struct DIVERSsysteme *systeme)
 {
     int INDEX;
     for (INDEX = 0 ; INDEX < 12 ; INDEX++)
@@ -19,11 +18,12 @@ void checkPixel(struct floor *carte,struct PERSO *perso)
         perso->pix.x = ((carte->pict.pos.x - perso->perso.pict.pos.x)*-1) + perso->PixelCalque[INDEX].x;
         perso->pix.y = ((carte->pict.pos.y+carte->pict.pos.h)-(perso->perso.pict.pos.y+perso->perso.pict.pos.h)) + perso->PixelCalque[INDEX].y;
 
+
         if (obtenirPixel(carte->calque, &perso->pix) == 255) {perso->etatpix[INDEX] = 0;}
         else{perso->etatpix[INDEX] = 1;}
     }
 }
-
+/*
 void deplacementperso_combat(struct PERSO *perso,struct DIRECTION *direction)
 {
     int index;
@@ -58,8 +58,8 @@ void deplacementperso_combat(struct PERSO *perso,struct DIRECTION *direction)
         perso->cote[UPRIGHT] = 99;
     }
     move_combat(perso, direction);
-}
-
+}*/
+/*
 void move_combat(struct PERSO *perso,struct DIRECTION *direction)
 {
 
@@ -110,7 +110,7 @@ void move_combat(struct PERSO *perso,struct DIRECTION *direction)
 		break;
 	}
 }
-
+*/
 void move_map(struct PERSO *perso,struct DIRECTION *direction, SDL_Point *origin)
 {
     perso->cote[UP] =          perso->etatpix[0] + perso->etatpix[1] + perso->etatpix[2] + perso->etatpix[3];

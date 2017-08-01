@@ -3,9 +3,8 @@
 #include <stdio.h>
 #include <math.h>
 
-#include "main.h"
+#include "ui.h"
 #include "image.h"
-#include "listechaine.h"
 
 extern int screenh, screenw;
 

@@ -1,4 +1,4 @@
-#include "main.h"
+#include "clavier.h"
 
 void intputtexte(struct typeFORevent *FORevent)
 {

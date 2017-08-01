@@ -1,7 +1,6 @@
 #ifndef CREATUREH
 #define CREATUREH
 
-#include "struct.h"
 
 struct CREATURE
 {

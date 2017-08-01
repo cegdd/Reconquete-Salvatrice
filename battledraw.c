@@ -1,6 +1,4 @@
-#include "main.h"
-#include "colision.h"
-#include "image.h"
+
 /*
 extern int screenh, screenw;
 

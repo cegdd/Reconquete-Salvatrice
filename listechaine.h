@@ -1,6 +1,8 @@
 #ifndef LISTECHAINEH
 #define LISTECHAINEH
 
+#include "struct.h"
+
 void insertionsac(struct PACKobjet *packobjet, int id);
 void insertionnumero(int oldcase,struct EMPLACEMENT *sac, int lacase,struct EMPLACEMENT *objetenmain,struct CHOSE *objet);
 void prendreenmain(struct EMPLACEMENT lacase,struct EMPLACEMENT *objetenmain);

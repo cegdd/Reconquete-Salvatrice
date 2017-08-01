@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <SDL.h>
 
-#include "main.h"
 #include "listechaine.h"
+#include "struct.h"
 
 void insertionsac(struct PACKobjet *packobjet, int id)
 {

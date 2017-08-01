@@ -3,8 +3,6 @@
 
 #include <SDL_ttf.h>
 
-#include "main.h"
-#include "donjon.h"
 
 int TotalTableauInt(int *ptrTableau, int nbcase);
 void initPLAN(struct PACKobjet *objet);

@@ -2,15 +2,12 @@
 #include <stdio.h>
 #include <SDL.h>
 
-#include "main.h"
+#include "struct.h"
 #include "image.h"
 
-typedef struct BARREVIE BARREVIE;
-
-
-BARREVIE* AddLifeBar(int life, int lenght)
+struct BARREVIE* AddLifeBar(int life, int lenght)
 {
-	BARREVIE *lifebar = malloc(sizeof(BARREVIE));
+	struct BARREVIE *lifebar = malloc(sizeof(struct BARREVIE));
 
 	lifebar->life = life;
 	lifebar->baselife = life;

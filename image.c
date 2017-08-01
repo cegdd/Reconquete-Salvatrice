@@ -6,13 +6,21 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 
-#include "main.h"
 #include "image.h"
+#include "struct.h"
+
 
 extern int screenh, screenw;
 
 
 Uint8 obtenirPixel(SDL_Surface *surface, SDL_Point *pix)
+{
+    Uint8 *p = (Uint8 *)surface->pixels + pix->y * surface->pitch + pix->x * 4;
+    /* HAVE TO BE 32 BIT PNG */
+    return *p;
+}
+
+Uint8 obtenirPixel_hook(SDL_Surface *surface, SDL_Point *pix)
 {
     Uint8 *p = (Uint8 *)surface->pixels + (surface->h-pix->y) * surface->pitch + pix->x * 4;
     /* HAVE TO BE 32 BIT PNG */
