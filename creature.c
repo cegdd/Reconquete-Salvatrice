@@ -12,6 +12,8 @@ void initcreature(struct CREATURE *creature)
     creature->dps = 0;
     creature->Ratk = 0;
     creature->vie  = 0;
+    creature->hitlaps  = 0;
+
     creature->name[0]  = '\0';
     creature->imgpath[0]  = '\0';
     creature->pict.texture  = -1;

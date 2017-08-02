@@ -90,6 +90,7 @@ systeme->continuer = 1;
 
 			/*sichronisation des données*/
 			sinchronisation(craft, systeme, online, perso, &dj0);
+			SyncMob(&dj0);
             /*calcul direction joueur client*/
             deplacement->direction.direction = directionperso(&deplacement->direction);
             /*deplacement*/

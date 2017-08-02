@@ -123,6 +123,7 @@ void hitboxplayer (struct DONJON *donjon, struct PERSO *perso)
     {
         donjon->mob[ret].atkDone = true;
         TakeDamage(ret, donjon, perso);
+        donjon->mob[ret].TimeSinceAtk = SDL_GetTicks();
 
         ret = playeristouched(donjon, perso);
     }

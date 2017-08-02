@@ -91,6 +91,9 @@ void LoadDonjon(struct DONJON *donjon, char *name)
             //Ratk
             lis(fichier, buffer);
             donjon->creature[i].Ratk = atoi(buffer);
+            //hitlaps
+            lis(fichier, buffer);
+            donjon->creature[i].hitlaps = atoi(buffer);
 
             sprintf(buffer, "rs/images/%s", donjon->creature[i].imgpath);
             donjon->creature[i].pict.texture = loadTextureandsize(buffer, &donjon->creature[i].pict.pos);

@@ -14,6 +14,7 @@ struct MOB
     int vie;
     int ID;
     int angle;
+    int TimeSinceAtk;
 
     double scale;
 
@@ -24,5 +25,6 @@ struct MOB
 
 void initmob(struct MOB *mob);
 void SetMob(int i, struct DONJON *donjon);
+void SyncMob(struct DONJON *donjon);
 
 #endif
