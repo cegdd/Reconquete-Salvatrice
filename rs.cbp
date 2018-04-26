@@ -30,9 +30,9 @@
 			<Add option="-Wshadow" />
 			<Add option="-Wmain" />
 			<Add option="-Wall" />
-			<Add option="-std=c99" />
 			<Add option="-pg" />
 			<Add option="-g" />
+			<Add option="-std=gnu11" />
 			<Add directory="C:/Users/cegdd/programmation/lib/SDL2-2.0.4/i686-w64-mingw32/include/SDL2" />
 			<Add directory="C:/Users/cegdd/programmation/lib/SDL2_image-2.0.1/i686-w64-mingw32/include/SDL2" />
 			<Add directory="C:/Users/cegdd/programmation/lib/SDL2_mixer-2.0.1/i686-w64-mingw32/include/SDL2" />
@@ -291,6 +291,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="tableau.h" />
+		<Unit filename="target.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="target.h" />
 		<Unit filename="thread1.c">
 			<Option compilerVar="CC" />
 		</Unit>

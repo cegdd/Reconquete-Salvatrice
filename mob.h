@@ -21,10 +21,12 @@ struct MOB
     struct BARREVIE *BarreDeVie;
     struct hookpict hookpict;
     struct PATH path;
+
+    struct STRAIGHTPATH *straightpath;
 };
 
 void initmob(struct MOB *mob);
 void SetMob(int i, struct DONJON *donjon);
-void SyncMob(struct DONJON *donjon);
+void SyncMob(struct DONJON *donjon, struct PERSO *perso);
 
 #endif

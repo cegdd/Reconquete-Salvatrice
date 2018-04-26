@@ -2,6 +2,9 @@
 #define DEPLACEMENTH
 
 #include "struct.h"
+#include "target.h"
+#include "mob.h"
+#include "creature.h"
 
 struct DIRECTION
 {
@@ -22,6 +25,16 @@ struct DIVERSdeplacement
     SDL_Rect temp;
 };
 
+struct STRAIGHTPATH
+{
+    struct TARGET target;
+    double vecteur_X;
+    double vecteur_Y;
+    SDL_Point StartPos;
+    SDL_Point CurrentPos;
+    int speed;
+};
+
 void initdeplacement(struct DIVERSdeplacement *deplacement,struct DIVERSsysteme *systeme);
 
 void haut           (int* y);
@@ -32,5 +45,7 @@ void bas            (int* y);
 void basgauche      (int* x, int* y);
 void gauche         (int* x);
 void gauchehaut     (int* x, int* y);
+
+void NewStraightPath(struct DONJON *donjon, SDL_Rect target_Pos);
 
 #endif

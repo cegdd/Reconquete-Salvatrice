@@ -432,7 +432,7 @@ GLuint loadTextureandsize(const char * filename, struct SDL_Rect *pos)
 
     picture_surface = IMG_Load(filename);
     if (picture_surface == NULL)
-        {   printf ("surface not correctly loaded \n");
+        {   printf ("surface %s not correctly loaded \n", filename);
             return 0;}//0 is an error for opengl
 
     pos->w = picture_surface->w;

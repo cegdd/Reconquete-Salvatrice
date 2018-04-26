@@ -109,6 +109,7 @@ struct hookpict
 {
     struct pict pict;
     SDL_Point translation;
+    SDL_Rect Originpos;
 };
 
 struct File

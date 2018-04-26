@@ -54,7 +54,8 @@ int map (struct DIVERSsysteme *systeme,struct typeFORthreads *online,struct PACK
     struct DONJON dj0;
     initdonjon(&dj0, systeme);
     LoadDonjon(&dj0, "dj0");
-                systeme->djisloaded = true;
+
+    systeme->djisloaded = true;
 
     online->jeuxACTIF = 1;
 
@@ -90,14 +91,14 @@ systeme->continuer = 1;
 
 			/*sichronisation des données*/
 			sinchronisation(craft, systeme, online, perso, &dj0);
-			SyncMob(&dj0);
+			SyncMob(&dj0, perso);
             /*calcul direction joueur client*/
             deplacement->direction.direction = directionperso(&deplacement->direction);
             /*deplacement*/
             checkPixel(&dj0.map, perso, systeme);
             move_map(perso, &deplacement->direction, &dj0.origin);
             /*gestion des dégats*/
-            hitboxplayer (&dj0, perso);
+            hitboxplayer (&dj0, perso, systeme);
             /*recupération coordonées souris*/
             SDL_GetMouseState(&systeme->pointeur.pos.x, &systeme->pointeur.pos.y);
             systeme->pointeur.pos.y = (systeme->pointeur.pos.y - screenh + systeme->pointeur.pos.h) * -1;

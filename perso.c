@@ -116,19 +116,29 @@ void initperso(struct PERSO *perso,struct DIVERSsysteme *systeme)
 	perso->PixelCalque[index].x = 0;		perso->PixelCalque[index].y = 32;
 }
 
-void hitboxplayer (struct DONJON *donjon, struct PERSO *perso)
+void hitboxplayer (struct DONJON *donjon, struct PERSO *perso, struct DIVERSsysteme *systeme)
 {
     int ret = playeristouched(donjon, perso);
     while (ret != -1)
     {
         donjon->mob[ret].atkDone = true;
-        TakeDamage(ret, donjon, perso);
+        TakeDamage(ret, donjon, perso, systeme);
         donjon->mob[ret].TimeSinceAtk = SDL_GetTicks();
 
         ret = playeristouched(donjon, perso);
     }
 }
-void TakeDamage (int index, struct DONJON *donjon, struct PERSO *perso)
+void TakeDamage (int index, struct DONJON *donjon, struct PERSO *perso, struct DIVERSsysteme *systeme)
 {
     perso->life -= donjon->creature[donjon->mob[index].ID].dps;
+    if (perso->life <= 0)
+    {
+
+    initdonjon(donjon, systeme);
+    systeme->djisloaded = false;
+    LoadDonjon(donjon, "dj0");
+    systeme->djisloaded = true;
+    perso->life = perso->lifemax;
+
+    }
 }
