@@ -1,4 +1,4 @@
-#include <SDL.h>
+#include "C:\Users\antoi\Documents\programation\SDL2\SDL.h"
 
 /*
 int HitboxPoing(struct typecombat *BTLstr, int index)

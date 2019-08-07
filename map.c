@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
-#include <SDL_ttf.h>
-#include <SDL_image.h>
+#include "C:\Users\antoi\Documents\programation\SDL2\SDL_ttf.h"
+#include "C:\Users\antoi\Documents\programation\SDL2\SDL_image.h"
 #include <math.h>
 
 #include "perso.h"

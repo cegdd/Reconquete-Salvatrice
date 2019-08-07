@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include <SDL.h>
-#include <SDL_ttf.h>
+#include "C:\Users\antoi\Documents\programation\SDL2\SDL.h"
+#include "C:\Users\antoi\Documents\programation\SDL2\SDL_ttf.h"
 #include <string.h>
 
 #include "struct.h"

@@ -1,7 +1,7 @@
 #ifndef UIH
 #define UIH
 
-#include <SDL_ttf.h>
+#include "C:\Users\antoi\Documents\programation\SDL2\SDL_ttf.h"
 #include <stdbool.h>
 
 #include "struct.h"

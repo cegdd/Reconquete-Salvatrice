@@ -1,7 +1,7 @@
 #ifndef TARGETH
 #define TARGETH
 
-#include <SDL.h>
+#include "C:\Users\antoi\Documents\programation\SDL2\SDL.h"
 
 struct TARGET
 {

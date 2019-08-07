@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <SDL.h>
-#include <SDL_ttf.h>
-#include <SDL_image.h>
-#include <SDL_mixer.h>
+#include "C:\Users\antoi\Documents\programation\SDL2\SDL.h"
+#include "C:\Users\antoi\Documents\programation\SDL2\SDL_ttf.h"
+#include "C:\Users\antoi\Documents\programation\SDL2\SDL_image.h"
+#include "C:\Users\antoi\Documents\programation\SDL2\SDL_mixer.h"
 #include <pthread.h>
 
 #include <GL/gl.h>
@@ -68,7 +68,7 @@ int main( int argc , char ** argv )
 	Mix_VolumeMusic(64);
 
 
-	#if FASTLOG == 1/*juste pour moi, pour éviter le log*/
+	#if FASTLOG == 1/*juste pour moi, pour ï¿½viter le log*/
 	sprintf(systeme.sauvegarde[0], "cegdd");
 	sprintf(systeme.sauvegarde[1], "mdpbidon");
 	/*pthread_create(&lethread1, NULL, *thread1, &online);*/
@@ -78,10 +78,10 @@ int main( int argc , char ** argv )
 	#endif /* FASTLOG*/
 
 	sound = Mix_LoadMUS("game.mp3");
-	if (sound == NULL){ printf("musique non trouvée"); return EXIT_FAILURE;}
+	if (sound == NULL){ printf("musique non trouvï¿½e"); return EXIT_FAILURE;}
 	else if (Mix_PlayMusic(sound, -1) < 0){ printf("musique non jouable"); return EXIT_FAILURE;}
 
-	/*si le login est accepté*/
+	/*si le login est acceptï¿½*/
 	ret = login(&systeme);
 	while (ret != 0)
 	{
@@ -100,7 +100,7 @@ int main( int argc , char ** argv )
 		else if (ret == 5)
 		{
 			Mix_PauseMusic ();
-			chargementarcade(&systeme);
+			//chargementarcade(&systeme);
 			if (Mix_PlayMusic(sound, -1) < 0){ printf("musique non jouable"); return EXIT_FAILURE;}
 		}
 		else

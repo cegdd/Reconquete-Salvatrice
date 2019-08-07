@@ -3,8 +3,8 @@
 
 #include <stdio.h>
 #include <stdbool.h>
-#include <SDL_ttf.h>
-#include <SDL.h>
+#include "C:\Users\antoi\Documents\programation\SDL2\SDL_ttf.h"
+#include "C:\Users\antoi\Documents\programation\SDL2\SDL.h"
 
 #include <GL/gl.h>
 #include <GL/glu.h>
@@ -12,13 +12,13 @@
 /*####     OS     ######*/
 #define WINDOWS 1
 /*####logging rapide ####*/
-#define FASTLOG 1
+#define FASTLOG 0
 /*####  battle log   ####*/
 #define BATTLE_LOG 0
 /*##battle log display##*/
 #define BATTLE_LOG_DISPLAY 0
 /*####    cheat     ####*/
-#define CHEAT 1
+#define CHEAT 0
 /*#######################*/
 
 #if WINDOWS == 1

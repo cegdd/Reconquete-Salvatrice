@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <SDL_image.h>
+#include "C:\Users\antoi\Documents\programation\SDL2\SDL_image.h"
 
 #include "donjon.h"
 #include "mob.h"
