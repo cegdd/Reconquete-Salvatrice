@@ -1,10 +1,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "C:\Users\antoi\Documents\programation\SDL2\SDL.h"
+#include "SDL2/SDL.h"
 #include <string.h>
 #include <pthread.h>
-#include "C:\Users\antoi\Documents\programation\SDL2\SDL_ttf.h"
+#include "SDL2/SDL_ttf.h"
 
 #include "thread2.h"
 #include "main.h"

@@ -16,7 +16,7 @@
 					<Add option="-g" />
 				</Compiler>
 				<Linker>
-					<Add option="-pg -lgmon" />
+					<Add option="-pg" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -36,16 +36,16 @@
 			<Add directory="C:/Users/antoi/Documents/programmation/lib" />
 		</Compiler>
 		<Linker>
-			<Add option="-pg -lgmon" />
-			<Add library="mingw32" />
-			<Add library="opengl32" />
-			<Add library="glu32" />
-			<Add library="C:/Users/antoi/Documents/programation/lib/libSDL2main.a" />
-			<Add library="C:/Users/antoi/Documents/programation/lib/libSDL2.dll.a" />
-			<Add library="C:/Users/antoi/Documents/programation/lib/libSDL2_image.dll.a" />
-			<Add library="C:/Users/antoi/Documents/programation/lib/libSDL2_ttf.dll.a" />
-			<Add library="C:/Users/antoi/Documents/programation/lib/libSDL2_mixer.dll.a" />
-			<Add library="ws2_32" />
+			<Add option="-pg" />
+			<Add library="pthread" />
+			<Add library="SDL2main" />
+			<Add library="SDL2" />
+			<Add library="SDL2_image" />
+			<Add library="SDL2_ttf" />
+			<Add library="SDL2_mixer" />
+			<Add library="GL" />
+			<Add library="GLU" />
+			<Add library="m" />
 		</Linker>
 		<Unit filename=".gitattributes" />
 		<Unit filename=".gitignore" />
@@ -313,9 +313,6 @@
 		</Unit>
 		<Unit filename="ui.h" />
 		<Extensions>
-			<code_completion />
-			<envvars />
-			<debugger />
 			<lib_finder disable_auto="1" />
 		</Extensions>
 	</Project>

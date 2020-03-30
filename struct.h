@@ -3,14 +3,14 @@
 
 #include <stdio.h>
 #include <stdbool.h>
-#include "C:\Users\antoi\Documents\programation\SDL2\SDL_ttf.h"
-#include "C:\Users\antoi\Documents\programation\SDL2\SDL.h"
+#include "SDL2/SDL_ttf.h"
+#include "SDL2/SDL.h"
 
 #include <GL/gl.h>
 #include <GL/glu.h>
 
 /*####     OS     ######*/
-#define WINDOWS 1
+#define WINDOWS 0
 /*####logging rapide ####*/
 #define FASTLOG 0
 /*####  battle log   ####*/

@@ -1,4 +1,4 @@
-#include "C:\Users\antoi\Documents\programation\SDL2\SDL.h"
+#include "SDL2/SDL.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>

@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "C:\Users\antoi\Documents\programation\SDL2\SDL.h"
+#include "SDL2/SDL.h"
 
 #include "struct.h"
 #include "image.h"

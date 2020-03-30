@@ -1,7 +1,7 @@
 #ifndef TABLEAUH
 #define TABLEAUH
 
-#include "C:\Users\antoi\Documents\programation\SDL2\SDL_ttf.h"
+#include "SDL2/SDL_ttf.h"
 
 
 int TotalTableauInt(int *ptrTableau, int nbcase);

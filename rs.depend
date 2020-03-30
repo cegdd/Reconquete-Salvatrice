@@ -2704,3 +2704,347 @@
 	"main.h"
 	"C:\Users\antoi\Documents\programation\SDL2\SDL_ttf.h"
 
+1585538792 source:/home/cegdd/Documents/rs/Reconquete-Salvatrice/battledraw.c
+
+1585539461 source:/home/cegdd/Documents/rs/Reconquete-Salvatrice/CaC.c
+	"SDL2/SDL.h"
+
+1585538792 source:/home/cegdd/Documents/rs/Reconquete-Salvatrice/creature.c
+	<stdlib.h>
+	<stdbool.h>
+	"image.h"
+	"creature.h"
+
+1585539485 /home/cegdd/Documents/rs/Reconquete-Salvatrice/image.h
+	"SDL2/SDL_ttf.h"
+	<GL/gl.h>
+	<GL/glu.h>
+	"struct.h"
+
+1585539501 /home/cegdd/Documents/rs/Reconquete-Salvatrice/struct.h
+	<stdio.h>
+	<stdbool.h>
+	"SDL2/SDL_ttf.h"
+	"SDL2/SDL.h"
+	<GL/gl.h>
+	<GL/glu.h>
+	<winsock2.h>
+	<pthread.h>
+	<sys/types.h>
+	<sys/socket.h>
+	<netinet/in.h>
+	<arpa/inet.h>
+	<unistd.h>
+
+1585538792 /home/cegdd/Documents/rs/Reconquete-Salvatrice/creature.h
+
+1585538792 source:/home/cegdd/Documents/rs/Reconquete-Salvatrice/clavier.c
+	"clavier.h"
+	"deplacement.h"
+
+1585538792 /home/cegdd/Documents/rs/Reconquete-Salvatrice/clavier.h
+	"struct.h"
+
+1585538792 /home/cegdd/Documents/rs/Reconquete-Salvatrice/deplacement.h
+	"struct.h"
+	"target.h"
+	"mob.h"
+	"creature.h"
+
+1585539508 /home/cegdd/Documents/rs/Reconquete-Salvatrice/target.h
+	"SDL2/SDL.h"
+
+1585538792 /home/cegdd/Documents/rs/Reconquete-Salvatrice/mob.h
+	"path.h"
+	"struct.h"
+
+1585538792 /home/cegdd/Documents/rs/Reconquete-Salvatrice/path.h
+	<stdbool.h>
+
+1585539475 source:/home/cegdd/Documents/rs/Reconquete-Salvatrice/colision.c
+	"SDL2/SDL.h"
+	<math.h>
+	<stdio.h>
+	<stdbool.h>
+	"struct.h"
+	"perso.h"
+	"colision.h"
+	"image.h"
+	"deplacement.h"
+	"donjon.h"
+
+1585538792 /home/cegdd/Documents/rs/Reconquete-Salvatrice/perso.h
+	"deplacement.h"
+	"donjon.h"
+
+1585538792 /home/cegdd/Documents/rs/Reconquete-Salvatrice/donjon.h
+	"struct.h"
+	"creature.h"
+	"mob.h"
+
+1585538792 /home/cegdd/Documents/rs/Reconquete-Salvatrice/colision.h
+	<stdbool.h>
+	"deplacement.h"
+	"donjon.h"
+
+1585539478 source:/home/cegdd/Documents/rs/Reconquete-Salvatrice/deplacement.c
+	"SDL2/SDL.h"
+	<math.h>
+	"struct.h"
+	"deplacement.h"
+	"mob.h"
+	"target.h"
+	"perso.h"
+	"creature.h"
+
+1585539511 source:/home/cegdd/Documents/rs/Reconquete-Salvatrice/donjon.c
+	<stdio.h>
+	<stdlib.h>
+	"SDL2/SDL.h"
+	"donjon.h"
+	"mob.h"
+	"sauvegarde.h"
+	"image.h"
+
+1585538792 /home/cegdd/Documents/rs/Reconquete-Salvatrice/sauvegarde.h
+
+1585538792 source:/home/cegdd/Documents/rs/Reconquete-Salvatrice/fichier.c
+	<stdio.h>
+
+1585539525 source:/home/cegdd/Documents/rs/Reconquete-Salvatrice/image.c
+	<stdio.h>
+	"SDL2/SDL.h"
+	"SDL2/SDL_ttf.h"
+	"SDL2/SDL_image.h"
+	<GL/gl.h>
+	<GL/glu.h>
+	"image.h"
+	"struct.h"
+
+1585539548 source:/home/cegdd/Documents/rs/Reconquete-Salvatrice/listechaine.c
+	<stdlib.h>
+	"SDL2/SDL.h"
+	"listechaine.h"
+	"struct.h"
+
+1585538792 /home/cegdd/Documents/rs/Reconquete-Salvatrice/listechaine.h
+	"struct.h"
+
+1585539432 source:/home/cegdd/Documents/rs/Reconquete-Salvatrice/main.c
+	<stdio.h>
+	<stdlib.h>
+	"SDL2/SDL.h"
+	"SDL2/SDL_ttf.h"
+	"SDL2/SDL_image.h"
+	"SDL2/SDL_mixer.h"
+	<pthread.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	"struct.h"
+	"perso.h"
+	"tableau.h"
+	"sauvegarde.h"
+	"main.h"
+	"login.h"
+	"map.h"
+
+1585539556 /home/cegdd/Documents/rs/Reconquete-Salvatrice/tableau.h
+	"SDL2/SDL_ttf.h"
+
+1585538792 /home/cegdd/Documents/rs/Reconquete-Salvatrice/main.h
+	"struct.h"
+
+1585538792 /home/cegdd/Documents/rs/Reconquete-Salvatrice/login.h
+
+1585538792 /home/cegdd/Documents/rs/Reconquete-Salvatrice/map.h
+	"donjon.h"
+
+1585538792 source:/home/cegdd/Documents/rs/Reconquete-Salvatrice/mob.c
+	"mob.h"
+	"image.h"
+	"tool.h"
+	"donjon.h"
+	"systeme.h"
+	"perso.h"
+
+1585538792 /home/cegdd/Documents/rs/Reconquete-Salvatrice/tool.h
+
+1585538792 /home/cegdd/Documents/rs/Reconquete-Salvatrice/systeme.h
+
+1585538792 source:/home/cegdd/Documents/rs/Reconquete-Salvatrice/objet.c
+	<stdio.h>
+	<stdarg.h>
+	"struct.h"
+
+1585539529 source:/home/cegdd/Documents/rs/Reconquete-Salvatrice/evenement.c
+	<stdlib.h>
+	<stdio.h>
+	<stdbool.h>
+	"SDL2/SDL.h"
+	"struct.h"
+	"perso.h"
+	"clavier.h"
+	"evenement.h"
+	"colision.h"
+	"systeme.h"
+	"ui.h"
+	"listechaine.h"
+
+1585539573 /home/cegdd/Documents/rs/Reconquete-Salvatrice/evenement.h
+	<stdbool.h>
+	"SDL2/SDL.h"
+
+1585539581 /home/cegdd/Documents/rs/Reconquete-Salvatrice/ui.h
+	"SDL2/SDL_ttf.h"
+	<stdbool.h>
+	"struct.h"
+
+1585539568 source:/home/cegdd/Documents/rs/Reconquete-Salvatrice/map.c
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	<string.h>
+	"SDL2/SDL_ttf.h"
+	"SDL2/SDL_image.h"
+	<math.h>
+	"perso.h"
+	"donjon.h"
+	"image.h"
+	"listechaine.h"
+	"systeme.h"
+	"map.h"
+	"deplacement.h"
+	"colision.h"
+	"ui.h"
+	"evenement.h"
+	"tir.h"
+	"tool.h"
+	"sauvegarde.h"
+
+1585538792 /home/cegdd/Documents/rs/Reconquete-Salvatrice/tir.h
+
+1585538792 source:/home/cegdd/Documents/rs/Reconquete-Salvatrice/path.c
+	<stdio.h>
+	"path.h"
+
+1585538792 source:/home/cegdd/Documents/rs/Reconquete-Salvatrice/perso.c
+	"deplacement.h"
+	"image.h"
+	"perso.h"
+	"tool.h"
+	"donjon.h"
+	"colision.h"
+
+1585539595 source:/home/cegdd/Documents/rs/Reconquete-Salvatrice/login.c
+	<stdio.h>
+	"SDL2/SDL.h"
+	"SDL2/SDL_ttf.h"
+	<string.h>
+	"struct.h"
+	"login.h"
+	"evenement.h"
+	"ui.h"
+	"sauvegarde.h"
+	"fichier.h"
+	"image.h"
+	"tableau.h"
+
+1585538792 /home/cegdd/Documents/rs/Reconquete-Salvatrice/fichier.h
+
+1585538792 source:/home/cegdd/Documents/rs/Reconquete-Salvatrice/queue.c
+	<stdio.h>
+	<stdlib.h>
+	"struct.h"
+
+1585539601 source:/home/cegdd/Documents/rs/Reconquete-Salvatrice/sauvegarde.c
+	<stdio.h>
+	<stdlib.h>
+	"SDL2/SDL.h"
+	<string.h>
+	"struct.h"
+	"sauvegarde.h"
+	"perso.h"
+
+1585538792 source:/home/cegdd/Documents/rs/Reconquete-Salvatrice/target.c
+	"target.h"
+
+1585539604 source:/home/cegdd/Documents/rs/Reconquete-Salvatrice/systeme.c
+	"SDL2/SDL.h"
+	<stdlib.h>
+	<stdio.h>
+	<math.h>
+	"ui.h"
+	"image.h"
+	"perso.h"
+
+1585539621 source:/home/cegdd/Documents/rs/Reconquete-Salvatrice/tableau.c
+	"SDL2/SDL.h"
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	"SDL2/SDL_ttf.h"
+	"SDL2/SDL_image.h"
+	"struct.h"
+	"image.h"
+	"objet.h"
+	"tool.h"
+	"perso.h"
+
+1585538792 /home/cegdd/Documents/rs/Reconquete-Salvatrice/objet.h
+
+1585539637 source:/home/cegdd/Documents/rs/Reconquete-Salvatrice/thread2.c
+	<stdlib.h>
+	<stdio.h>
+	<stdbool.h>
+	"SDL2/SDL.h"
+	<string.h>
+	<pthread.h>
+	"image.h"
+	"thread2.h"
+	"main.h"
+	"SDL2/SDL_ttf.h"
+
+1585538792 /home/cegdd/Documents/rs/Reconquete-Salvatrice/thread2.h
+
+1585539641 source:/home/cegdd/Documents/rs/Reconquete-Salvatrice/tir.c
+	<stdlib.h>
+	<stdio.h>
+	"SDL2/SDL.h"
+	<math.h>
+	"struct.h"
+	"donjon.h"
+	"systeme.h"
+	"image.h"
+	"perso.h"
+
+1585539649 source:/home/cegdd/Documents/rs/Reconquete-Salvatrice/thread1.c
+	<stdlib.h>
+	<stdio.h>
+	<stdbool.h>
+	"SDL2/SDL.h"
+	<string.h>
+	<pthread.h>
+	"SDL2/SDL_ttf.h"
+	"thread2.h"
+	"main.h"
+
+1585539653 source:/home/cegdd/Documents/rs/Reconquete-Salvatrice/tool.c
+	<stdlib.h>
+	<stdio.h>
+	"SDL2/SDL.h"
+	"struct.h"
+	"image.h"
+
+1585539656 source:/home/cegdd/Documents/rs/Reconquete-Salvatrice/ui.c
+	<stdio.h>
+	<stdlib.h>
+	"SDL2/SDL.h"
+	<math.h>
+	"struct.h"
+	"ui.h"
+	"colision.h"
+	"systeme.h"
+	"image.h"
+	"perso.h"
+	"tool.h"
+

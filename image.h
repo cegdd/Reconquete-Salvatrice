@@ -1,7 +1,7 @@
 #ifndef IMAGEH
 #define IMAGEH
 
-#include "C:\Users\antoi\Documents\programation\SDL2\SDL_ttf.h"
+#include "SDL2/SDL_ttf.h"
 #include <GL/gl.h>
 #include <GL/glu.h>
 

@@ -2,7 +2,7 @@
 #define EVENEMENTH
 
 #include <stdbool.h>
-#include "C:\Users\antoi\Documents\programation\SDL2\SDL.h"
+#include "SDL2/SDL.h"
 
 void boucleevent (bool *lancermessage,struct typeFORevent *FORevent, struct TIR *TIR);
 int boucleeventlogin (struct typelogin *loginstore,struct DIVERSsysteme *systeme);

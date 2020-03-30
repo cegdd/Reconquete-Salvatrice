@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "C:\Users\antoi\Documents\programation\SDL2\SDL.h"
+#include "SDL2/SDL.h"
 
 #include "listechaine.h"
 #include "struct.h"

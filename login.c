@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include "C:\Users\antoi\Documents\programation\SDL2\SDL.h"
-#include "C:\Users\antoi\Documents\programation\SDL2\SDL_ttf.h"
+#include "SDL2/SDL.h"
+#include "SDL2/SDL_ttf.h"
 #include <string.h>
 
 #include "struct.h"
@@ -109,10 +109,10 @@ int login (struct DIVERSsysteme *systeme)
 		else if (loginstore.tpact - loginstore.tpcurseur >= 500)
         {
             loginstore.tpcurseur = loginstore.tpact;
-            if (loginstore.clignote == TRUE)
-                {   loginstore.clignote = FALSE;    }
+            if (loginstore.clignote == true)
+                {   loginstore.clignote = false;    }
             else
-                {   loginstore.clignote = TRUE;     }
+                {   loginstore.clignote = true;     }
         }
 		else
 		{
