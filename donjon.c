@@ -8,6 +8,8 @@
 #include "sauvegarde.h"
 #include "image.h"
 
+#include <LIBcegdd_ui.h>
+
 extern int screenh, screenw;
 
 void initdonjon(struct DONJON *donjon,struct DIVERSsysteme *systeme)
@@ -48,7 +50,7 @@ void LoadDonjon(struct DONJON *donjon, char *name)
 
         sprintf(temp, "rs/maps/%s.png", buffer);
         donjon->map.pict.texture = loadTextureandsize(temp, &donjon->map.pict.pos);
-        setPos2(&donjon->origin, screenw/2, screenh/2);
+        CEGDD_UI_setPos2(&donjon->origin, screenw/2, screenh/2);
 
         sprintf(temp, "rs/maps/%snb.png", buffer);
         donjon->map.calque = IMG_Load(temp);
@@ -68,10 +70,10 @@ void LoadDonjon(struct DONJON *donjon, char *name)
             lis(fichier, buffer);
             //name
             lis(fichier, buffer);
-            sprintf(donjon->creature[i].name, buffer);
+            strcpy(donjon->creature[i].name, buffer);
             //image
             lis(fichier, buffer);
-            sprintf(donjon->creature[i].imgpath, buffer);
+            strcpy(donjon->creature[i].imgpath, buffer);
             //vie
             lis(fichier, buffer);
             donjon->creature[i].vie = atoi(buffer);
@@ -110,7 +112,7 @@ void LoadDonjon(struct DONJON *donjon, char *name)
             //translation joueur en y
             lis(fichier, buffer);
             y = atoi(buffer);
-            setPos2(&donjon->map.translation, -x, -y);
+            CEGDD_UI_setPos2(&donjon->map.translation, -x, -y);
         }
 
         //nombre de mobs

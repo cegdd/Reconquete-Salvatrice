@@ -9,23 +9,10 @@
 #include "image.h"
 #include "struct.h"
 
+#include <LIBcegdd_ui.h>
+
 
 extern int screenh, screenw;
-
-
-Uint8 obtenirPixel(SDL_Surface *surface, SDL_Point *pix)
-{
-    Uint8 *p = (Uint8 *)surface->pixels + pix->y * surface->pitch + pix->x * 4;
-    /* HAVE TO BE 32 BIT PNG */
-    return *p;
-}
-
-Uint8 obtenirPixel_hook(SDL_Surface *surface, SDL_Point *pix)
-{
-    Uint8 *p = (Uint8 *)surface->pixels + (surface->h-pix->y) * surface->pitch + pix->x * 4;
-    /* HAVE TO BE 32 BIT PNG */
-    return *p;
-}
 
 void chargement (struct DIVERSsysteme *systeme)
 {
@@ -38,8 +25,8 @@ void chargement (struct DIVERSsysteme *systeme)
     glLoadIdentity();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) ;
 
-	setPos4(&logo.pos, 0, 200, screenw, screenh);
-	setPos4(&fond.pos, 0, screenh*-0.2, screenw*0.7, screenh*0.8);
+	CEGDD_UI_setPos4(&logo.pos, 0, 200, screenw, screenh);
+	CEGDD_UI_setPos4(&fond.pos, 0, screenh*-0.2, screenw*0.7, screenh*0.8);
     fond.pos.x = (screenw - fond.pos.w) / 2;
 
 	fond.texture = loadTexture("rs/images/chargement.png");
@@ -344,26 +331,11 @@ void draw_button(struct BOUTON *bouton)
     glColor3ub(255, 255, 255);
 }
 
-void setPos4(SDL_Rect *pos, int x, int y, int w, int h)
-{
-    pos->x = x;
-    pos->y = y;
-    pos->w = w;
-    pos->h = h;
-}
-
-void setPos2(SDL_Point *point, int x, int y)
-{
-    point->x = x;
-    point->y = y;
-}
 void setPos2rect(SDL_Rect *point, int x, int y)
 {
     point->x = x;
     point->y = y;
 }
-
-
 
 void Turn_And_Draw (struct pict *img, float angle)
 {

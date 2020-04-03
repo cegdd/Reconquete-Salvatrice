@@ -5,6 +5,8 @@
 #include "struct.h"
 #include "image.h"
 
+#include <LIBcegdd_ui.h>
+
 struct BARREVIE* AddLifeBar(int life, int lenght)
 {
 	struct BARREVIE *lifebar = malloc(sizeof(struct BARREVIE));
@@ -12,8 +14,8 @@ struct BARREVIE* AddLifeBar(int life, int lenght)
 	lifebar->life = life;
 	lifebar->baselife = life;
 
-	setPos4(&lifebar->pBG, 0, 0, lenght+2, 7);
-    setPos4(&lifebar->pbarre, 1, 1, lenght, 5);
+	CEGDD_UI_setPos4(&lifebar->pBG, 0, 0, lenght+2, 7);
+    CEGDD_UI_setPos4(&lifebar->pbarre, 1, 1, lenght, 5);
 	return lifebar;
 }
 

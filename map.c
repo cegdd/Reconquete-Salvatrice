@@ -20,6 +20,8 @@
 #include "tool.h"
 #include "sauvegarde.h"
 
+#include <LIBcegdd_ui.h>
+
 extern int screenh, screenw;
 
 int map (struct DIVERSsysteme *systeme,struct typeFORthreads *online,struct PACKbouton *bouton ,struct PACKobjet *objet,
@@ -135,7 +137,7 @@ systeme->continuer = 1;
                     CalculerBarreDeVie(dj0.mob[index].BarreDeVie->baselife , dj0.mob[index].BarreDeVie->life, 68);
                     setPos2rect(&dj0.mob[index].BarreDeVie->pBG, dj0.mob[index].hookpict.pict.pos.x-1 + ((dj0.mob[index].hookpict.pict.pos.w-68)/2),
                                 dj0.mob[index].hookpict.pict.pos.y + dj0.mob[index].hookpict.pict.pos.h+4);
-                    setPos4(&dj0.mob[index].BarreDeVie->pbarre, dj0.mob[index].hookpict.pict.pos.x + ((dj0.mob[index].hookpict.pict.pos.w-68)/2),
+                    CEGDD_UI_setPos4(&dj0.mob[index].BarreDeVie->pbarre, dj0.mob[index].hookpict.pict.pos.x + ((dj0.mob[index].hookpict.pict.pos.w-68)/2),
                                 dj0.mob[index].hookpict.pict.pos.y + dj0.mob[index].hookpict.pict.pos.h+5,
                                 CalculerBarreDeVie(dj0.mob[index].BarreDeVie->baselife , dj0.mob[index].BarreDeVie->life, 68), 5);
 

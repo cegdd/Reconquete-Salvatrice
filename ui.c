@@ -11,6 +11,8 @@
 #include "perso.h"
 #include "tool.h"
 
+#include <LIBcegdd_ui.h>
+
 extern int screenh, screenw;
 
 void gestionui (struct DIVERSsysteme *systeme,struct DIVERSui *ui,struct DIVERScraft *craft,struct PACKbouton *bouton,
@@ -461,7 +463,7 @@ void afficherJOUEURS(struct PERSO *perso,struct DIVERSdeplacement *deplacement,s
 	Turn_And_Draw(&perso->perso.pict, calcul);
 
 	setPos2rect(&perso->BarreDeVie->pBG, perso->perso.pict.pos.x-1, perso->perso.pict.pos.y+perso->perso.pict.pos.h+4);
-	setPos4(&perso->BarreDeVie->pbarre,
+	CEGDD_UI_setPos4(&perso->BarreDeVie->pbarre,
          perso->perso.pict.pos.x,
          perso->perso.pict.pos.y+perso->perso.pict.pos.h+5,
          CalculerBarreDeVie(perso->lifemax ,perso->life, perso->perso.pict.pos.w),

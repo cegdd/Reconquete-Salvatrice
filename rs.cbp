@@ -12,6 +12,7 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-std=c11" />
 					<Add option="-pg" />
 					<Add option="-g" />
 				</Compiler>
@@ -33,7 +34,7 @@
 			<Add option="-pg" />
 			<Add option="-g" />
 			<Add option="-std=gnu11" />
-			<Add directory="C:/Users/antoi/Documents/programmation/lib" />
+			<Add directory="/home/cegdd/projets/LIBcegdd_UI" />
 		</Compiler>
 		<Linker>
 			<Add option="-pg" />
@@ -46,6 +47,7 @@
 			<Add library="GL" />
 			<Add library="GLU" />
 			<Add library="m" />
+			<Add library="/home/cegdd/projets/LIBcegdd_UI/bin/Release/libLIBcegdd_UI.a" />
 		</Linker>
 		<Unit filename=".gitattributes" />
 		<Unit filename=".gitignore" />

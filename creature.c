@@ -4,6 +4,8 @@
 #include "image.h"
 #include "creature.h"
 
+#include <LIBcegdd_ui.h>
+
 void initcreature(struct CREATURE *creature)
 {
     creature->aggressif = false;
@@ -17,5 +19,5 @@ void initcreature(struct CREATURE *creature)
     creature->name[0]  = '\0';
     creature->imgpath[0]  = '\0';
     creature->pict.texture  = -1;
-    setPos4(&creature->pict.pos, 0, 0, 0, 0);
+    CEGDD_UI_setPos4(&creature->pict.pos, 0, 0, 0, 0);
 }

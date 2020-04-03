@@ -10,6 +10,8 @@
 #include "deplacement.h"
 #include "donjon.h"
 
+#include <LIBcegdd_ui.h>
+
 extern int screenh, screenw;
 
 void checkPixel(struct floor *carte,struct PERSO *perso,struct DIVERSsysteme *systeme)
@@ -21,7 +23,7 @@ void checkPixel(struct floor *carte,struct PERSO *perso,struct DIVERSsysteme *sy
         perso->pix.y = ((carte->pict.pos.y+carte->pict.pos.h)-(perso->perso.pict.pos.y+perso->perso.pict.pos.h)) + perso->PixelCalque[INDEX].y;
 
 
-        if (obtenirPixel(carte->calque, &perso->pix) == 255) {perso->etatpix[INDEX] = 0;}
+        if (CEGDD_UI_obtenirPixel(carte->calque, &perso->pix) == 255) {perso->etatpix[INDEX] = 0;}
         else{perso->etatpix[INDEX] = 1;}
     }
 }

@@ -9,6 +9,8 @@
 #include "image.h"
 #include "perso.h"
 
+#include <LIBcegdd_ui.h>
+
 void tirer (float px, float py, int canonx, int canony, int tx[][PRECISIONcailloux], int ty[][PRECISIONcailloux],
             int tableauutile, double *degre, struct DONJON *donjon)
 {
@@ -80,7 +82,7 @@ void COMBATgestionprojectile (struct TIR *TIR, struct DONJON *donjon)
 			TIR->pballe[index].x = TIR->tx[index][TIR->i[index]];
 			TIR->pballe[index].y = TIR->ty[index][TIR->i[index]];
 
-			if (obtenirPixel_hook(donjon->map.calque, (SDL_Point*)&TIR->pballe[index]) !=  255)
+			if (CEGDD_UI_obtenirPixel_hook(donjon->map.calque, (SDL_Point*)&TIR->pballe[index]) !=  255)
             {
                 TIR->DepartBalle[index] = STOP;
             }

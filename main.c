@@ -18,6 +18,8 @@
 #include "login.h"
 #include "map.h"
 
+#include <LIBcegdd_ui.h>
+
 int screenh, screenw;
 
 int main( int argc , char ** argv )

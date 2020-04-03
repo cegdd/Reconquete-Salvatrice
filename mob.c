@@ -5,6 +5,8 @@
 #include "systeme.h"
 #include "perso.h"
 
+#include <LIBcegdd_ui.h>
+
 void initmob(struct MOB *mob)
 {
     mob->fixe = true;
@@ -15,8 +17,8 @@ void initmob(struct MOB *mob)
     mob->TimeSinceAtk = 0;
     mob->hookpict.translation.x = 0;
     mob->hookpict.translation.y = 0;
-    setPos4(&mob->hookpict.pict.pos, 0, 0, 0, 0);
-    setPos4(&mob->hookpict.Originpos, 0, 0, 0, 0);
+    CEGDD_UI_setPos4(&mob->hookpict.pict.pos, 0, 0, 0, 0);
+    CEGDD_UI_setPos4(&mob->hookpict.Originpos, 0, 0, 0, 0);
     mob->hookpict.pict.texture = -1;
     PATH_init(&mob->path);
     mob->straightpath = NULL;
@@ -25,10 +27,10 @@ void initmob(struct MOB *mob)
 void SetMob(int i, struct DONJON *donjon)
 {
     donjon->mob[i].hookpict.pict.texture = donjon->creature[donjon->mob[i].ID].pict.texture;
-    setPos4(&donjon->mob[i].hookpict.pict.pos, 0, 0,
+    CEGDD_UI_setPos4(&donjon->mob[i].hookpict.pict.pos, 0, 0,
             donjon->creature[donjon->mob[i].ID].pict.pos.w * donjon->mob[i].scale,
             donjon->creature[donjon->mob[i].ID].pict.pos.h * donjon->mob[i].scale);
-    setPos4(&donjon->mob[i].hookpict.pict.pos,
+    CEGDD_UI_setPos4(&donjon->mob[i].hookpict.pict.pos,
             0,
             0,
             donjon->creature[donjon->mob[i].ID].pict.pos.w * donjon->mob[i].scale,

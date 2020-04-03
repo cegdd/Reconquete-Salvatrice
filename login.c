@@ -12,6 +12,8 @@
 #include "image.h"
 #include "tableau.h"
 
+#include <LIBcegdd_ui.h>
+
 extern int screenh, screenw;
 
 int login (struct DIVERSsysteme *systeme)
@@ -288,13 +290,13 @@ void InitLoginStore(struct typelogin *loginstore,struct DIVERSsysteme *systeme)
 	loginstore->pseudo.img.texture = imprime ("pseudo :", screenw, BLEU, systeme, &loginstore->pseudo.lenght, NULL);
 	loginstore->mdp.img.texture = imprime ("mot de passe :", screenw, BLEU, systeme, &loginstore->mdp.lenght, NULL);
 
-	setPos4(&loginstore->login.pos, 0, 0, screenw, screenh);
-	setPos4(&loginstore->pointeur.pos, 0, 0, 40, 60);
-	setPos4(&loginstore->blueBox.pos, 0, 0, 0, 0);
-	setPos4(&loginstore->whiteBox.pos, 0, 0, 0, 0);
-	setPos4(&loginstore->tdialogue.pos, screenw/8, (screenh/12)*5, (screenw/8)*6, (screenh/6));
-	setPos4(&loginstore->cachermdp.pos, screenw*0.75, screenh*0.3, screenw/6, screenh/12);
-	setPos4(&loginstore->coche.pos, screenw*0.75, screenh*0.3, loginstore->cachermdp.pos.w/3, loginstore->cachermdp.pos.h*1.3);
+	CEGDD_UI_setPos4(&loginstore->login.pos, 0, 0, screenw, screenh);
+	CEGDD_UI_setPos4(&loginstore->pointeur.pos, 0, 0, 40, 60);
+	CEGDD_UI_setPos4(&loginstore->blueBox.pos, 0, 0, 0, 0);
+	CEGDD_UI_setPos4(&loginstore->whiteBox.pos, 0, 0, 0, 0);
+	CEGDD_UI_setPos4(&loginstore->tdialogue.pos, screenw/8, (screenh/12)*5, (screenw/8)*6, (screenh/6));
+	CEGDD_UI_setPos4(&loginstore->cachermdp.pos, screenw*0.75, screenh*0.3, screenw/6, screenh/12);
+	CEGDD_UI_setPos4(&loginstore->coche.pos, screenw*0.75, screenh*0.3, loginstore->cachermdp.pos.w/3, loginstore->cachermdp.pos.h*1.3);
 
     loginstore->login.texture = loadTexture("rs/fonds/login.png");
     loginstore->pointeur.texture = loadTexture("rs/images/p.png");
@@ -402,35 +404,35 @@ void Initbouton(struct typelogin *loginstore,struct DIVERSsysteme *systeme)
     int haut = screenh*0.425;
 
     loginstore->option.texture = loadTexture("rs/ui/options.png");
-    setPos4(&loginstore->option.pos,  screenw/11, screenh/7, screenw/11, screenh/12);
+    CEGDD_UI_setPos4(&loginstore->option.pos,  screenw/11, screenh/7, screenw/11, screenh/12);
     loginstore->option.etat = B_NORMAL;
 
 	loginstore->jouer.texture = loadTexture("rs/ui/jouer.png");
-	setPos4(&loginstore->jouer.pos,  (screenw/11)*3, screenh/7, screenw/11, screenh/12);
+	CEGDD_UI_setPos4(&loginstore->jouer.pos,  (screenw/11)*3, screenh/7, screenw/11, screenh/12);
     loginstore->jouer.etat = B_NORMAL;
 
 	loginstore->creer.texture = loadTexture("rs/ui/creer.png");
-	setPos4(&loginstore->creer.pos,  (screenw/11)*5, screenh/7, screenw/11, screenh/12);
+	CEGDD_UI_setPos4(&loginstore->creer.pos,  (screenw/11)*5, screenh/7, screenw/11, screenh/12);
     loginstore->creer.etat = B_NORMAL;
 
 	loginstore->quitter.texture = loadTexture("rs/ui/logquitter.png");
-	setPos4(&loginstore->quitter.pos,  (screenw/11)*7, screenh/7, screenw/11, screenh/12);
+	CEGDD_UI_setPos4(&loginstore->quitter.pos,  (screenw/11)*7, screenh/7, screenw/11, screenh/12);
     loginstore->quitter.etat = B_NORMAL;
 
 	loginstore->arcade.texture = loadTexture("rs/ui/arcade.png");
-	setPos4(&loginstore->arcade.pos,  (screenw/11)*9, screenh/7, screenw/11, screenh/12);
+	CEGDD_UI_setPos4(&loginstore->arcade.pos,  (screenw/11)*9, screenh/7, screenw/11, screenh/12);
     loginstore->arcade.etat = B_NORMAL;
 
 	loginstore->azerty.texture = loadTexture("rs/ui/azerty.png");
-	setPos4(&loginstore->azerty.pos,  menuw/7+gauche, menuh/3+haut, menuw/7, menuh/3);
+	CEGDD_UI_setPos4(&loginstore->azerty.pos,  menuw/7+gauche, menuh/3+haut, menuw/7, menuh/3);
     loginstore->azerty.etat = B_NORMAL;
 
 	loginstore->qwerty.texture = loadTexture("rs/ui/qwerty.png");
-	setPos4(&loginstore->qwerty.pos,  (menuw/7)*5+gauche, menuh/3+haut, menuw/7, menuh/3);
+	CEGDD_UI_setPos4(&loginstore->qwerty.pos,  (menuw/7)*5+gauche, menuh/3+haut, menuw/7, menuh/3);
     loginstore->qwerty.etat = B_NORMAL;
 
     loginstore->qwertz.texture = loadTexture("rs/ui/qwertz.png");
-    setPos4(&loginstore->qwertz.pos,  (menuw/7)*3+gauche, menuh/3+haut, menuw/7, menuh/3);
+    CEGDD_UI_setPos4(&loginstore->qwertz.pos,  (menuw/7)*3+gauche, menuh/3+haut, menuw/7, menuh/3);
     loginstore->qwertz.etat = B_NORMAL;
 }
 
@@ -446,17 +448,17 @@ void affichageloggin(struct typelogin *loginstore,struct DIVERSsysteme *systeme)
     draw_button(&loginstore->arcade);
 
     if (loginstore->saisiepseudo == true)
-    {   setPos4(&loginstore->blueBox.pos, loginstore->pcase.x, loginstore->pcase.y, loginstore->pcase.w, loginstore->pcase.h);
+    {   CEGDD_UI_setPos4(&loginstore->blueBox.pos, loginstore->pcase.x, loginstore->pcase.y, loginstore->pcase.w, loginstore->pcase.h);
         draw_pict(&loginstore->blueBox);     }
     else
-    {   setPos4(&loginstore->whiteBox.pos, loginstore->pcase.x, loginstore->pcase.y, loginstore->pcase.w, loginstore->pcase.h);
+    {   CEGDD_UI_setPos4(&loginstore->whiteBox.pos, loginstore->pcase.x, loginstore->pcase.y, loginstore->pcase.w, loginstore->pcase.h);
         draw_pict(&loginstore->whiteBox);     }
 
     if (loginstore->saisiemdp == true)
-    {   setPos4(&loginstore->blueBox.pos, loginstore->pcase2.x, loginstore->pcase2.y, loginstore->pcase2.w, loginstore->pcase2.h);
+    {   CEGDD_UI_setPos4(&loginstore->blueBox.pos, loginstore->pcase2.x, loginstore->pcase2.y, loginstore->pcase2.w, loginstore->pcase2.h);
         draw_pict(&loginstore->blueBox);     }
     else
-    {   setPos4(&loginstore->whiteBox.pos, loginstore->pcase2.x, loginstore->pcase2.y, loginstore->pcase2.w, loginstore->pcase2.h);
+    {   CEGDD_UI_setPos4(&loginstore->whiteBox.pos, loginstore->pcase2.x, loginstore->pcase2.y, loginstore->pcase2.w, loginstore->pcase2.h);
         draw_pict(&loginstore->whiteBox);     }
 
     if(loginstore->longmdp > 0)

@@ -11,6 +11,8 @@
 #include "tool.h"
 #include "perso.h"
 
+#include <LIBcegdd_ui.h>
+
 extern int screenh, screenw;
 
 int TotalTableauInt(int *ptrTableau, int nbcase)
@@ -64,9 +66,9 @@ void initinventaire(struct DIVERSinventaire *inventaire,struct DIVERSsysteme *sy
 	sprintf(nom, "clic droit : equiper");
 	inventaire->aide.img.texture = imprime (nom, screenw, GRIS, systeme, &inventaire->aide.lenght, NULL);
 
-	setPos4(&inventaire->sac.pos, 0, screenh/2 - screenh*0.026, screenw*0.1, screenh*0.026);
-	setPos4(&inventaire->fond.pos, 0, 0, screenw, screenh/2);
-	setPos4(&inventaire->rubbish.pos, screenw*0.9, 0, screenw*0.073, screenh*0.13);
+	CEGDD_UI_setPos4(&inventaire->sac.pos, 0, screenh/2 - screenh*0.026, screenw*0.1, screenh*0.026);
+	CEGDD_UI_setPos4(&inventaire->fond.pos, 0, 0, screenw, screenh/2);
+	CEGDD_UI_setPos4(&inventaire->rubbish.pos, screenw*0.9, 0, screenw*0.073, screenh*0.13);
 }
 
 
@@ -261,8 +263,8 @@ void inittemps(struct DIVERStemps *temps,struct DIVERSsysteme *systeme)/*							
 	temps->fps.texture = imprime (temps->StringI, screenw, BLANC, systeme, NULL, NULL);
 	temps->temps.texture = imprime (temps->stringtempstotal, screenw, BLANC, systeme, NULL, NULL);
 
-	setPos4(&temps->fps.pos, screenw*0.75, screenh*0.8, screenw*0.2, screenh*0.05);
-	setPos4(&temps->temps.pos, screenw*0.75, screenh*0.75, screenw*0.2, screenh*0.05);
+	CEGDD_UI_setPos4(&temps->fps.pos, screenw*0.75, screenh*0.8, screenw*0.2, screenh*0.05);
+	CEGDD_UI_setPos4(&temps->temps.pos, screenw*0.75, screenh*0.75, screenw*0.2, screenh*0.05);
 }
 
 void initsystem(struct DIVERSsysteme *systeme)/*																	systeme*/
@@ -288,7 +290,7 @@ void initsystem(struct DIVERSsysteme *systeme)/*																	systeme*/
         printf("police not load2\n");
     }
 
-    setPos4(&systeme->pointeur.pos, 0, 0, 20, 30);
+    CEGDD_UI_setPos4(&systeme->pointeur.pos, 0, 0, 20, 30);
 
 	systeme->pecran.x = 0;
 	systeme->pecran.y = 0;
@@ -356,11 +358,11 @@ void initui(struct DIVERSui *ui,struct DIVERSsysteme *systeme)/*															u
 	ui->plumiere.w = screenw*0.1;
 	ui->plumiere.h = screenh*0.0325;
 
-	setPos4 (&ui->corner_menu.pos, 0, screenh-screenh*0.063, screenw*0.036, screenh*0.065);
-	setPos4 (&ui->corner_inventaire.pos, screenw-screenw*0.036, 0, screenw*0.036, screenh*0.065);
-	setPos4 (&ui->corner_chat.pos, 0, 0, screenw*0.036, screenh*0.065);
-	setPos4 (&ui->BGmenu.pos, 0, screenh/2, screenw, screenh/2);
-	setPos4 (&ui->BoutonQuitter.pos, screenw*0.96, screenh-screenw*0.04, screenw*0.04, screenw*0.04);
+	CEGDD_UI_setPos4 (&ui->corner_menu.pos, 0, screenh-screenh*0.063, screenw*0.036, screenh*0.065);
+	CEGDD_UI_setPos4 (&ui->corner_inventaire.pos, screenw-screenw*0.036, 0, screenw*0.036, screenh*0.065);
+	CEGDD_UI_setPos4 (&ui->corner_chat.pos, 0, 0, screenw*0.036, screenh*0.065);
+	CEGDD_UI_setPos4 (&ui->BGmenu.pos, 0, screenh/2, screenw, screenh/2);
+	CEGDD_UI_setPos4 (&ui->BoutonQuitter.pos, screenw*0.96, screenh-screenw*0.04, screenw*0.04, screenw*0.04);
 
 	ui->BoutonQuitter.etat = B_NORMAL;
 
@@ -368,13 +370,13 @@ void initui(struct DIVERSui *ui,struct DIVERSsysteme *systeme)/*															u
 	ui->corner_inventaire.etat =    B_NORMAL;
 	ui->corner_chat.etat =          B_NORMAL;
 
-	setPos4 (&ui->casestuff[0].pos, screenw*0.225, screenh*0.85, screenh*0.1, screenh*0.1);
-	setPos4 (&ui->casestuff[1].pos, screenw*0.05, screenh*0.55, screenh*0.1, screenh*0.1);
-	setPos4 (&ui->casestuff[2].pos, screenw*0.05, screenh*0.65, screenh*0.1, screenh*0.1);
-	setPos4 (&ui->casestuff[3].pos, screenw*0.05, screenh*0.75, screenh*0.1, screenh*0.1);
-	setPos4 (&ui->casestuff[4].pos, screenw*0.4, screenh*0.55, screenh*0.1, screenh*0.1);
-	setPos4 (&ui->casestuff[5].pos, screenw*0.4, screenh*0.65, screenh*0.1, screenh*0.1);
-	setPos4 (&ui->casestuff[6].pos, screenw*0.4, screenh*0.75, screenh*0.1, screenh*0.1);
+	CEGDD_UI_setPos4 (&ui->casestuff[0].pos, screenw*0.225, screenh*0.85, screenh*0.1, screenh*0.1);
+	CEGDD_UI_setPos4 (&ui->casestuff[1].pos, screenw*0.05, screenh*0.55, screenh*0.1, screenh*0.1);
+	CEGDD_UI_setPos4 (&ui->casestuff[2].pos, screenw*0.05, screenh*0.65, screenh*0.1, screenh*0.1);
+	CEGDD_UI_setPos4 (&ui->casestuff[3].pos, screenw*0.05, screenh*0.75, screenh*0.1, screenh*0.1);
+	CEGDD_UI_setPos4 (&ui->casestuff[4].pos, screenw*0.4, screenh*0.55, screenh*0.1, screenh*0.1);
+	CEGDD_UI_setPos4 (&ui->casestuff[5].pos, screenw*0.4, screenh*0.65, screenh*0.1, screenh*0.1);
+	CEGDD_UI_setPos4 (&ui->casestuff[6].pos, screenw*0.4, screenh*0.75, screenh*0.1, screenh*0.1);
 
 
 }
@@ -564,7 +566,7 @@ void initTIR(struct TIR *TIR)
 	    TIR->i[index] = 0;
 		TIR->DepartBalle[index] = UNUSED;
 
-		setPos4(&TIR->pballe[index], -50, -50, screenw*0.0146, screenh*0.026);
+		CEGDD_UI_setPos4(&TIR->pballe[index], -50, -50, screenw*0.0146, screenh*0.026);
 	}
 
 	TIR->balle = loadTexture ("rs/images/balle.png");

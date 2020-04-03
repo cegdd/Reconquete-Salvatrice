@@ -5,6 +5,8 @@
 #include "donjon.h"
 #include "colision.h"
 
+#include <LIBcegdd_ui.h>
+
 extern int screenh, screenw;
 
 int directionperso(struct DIRECTION *direction)
@@ -41,7 +43,7 @@ void initperso(struct PERSO *perso,struct DIVERSsysteme *systeme)
 	perso->perso.delay = 123;
 	perso->perso.time = 0;
 
-	setPos4(&perso->perso.pict.pos, (screenw/2)-(perso->perso.pict.pos.w/2), (screenh/2)-(perso->perso.pict.pos.h/2), 68, 51);
+	CEGDD_UI_setPos4(&perso->perso.pict.pos, (screenw/2)-(perso->perso.pict.pos.w/2), (screenh/2)-(perso->perso.pict.pos.h/2), 68, 51);
 
 	for(index = 0 ; index < 8 ; index++)
     {
@@ -93,11 +95,11 @@ void initperso(struct PERSO *perso,struct DIVERSsysteme *systeme)
 	perso->tregenlife.texture = imprime (string, screenw, BLANC, systeme, NULL, NULL);
 	perso->tdefense.texture = imprime (string, screenw, BLANC, systeme, NULL, NULL);
 
-    setPos4(&perso->tlife.pos, screenw*0.11, screenh*0.8, screenw*0.28, screenh*0.05);
-	setPos4(&perso->tdefense.pos, screenw*0.11, screenh*0.74, screenw*0.28, screenh*0.05);
-	setPos4(&perso->tregenlife.pos, screenw*0.11, screenh*0.68, screenw*0.28, screenh*0.05);
-	setPos4(&perso->tforce.pos, screenw*0.11, screenh*0.62, screenw*0.28, screenh*0.05);
-	setPos4(&perso->tportee.pos, screenw*0.11, screenh*0.56, screenw*0.28, screenh*0.05);
+    CEGDD_UI_setPos4(&perso->tlife.pos, screenw*0.11, screenh*0.8, screenw*0.28, screenh*0.05);
+	CEGDD_UI_setPos4(&perso->tdefense.pos, screenw*0.11, screenh*0.74, screenw*0.28, screenh*0.05);
+	CEGDD_UI_setPos4(&perso->tregenlife.pos, screenw*0.11, screenh*0.68, screenw*0.28, screenh*0.05);
+	CEGDD_UI_setPos4(&perso->tforce.pos, screenw*0.11, screenh*0.62, screenw*0.28, screenh*0.05);
+	CEGDD_UI_setPos4(&perso->tportee.pos, screenw*0.11, screenh*0.56, screenw*0.28, screenh*0.05);
 
 	perso->BarreDeVie = AddLifeBar(100, perso->perso.pict.pos.w);
 
