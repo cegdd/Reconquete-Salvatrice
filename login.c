@@ -298,13 +298,13 @@ void InitLoginStore(struct typelogin *loginstore,struct DIVERSsysteme *systeme)
 	CEGDD_UI_setPos4(&loginstore->cachermdp.pos, screenw*0.75, screenh*0.3, screenw/6, screenh/12);
 	CEGDD_UI_setPos4(&loginstore->coche.pos, screenw*0.75, screenh*0.3, loginstore->cachermdp.pos.w/3, loginstore->cachermdp.pos.h*1.3);
 
-    loginstore->login.texture = loadTexture("rs/fonds/login.png");
-    loginstore->pointeur.texture = loadTexture("rs/images/p.png");
-    loginstore->blueBox.texture = loadTexture("rs/images/blueBox.png");
-    loginstore->whiteBox.texture = loadTexture("rs/images/whiteBox.png");
-    loginstore->tdialogue.texture = loadTexture("rs/ui/fenetreinfo.png");
-    loginstore->cachermdp.texture = loadTexture("rs/images/cachermdp.png");
-    loginstore->coche.texture = loadTexture("rs/images/coche.png");
+    loginstore->login.texture =     CEGDD_UI_loadTexture("rs/fonds/login.png");
+    loginstore->pointeur.texture =  CEGDD_UI_loadTexture("rs/images/p.png");
+    loginstore->blueBox.texture =   CEGDD_UI_loadTexture("rs/images/blueBox.png");
+    loginstore->whiteBox.texture =  CEGDD_UI_loadTexture("rs/images/whiteBox.png");
+    loginstore->tdialogue.texture = CEGDD_UI_loadTexture("rs/ui/fenetreinfo.png");
+    loginstore->cachermdp.texture = CEGDD_UI_loadTexture("rs/images/cachermdp.png");
+    loginstore->coche.texture =     CEGDD_UI_loadTexture("rs/images/coche.png");
 
 	loginstore->noir.texture = 0;
 
@@ -403,35 +403,35 @@ void Initbouton(struct typelogin *loginstore,struct DIVERSsysteme *systeme)
     int gauche = screenw*0.15;
     int haut = screenh*0.425;
 
-    loginstore->option.texture = loadTexture("rs/ui/options.png");
+    loginstore->option.texture = CEGDD_UI_loadTexture("rs/ui/options.png");
     CEGDD_UI_setPos4(&loginstore->option.pos,  screenw/11, screenh/7, screenw/11, screenh/12);
     loginstore->option.etat = B_NORMAL;
 
-	loginstore->jouer.texture = loadTexture("rs/ui/jouer.png");
+	loginstore->jouer.texture = CEGDD_UI_loadTexture("rs/ui/jouer.png");
 	CEGDD_UI_setPos4(&loginstore->jouer.pos,  (screenw/11)*3, screenh/7, screenw/11, screenh/12);
     loginstore->jouer.etat = B_NORMAL;
 
-	loginstore->creer.texture = loadTexture("rs/ui/creer.png");
+	loginstore->creer.texture = CEGDD_UI_loadTexture("rs/ui/creer.png");
 	CEGDD_UI_setPos4(&loginstore->creer.pos,  (screenw/11)*5, screenh/7, screenw/11, screenh/12);
     loginstore->creer.etat = B_NORMAL;
 
-	loginstore->quitter.texture = loadTexture("rs/ui/logquitter.png");
+	loginstore->quitter.texture = CEGDD_UI_loadTexture("rs/ui/logquitter.png");
 	CEGDD_UI_setPos4(&loginstore->quitter.pos,  (screenw/11)*7, screenh/7, screenw/11, screenh/12);
     loginstore->quitter.etat = B_NORMAL;
 
-	loginstore->arcade.texture = loadTexture("rs/ui/arcade.png");
+	loginstore->arcade.texture = CEGDD_UI_loadTexture("rs/ui/arcade.png");
 	CEGDD_UI_setPos4(&loginstore->arcade.pos,  (screenw/11)*9, screenh/7, screenw/11, screenh/12);
     loginstore->arcade.etat = B_NORMAL;
 
-	loginstore->azerty.texture = loadTexture("rs/ui/azerty.png");
+	loginstore->azerty.texture = CEGDD_UI_loadTexture("rs/ui/azerty.png");
 	CEGDD_UI_setPos4(&loginstore->azerty.pos,  menuw/7+gauche, menuh/3+haut, menuw/7, menuh/3);
     loginstore->azerty.etat = B_NORMAL;
 
-	loginstore->qwerty.texture = loadTexture("rs/ui/qwerty.png");
+	loginstore->qwerty.texture = CEGDD_UI_loadTexture("rs/ui/qwerty.png");
 	CEGDD_UI_setPos4(&loginstore->qwerty.pos,  (menuw/7)*5+gauche, menuh/3+haut, menuw/7, menuh/3);
     loginstore->qwerty.etat = B_NORMAL;
 
-    loginstore->qwertz.texture = loadTexture("rs/ui/qwertz.png");
+    loginstore->qwertz.texture = CEGDD_UI_loadTexture("rs/ui/qwertz.png");
     CEGDD_UI_setPos4(&loginstore->qwertz.pos,  (menuw/7)*3+gauche, menuh/3+haut, menuw/7, menuh/3);
     loginstore->qwertz.etat = B_NORMAL;
 }

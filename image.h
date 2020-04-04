@@ -12,9 +12,6 @@ void chargement (struct DIVERSsysteme *systeme);
 GLuint imprime (char s[], int len, int couleur,struct DIVERSsysteme *systeme, int *LenghtReturn, int *HighReturn);
 void ANIMmort (struct DIVERSsysteme *systeme);
 
-SDL_Surface * flipSurface(SDL_Surface * surface);
-GLuint convertTexture(SDL_Surface *surface);
-GLuint loadTexture(const char * filename);
 GLuint loadTextureandsize(const char * filename, struct SDL_Rect *pos);
 
 void draw_pict(struct pict *image);

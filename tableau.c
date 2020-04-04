@@ -30,7 +30,7 @@ void initinventaire(struct DIVERSinventaire *inventaire,struct DIVERSsysteme *sy
 	int index, rangerx = -1;
 	char nom[32];
 
-	inventaire->box[0].texture = loadTexture		("rs/ui/caseinventaire.png");
+	inventaire->box[0].texture = CEGDD_UI_loadTexture		("rs/ui/caseinventaire.png");
 
 	for (index = 0 ; index < TAILLESAC ; index++)
 	{
@@ -59,9 +59,9 @@ void initinventaire(struct DIVERSinventaire *inventaire,struct DIVERSsysteme *sy
 	inventaire->casedowngauche = -1;
 	inventaire->caseupgauche = -1;
 	inventaire->idsurvoler = -1;
-	inventaire->sac.texture = loadTexture   ("rs/ui/sac1.png");
-	inventaire->fond.texture = loadTexture	("rs/ui/BGinventaire.png");
-	inventaire->rubbish.texture = loadTexture("rs/images/rubbish.png");
+	inventaire->sac.texture =       CEGDD_UI_loadTexture    ("rs/ui/sac1.png");
+	inventaire->fond.texture =      CEGDD_UI_loadTexture    ("rs/ui/BGinventaire.png");
+	inventaire->rubbish.texture =   CEGDD_UI_loadTexture    ("rs/images/rubbish.png");
 
 	sprintf(nom, "clic droit : equiper");
 	inventaire->aide.img.texture = imprime (nom, screenw, GRIS, systeme, &inventaire->aide.lenght, NULL);
@@ -154,7 +154,7 @@ void initobjet(struct PACKobjet *objet,struct DIVERSsysteme *systeme,struct DIVE
 	for (index = 0 ; index < NOMBREOBJETS ; index++)
 	{
 		sprintf(nom, "rs/objets/%d#0.png", index);
-        objet->objet[index].texture = loadTexture   (nom);
+        objet->objet[index].texture = CEGDD_UI_loadTexture(nom);
 		if(objet->objet[index].def != 0)
 		{
 			sprintf(nom, "defense : %d", objet->objet[index].def);
@@ -277,10 +277,10 @@ void initsystem(struct DIVERSsysteme *systeme)/*																	systeme*/
 	systeme->continuer = 1;
 	systeme->echap = 0;
 
-	systeme->pointeur.texture = loadTexture("rs/images/p.png");
+	systeme->pointeur.texture = CEGDD_UI_loadTexture("rs/images/p.png");
 	//systeme->BGmort = LoadingImage				("rs/fonds/mort.png", 0, systeme);
-	systeme->BGnoir =               loadTexture	("rs/ui/BG.png");
-	systeme->BGblanc =              loadTexture	("rs/ui/bgb.png");
+	systeme->BGnoir =           CEGDD_UI_loadTexture("rs/ui/BG.png");
+	systeme->BGblanc =          CEGDD_UI_loadTexture("rs/ui/bgb.png");
 
 	systeme->police = TTF_OpenFont("rs/divers/dalek.ttf", TAILLE_POLICE);
 	systeme->police1 = TTF_OpenFont("rs/divers/police1.ttf", TAILLE_POLICE);
@@ -332,16 +332,16 @@ void initui(struct DIVERSui *ui,struct DIVERSsysteme *systeme)/*															u
 	}
 
 	ui->dialogue_text.texture = 0;
-	ui->dialogue_back.texture = loadTexture		("rs/ui/dialogue.png");
+	ui->dialogue_back.texture = CEGDD_UI_loadTexture("rs/ui/dialogue.png");
 
     //ui->lumiereon = LoadingImage		("rs/images/enligne.png", 0, systeme);
 	//ui->lumiereoff = LoadingImage		("rs/images/horsligne.png", 0, systeme);
 
-	ui->corner_menu.texture = loadTexture       ("rs/ui/uimenu.png");
-	ui->corner_inventaire.texture = loadTexture ("rs/ui/uiinventaire.png");
-	ui->corner_chat.texture = loadTexture       ("rs/ui/uichat.png");
-	ui->BGmenu.texture = loadTexture            ("rs/ui/BGmenu.png");
-	ui->BoutonQuitter.texture = loadTexture		("rs/ui/quitter.png");
+	ui->corner_menu.texture = CEGDD_UI_loadTexture          ("rs/ui/uimenu.png");
+	ui->corner_inventaire.texture = CEGDD_UI_loadTexture    ("rs/ui/uiinventaire.png");
+	ui->corner_chat.texture = CEGDD_UI_loadTexture          ("rs/ui/uichat.png");
+	ui->BGmenu.texture = CEGDD_UI_loadTexture               ("rs/ui/BGmenu.png");
+	ui->BoutonQuitter.texture = CEGDD_UI_loadTexture	    ("rs/ui/quitter.png");
 
 	ui->pUIbas.x = 0;
 	ui->pUIbas.y = screenh/2;
@@ -569,5 +569,5 @@ void initTIR(struct TIR *TIR)
 		CEGDD_UI_setPos4(&TIR->pballe[index], -50, -50, screenw*0.0146, screenh*0.026);
 	}
 
-	TIR->balle = loadTexture ("rs/images/balle.png");
+	TIR->balle = CEGDD_UI_loadTexture ("rs/images/balle.png");
 }

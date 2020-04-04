@@ -25,6 +25,9 @@
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-Wno-format-truncation" />
+				</Compiler>
 			</Target>
 		</Build>
 		<Compiler>
@@ -33,7 +36,6 @@
 			<Add option="-Wall" />
 			<Add option="-pg" />
 			<Add option="-g" />
-			<Add option="-std=gnu11" />
 			<Add directory="/home/cegdd/projets/LIBcegdd_UI" />
 		</Compiler>
 		<Linker>

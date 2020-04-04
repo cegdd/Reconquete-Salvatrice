@@ -34,9 +34,9 @@ void initperso(struct PERSO *perso,struct DIVERSsysteme *systeme)
 {
 	int index;
 	char string[16];
-	perso->perso.texture[0] = loadTexture("rs/images/perso0.png");
-	perso->perso.texture[1] = loadTexture("rs/images/perso1.png");
-	perso->perso.texture[2] = loadTexture("rs/images/perso2.png");
+	perso->perso.texture[0] = CEGDD_UI_loadTexture("rs/images/perso0.png");
+	perso->perso.texture[1] = CEGDD_UI_loadTexture("rs/images/perso1.png");
+	perso->perso.texture[2] = CEGDD_UI_loadTexture("rs/images/perso2.png");
 	perso->perso.frame = 3;
 	perso->perso.pict.texture = perso->perso.texture[0];
 	perso->perso.current = 0;
