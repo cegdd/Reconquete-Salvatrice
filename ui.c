@@ -23,7 +23,7 @@ void gestionui (struct DIVERSsysteme *systeme,struct DIVERSui *ui,struct DIVERSc
 	if (ui->lancedialogue == true)
 	{
 		char texte[512] = "Toumai :\n motive le développeur de ce jeu pour qu'il se bouge le cul a faire la suite ;)\n \n \n \n \n";
-		ui->dialogue_text.texture = fenetredialogue(screenw*0.3, screenh*0.5, &ui->dialogue_back.pos, &ui->dialogue_text.pos, texte, BLANC, systeme);
+		ui->dialogue_text.texture = fenetredialogue(screenw*0.3, screenh*0.5, &ui->dialogue_back.pos, &ui->dialogue_text.pos, texte, &systeme->blanc, systeme);
 		ui->dialogueactif = 1;
 		ui->lancedialogue = false;
 	}
@@ -144,8 +144,7 @@ void gestionui (struct DIVERSsysteme *systeme,struct DIVERSui *ui,struct DIVERSc
     }
 }
 
-GLuint fenetredialogue(int x, int y, SDL_Rect* pdialogue, SDL_Rect* ptextedialogue, char texte[],
-							int couleur,struct DIVERSsysteme *systeme)
+GLuint fenetredialogue(int x, int y, SDL_Rect* pdialogue, SDL_Rect* ptextedialogue, char texte[],SDL_Color *couleur,struct DIVERSsysteme *systeme)
 {/*pdialogue is the background and ptextedialogue is the text inside.*/
 /*just set "x" and "y" and everything will be automaticaly set up.*/
     GLuint picture;
@@ -153,7 +152,7 @@ GLuint fenetredialogue(int x, int y, SDL_Rect* pdialogue, SDL_Rect* ptextedialog
 
 	if (texte != NULL)
 	{
-		picture = imprime(texte, x, couleur, systeme, &lenght, &high);
+		picture = CEGDD_UI_imprime(texte, x, couleur, systeme->police1, &lenght, &high);
 	}
 
 	pdialogue->x = (screenw-x)/2;
@@ -234,14 +233,14 @@ void afficherCRAFT(struct DIVERScraft *craft,struct DIVERSui *ui,struct PACKbout
 				if (inventaire->totalID[objet->PLANstuff[craft->bcraftactif][craft->planactif].compoID[index]] >= objet->PLANstuff[craft->bcraftactif][craft->planactif].compoNB[index])
 				{
 					/*objet dispo*/
-//					craft->tcomponame[index] = imprime (objet->PLANstuff[craft->bcraftactif][craft->planactif].textecompo[index],
+//					craft->tcomponame[index] = CEGDD_UI_imprime (objet->PLANstuff[craft->bcraftactif][craft->planactif].textecompo[index],
 //						screenw, VERT, systeme, NULL, NULL);
 					objet->PLANstuff[craft->bcraftactif][craft->planactif].compodispo[index] = true;
 				}
 				else
 				{
 					/*objet pas dispo*/
-//					craft->tcomponame[index] = imprime (objet->PLANstuff[craft->bcraftactif][craft->planactif].textecompo[index],
+//					craft->tcomponame[index] = CEGDD_UI_imprime (objet->PLANstuff[craft->bcraftactif][craft->planactif].textecompo[index],
 //						screenw, ROUGE, systeme, NULL, NULL);
 					objet->PLANstuff[craft->bcraftactif][craft->planactif].compodispo[index] = false;
 				}
@@ -314,19 +313,19 @@ void afficherINVENTAIRE(struct DIVERSinventaire *inventaire,struct DIVERSui *ui,
 	int index;
 	char snbobjet[4];
 	/*background*/
-	draw_pict(&inventaire->fond);
+	CEGDD_UI_draw_pict(&inventaire->fond);
 	/*bags*/
-	draw_pict(&inventaire->sac);
+	CEGDD_UI_draw_pict(&inventaire->sac);
 	/*rubbish*/
 	if (objet->objetenmain.IDobjet != -1)
     {
-        draw_pict(&inventaire->rubbish);
+        CEGDD_UI_draw_pict(&inventaire->rubbish);
     }
 	/*for each cases*/
 	for (index = 0 ; index < TAILLESAC ; index++)
 	{
 		/*the case*/
-		draw_pict(&inventaire->box[index]);
+		CEGDD_UI_draw_pict(&inventaire->box[index]);
 		/*si la case contient un objet*/
 		if(objet->sac1[index].NBobjet > 0 && objet->sac1[index].IDobjet > -1)
 		{
@@ -343,7 +342,7 @@ void afficherINVENTAIRE(struct DIVERSinventaire *inventaire,struct DIVERSui *ui,
 				else
 				{
 					sprintf (snbobjet, "%d", objet->sac1[index].NBobjet);
-					draw(imprime(snbobjet, screenw, ROUGE, systeme, NULL, NULL), &inventaire->pnbobjet[index]);
+					draw(CEGDD_UI_imprime(snbobjet, screenw, &systeme->rouge, systeme->police1, NULL, NULL), &inventaire->pnbobjet[index]);
 				}
 			}
 		}
@@ -368,16 +367,16 @@ void afficherUI(bool enligne,struct DIVERSui *ui,struct PACKbouton *bouton,struc
 	if (ui->menu_open)
 	{
 		/*BackGround*/
-		draw_pict(&ui->BGmenu);
+		CEGDD_UI_draw_pict(&ui->BGmenu);
 		/*infos*/
-		draw_pict(&temps->temps);
-		draw_pict(&temps->fps);
+		CEGDD_UI_draw_pict(&temps->temps);
+		CEGDD_UI_draw_pict(&temps->fps);
 
-		draw_pict(&perso->tlife);
-		draw_pict(&perso->tdefense);
-		draw_pict(&perso->tregenlife);
-		draw_pict(&perso->tforce);
-		draw_pict(&perso->tportee);
+		CEGDD_UI_draw_pict(&perso->tlife);
+		CEGDD_UI_draw_pict(&perso->tdefense);
+		CEGDD_UI_draw_pict(&perso->tregenlife);
+		CEGDD_UI_draw_pict(&perso->tforce);
+		CEGDD_UI_draw_pict(&perso->tportee);
 
 		/*désignation stuff*/
 		for (index = 0 ; index < 7 ; index++)
@@ -416,8 +415,8 @@ void afficherUI(bool enligne,struct DIVERSui *ui,struct PACKbouton *bouton,struc
 /*dialogue*/
 	if (ui->dialogueactif == 1)
 	{
-	    draw_pict (&ui->dialogue_back);
-	    draw_pict (&ui->dialogue_text);
+	    CEGDD_UI_draw_pict (&ui->dialogue_back);
+	    CEGDD_UI_draw_pict (&ui->dialogue_text);
 	}
 	else if (ui->dialogueactif == 2)
 	{
@@ -462,7 +461,7 @@ void afficherJOUEURS(struct PERSO *perso,struct DIVERSdeplacement *deplacement,s
 
 	Turn_And_Draw(&perso->perso.pict, calcul);
 
-	setPos2rect(&perso->BarreDeVie->pBG, perso->perso.pict.pos.x-1, perso->perso.pict.pos.y+perso->perso.pict.pos.h+4);
+	CEGDD_UI_setPos2rect(&perso->BarreDeVie->pBG, perso->perso.pict.pos.x-1, perso->perso.pict.pos.y+perso->perso.pict.pos.h+4);
 	CEGDD_UI_setPos4(&perso->BarreDeVie->pbarre,
          perso->perso.pict.pos.x,
          perso->perso.pict.pos.y+perso->perso.pict.pos.h+5,
@@ -524,7 +523,7 @@ void afficherCHAT(struct DIVERSchat *chat,struct DIVERSui *ui, int lenbuffer,str
 
 void afficherPOINTEUR(struct DIVERSsysteme *systeme,struct PACKobjet *objet)
 {
-	draw_pict(&systeme->pointeur);
+	CEGDD_UI_draw_pict(&systeme->pointeur);
 	if (objet->objetenmain.IDobjet != -1)
 	{
 		systeme->ppobj.x = systeme->pointeur.pos.x + 15;

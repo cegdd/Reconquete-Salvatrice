@@ -69,7 +69,7 @@ void* thread2(void  *data)
             id[0] = '0';
             intid = atoi(id);
             sprintf(online->joueurs[intid].pseudo, "%s", arg1);
-           // online->joueurs[index].tpseudo = imprime(online->joueurs[intid].pseudo, online->screenw, BLANC,
+           // online->joueurs[index].tpseudo = CEGDD_UI_imprime(online->joueurs[intid].pseudo, online->screenw, BLANC,
 			//	online->systeme, NULL, NULL);
             online->joueurs[intid].enligne = true;
         }

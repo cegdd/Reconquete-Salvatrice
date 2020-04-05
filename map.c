@@ -128,14 +128,14 @@ systeme->continuer = 1;
                 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) ;
 
             /*affichage de la carte*/
-            draw_pict(&dj0.map.pict);
+            CEGDD_UI_draw_pict(&dj0.map.pict);
             for (index=0 ; index<dj0.nombremonstre ; index++)
             {
                 if(dj0.mob[index].BarreDeVie->life > 0)
                 {
                     turn_draw_hookpict(dj0.mob[index].angle, &dj0.mob[index].hookpict, &dj0.map.pict.pos);
                     CalculerBarreDeVie(dj0.mob[index].BarreDeVie->baselife , dj0.mob[index].BarreDeVie->life, 68);
-                    setPos2rect(&dj0.mob[index].BarreDeVie->pBG, dj0.mob[index].hookpict.pict.pos.x-1 + ((dj0.mob[index].hookpict.pict.pos.w-68)/2),
+                    CEGDD_UI_setPos2rect(&dj0.mob[index].BarreDeVie->pBG, dj0.mob[index].hookpict.pict.pos.x-1 + ((dj0.mob[index].hookpict.pict.pos.w-68)/2),
                                 dj0.mob[index].hookpict.pict.pos.y + dj0.mob[index].hookpict.pict.pos.h+4);
                     CEGDD_UI_setPos4(&dj0.mob[index].BarreDeVie->pbarre, dj0.mob[index].hookpict.pict.pos.x + ((dj0.mob[index].hookpict.pict.pos.w-68)/2),
                                 dj0.mob[index].hookpict.pict.pos.y + dj0.mob[index].hookpict.pict.pos.h+5,
@@ -192,7 +192,7 @@ systeme->continuer = 1;
             if (temps->temptotal == 5)
             {
                 char texte[2548] = "\nprisonnier :  \n   salut ... \n ça tombe bien,\n j'avais besoin d'un coup de main !\n tiens ! prend ce lance pierre et vas nous chercher\nquelques rat !\n\n\n\n\n\n\n\n\n\n\n\n\n\n   APPUIE SUR ENTRÉE POUR CONTINUER";
-                ui->dialogue_text.texture = fenetredialogue(screenw*0.4, screenh*0.8, &ui->dialogue_back.pos, &ui->dialogue_text.pos, texte, BLANC, systeme);
+                ui->dialogue_text.texture = fenetredialogue(screenw*0.4, screenh*0.8, &ui->dialogue_back.pos, &ui->dialogue_text.pos, texte, &systeme->blanc, systeme);
                 ui->dialogueactif = 1;
                 insertionsac(objet, 3);
             }
@@ -232,9 +232,9 @@ systeme->continuer = 1;
             sprintf(perso->slife, "vie : %0.0f/%d", perso->life, perso->lifemax);
             sprintf(temps->stringtempstotal, "age du personnage : %dj %dh %dmin %dsec", calcultempsjours(temps->temptotal), calcultempsheures(temps->temptotal), calcultempsminutes(temps->temptotal), calcultempssecondes(temps->temptotal));
 
-            temps->fps.texture = imprime (temps->StringI, screenw, BLANC, systeme, NULL, NULL);
-            perso->tlife.texture = imprime (perso->slife, screenw, BLANC, systeme, NULL, NULL);
-            temps->temps.texture = imprime (temps->stringtempstotal, screenw, BLANC, systeme, NULL, NULL);
+            temps->fps.texture = CEGDD_UI_imprime (temps->StringI, screenw, &systeme->blanc, systeme->police1, NULL, NULL);
+            perso->tlife.texture = CEGDD_UI_imprime (perso->slife, screenw, &systeme->blanc, systeme->police1, NULL, NULL);
+            temps->temps.texture = CEGDD_UI_imprime (temps->stringtempstotal, screenw, &systeme->blanc, systeme->police1, NULL, NULL);
 
             for(index = 0; index < 10 ; index++)
             {
@@ -242,7 +242,7 @@ systeme->continuer = 1;
                 {
                     chat->pstringchat[index].y = (screenh*0.5)+(online->chat.poschat[index]*(screenh*0.047));
                     SDL_DestroyTexture(chat->tstringchat[index]);
-                  //  chat->tstringchat[index] = imprime(online->chat.schat[index], screenw, BLANC, systeme, NULL, NULL);
+                  //  chat->tstringchat[index] = CEGDD_UI_imprime(online->chat.schat[index], screenw, BLANC, systeme, NULL, NULL);
                 }
             }
 
@@ -279,7 +279,7 @@ void gestionchat(struct DIVERSchat *chat,struct DIVERSsysteme *systeme,struct ty
         }
         chat->lettre = '\0';
         SDL_DestroyTexture(chat->tbufferchat);
-    //    chat->tbufferchat = imprime(online->chat.bufferchat, screenw, BLANC, systeme, NULL, NULL);
+    //    chat->tbufferchat = CEGDD_UI_imprime(online->chat.bufferchat, screenw, BLANC, systeme, NULL, NULL);
     }
 }
 

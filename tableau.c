@@ -64,7 +64,7 @@ void initinventaire(struct DIVERSinventaire *inventaire,struct DIVERSsysteme *sy
 	inventaire->rubbish.texture =   CEGDD_UI_loadTexture    ("rs/images/rubbish.png");
 
 	sprintf(nom, "clic droit : equiper");
-	inventaire->aide.img.texture = imprime (nom, screenw, GRIS, systeme, &inventaire->aide.lenght, NULL);
+	inventaire->aide.img.texture = CEGDD_UI_imprime (nom, screenw, &systeme->gris, systeme->police1, &inventaire->aide.lenght, NULL);
 
 	CEGDD_UI_setPos4(&inventaire->sac.pos, 0, screenh/2 - screenh*0.026, screenw*0.1, screenh*0.026);
 	CEGDD_UI_setPos4(&inventaire->fond.pos, 0, 0, screenw, screenh/2);
@@ -158,37 +158,37 @@ void initobjet(struct PACKobjet *objet,struct DIVERSsysteme *systeme,struct DIVE
 		if(objet->objet[index].def != 0)
 		{
 			sprintf(nom, "defense : %d", objet->objet[index].def);
-			objet->objet[index].tdef.img.texture = imprime (nom, screenw, BLANC, systeme, &objet->objet[index].tdef.lenght, NULL);
+			objet->objet[index].tdef.img.texture = CEGDD_UI_imprime (nom, screenw, &systeme->blanc, systeme->police1, &objet->objet[index].tdef.lenght, NULL);
 		}
 		if(objet->objet[index].life != 0)
 		{
 			sprintf(nom, "sante : +%d", objet->objet[index].life);
-			objet->objet[index].tlife.img.texture = imprime (nom, screenw, BLANC, systeme, &objet->objet[index].tlife.lenght, NULL);
+			objet->objet[index].tlife.img.texture = CEGDD_UI_imprime (nom, screenw, &systeme->blanc, systeme->police1, &objet->objet[index].tlife.lenght, NULL);
 		}
 		if(objet->objet[index].regenlife != 0)
 		{
 			sprintf(nom, "regeneration : %d/sec", objet->objet[index].regenlife);
-			objet->objet[index].tregenlife.img.texture = imprime (nom, screenw, BLANC, systeme, &objet->objet[index].tregenlife.lenght, NULL);
+			objet->objet[index].tregenlife.img.texture = CEGDD_UI_imprime (nom, screenw, &systeme->blanc, systeme->police1, &objet->objet[index].tregenlife.lenght, NULL);
 		}
 
 		if(objet->objet[index].force != 0)
 		{
 			sprintf(nom, "force : %d", objet->objet[index].force);
-			objet->objet[index].tforce.img.texture = imprime (nom, screenw, BLANC, systeme, &objet->objet[index].tforce.lenght, NULL);
+			objet->objet[index].tforce.img.texture = CEGDD_UI_imprime (nom, screenw, &systeme->blanc, systeme->police1, &objet->objet[index].tforce.lenght, NULL);
 		}
 
 		if(objet->objet[index].portee != 0)
 		{
 			sprintf(nom, "portee : +%d%%", objet->objet[index].portee);
-			objet->objet[index].tportee.img.texture = imprime (nom, screenw, BLANC, systeme, &objet->objet[index].tportee.lenght, NULL);
+			objet->objet[index].tportee.img.texture = CEGDD_UI_imprime (nom, screenw, &systeme->blanc, systeme->police1, &objet->objet[index].tportee.lenght, NULL);
 		}
 
 		sprintf(nom, "%d", objet->objet[index].empilage);
-		objet->objet[index].quantite = imprime (nom, screenw, ROUGE, systeme, NULL, NULL);
+		objet->objet[index].quantite = CEGDD_UI_imprime (nom, screenw, &systeme->rouge, systeme->police1, NULL, NULL);
 
-		objet->objet[index].texturenom[0] = imprime (objet->objet[index].nom, screenw, BLANC, systeme, &objet->objet[index].LARGEURnom, NULL);
-		objet->objet[index].texturenom[1] = imprime (objet->objet[index].nom, screenw, GRIS, systeme, &objet->objet[index].LARGEURnom, NULL);
-		objet->objet[index].texturenom[2] = imprime (objet->objet[index].nom, screenw, ROUGE, systeme, &objet->objet[index].LARGEURnom, NULL);
+		objet->objet[index].texturenom[0] = CEGDD_UI_imprime (objet->objet[index].nom, screenw, &systeme->blanc, systeme->police1, &objet->objet[index].LARGEURnom, NULL);
+		objet->objet[index].texturenom[1] = CEGDD_UI_imprime (objet->objet[index].nom, screenw, &systeme->gris, systeme->police1, &objet->objet[index].LARGEURnom, NULL);
+		objet->objet[index].texturenom[2] = CEGDD_UI_imprime (objet->objet[index].nom, screenw, &systeme->rouge, systeme->police1, &objet->objet[index].LARGEURnom, NULL);
 	}
 
 	for (index = 0 ; index < TAILLESAC ; index++)
@@ -260,8 +260,8 @@ void inittemps(struct DIVERStemps *temps,struct DIVERSsysteme *systeme)/*							
 	sprintf(temps->stringtempstotal, "age du personnage :\n - j - h - min - sec");
 	sprintf(temps->StringI, "IPS => 0");
 
-	temps->fps.texture = imprime (temps->StringI, screenw, BLANC, systeme, NULL, NULL);
-	temps->temps.texture = imprime (temps->stringtempstotal, screenw, BLANC, systeme, NULL, NULL);
+	temps->fps.texture = CEGDD_UI_imprime (temps->StringI, screenw, &systeme->blanc, systeme->police1, NULL, NULL);
+	temps->temps.texture = CEGDD_UI_imprime (temps->stringtempstotal, screenw, &systeme->blanc, systeme->police1, NULL, NULL);
 
 	CEGDD_UI_setPos4(&temps->fps.pos, screenw*0.75, screenh*0.8, screenw*0.2, screenh*0.05);
 	CEGDD_UI_setPos4(&temps->temps.pos, screenw*0.75, screenh*0.75, screenw*0.2, screenh*0.05);
@@ -287,8 +287,15 @@ void initsystem(struct DIVERSsysteme *systeme)/*																	systeme*/
 	if (systeme->police == NULL ||
         systeme->police1 == NULL)
     {
-        printf("police not load2\n");
+        printf("police not load\n");
     }
+
+	CEGDD_UI_setColor(&systeme->noir, 0, 0, 0, 0);
+	CEGDD_UI_setColor(&systeme->gris, 127, 127, 127, 0);
+	CEGDD_UI_setColor(&systeme->blanc, 255, 255, 255, 0);
+	CEGDD_UI_setColor(&systeme->rouge, 255, 0, 0, 0);
+	CEGDD_UI_setColor(&systeme->vert, 0, 255, 0, 0);
+	CEGDD_UI_setColor(&systeme->bleu, 0, 0, 255, 0);
 
     CEGDD_UI_setPos4(&systeme->pointeur.pos, 0, 0, 20, 30);
 
@@ -326,7 +333,7 @@ void initui(struct DIVERSui *ui,struct DIVERSsysteme *systeme)/*															u
 
 	for(index = 0 ; index < 7 ; index++)
 	{
-//		ui->tdesignationstuff[index] = imprime (ui->designationstuff[index], screenw, BLANC, systeme, NULL, NULL);
+//		ui->tdesignationstuff[index] = CEGDD_UI_imprime (ui->designationstuff[index], screenw, BLANC, systeme, NULL, NULL);
 		ui->casestuff[index].IDobjet = atoi(systeme->sauvegarde[index+10]);
 		ui->casestuff[index].NBobjet = 0;
 	}
@@ -455,7 +462,7 @@ void initcraft(struct DIVERScraft *craft,struct DIVERSsysteme *systeme)/*							
 		craft->posimagecompocraft[index].w = screenw*0.0337;
 		craft->posimagecompocraft[index].h = screenh*0.0599;
 
-//		craft->tcomponame[index] = imprime("rien", screenw, ROUGE, systeme, NULL, NULL);
+//		craft->tcomponame[index] = CEGDD_UI_imprime("rien", screenw, ROUGE, systeme, NULL, NULL);
 	}
 /*
 	craft->Uicraft = LoadingImage			("rs/ui/uicraft.png", 0, systeme);
@@ -476,8 +483,8 @@ void initrecompense (struct PACKrecompense *recompense,struct DIVERSsysteme *sys
 		recompense->recompenseID[index] = -1;
 	}
 
-//	recompense->tvictoire = imprime("VICTOIRE", screenw, ROUGE, systeme, NULL, NULL);
-//	recompense->ttexterecompensecombat = imprime("vous avez gagné :", screenw, BLANC, systeme, NULL, NULL);
+//	recompense->tvictoire = CEGDD_UI_imprime("VICTOIRE", screenw, ROUGE, systeme, NULL, NULL);
+//	recompense->ttexterecompensecombat = CEGDD_UI_imprime("vous avez gagné :", screenw, BLANC, systeme, NULL, NULL);
 
 	recompense->pBGrecompense.x = screenw*0.333;
 	recompense->pBGrecompense.y = screenh*0.044;

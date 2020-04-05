@@ -32,67 +32,14 @@ void chargement (struct DIVERSsysteme *systeme)
 	fond.texture = CEGDD_UI_loadTexture("rs/images/chargement.png");
 	logo.texture = CEGDD_UI_loadTexture("rs/fonds/rs.png");
 
-	draw_pict(&fond);
-	draw_pict(&logo);
+	CEGDD_UI_draw_pict(&logo);
+	CEGDD_UI_draw_pict(&fond);
+
 
     glFlush();
     SDL_GL_SwapWindow(systeme->screen);
 
     SDL_Delay(1000);
-}
-
-GLuint imprime (char s[], int len, int couleur,struct DIVERSsysteme *systeme, int *LenghtReturn, int *HighReturn)
-{
-    SDL_Surface *SurfTemp = NULL;
-    SDL_Color Noir = {0, 0, 0, 0};
-	SDL_Color Gris = {127, 127,127, 0};
-	SDL_Color Blanc = {255, 255, 255, 0};
-	SDL_Color Rouge = {255, 0, 0, 0};
-	SDL_Color Vert = {0, 255, 0, 0};
-	SDL_Color Bleu = {0, 0, 255, 0};
-
-
-    if(systeme->police == NULL)
-    {
-        printf ("police not load\n");
-    }
-
-	if (couleur == BLANC)
-    {
-        SurfTemp = TTF_RenderText_Blended_Wrapped(systeme->police1, (const char *)s, Blanc, len);
-    }
-    else if (couleur == ROUGE)
-    {
-        SurfTemp = TTF_RenderText_Blended_Wrapped(systeme->police1, (const char *)s, Rouge, len);
-    }
-    else if (couleur == GRIS)
-    {
-        SurfTemp = TTF_RenderText_Blended_Wrapped(systeme->police1, (const char *)s, Gris, len);
-    }
-	else if (couleur == NOIR)
-    {
-        SurfTemp = TTF_RenderText_Blended_Wrapped(systeme->police1, (const char *)s, Noir, len);
-    }
-    else if (couleur == VERT)
-    {
-        SurfTemp = TTF_RenderText_Blended_Wrapped(systeme->police1, (const char *)s, Vert, len);
-    }
-    else
-    {
-        SurfTemp = TTF_RenderText_Blended_Wrapped(systeme->police1, (const char *)s, Bleu, len);
-    }
-
-
-    if (LenghtReturn != NULL)
-    {
-        *LenghtReturn = SurfTemp->w;
-    }
-    if (HighReturn != NULL)
-    {
-        *HighReturn = SurfTemp->h;
-    }
-
-    return CEGDD_UI_convertTexture(SurfTemp);
 }
 
 void ANIMmort (struct DIVERSsysteme *systeme)
@@ -105,16 +52,6 @@ void ANIMmort (struct DIVERSsysteme *systeme)
     #endif
 }
 
-void draw_pict(struct pict *image)
-{
-    glBindTexture(GL_TEXTURE_2D, image->texture);
-    glBegin(GL_QUADS);
-        glTexCoord2d(0,0);          glVertex2d(image->pos.x,image->pos.y);
-        glTexCoord2d(0,1);          glVertex2d(image->pos.x,image->pos.y+image->pos.h);
-        glTexCoord2d(1,1);          glVertex2d(image->pos.x+image->pos.w,image->pos.y+image->pos.h);
-        glTexCoord2d(1,0);          glVertex2d(image->pos.x+image->pos.w,image->pos.y);
-    glEnd();
-}
 void draw_hookpict(struct hookpict *image, SDL_Rect *support)
 {
     image->pict.pos.x = support->x + image->translation.x;
@@ -194,12 +131,6 @@ void draw_button(struct BOUTON *bouton)
     glColor3ub(255, 255, 255);
 }
 
-void setPos2rect(SDL_Rect *point, int x, int y)
-{
-    point->x = x;
-    point->y = y;
-}
-
 void Turn_And_Draw (struct pict *img, float angle)
 {
     SDL_Point temp;
@@ -212,7 +143,7 @@ void Turn_And_Draw (struct pict *img, float angle)
 	glTranslatef(temp.x+(img->pos.w/2), temp.y+(img->pos.h/2), 0);
 	glRotatef(angle, 0, 0 ,1);
 
-	draw_pict(img);
+	CEGDD_UI_draw_pict(img);
 
 	img->pos.x = temp.x;
 	img->pos.y = temp.y;

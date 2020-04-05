@@ -67,7 +67,7 @@ void initperso(struct PERSO *perso,struct DIVERSsysteme *systeme)
 	//perso->cheveuxbrun = loadTexture("rs/images/cheveux0.png");
 	//perso->cheveuxblanc = loadTexture("rs/images/cheveux3.png");
 
-	//perso->tpseudo = imprime (systeme->sauvegarde[0], screenw,BLANC, systeme, NULL, NULL);
+	//perso->tpseudo = CEGDD_UI_imprime (systeme->sauvegarde[0], screenw,BLANC, systeme, NULL, NULL);
 
 	perso->pperso_poing.w = 48;
 	perso->pperso_poing.h = 48;
@@ -89,11 +89,11 @@ void initperso(struct PERSO *perso,struct DIVERSsysteme *systeme)
 	sprintf(string, "force :");
 	sprintf(string, "portee :");
 
-    perso->tlife.texture = imprime (perso->slife, screenw, BLANC, systeme, NULL, NULL);
-	perso->tportee.texture = imprime (string, screenw, BLANC, systeme, NULL, NULL);
-	perso->tforce.texture = imprime (string, screenw, BLANC, systeme, NULL, NULL);
-	perso->tregenlife.texture = imprime (string, screenw, BLANC, systeme, NULL, NULL);
-	perso->tdefense.texture = imprime (string, screenw, BLANC, systeme, NULL, NULL);
+    perso->tlife.texture = 		CEGDD_UI_imprime (perso->slife, screenw, &systeme->blanc, systeme->police1, NULL, NULL);
+	perso->tportee.texture = 	CEGDD_UI_imprime (string, screenw, &systeme->blanc, systeme->police1, NULL, NULL);
+	perso->tforce.texture = 	CEGDD_UI_imprime (string, screenw, &systeme->blanc, systeme->police1, NULL, NULL);
+	perso->tregenlife.texture = CEGDD_UI_imprime (string, screenw, &systeme->blanc, systeme->police1, NULL, NULL);
+	perso->tdefense.texture = 	CEGDD_UI_imprime (string, screenw, &systeme->blanc, systeme->police1, NULL, NULL);
 
     CEGDD_UI_setPos4(&perso->tlife.pos, screenw*0.11, screenh*0.8, screenw*0.28, screenh*0.05);
 	CEGDD_UI_setPos4(&perso->tdefense.pos, screenw*0.11, screenh*0.74, screenw*0.28, screenh*0.05);

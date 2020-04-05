@@ -45,13 +45,13 @@ int login (struct DIVERSsysteme *systeme)
 				if ( loginstore.continuer == 0) {loginstore.continuer = 2;}
 				else if (loginstore.continuer == -1)
 				{
-					loginstore.ttextedialogue = fenetredialogue(screenw*0.3, 240, &loginstore.pdialogue, &loginstore.ptextedialogue, loginstore.info, ROUGE, systeme);
+					loginstore.ttextedialogue = fenetredialogue(screenw*0.3, 240, &loginstore.pdialogue, &loginstore.ptextedialogue, loginstore.info, &systeme->rouge, systeme);
 					loginstore.menu = true;
 					loginstore.continuer = 1;
 				}
 				else if (loginstore.continuer == -2)
 				{
-					loginstore.ttextedialogue = fenetredialogue(screenw*0.3, 240, &loginstore.pdialogue, &loginstore.ptextedialogue, loginstore.info2, ROUGE, systeme);
+					loginstore.ttextedialogue = fenetredialogue(screenw*0.3, 240, &loginstore.pdialogue, &loginstore.ptextedialogue, loginstore.info2, &systeme->rouge, systeme);
 					loginstore.menu = true;
 					loginstore.continuer = 1;
 				}
@@ -63,21 +63,20 @@ int login (struct DIVERSsysteme *systeme)
 				loginstore.continuer = auth(systeme->sauvegarde);
 				if (loginstore.continuer == -1)
 				{
-					loginstore.ttextedialogue = fenetredialogue(screenw*0.3, screenh*0.3, &loginstore.pdialogue, &loginstore.ptextedialogue, loginstore.info3, ROUGE, systeme);
+					loginstore.ttextedialogue = fenetredialogue(screenw*0.3, screenh*0.3, &loginstore.pdialogue, &loginstore.ptextedialogue, loginstore.info3, &systeme->rouge, systeme);
 					loginstore.menu = true;
 					loginstore.continuer = 1;
 				}
 				else if (loginstore.continuer == -2)
 				{
-					loginstore.ttextedialogue = fenetredialogue(screenw*0.3, screenh*0.3, &loginstore.pdialogue, &loginstore.ptextedialogue, loginstore.info4, ROUGE, systeme);
+					loginstore.ttextedialogue = fenetredialogue(screenw*0.3, screenh*0.3, &loginstore.pdialogue, &loginstore.ptextedialogue, loginstore.info4, &systeme->rouge, systeme);
 					loginstore.menu = true;
 					loginstore.continuer = 1;
 				}
 			}
 			else if (loginstore.continuer == 4)
 			{
-				loginstore.ttextedialogue = fenetredialogue(screenw*0.7, screenh*0.15, &loginstore.pdialogue, &loginstore.ptextedialogue, " ",
-                                                ROUGE, systeme);
+				loginstore.ttextedialogue = fenetredialogue(screenw*0.7, screenh*0.15, &loginstore.pdialogue, &loginstore.ptextedialogue, " ", &systeme->rouge, systeme);
 				loginstore.menu = true;
 				loginstore.continuer = 1;
 				loginstore.optionactif = 1;
@@ -287,8 +286,8 @@ void InitLoginStore(struct typelogin *loginstore,struct DIVERSsysteme *systeme)
 {
 	loginstore->police = TTF_OpenFont("rs/divers/police1.ttf", TAILLE_POLICE_LOGIN);
 
-	loginstore->pseudo.img.texture = imprime ("pseudo :", screenw, BLEU, systeme, &loginstore->pseudo.lenght, NULL);
-	loginstore->mdp.img.texture = imprime ("mot de passe :", screenw, BLEU, systeme, &loginstore->mdp.lenght, NULL);
+	loginstore->pseudo.img.texture = CEGDD_UI_imprime ("pseudo :", screenw, &systeme->bleu, systeme->police1, &loginstore->pseudo.lenght, NULL);
+	loginstore->mdp.img.texture = CEGDD_UI_imprime ("mot de passe :", screenw, &systeme->bleu, systeme->police1, &loginstore->mdp.lenght, NULL);
 
 	CEGDD_UI_setPos4(&loginstore->login.pos, 0, 0, screenw, screenh);
 	CEGDD_UI_setPos4(&loginstore->pointeur.pos, 0, 0, 40, 60);
@@ -439,7 +438,7 @@ void Initbouton(struct typelogin *loginstore,struct DIVERSsysteme *systeme)
 void affichageloggin(struct typelogin *loginstore,struct DIVERSsysteme *systeme)
 {
 
-    draw_pict(&loginstore->login);
+    CEGDD_UI_draw_pict(&loginstore->login);
 
     draw_button(&loginstore->option);
     draw_button(&loginstore->jouer);
@@ -449,34 +448,34 @@ void affichageloggin(struct typelogin *loginstore,struct DIVERSsysteme *systeme)
 
     if (loginstore->saisiepseudo == true)
     {   CEGDD_UI_setPos4(&loginstore->blueBox.pos, loginstore->pcase.x, loginstore->pcase.y, loginstore->pcase.w, loginstore->pcase.h);
-        draw_pict(&loginstore->blueBox);     }
+        CEGDD_UI_draw_pict(&loginstore->blueBox);     }
     else
     {   CEGDD_UI_setPos4(&loginstore->whiteBox.pos, loginstore->pcase.x, loginstore->pcase.y, loginstore->pcase.w, loginstore->pcase.h);
-        draw_pict(&loginstore->whiteBox);     }
+        CEGDD_UI_draw_pict(&loginstore->whiteBox);     }
 
     if (loginstore->saisiemdp == true)
     {   CEGDD_UI_setPos4(&loginstore->blueBox.pos, loginstore->pcase2.x, loginstore->pcase2.y, loginstore->pcase2.w, loginstore->pcase2.h);
-        draw_pict(&loginstore->blueBox);     }
+        CEGDD_UI_draw_pict(&loginstore->blueBox);     }
     else
     {   CEGDD_UI_setPos4(&loginstore->whiteBox.pos, loginstore->pcase2.x, loginstore->pcase2.y, loginstore->pcase2.w, loginstore->pcase2.h);
-        draw_pict(&loginstore->whiteBox);     }
+        CEGDD_UI_draw_pict(&loginstore->whiteBox);     }
 
     if(loginstore->longmdp > 0)
     {
         if (loginstore->mdpcacher == 0)
         {
-            loginstore->LEmdp.img.texture = imprime(systeme->sauvegarde[1], screenw, NOIR, systeme, &loginstore->LEmdp.img.pos.w, NULL);
+            loginstore->LEmdp.img.texture = CEGDD_UI_imprime(systeme->sauvegarde[1], screenw, &systeme->noir, systeme->police1, &loginstore->LEmdp.img.pos.w, NULL);
         }
         else
         {
-            loginstore->LEmdp.img.texture = imprime(loginstore->mdpshow, screenw, NOIR, systeme, &loginstore->LEmdp.img.pos.w, NULL);
+            loginstore->LEmdp.img.texture = CEGDD_UI_imprime(loginstore->mdpshow, screenw, &systeme->noir, systeme->police1, &loginstore->LEmdp.img.pos.w, NULL);
         }
-        draw_pict(&loginstore->LEmdp.img);
+        CEGDD_UI_draw_pict(&loginstore->LEmdp.img);
     }
     if(loginstore->longpseudo > 0)
     {
-        loginstore->LEpseudo.img.texture = imprime(systeme->sauvegarde[0], screenw, NOIR, systeme, &loginstore->LEpseudo.img.pos.w, NULL);
-        draw_pict(&loginstore->LEpseudo.img);
+        loginstore->LEpseudo.img.texture = CEGDD_UI_imprime(systeme->sauvegarde[0], screenw, &systeme->noir, systeme->police1, &loginstore->LEpseudo.img.pos.w, NULL);
+        CEGDD_UI_draw_pict(&loginstore->LEpseudo.img);
     }
 
     if (loginstore->saisiemdp == true && loginstore->clignote == true)
@@ -508,17 +507,17 @@ void affichageloggin(struct typelogin *loginstore,struct DIVERSsysteme *systeme)
         draw_color_black(&loginstore->noir.pos);
     }
 
-    draw_pict(&loginstore->pseudo.img);
-    draw_pict(&loginstore->mdp.img);
+    CEGDD_UI_draw_pict(&loginstore->pseudo.img);
+    CEGDD_UI_draw_pict(&loginstore->mdp.img);
 
-    draw_pict(&loginstore->cachermdp);
+    CEGDD_UI_draw_pict(&loginstore->cachermdp);
     if (loginstore->mdpcacher == 1)
-    {   draw_pict(&loginstore->coche);   }
+    {   CEGDD_UI_draw_pict(&loginstore->coche);   }
 
 
      if (loginstore->menu == true)
     {
-        draw_pict(&loginstore->tdialogue);
+        CEGDD_UI_draw_pict(&loginstore->tdialogue);
         //draw(&loginstore->ttextedialogue);
     }
 
@@ -533,7 +532,7 @@ void affichageloggin(struct typelogin *loginstore,struct DIVERSsysteme *systeme)
         if (loginstore->qwertz.etat == B_NORMAL)
         {   draw_button(&loginstore->qwerty);}
     }
-    draw_pict(&loginstore->pointeur);
+    CEGDD_UI_draw_pict(&loginstore->pointeur);
 
     glFlush();
     SDL_GL_SwapWindow(systeme->screen);

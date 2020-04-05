@@ -8,8 +8,7 @@
 
 void gestionui (struct DIVERSsysteme *systeme,struct DIVERSui *ui,struct DIVERScraft *craft,struct PACKbouton *bouton,
                 struct DIVERSchat *chat,struct DIVERSinventaire *inventaire,struct PACKobjet *objet,struct PERSO *perso);
-GLuint fenetredialogue(int x, int y, SDL_Rect* pdialogue, SDL_Rect* ptextedialogue, char texte[],
-							int couleur,struct DIVERSsysteme *systeme);
+GLuint fenetredialogue(int x, int y, SDL_Rect* pdialogue, SDL_Rect* ptextedialogue, char texte[], SDL_Color *couleur,struct DIVERSsysteme *systeme);
 
 int calculclicinventaire(SDL_Rect pointeur ,struct DIVERSsysteme *systeme);
 void afficherCRAFT(struct DIVERScraft *craft,struct DIVERSui *ui,struct PACKbouton *bouton,struct PACKobjet *objet,

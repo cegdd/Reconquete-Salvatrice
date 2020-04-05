@@ -9,6 +9,8 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 
+#include <LIBcegdd_ui.h>
+
 /*####     OS     ######*/
 #define WINDOWS 0
 /*####logging rapide ####*/
@@ -68,7 +70,6 @@
 enum{BTL_LOST, BTL_WON, BTL_LEAVED, BTL_RESTART};/*for battle*/
 enum{ARME, TORSE, COU, DOS, PIED, TAILLE, TETE};/*body area for item*/
 enum{RESSOURCE, EQUIPEMENT};/*type of item*/
-enum{BLANC, ROUGE, GRIS, NOIR, VERT, BLEU};/*text color*/
 enum{UP, UPRIGHT, RIGHT, RIGHTDOWN, DOWN, DOWNLEFT, LEFT, LEFTUP};/*direction*/
 enum{UNUSED, GO, RUNNING, STOP};/*projectil*/
 enum{ALIGN_RIGHT, ALIGN_LEFT, ALIGN_CENTER};/*text*/
@@ -76,11 +77,6 @@ enum{B_NORMAL, B_SURVOLER, B_CLIQUER, B_IMPOSSIBLE};/*bouton*/
 enum{RAT_BLANC, RAT_VERT, RAT_JAUNE, RAT_ORANGE, RAT_ROUGE};/*creature*/
 enum{ALIVE, DEAD};
 
-struct pict
-{
-    SDL_Rect pos;
-    GLuint texture;
-};
 struct TEXTE
 {
     struct pict img;
@@ -272,6 +268,13 @@ struct DIVERSsysteme
 
     TTF_Font *police;
     TTF_Font *police1;
+
+    SDL_Color noir;
+	SDL_Color gris;
+	SDL_Color blanc;
+	SDL_Color rouge;
+	SDL_Color vert;
+	SDL_Color bleu;
 
 	SDL_Rect pecran;
 	SDL_Rect oldpp;

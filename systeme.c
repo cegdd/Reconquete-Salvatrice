@@ -38,16 +38,16 @@ void checkandrefreshstuff(struct PERSO *perso,struct PACKobjet *objet,struct DIV
 	}
 
     sprintf(string, "defense : %d", (int)perso->defense);
-    perso->tdefense.texture = imprime (string, screenw, BLANC, systeme, NULL, NULL);
+    perso->tdefense.texture = CEGDD_UI_imprime (string, screenw, &systeme->blanc, systeme->police1, NULL, NULL);
 
     sprintf(string, "regen vie : +%d/sec", perso->regenlife);
-    perso->tregenlife.texture = imprime (string, screenw, BLANC, systeme, NULL, NULL);
+    perso->tregenlife.texture = CEGDD_UI_imprime (string, screenw, &systeme->blanc, systeme->police1, NULL, NULL);
 
     sprintf(string, "portee : +%d%%", perso->portee);
-    perso->tportee.texture = imprime (string, screenw, BLANC, systeme, NULL, NULL);
+    perso->tportee.texture = CEGDD_UI_imprime (string, screenw, &systeme->blanc, systeme->police1, NULL, NULL);
 
     sprintf(string, "force : %d", perso->force);
-    perso->tforce.texture = imprime (string, screenw, BLANC, systeme, NULL, NULL);
+    perso->tforce.texture = CEGDD_UI_imprime (string, screenw, &systeme->blanc, systeme->police1, NULL, NULL);
 }
 
 void checkinventaire(struct PACKobjet *objet,struct DIVERSinventaire *inventaire)
