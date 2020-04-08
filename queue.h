@@ -1,6 +1,7 @@
 #ifndef QUEUEH
 #define QUEUEH
 
+#include "struct.h"
 
 void Add_Creature_Queue(struct File *file, int nvNombre, int quantity);
 int Read_Creature_Queue(struct File *file);

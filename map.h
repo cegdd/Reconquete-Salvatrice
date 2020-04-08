@@ -1,7 +1,7 @@
 #ifndef MAPH
 #define MAPH
 
-#include "donjon.h"
+#include "struct.h"
 
 
 int map (struct DIVERSsysteme *systeme,struct typeFORthreads *online,struct PACKbouton *bouton ,struct PACKobjet *objet,

@@ -5,7 +5,6 @@
 #include <string.h>
 #include <pthread.h>
 
-#include "image.h"
 #include "thread2.h"
 #include "main.h"
 #include "SDL2/SDL_ttf.h"

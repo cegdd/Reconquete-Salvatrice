@@ -1,21 +1,7 @@
 #ifndef PATHH
 #define PATHH
 
-
-#include <stdbool.h>
-
-
-#define PATH_dots 16
-
-
-struct PATH
-{
-    int x[PATH_dots];
-    int y[PATH_dots];
-    bool used[PATH_dots];
-    bool loop;
-    int counter;
-};
+#include "struct.h"
 
 //int PATH_add(struct PATH *path, int x, int y, struct DATA *data);
 //int PATH_remove(struct PATH *path);

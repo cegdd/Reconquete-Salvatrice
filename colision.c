@@ -1,16 +1,5 @@
-#include "SDL2/SDL.h"
-#include <math.h>
-#include <stdio.h>
-#include <stdbool.h>
-
-#include "struct.h"
-#include "perso.h"
 #include "colision.h"
-#include "image.h"
 #include "deplacement.h"
-#include "donjon.h"
-
-#include <LIBcegdd_ui.h>
 
 extern int screenh, screenw;
 

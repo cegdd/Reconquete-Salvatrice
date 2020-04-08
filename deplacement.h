@@ -2,38 +2,6 @@
 #define DEPLACEMENTH
 
 #include "struct.h"
-#include "target.h"
-#include "mob.h"
-#include "creature.h"
-
-struct DIRECTION
-{
-	int bas;
-    int haut;
-    int droite;
-    int gauche;
-    int direction;
-    int olddirection;
-};
-
-struct DIVERSdeplacement
-{
-    int directionjoueurs[MAX_JOUEURS];
-    struct DIRECTION direction;
-    int persobouge;
-    int indexanimperso;
-    SDL_Rect temp;
-};
-
-struct STRAIGHTPATH
-{
-    struct TARGET target;
-    double vecteur_X;
-    double vecteur_Y;
-    SDL_Point StartPos;
-    SDL_Point CurrentPos;
-    int speed;
-};
 
 void initdeplacement(struct DIVERSdeplacement *deplacement,struct DIVERSsysteme *systeme);
 

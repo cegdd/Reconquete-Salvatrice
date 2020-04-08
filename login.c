@@ -1,18 +1,10 @@
-#include <stdio.h>
-#include "SDL2/SDL.h"
-#include "SDL2/SDL_ttf.h"
-#include <string.h>
 
-#include "struct.h"
 #include "login.h"
+
 #include "evenement.h"
 #include "ui.h"
 #include "sauvegarde.h"
 #include "fichier.h"
-#include "image.h"
-#include "tableau.h"
-
-#include <LIBcegdd_ui.h>
 
 extern int screenh, screenw;
 
@@ -147,7 +139,7 @@ int creerjoueur(char sauvegarde[][50])
 		int taille = TAILLESAC;
 		sprintf(sauvegarde[4], "500");			/*perso en x500*/
 		sprintf(sauvegarde[5], "500");			/*perso en y500*/
-		sprintf(sauvegarde[7], "100");			/*quantité de vie*/
+		sprintf(sauvegarde[7], "100");			/*quantitÃ© de vie*/
 		sprintf(sauvegarde[9], "%d", taille);	/*taille sac*/
 
 		fichier2 = fopen((const char *)nomfichier, "w+");
@@ -372,7 +364,7 @@ void InitLoginStore(struct typelogin *loginstore,struct DIVERSsysteme *systeme)
 	loginstore->tpcurseur = 0;
 	loginstore->lettre = '0';
 
-	/*récupération du type de clavier utilisé*/
+	/*rÃ©cupÃ©ration du type de clavier utilisÃ©*/
 	loginstore->fichier = fopen("rs/options.RSsave", "r");
 	systeme->typeclavier = fgetc(loginstore->fichier);
 	fclose(loginstore->fichier);
@@ -440,11 +432,11 @@ void affichageloggin(struct typelogin *loginstore,struct DIVERSsysteme *systeme)
 
     CEGDD_UI_draw_pict(&loginstore->login);
 
-    draw_button(&loginstore->option);
-    draw_button(&loginstore->jouer);
-    draw_button(&loginstore->quitter);
-    draw_button(&loginstore->creer);
-    draw_button(&loginstore->arcade);
+    CEGDD_UI_draw_button(&loginstore->option);
+    CEGDD_UI_draw_button(&loginstore->jouer);
+    CEGDD_UI_draw_button(&loginstore->quitter);
+    CEGDD_UI_draw_button(&loginstore->creer);
+    CEGDD_UI_draw_button(&loginstore->arcade);
 
     if (loginstore->saisiepseudo == true)
     {   CEGDD_UI_setPos4(&loginstore->blueBox.pos, loginstore->pcase.x, loginstore->pcase.y, loginstore->pcase.w, loginstore->pcase.h);
@@ -490,7 +482,7 @@ void affichageloggin(struct typelogin *loginstore,struct DIVERSsysteme *systeme)
             loginstore->noir.pos.x = loginstore->pcase2.x + 5;
             loginstore->noir.pos.y = loginstore->pcase2.y + 5;
         }
-        draw_color_black(&loginstore->noir.pos);
+        CEGDD_UI_draw_color_black(&loginstore->noir.pos);
     }
     else if (loginstore->saisiepseudo == true && loginstore->clignote == true)
     {
@@ -504,7 +496,7 @@ void affichageloggin(struct typelogin *loginstore,struct DIVERSsysteme *systeme)
             loginstore->noir.pos.x = loginstore->pcase.x + 5;
             loginstore->noir.pos.y = loginstore->pcase.y + 5;
         }
-        draw_color_black(&loginstore->noir.pos);
+        CEGDD_UI_draw_color_black(&loginstore->noir.pos);
     }
 
     CEGDD_UI_draw_pict(&loginstore->pseudo.img);
@@ -524,13 +516,13 @@ void affichageloggin(struct typelogin *loginstore,struct DIVERSsysteme *systeme)
     if (loginstore->optionactif == 1)
     {
         if (loginstore->azerty.etat == B_NORMAL)
-        {   draw_button(&loginstore->azerty);}
+        {   CEGDD_UI_draw_button(&loginstore->azerty);}
 
         if (loginstore->qwerty.etat == B_NORMAL)
-        {   draw_button(&loginstore->qwertz);}
+        {   CEGDD_UI_draw_button(&loginstore->qwertz);}
 
         if (loginstore->qwertz.etat == B_NORMAL)
-        {   draw_button(&loginstore->qwerty);}
+        {   CEGDD_UI_draw_button(&loginstore->qwerty);}
     }
     CEGDD_UI_draw_pict(&loginstore->pointeur);
 

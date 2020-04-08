@@ -1,10 +1,7 @@
 #ifndef COLISIONH
 #define COLISIONH
 
-#include <stdbool.h>
-
-#include "deplacement.h"
-#include "donjon.h"
+#include "struct.h"
 
 void checkPixel(struct floor *carte,struct PERSO *perso,struct DIVERSsysteme *systeme);
 void deplacementperso_combat(struct PERSO *perso,struct DIRECTION *direction);

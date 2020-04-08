@@ -1,8 +1,7 @@
 #ifndef EVENEMENTH
 #define EVENEMENTH
 
-#include <stdbool.h>
-#include "SDL2/SDL.h"
+#include "struct.h"
 
 void boucleevent (bool *lancermessage,struct typeFORevent *FORevent, struct TIR *TIR);
 int boucleeventlogin (struct typelogin *loginstore,struct DIVERSsysteme *systeme);

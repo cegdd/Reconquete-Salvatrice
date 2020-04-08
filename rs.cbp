@@ -91,10 +91,6 @@
 		<Unit filename="fichier.h" />
 		<Unit filename="game.mp3" />
 		<Unit filename="ia.h" />
-		<Unit filename="image.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="image.h" />
 		<Unit filename="listechaine.c">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -1,5 +1,8 @@
 #ifndef TIRH
 #define TIRH
+
+#include "struct.h"
+
 void tirer (float px, float py, int canonx, int canony, int tx[][PRECISIONcailloux], int ty[][PRECISIONcailloux],
             int tableauutile, double *degre, struct DONJON *donjon);
 

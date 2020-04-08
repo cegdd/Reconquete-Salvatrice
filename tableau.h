@@ -1,8 +1,7 @@
 #ifndef TABLEAUH
 #define TABLEAUH
 
-#include "SDL2/SDL_ttf.h"
-
+#include "struct.h"
 
 int TotalTableauInt(int *ptrTableau, int nbcase);
 void initPLAN(struct PACKobjet *objet);

@@ -1,24 +1,14 @@
-#include <stdio.h>
-#include <stdlib.h>
 
-#include "SDL2/SDL.h"
-#include "SDL2/SDL_ttf.h"
-#include "SDL2/SDL_image.h"
+#include "main.h"
+
 #include "SDL2/SDL_mixer.h"
-#include <pthread.h>
 
-#include <GL/gl.h>
-#include <GL/glu.h>
-
-#include "struct.h"
 #include "perso.h"
 #include "tableau.h"
 #include "sauvegarde.h"
-#include "main.h"
 #include "login.h"
 #include "map.h"
-
-#include <LIBcegdd_ui.h>
+#include "deplacement.h"
 
 int screenh, screenw;
 

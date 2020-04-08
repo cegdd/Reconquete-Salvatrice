@@ -1,16 +1,11 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include "SDL2/SDL.h"
 
-#include "struct.h"
-#include "perso.h"
-#include "clavier.h"
 #include "evenement.h"
+
 #include "colision.h"
 #include "systeme.h"
 #include "ui.h"
 #include "listechaine.h"
+#include "clavier.h"
 
 extern int screenh, screenw;
 

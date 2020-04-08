@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include "fichier.h"
 
 void nouvelle_ligne(FILE *fichier)
 {

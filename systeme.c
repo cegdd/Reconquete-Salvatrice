@@ -1,11 +1,4 @@
-#include "SDL2/SDL.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
-
-#include "ui.h"
-#include "image.h"
-#include "perso.h"
+#include "systeme.h"
 
 extern int screenh, screenw;
 

@@ -1,7 +1,5 @@
-#include <stdio.h>
-#include <stdarg.h>
 
-#include "struct.h"
+#include "objet.h"
 
 void createobjet(int index, char *nom, int empilage, int type, int def, int life, int force, int portee, int regenlife,
                  int bodypart,struct PACKobjet *objet,struct DIVERScraft *craft)

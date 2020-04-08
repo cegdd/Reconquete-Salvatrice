@@ -1,17 +1,9 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "SDL2/SDL.h"
-#include <math.h>
-
-#include "struct.h"
 #include "ui.h"
+
 #include "colision.h"
 #include "systeme.h"
-#include "image.h"
-#include "perso.h"
 #include "tool.h"
 
-#include <LIBcegdd_ui.h>
 
 extern int screenh, screenw;
 
@@ -19,10 +11,10 @@ void gestionui (struct DIVERSsysteme *systeme,struct DIVERSui *ui,struct DIVERSc
                 struct DIVERSchat *chat,struct DIVERSinventaire *inventaire,struct PACKobjet *objet,struct PERSO *perso)
 {
     int index = 0;
-	/*si un dialogue a été lancer*/
+	/*si un dialogue a Ã©tÃ© lancer*/
 	if (ui->lancedialogue == true)
 	{
-		char texte[512] = "Toumai :\n motive le développeur de ce jeu pour qu'il se bouge le cul a faire la suite ;)\n \n \n \n \n";
+		char texte[512] = "Toumai :\n motive le dÃ©veloppeur de ce jeu pour qu'il se bouge le cul a faire la suite ;)\n \n \n \n \n";
 		ui->dialogue_text.texture = fenetredialogue(screenw*0.3, screenh*0.5, &ui->dialogue_back.pos, &ui->dialogue_text.pos, texte, &systeme->blanc, systeme);
 		ui->dialogueactif = 1;
 		ui->lancedialogue = false;
@@ -251,7 +243,7 @@ void afficherCRAFT(struct DIVERScraft *craft,struct DIVERSui *ui,struct PACKbout
 		/*image resultat*/
 		//SDL_RenderCopy(systeme->renderer, objet->objet[objet->PLANstuff[craft->bcraftactif][craft->planactif].resultatID].texture, NULL, &craft->posimageresultatcraft);
 
-		/*si l'objet possède des stats*/
+		/*si l'objet possÃ¨de des stats*/
 		if(objet->objet[objet->PLANstuff[craft->bcraftactif][craft->planactif].resultatID].type == EQUIPEMENT)
 		{
 			craft->pstats.y = screenh*0.160;
@@ -279,7 +271,7 @@ void afficherCRAFT(struct DIVERScraft *craft,struct DIVERSui *ui,struct PACKbout
 				craft->pstats.y += screenh*0.065;
 				//SDL_RenderCopy(systeme->renderer, objet->objet[objet->PLANstuff[craft->bcraftactif][craft->planactif].resultatID].textureforce, NULL, &craft->pstats);
 			}
-			/*stat portée*/
+			/*stat portÃ©e*/
 			if(objet->objet[objet->PLANstuff[craft->bcraftactif][craft->planactif].resultatID].portee != 0)
 			{
 				craft->pstats.y += screenh*0.065;
@@ -330,19 +322,19 @@ void afficherINVENTAIRE(struct DIVERSinventaire *inventaire,struct DIVERSui *ui,
 		if(objet->sac1[index].NBobjet > 0 && objet->sac1[index].IDobjet > -1)
 		{
 			/*image de l'objet*/
-			draw(objet->objet[objet->sac1[index].IDobjet].texture, &inventaire->box[index].pos);
+			CEGDD_UI_draw(objet->objet[objet->sac1[index].IDobjet].texture, &inventaire->box[index].pos);
 			/*si il y a plus d'un objet*/
 			if (objet->sac1[index].NBobjet > 1)
 			{
-				/*si le nombre d'objet est égale au nombre maximum empilable*/
+				/*si le nombre d'objet est Ã©gale au nombre maximum empilable*/
 				if (objet->sac1[index].NBobjet == objet->objet[objet->sac1[index].IDobjet].empilage)
 				{
-				    draw(objet->objet[objet->sac1[index].IDobjet].quantite, &inventaire->pnbobjet[index]);
+				    CEGDD_UI_draw(objet->objet[objet->sac1[index].IDobjet].quantite, &inventaire->pnbobjet[index]);
 				}
 				else
 				{
 					sprintf (snbobjet, "%d", objet->sac1[index].NBobjet);
-					draw(CEGDD_UI_imprime(snbobjet, screenw, &systeme->rouge, systeme->police1, NULL, NULL), &inventaire->pnbobjet[index]);
+					CEGDD_UI_draw(CEGDD_UI_imprime(snbobjet, screenw, &systeme->rouge, systeme->police1, NULL, NULL), &inventaire->pnbobjet[index]);
 				}
 			}
 		}
@@ -360,9 +352,9 @@ void afficherUI(bool enligne,struct DIVERSui *ui,struct PACKbouton *bouton,struc
 {
 	int index, calculposy;
 	/*coins*/
-	draw_button(&ui->corner_chat);
-	draw_button(&ui->corner_menu);
-	draw_button(&ui->corner_inventaire);
+	CEGDD_UI_draw_button(&ui->corner_chat);
+	CEGDD_UI_draw_button(&ui->corner_menu);
+	CEGDD_UI_draw_button(&ui->corner_inventaire);
 
 	if (ui->menu_open)
 	{
@@ -378,13 +370,13 @@ void afficherUI(bool enligne,struct DIVERSui *ui,struct PACKbouton *bouton,struc
 		CEGDD_UI_draw_pict(&perso->tforce);
 		CEGDD_UI_draw_pict(&perso->tportee);
 
-		/*désignation stuff*/
+		/*dÃ©signation stuff*/
 		for (index = 0 ; index < 7 ; index++)
 		{
-		    draw(inventaire->box[0].texture, &ui->casestuff[index].pos);
+		    CEGDD_UI_draw(inventaire->box[0].texture, &ui->casestuff[index].pos);
 			if(ui->casestuff[index].IDobjet != -1)
 			{
-			    draw(objet->objet[ui->casestuff[index].IDobjet].texture, &ui->casestuff[index].pos);
+			    CEGDD_UI_draw(objet->objet[ui->casestuff[index].IDobjet].texture, &ui->casestuff[index].pos);
 			}
 			else
 			{
@@ -400,7 +392,7 @@ void afficherUI(bool enligne,struct DIVERSui *ui,struct PACKbouton *bouton,struc
 				afficherDETAIL(inventaire, objet, systeme, ui->casestuff[index].IDobjet);
 			}
 		}
-        draw_button(&ui->BoutonQuitter);
+        CEGDD_UI_draw_button(&ui->BoutonQuitter);
 
 		/*lumieres*/
 		if(enligne == false)	{//SDL_RenderCopy(systeme->renderer, ui->lumiereoff, NULL, &ui->plumiere);
@@ -452,14 +444,14 @@ void afficherJOUEURS(struct PERSO *perso,struct DIVERSdeplacement *deplacement,s
 
     if (deplacement->persobouge == 1)
     {
-        Sync_Moving_Pict(temps->tpact, &perso->perso);
+        CEGDD_UI_Sync_Moving_Pict(temps->tpact, &perso->perso);
     }
     else
     {
         perso->perso.pict.texture = perso->perso.texture[0];
     }
 
-	Turn_And_Draw(&perso->perso.pict, calcul);
+	CEGDD_UI_Turn_And_Draw(&perso->perso.pict, calcul);
 
 	CEGDD_UI_setPos2rect(&perso->BarreDeVie->pBG, perso->perso.pict.pos.x-1, perso->perso.pict.pos.y+perso->perso.pict.pos.h+4);
 	CEGDD_UI_setPos4(&perso->BarreDeVie->pbarre,
@@ -467,8 +459,8 @@ void afficherJOUEURS(struct PERSO *perso,struct DIVERSdeplacement *deplacement,s
          perso->perso.pict.pos.y+perso->perso.pict.pos.h+5,
          CalculerBarreDeVie(perso->lifemax ,perso->life, perso->perso.pict.pos.w),
          5);
-	draw(systeme->BGnoir, &perso->BarreDeVie->pBG);
-    draw(systeme->BGblanc, &perso->BarreDeVie->pbarre);
+	CEGDD_UI_draw(systeme->BGnoir, &perso->BarreDeVie->pBG);
+    CEGDD_UI_draw(systeme->BGblanc, &perso->BarreDeVie->pbarre);
 
 	/*joueurs en ligne
 	for(index = 0 ; index < MAX_JOUEURS ; index++)
@@ -528,7 +520,7 @@ void afficherPOINTEUR(struct DIVERSsysteme *systeme,struct PACKobjet *objet)
 	{
 		systeme->ppobj.x = systeme->pointeur.pos.x + 15;
 		systeme->ppobj.y = systeme->pointeur.pos.y + 20;
-		draw (objet->objet[objet->objetenmain.IDobjet].texture, &systeme->ppobj);
+		CEGDD_UI_draw (objet->objet[objet->objetenmain.IDobjet].texture, &systeme->ppobj);
 	}
 
 }
@@ -607,7 +599,7 @@ void afficherDETAIL(struct DIVERSinventaire *inventaire,struct PACKobjet *objet,
 /*affichage*/
 	inventaire->pdetail.w += 20;
 	inventaire->pdetail.y = systeme->pointeur.pos.y - inventaire->pdetail.h;
-	draw(systeme->BGnoir, &inventaire->pdetail);
+	CEGDD_UI_draw(systeme->BGnoir, &inventaire->pdetail);
 
 	if(objet->objet[id].type == EQUIPEMENT)
 	{
@@ -616,7 +608,7 @@ void afficherDETAIL(struct DIVERSinventaire *inventaire,struct PACKobjet *objet,
         inventaire->pdetail.h = 30;
         inventaire->pdetail.w = inventaire->aide.lenght;
 
-        draw(inventaire->aide.img.texture, &inventaire->pdetail);
+        CEGDD_UI_draw(inventaire->aide.img.texture, &inventaire->pdetail);
         inventaire->pdetail.y -= 10;
 		inventaire->pdetail.h = 40;
 
@@ -624,39 +616,77 @@ void afficherDETAIL(struct DIVERSinventaire *inventaire,struct PACKobjet *objet,
 		{
 			inventaire->pdetail.y += 40;
 			inventaire->pdetail.w = objet->objet[id].tdef.lenght;
-			draw(objet->objet[id].tdef.img.texture, &inventaire->pdetail);
+			CEGDD_UI_draw(objet->objet[id].tdef.img.texture, &inventaire->pdetail);
 		}
 		if (objet->objet[id].life > 0)
 		{
 			inventaire->pdetail.y += 40;
 			inventaire->pdetail.w = objet->objet[id].tlife.lenght;
-			draw(objet->objet[id].tlife.img.texture, &inventaire->pdetail);
+			CEGDD_UI_draw(objet->objet[id].tlife.img.texture, &inventaire->pdetail);
 		}
 		if (objet->objet[id].regenlife > 0)
 		{
 			inventaire->pdetail.y += 40;
 			inventaire->pdetail.w = objet->objet[id].tregenlife.lenght;
-			draw(objet->objet[id].tregenlife.img.texture, &inventaire->pdetail);
+			CEGDD_UI_draw(objet->objet[id].tregenlife.img.texture, &inventaire->pdetail);
 		}
 		if (objet->objet[id].force > 0)
 		{
 			inventaire->pdetail.y += 40;
 			inventaire->pdetail.w = objet->objet[id].tforce.lenght;
-			draw(objet->objet[id].tforce.img.texture, &inventaire->pdetail);
+			CEGDD_UI_draw(objet->objet[id].tforce.img.texture, &inventaire->pdetail);
 		}
 		if (objet->objet[id].portee > 0)
 		{
 			inventaire->pdetail.y += 40;
 			inventaire->pdetail.w = objet->objet[id].tportee.lenght;
-			draw(objet->objet[id].tportee.img.texture, &inventaire->pdetail);
+			CEGDD_UI_draw(objet->objet[id].tportee.img.texture, &inventaire->pdetail);
 		}
 		inventaire->pdetail.w = objet->objet[id].LARGEURnom;
 		inventaire->pdetail.y += 40;
-		draw(objet->objet[id].texturenom[2],&inventaire->pdetail);
+		CEGDD_UI_draw(objet->objet[id].texturenom[2],&inventaire->pdetail);
 
 	}
 	else
 	{
-	    draw(objet->objet[id].texturenom[2],&inventaire->pdetail);
+	    CEGDD_UI_draw(objet->objet[id].texturenom[2],&inventaire->pdetail);
 	}
+}
+
+void chargement (struct DIVERSsysteme *systeme)
+{
+    struct pict logo, fond;
+
+    glMatrixMode( GL_PROJECTION );
+    glLoadIdentity();
+    gluOrtho2D(0,screenw,0,screenh);
+    glMatrixMode( GL_MODELVIEW );
+    glLoadIdentity();
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) ;
+
+	CEGDD_UI_setPos4(&logo.pos, 0, 200, screenw, screenh);
+	CEGDD_UI_setPos4(&fond.pos, 0, screenh*-0.2, screenw*0.7, screenh*0.8);
+    fond.pos.x = (screenw - fond.pos.w) / 2;
+
+	fond.texture = CEGDD_UI_loadTexture("rs/images/chargement.png");
+	logo.texture = CEGDD_UI_loadTexture("rs/fonds/rs.png");
+
+	CEGDD_UI_draw_pict(&logo);
+	CEGDD_UI_draw_pict(&fond);
+
+
+    glFlush();
+    SDL_GL_SwapWindow(systeme->screen);
+
+    SDL_Delay(1000);
+}
+
+void ANIMmort (struct DIVERSsysteme *systeme) //non utilisÃ©
+{
+	//SDL_RenderCopy(systeme->renderer, systeme->BGmort, NULL, &pecran);
+    glFlush();
+    SDL_GL_SwapWindow(systeme->screen);
+    #if FASTLOG == 0 /*pour moi, pour ne pas attendre*/
+    SDL_Delay(1500);
+    #endif
 }

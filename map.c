@@ -1,26 +1,18 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <string.h>
-#include "SDL2/SDL_ttf.h"
-#include "SDL2/SDL_image.h"
-#include <math.h>
+
+#include "map.h"
 
 #include "perso.h"
-#include "donjon.h"
-#include "image.h"
 #include "listechaine.h"
 #include "systeme.h"
-#include "map.h"
-#include "deplacement.h"
-#include "colision.h"
+
 #include "ui.h"
 #include "evenement.h"
 #include "tir.h"
-#include "tool.h"
 #include "sauvegarde.h"
-
-#include <LIBcegdd_ui.h>
+#include "mob.h"
+#include "tool.h"
+#include "donjon.h"
+#include "colision.h"
 
 extern int screenh, screenw;
 
@@ -133,7 +125,7 @@ systeme->continuer = 1;
             {
                 if(dj0.mob[index].BarreDeVie->life > 0)
                 {
-                    turn_draw_hookpict(dj0.mob[index].angle, &dj0.mob[index].hookpict, &dj0.map.pict.pos);
+                    CEGDD_UI_turn_draw_hookpict(dj0.mob[index].angle, &dj0.mob[index].hookpict, &dj0.map.pict.pos);
                     CalculerBarreDeVie(dj0.mob[index].BarreDeVie->baselife , dj0.mob[index].BarreDeVie->life, 68);
                     CEGDD_UI_setPos2rect(&dj0.mob[index].BarreDeVie->pBG, dj0.mob[index].hookpict.pict.pos.x-1 + ((dj0.mob[index].hookpict.pict.pos.w-68)/2),
                                 dj0.mob[index].hookpict.pict.pos.y + dj0.mob[index].hookpict.pict.pos.h+4);
@@ -141,8 +133,8 @@ systeme->continuer = 1;
                                 dj0.mob[index].hookpict.pict.pos.y + dj0.mob[index].hookpict.pict.pos.h+5,
                                 CalculerBarreDeVie(dj0.mob[index].BarreDeVie->baselife , dj0.mob[index].BarreDeVie->life, 68), 5);
 
-                    draw(systeme->BGnoir, &dj0.mob[index].BarreDeVie->pBG);
-                    draw(systeme->BGblanc, &dj0.mob[index].BarreDeVie->pbarre);
+                    CEGDD_UI_draw(systeme->BGnoir, &dj0.mob[index].BarreDeVie->pBG);
+                    CEGDD_UI_draw(systeme->BGblanc, &dj0.mob[index].BarreDeVie->pbarre);
                 }
             }
 

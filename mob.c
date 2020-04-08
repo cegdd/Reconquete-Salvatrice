@@ -1,11 +1,10 @@
 #include "mob.h"
-#include "image.h"
-#include "tool.h"
-#include "donjon.h"
+
 #include "systeme.h"
 #include "perso.h"
-
-#include <LIBcegdd_ui.h>
+#include "path.h"
+#include "deplacement.h"
+#include "tool.h"
 
 void initmob(struct MOB *mob)
 {

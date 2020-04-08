@@ -1,10 +1,4 @@
-#include <stdlib.h>
-#include <stdbool.h>
-
-#include "image.h"
 #include "creature.h"
-
-#include <LIBcegdd_ui.h>
 
 void initcreature(struct CREATURE *creature)
 {

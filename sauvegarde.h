@@ -1,6 +1,7 @@
 #ifndef SAUVEGARDEH
 #define SAUVEGARDEH
 
+#include "struct.h"
 
 void chargersauvegarde(struct DIVERSsysteme *systeme);
 void sauvegardetout(char sauvegarde[][50],SDL_Rect pmap,struct PERSO *perso, int temptotal, int unuse,

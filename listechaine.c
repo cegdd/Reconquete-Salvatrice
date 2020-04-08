@@ -1,8 +1,5 @@
-#include <stdlib.h>
-#include "SDL2/SDL.h"
 
 #include "listechaine.h"
-#include "struct.h"
 
 void insertionsac(struct PACKobjet *packobjet, int id)
 {

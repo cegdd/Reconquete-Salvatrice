@@ -1,11 +1,4 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include "SDL2/SDL.h"
-
-#include "struct.h"
-#include "image.h"
-
-#include <LIBcegdd_ui.h>
+#include "tool.h"
 
 struct BARREVIE* AddLifeBar(int life, int lenght)
 {

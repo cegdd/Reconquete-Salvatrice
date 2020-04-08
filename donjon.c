@@ -1,14 +1,8 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "SDL2/SDL.h"
-#include "SDL2/SDL_image.h"
-
 #include "donjon.h"
+
 #include "mob.h"
 #include "sauvegarde.h"
-#include "image.h"
-
-#include <LIBcegdd_ui.h>
+#include "creature.h"
 
 extern int screenh, screenw;
 
@@ -49,7 +43,7 @@ void LoadDonjon(struct DONJON *donjon, char *name)
         lis(fichier, buffer);
 
         sprintf(temp, "rs/maps/%s.png", buffer);
-        donjon->map.pict.texture = loadTextureandsize(temp, &donjon->map.pict.pos);
+        donjon->map.pict.texture = CEGDD_UI_loadTextureandsize(temp, &donjon->map.pict.pos);
         CEGDD_UI_setPos2(&donjon->origin, screenw/2, screenh/2);
 
         sprintf(temp, "rs/maps/%snb.png", buffer);
@@ -99,7 +93,7 @@ void LoadDonjon(struct DONJON *donjon, char *name)
             donjon->creature[i].hitlaps = atoi(buffer);
 
             sprintf(buffer, "rs/images/%s", donjon->creature[i].imgpath);
-            donjon->creature[i].pict.texture = loadTextureandsize(buffer, &donjon->creature[i].pict.pos);
+            donjon->creature[i].pict.texture = CEGDD_UI_loadTextureandsize(buffer, &donjon->creature[i].pict.pos);
         }
 
         //si le joueur est poser

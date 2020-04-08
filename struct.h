@@ -3,8 +3,11 @@
 
 #include <stdio.h>
 #include <stdbool.h>
-#include "SDL2/SDL_ttf.h"
+
 #include "SDL2/SDL.h"
+#include "SDL2/SDL_image.h"
+#include "SDL2/SDL_ttf.h"
+
 
 #include <GL/gl.h>
 #include <GL/glu.h>
@@ -53,6 +56,8 @@
 #define BUFFER 25
 #define REGEN 2.5
 
+#define PATH_dots 16
+
 /*combat*/
 #define NBcailloux 50
 #define PRECISIONcailloux 768 /*nombre de calcul par tir 384*/
@@ -73,7 +78,6 @@ enum{RESSOURCE, EQUIPEMENT};/*type of item*/
 enum{UP, UPRIGHT, RIGHT, RIGHTDOWN, DOWN, DOWNLEFT, LEFT, LEFTUP};/*direction*/
 enum{UNUSED, GO, RUNNING, STOP};/*projectil*/
 enum{ALIGN_RIGHT, ALIGN_LEFT, ALIGN_CENTER};/*text*/
-enum{B_NORMAL, B_SURVOLER, B_CLIQUER, B_IMPOSSIBLE};/*bouton*/
 enum{RAT_BLANC, RAT_VERT, RAT_JAUNE, RAT_ORANGE, RAT_ROUGE};/*creature*/
 enum{ALIVE, DEAD};
 
@@ -84,28 +88,11 @@ struct TEXTE
 	int high;
 };
 
-struct moving_pict
-{
-    struct pict pict;
-    GLuint texture[16];
-    int frame;
-    int current;
-    int delay;
-    int time;
-};
-
 struct floor
 {
     struct pict pict;
     SDL_Surface *calque;
     SDL_Point translation;
-};
-
-struct hookpict
-{
-    struct pict pict;
-    SDL_Point translation;
-    SDL_Rect Originpos;
 };
 
 struct File
@@ -169,13 +156,6 @@ struct PLAN
 	int resultatNB;
 	char textecompo[NOMBREOBJETS][96];
 	SDL_Texture *resultattexture;
-};
-
-struct BOUTON
-{
-	GLuint texture;
-	SDL_Rect pos;
-	int etat;
 };
 
 struct EMPLACEMENT
@@ -507,6 +487,141 @@ struct TIR
     GLuint balle;
 
     SDL_Rect pballe[NBcailloux];
+};
+
+struct DIRECTION
+{
+	int bas;
+    int haut;
+    int droite;
+    int gauche;
+    int direction;
+    int olddirection;
+};
+
+struct DIVERSdeplacement
+{
+    int directionjoueurs[MAX_JOUEURS];
+    struct DIRECTION direction;
+    int persobouge;
+    int indexanimperso;
+    SDL_Rect temp;
+};
+
+struct PATH
+{
+    int x[PATH_dots];
+    int y[PATH_dots];
+    bool used[PATH_dots];
+    bool loop;
+    int counter;
+};
+
+struct TARGET
+{
+    SDL_Point pos;
+};
+
+struct STRAIGHTPATH
+{
+    struct TARGET target;
+    double vecteur_X;
+    double vecteur_Y;
+    SDL_Point StartPos;
+    SDL_Point CurrentPos;
+    int speed;
+};
+
+struct CREATURE
+{
+    bool aggressif;
+
+    int vie;
+    int Rvision;
+    int vitesse;
+    int dps;
+    int Ratk;
+    int hitlaps;
+
+    char name[64];
+    char imgpath[128];
+
+    struct pict pict;
+};
+
+struct MOB
+{
+    bool fixe;
+    bool atkDone;
+
+    int vie;
+    int ID;
+    int angle;
+    int TimeSinceAtk;
+
+    double scale;
+
+    struct BARREVIE *BarreDeVie;
+    struct hookpict hookpict;
+    struct PATH path;
+
+    struct STRAIGHTPATH *straightpath;
+};
+
+struct DONJON
+{
+    char path[64];
+    struct floor map;
+    SDL_Point origin;
+    struct MOB mob [512];
+
+    int nombremonstre;
+
+    struct CREATURE creature[128];
+    int nbcreature;
+};
+
+struct PERSO
+{
+	struct BARREVIE *BarreDeVie;
+
+	int lifemax;
+	char slife[50];
+	int stuff[7];
+
+	int regenlife;
+	float defense;
+	float life;
+	int force;
+	int portee;
+	int cote[8];
+	int etatpix[12];
+
+	struct moving_pict perso;
+
+	Uint8 pixel[12] ;
+
+	SDL_Texture *texture_poing[1];
+	SDL_Texture *tpseudo;
+	SDL_Texture *cheveuxbrun ;
+	SDL_Texture *cheveuxblanc;
+
+	struct pict tdefense;
+
+	struct pict tlife;
+	struct pict tregenlife;
+	struct pict tforce;
+	struct pict tportee;
+
+	SDL_Rect spriteup[8];
+	SDL_Rect spritehit;
+	SDL_Rect pperso_poing;
+	SDL_Rect ptpseudo;
+
+	SDL_Point PixelCalque[12];
+	SDL_Point centrecorp;
+    SDL_Point pix;
+
 };
 
 #endif

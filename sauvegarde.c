@@ -1,12 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "SDL2/SDL.h"
-#include <string.h>
 
-#include "struct.h"
 #include "sauvegarde.h"
-#include "perso.h"
-
 
 void chargersauvegarde(struct DIVERSsysteme *systeme)
 {

@@ -1,9 +1,6 @@
 #ifndef UIH
 #define UIH
 
-#include "SDL2/SDL_ttf.h"
-#include <stdbool.h>
-
 #include "struct.h"
 
 void gestionui (struct DIVERSsysteme *systeme,struct DIVERSui *ui,struct DIVERScraft *craft,struct PACKbouton *bouton,
@@ -22,5 +19,8 @@ void afficherJOUEURS(struct PERSO *perso,struct DIVERSdeplacement *deplacement,s
 void afficherCHAT(struct DIVERSchat *chat,struct DIVERSui *ui, int lenbuffer,struct DIVERSsysteme *systeme);
 void afficherPOINTEUR(struct DIVERSsysteme *systeme,struct PACKobjet *objet);
 void afficherDETAIL(struct DIVERSinventaire *inventaire,struct PACKobjet *objet,struct DIVERSsysteme *systeme, int id);
+
+void chargement (struct DIVERSsysteme *systeme);
+void ANIMmort (struct DIVERSsysteme *systeme);//non utilisé
 
 #endif

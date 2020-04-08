@@ -1,17 +1,6 @@
-#include "SDL2/SDL.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include "SDL2/SDL_ttf.h"
-#include "SDL2/SDL_image.h"
+#include "tableau.h"
 
-#include "struct.h"
-#include "image.h"
 #include "objet.h"
-#include "tool.h"
-#include "perso.h"
-
-#include <LIBcegdd_ui.h>
 
 extern int screenh, screenw;
 

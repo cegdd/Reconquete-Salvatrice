@@ -1,11 +1,9 @@
-#include "deplacement.h"
-#include "image.h"
 #include "perso.h"
+
 #include "tool.h"
 #include "donjon.h"
 #include "colision.h"
 
-#include <LIBcegdd_ui.h>
 
 extern int screenh, screenw;
 

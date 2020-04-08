@@ -1,15 +1,6 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include "SDL2/SDL.h"
-#include <math.h>
+#include "tir.h"
 
-#include "struct.h"
-#include "donjon.h"
 #include "systeme.h"
-#include "image.h"
-#include "perso.h"
-
-#include <LIBcegdd_ui.h>
 
 void tirer (float px, float py, int canonx, int canony, int tx[][PRECISIONcailloux], int ty[][PRECISIONcailloux],
             int tableauutile, double *degre, struct DONJON *donjon)
@@ -135,7 +126,7 @@ void BattleDraw_Projectile(struct TIR *TIR, struct DONJON *donjon)
 	{
 		if (TIR->DepartBalle[index] == RUNNING)
 		{
-			draw(TIR->balle, &TIR->pballe[index]);
+			CEGDD_UI_draw(TIR->balle, &TIR->pballe[index]);
 		}
 	}
 }

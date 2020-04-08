@@ -1,13 +1,7 @@
-#include "SDL2/SDL.h"
-
-#include <math.h>
-
-#include "struct.h"
 #include "deplacement.h"
-#include "mob.h"
+
 #include "target.h"
-#include "perso.h"
-#include "creature.h"
+
 
 void initdeplacement(struct DIVERSdeplacement *deplacement,struct DIVERSsysteme *systeme)
 {
